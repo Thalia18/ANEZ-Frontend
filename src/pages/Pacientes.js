@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import Layout from '../components/Layout/Layout';
-import Navbar from '../components/Pacientes/Navbar';
-import Listado from '../components/Pacientes/Listado';
 import axios from 'axios';
+import React, { Component } from 'react';
+
+import Layout from '../components/Layout/Layout';
+import Listado from '../components/Pacientes/Listado';
 import { api_url } from '../components/utils/';
 
 class Pacientes extends Component {
@@ -40,12 +40,13 @@ class Pacientes extends Component {
     }
   };
   render() {
-    console.log(this.state.autocomplete);
     return (
       <React.Fragment>
         <Layout>
-          <Navbar autoComplete={this.state.autocomplete} />
-          <Listado pacientes={Object.values(this.state.pacientes)} />
+          <Listado
+            pacientes={Object.values(this.state.pacientes)}
+            autoComplete={this.state.autocomplete}
+          />
         </Layout>
       </React.Fragment>
     );
