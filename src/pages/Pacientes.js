@@ -39,10 +39,14 @@ class Pacientes extends Component {
       });
     }
   };
+
   render() {
+    if (this.state.loading) return <div>loading</div>;
+    if (this.state.error) return <div>error</div>;
+
     return (
       <React.Fragment>
-        <Layout>
+        <Layout activeKeyP='3'>
           <Listado
             pacientes={Object.values(this.state.pacientes)}
             autoComplete={this.state.autocomplete}

@@ -5,7 +5,7 @@ import Slider from '../components/Slider/Slider';
 const Main = () => {
   return (
     <div style={{ height: '100%' }}>
-      <Layout>
+      <Layout activeKeyP='1'>
         <Slider />
       </Layout>
     </div>

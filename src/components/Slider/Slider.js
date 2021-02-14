@@ -14,9 +14,9 @@ const Slider = () => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
-        <Segment>
+        <Segment basic>
           <Global
-            style={matches.medium ? { height: '20em' } : { height: '55em' }}
+            style={matches.medium ? { height: '35em' } : { height: '55em' }}
           >
             <SliderContainer>
               <Carousel
@@ -24,8 +24,8 @@ const Slider = () => {
                 className='custom-slider'
                 style={
                   matches.medium
-                    ? { width: '100%', height: '70%' }
-                    : { width: '100%', height: '90%' }
+                    ? { width: '100%', height: '85%' }
+                    : { width: '90%', height: '90%', margin: 'auto' }
                 }
               >
                 <img src='https://i.ibb.co/hLjvrdL/logoANEZ.png' />

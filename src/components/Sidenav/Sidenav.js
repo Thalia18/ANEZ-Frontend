@@ -1,20 +1,26 @@
 import React from 'react';
-// import 'rsuite/dist/styles/rsuite-dark.css';
 import Media from 'react-media';
-import { Dropdown, Icon, Nav, Navbar, Sidenav } from 'rsuite';
+// import 'rsuite/dist/styles/rsuite-dark.css';
+import { Link, withRouter, useHistory } from 'react-router-dom';
+import { Icon, Nav, Navbar, Sidenav } from 'rsuite';
 import { Grid, Segment } from 'semantic-ui-react';
 
 import { GLOBAL_MEDIA_QUERIES } from '../utils/';
 import { Logo } from './SidenavStyles';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions';
 
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const SidenavC = (props) => {
+const SidenavC = ({ activeKeyP, ...props }) => {
   const [expanded, setExpanded] = React.useState(true);
-  const [activeKey, setActiveKey] = React.useState('1');
+  let [activeKey, setActiveKey] = React.useState(Object.values(activeKeyP)[0]);
+
   const [widthColumnA, setwidthColumnA] = React.useState(3);
   const [widthColumnB, setWidthColumB] = React.useState(13);
+
+  let history = useHistory();
 
   const handleClick = () => {
     expanded ? setExpanded(false) : setExpanded(true);
@@ -31,6 +37,12 @@ const SidenavC = (props) => {
     setActiveKey(eventKey);
   };
 
+  const logout = (e) => {
+    e.preventDefault();
+    props.logoutUser([]);
+    history.push('/login');
+  };
+
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -38,7 +50,6 @@ const SidenavC = (props) => {
           <Grid.Column width={matches.medium ? widthColumnA + 1 : widthColumnA}>
             <Sidenav
               expanded={expanded}
-              defaultOpenKeys={['3', '4']}
               activeKey={activeKey}
               onSelect={handleSelect}
               style={{ height: '100%' }}
@@ -52,33 +63,15 @@ const SidenavC = (props) => {
                   >
                     <Logo src='https://i.ibb.co/hLjvrdL/logoANEZ.png' />
                   </Nav.Item>
-                  <Dropdown
-                    placement='rightStart'
-                    eventKey='1'
-                    title='Citas'
-                    icon={<Icon icon='calendar' />}
-                  >
-                    <Dropdown.Item eventKey='1-1'>Agregar</Dropdown.Item>
-                    <Dropdown.Item eventKey='1-2'>Ver </Dropdown.Item>
-                  </Dropdown>
-                  <Dropdown
-                    placement='rightStart'
-                    eventKey='2'
-                    title='Historias clínicas'
-                    icon={<Icon icon='heartbeat' />}
-                  >
-                    <Dropdown.Item eventKey='2-1'>Agregar</Dropdown.Item>
-                    <Dropdown.Item eventKey='2-2'>Ver</Dropdown.Item>
-                  </Dropdown>
-                  <Dropdown
-                    placement='rightStart'
-                    eventKey='3'
-                    title='Pacientes'
-                    icon={<Icon icon='people-group' />}
-                  >
-                    <Dropdown.Item eventKey='3-1'>Agregar</Dropdown.Item>
-                    <Dropdown.Item eventKey='3-2'>Ver</Dropdown.Item>
-                  </Dropdown>
+                  <Nav.Item eventKey='1'>
+                    <Icon icon='calendar' /> Citas
+                  </Nav.Item>
+                  <Nav.Item eventKey='2'>
+                    <Icon icon='heartbeat' /> Historias clínicas
+                  </Nav.Item>
+                  <Nav.Item eventKey='3' componentClass={Link} to='pacientes'>
+                    <Icon icon='people-group' /> Pacientes
+                  </Nav.Item>
                 </Nav>
               </Sidenav.Body>
             </Sidenav>
@@ -90,12 +83,18 @@ const SidenavC = (props) => {
                   <Nav.Item icon={<Icon icon='th' />} onClick={handleClick} />
                 </Nav>
                 <Nav pullRight>
-                  <Nav.Item icon={<Icon icon='cog' />}>Log out</Nav.Item>
+                  <Nav.Item
+                    icon={<Icon icon='cog' />}
+                    // componentClass='button'
+                    onClick={logout}
+                  >
+                    Log out
+                  </Nav.Item>
                 </Nav>
               </Navbar.Body>
             </Navbar>
             <Segment
-              style={matches.medium ? { height: '86%' } : { height: '93%' }}
+              style={matches.medium ? { height: '90%' } : { height: '93%' }}
             >
               {props.children}
             </Segment>
@@ -106,4 +105,7 @@ const SidenavC = (props) => {
   );
 };
 
-export default SidenavC;
+const mapDispatchToProps = {
+  logoutUser,
+};
+export default withRouter(connect(null, mapDispatchToProps)(SidenavC));

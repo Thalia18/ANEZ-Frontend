@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 import Layout from '../components/Layout/Layout';
-import Agregar from '../components/Paciente/Agregar/Agregar';
-import Navbar from '../components/Paciente/Agregar/NavbarAgregar';
+import Editar from '../components/Paciente/Editar/Editar';
+import Navbar from '../components/Paciente/Editar/NavbarEditar';
 import { api_url } from '../components/utils';
 
 class PacienteAgregar extends Component {
@@ -13,22 +13,22 @@ class PacienteAgregar extends Component {
       success: false,
       error: null,
       loading: true,
-      activePage: '',
+      activePage: '3',
       paciente: {
-        tipo_de_sangre_id: null,
-        etnia_id: null,
-        nivel_de_instruccion_id: null,
-        estado_civil_id: null,
-        nombre: '',
-        apellido: '',
-        cedula: '',
-        fecha_nacimiento: '',
-        lugar_nacimiento: '',
-        direccion: '',
-        telefono: '',
-        contacto_emergencia_nombre: '',
-        contacto_emergencia_telefono: '',
-        created_at: new Date(),
+        // tipo_de_sangre_id: null,
+        // etnia_id: null,
+        // nivel_de_instruccion_id: null,
+        // estado_civil_id: null,
+        // nombre: '',
+        // apellido: '',
+        // cedula: '',
+        // fecha_nacimiento: '',
+        // lugar_nacimiento: '',
+        // direccion: '',
+        // telefono: '',
+        // contacto_emergencia_nombre: '',
+        // contacto_emergencia_telefono: '',
+        // created_at: new Date(),
       },
       etnias: {},
       tipoDeSangre: {},
@@ -54,6 +54,9 @@ class PacienteAgregar extends Component {
       error: null,
     });
     try {
+      const { data: pacienteA } = await axios.get(
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+      );
       const { data: etnias } = await axios.get(`${api_url}/api/etnias`);
       const { data: estadosCiviles } = await axios.get(
         `${api_url}/api/estados_civiles`
@@ -69,10 +72,13 @@ class PacienteAgregar extends Component {
         estadoCivil: estadosCiviles.data,
         tipoDeSangre: tiposDeSangre.data,
         nivelDeInstruccion: nivelesDeInstruccion.data,
+        paciente: pacienteA.data,
+
         loading: false,
       });
       this.opcionesSelect();
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -160,7 +166,10 @@ class PacienteAgregar extends Component {
       error: null,
     });
     try {
-      await axios.post(`${api_url}/api/paciente`, this.state.paciente);
+      await axios.put(
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
+        this.state.paciente
+      );
       this.setState({
         loading: false,
         success: true,
@@ -190,12 +199,11 @@ class PacienteAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
           <Navbar />
-          <Agregar
+          <Editar
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}
             estadoCivil={this.state.optionEC}

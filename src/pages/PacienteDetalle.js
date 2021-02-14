@@ -2,14 +2,16 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 import Layout from '../components/Layout/Layout';
-import Detalle from '../components/Paciente/Detalle';
-import Navbar from '../components/Paciente/Navbar';
+import Detalle from '../components/Paciente/Detalle/Detalle';
+import Navbar from '../components/Paciente/Detalle/NavbarDetalle';
 import { api_url } from '../components/utils';
+import ModalEliminar from '../components/Paciente/Eliminar/ModalEliminar';
 
 class PacienteDetalle extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
       error: null,
       loading: true,
       paciente: {},
@@ -43,14 +45,51 @@ class PacienteDetalle extends Component {
       });
     }
   };
+  deleteData = async () => {
+    try {
+      await axios.delete(
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+      );
+      this.setState({
+        loading: false,
+      });
+      this.props.history.push('/pacientes');
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error,
+      });
+    }
+  };
+  closeModal = () => {
+    this.setState({
+      open: false,
+    });
+  };
+  onClickDelete = () => {
+    this.setState({
+      open: true,
+    });
+  };
+  goBack = () => {
+    this.props.history.goBack();
+  };
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout>
-          <Navbar />
-          <Detalle paciente={this.state.paciente} />
+        <Layout activeKeyP='3'>
+          <Navbar
+            onClickDelete={this.onClickDelete}
+            pacienteId={this.props.match.params.pacienteId}
+          />
+          <Detalle paciente={this.state.paciente} goBack={this.goBack} />
+          <ModalEliminar
+            deleteM={this.deleteData}
+            open={this.state.open}
+            closeModal={this.closeModal}
+          />
         </Layout>
       </React.Fragment>
     );
