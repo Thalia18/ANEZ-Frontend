@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 
-import Layout from '../components/Layout/Layout';
-import Detalle from '../components/Paciente/Detalle/Detalle';
-import Navbar from '../components/Paciente/Detalle/NavbarDetalle';
-import { api_url } from '../components/utils';
-import ModalEliminar from '../components/Paciente/Eliminar/ModalEliminar';
+import Layout from '../../components/Layout/Layout';
+import Detalle from '../../components/Paciente/Detalle/Detalle';
+import Navbar from '../../components/Paciente/Detalle/NavbarDetalle';
+import { api_url } from '../../components/utils';
+import ModalEliminar from '../../components/Modales/ModalEliminar';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../../components/utils';
 
 class PacienteDetalle extends Component {
   constructor(props) {
@@ -15,11 +17,10 @@ class PacienteDetalle extends Component {
       error: null,
       loading: true,
       paciente: {},
-      a: true,
     };
   }
   componentDidMount() {
-    if (this.state.a) {
+    if (this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/');
@@ -96,4 +97,4 @@ class PacienteDetalle extends Component {
   }
 }
 
-export default PacienteDetalle;
+export default connect(mapStateToProps, null)(PacienteDetalle);

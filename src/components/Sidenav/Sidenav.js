@@ -1,19 +1,20 @@
 import React from 'react';
 import Media from 'react-media';
+import { connect } from 'react-redux';
 // import 'rsuite/dist/styles/rsuite-dark.css';
-import { Link, withRouter, useHistory } from 'react-router-dom';
-import { Icon, Nav, Navbar, Sidenav } from 'rsuite';
+import { Link, useHistory, withRouter } from 'react-router-dom';
+import { Dropdown, Icon, Nav, Navbar, Sidenav } from 'rsuite';
 import { Grid, Segment } from 'semantic-ui-react';
 
+import { logoutUser } from '../../actions';
+import { mapStateToProps } from '../utils';
 import { GLOBAL_MEDIA_QUERIES } from '../utils/';
 import { Logo } from './SidenavStyles';
-import { connect } from 'react-redux';
-import { logoutUser } from '../../actions';
 
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const SidenavC = ({ activeKeyP, ...props }) => {
+const SidenavC = ({ user, activeKeyP, ...props }) => {
   const [expanded, setExpanded] = React.useState(true);
   let [activeKey, setActiveKey] = React.useState(Object.values(activeKeyP)[0]);
 
@@ -40,7 +41,7 @@ const SidenavC = ({ activeKeyP, ...props }) => {
   const logout = (e) => {
     e.preventDefault();
     props.logoutUser([]);
-    history.push('/login');
+    history.push('/');
   };
 
   return (
@@ -69,7 +70,7 @@ const SidenavC = ({ activeKeyP, ...props }) => {
                   <Nav.Item eventKey='2'>
                     <Icon icon='heartbeat' /> Historias clínicas
                   </Nav.Item>
-                  <Nav.Item eventKey='3' componentClass={Link} to='pacientes'>
+                  <Nav.Item eventKey='3' componentClass={Link} to='/pacientes'>
                     <Icon icon='people-group' /> Pacientes
                   </Nav.Item>
                 </Nav>
@@ -80,16 +81,20 @@ const SidenavC = ({ activeKeyP, ...props }) => {
             <Navbar>
               <Navbar.Body>
                 <Nav>
-                  <Nav.Item icon={<Icon icon='th' />} onClick={handleClick} />
+                  <Nav.Item
+                    icon={<Icon icon='th' size='lg' />}
+                    onClick={handleClick}
+                  />
                 </Nav>
                 <Nav pullRight>
-                  <Nav.Item
-                    icon={<Icon icon='cog' />}
-                    // componentClass='button'
-                    onClick={logout}
+                  <Dropdown
+                    icon={<Icon icon='user-md' size='lg' />}
+                    title={user.usuario}
+                    size='md'
+                    style={{ marginRight: '2em' }}
                   >
-                    Log out
-                  </Nav.Item>
+                    <Dropdown.Item onClick={logout}>Log out</Dropdown.Item>
+                  </Dropdown>
                 </Nav>
               </Navbar.Body>
             </Navbar>
@@ -108,4 +113,7 @@ const SidenavC = ({ activeKeyP, ...props }) => {
 const mapDispatchToProps = {
   logoutUser,
 };
-export default withRouter(connect(null, mapDispatchToProps)(SidenavC));
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SidenavC)
+);

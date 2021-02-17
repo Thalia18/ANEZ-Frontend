@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setUser } from '../actions';
 import Login from '../components/Login/Login';
+import { withRouter } from 'react-router-dom';
 import { api_url } from '../components/utils/';
 
 class LoginG extends Component {
@@ -67,7 +68,6 @@ class LoginG extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.correctUser);
 
     return (
       <React.Fragment>
@@ -85,4 +85,4 @@ class LoginG extends Component {
 const mapDispatchToProps = {
   setUser,
 };
-export default connect(null, mapDispatchToProps)(LoginG);
+export default withRouter(connect(null, mapDispatchToProps)(LoginG));

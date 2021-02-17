@@ -5,7 +5,7 @@ import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
 import { GLOBAL_MEDIA_QUERIES } from '../../utils';
-import ModalAgregar from './ModalAgregar';
+import ModalSuccess from '../../Modales/ModalSuccess';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -22,6 +22,7 @@ const Agregar = ({
   handleOnChangeTS,
   handleOnChangeNI,
   success,
+  closeModal,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
@@ -228,7 +229,12 @@ const Agregar = ({
                 </Form.Input>
               </Form.Group>
             </Form>
-            <ModalAgregar success={success} />
+            <ModalSuccess
+              success={success}
+              header='Nuevo Paciente'
+              content='Paciente creado exitosamente'
+              closeModal={closeModal}
+            />
           </Global>
         </Segment>
       )}

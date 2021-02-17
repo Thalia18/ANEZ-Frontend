@@ -1,15 +1,13 @@
 import React from 'react';
 import Media from 'react-media';
 import { Header, Icon, Segment, Table } from 'semantic-ui-react';
-import { connect } from 'react-redux';
 import { Global } from '../../../global';
 import { GLOBAL_MEDIA_QUERIES } from '../../utils';
 import { HeaderCell, HeaderSubCell } from './DetalleStyles';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Detalle = ({ paciente, user }) => {
-  console.log(user.usuario);
+const Detalle = ({ paciente }) => {
   var hoy = new Date();
   var nacimiento = new Date(paciente.fecha_nacimiento);
   const tiempo = hoy.getTime() - nacimiento.getTime();
@@ -111,7 +109,7 @@ const Detalle = ({ paciente, user }) => {
                     Teléfono contacto de emergencia
                   </Table.Cell>
                   <Table.Cell colSpan='2'>
-                    {paciente.contacto_de_emergencia_telefono}
+                    {paciente.contacto_emergencia_telefono}
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>
@@ -123,9 +121,4 @@ const Detalle = ({ paciente, user }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-export default connect(mapStateToProps, null)(Detalle);
+export default Detalle;

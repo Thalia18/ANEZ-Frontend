@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Layout from '../components/Layout/Layout';
-import Listado from '../components/Pacientes/Listado';
-import { api_url } from '../components/utils/';
+import Layout from '../../components/Layout/Layout';
+import Listado from '../../components/Pacientes/Listado';
+import { api_url } from '../../components/utils';
+import { mapStateToProps } from '../../components/utils';
 
 class Pacientes extends Component {
   constructor(props) {
@@ -16,7 +18,11 @@ class Pacientes extends Component {
     };
   }
   componentDidMount() {
-    this.fetchData();
+    if (this.props.user.isLoggedIn) {
+      this.fetchData();
+    } else {
+      this.props.history.push('/');
+    }
   }
   fetchData = async () => {
     this.setState({
@@ -43,7 +49,7 @@ class Pacientes extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-
+    console.log(this.state.buscar);
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
@@ -57,4 +63,4 @@ class Pacientes extends Component {
   }
 }
 
-export default Pacientes;
+export default connect(mapStateToProps, null)(Pacientes);

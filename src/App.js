@@ -1,17 +1,18 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import MainPage from './pages/Main';
-import PacienteAgregarPage from './pages/PacienteAgregar';
-import PacienteEditarPage from './pages/PacienteEditar';
-
-import PacienteDetallePage from './pages/PacienteDetalle';
-import PacientesPage from './pages/Pacientes';
 import LoginPage from './pages/Login';
+import MainPage from './pages/Main';
+import PacienteAgregarPage from './pages/Pacientes/PacienteAgregar';
+import PacienteBuscarPage from './pages/Pacientes/PacienteBuscar';
+import PacienteDetallePage from './pages/Pacientes/PacienteDetalle';
+import PacienteEditarPage from './pages/Pacientes/PacienteEditar';
+import PacientesPage from './pages/Pacientes/Pacientes';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
+        <Route exact path='/' component={LoginPage} />
         <Route exact path='/main' component={MainPage} />
         <Route exact path='/pacientes' component={PacientesPage} />
         <Route
@@ -25,7 +26,11 @@ function App() {
           path='/paciente_editar/:pacienteId'
           component={PacienteEditarPage}
         />
-        <Route exact path='/' component={LoginPage} />
+        <Route
+          exact
+          path='/paciente_buscar/:cedula'
+          component={PacienteBuscarPage}
+        />
       </Switch>
     </BrowserRouter>
   );

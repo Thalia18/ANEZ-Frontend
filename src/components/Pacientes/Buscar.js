@@ -1,7 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
 import { withRouter } from 'react-router-dom';
-import { Checkbox, Header, Icon, Segment, Table } from 'semantic-ui-react';
+import { Header, Icon, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../global';
 import { GLOBAL_MEDIA_QUERIES } from '../utils/';
@@ -9,14 +9,15 @@ import Navbar from './Navbar';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Listado = ({ pacientes, autoComplete }) => {
-  const [value, setValue] = React.useState();
-  const handleChange = (e, { value }) => setValue(value);
+const Buscar = ({ paciente, autoComplete }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar autoComplete={autoComplete} pacienteId={value} />
+          <Navbar
+            autoComplete={autoComplete}
+            pacienteId={paciente.paciente_id}
+          />
           <Segment>
             <Global
               style={matches.medium ? { height: '30em' } : { height: '50em' }}
@@ -41,25 +42,13 @@ const Listado = ({ pacientes, autoComplete }) => {
                 </Table.Header>
 
                 <Table.Body>
-                  {pacientes.map((paciente) => {
-                    return (
-                      <Table.Row key={paciente.paciente_id}>
-                        <Table.Cell collapsing>
-                          <Checkbox
-                            toggle
-                            name='checkboxRadioGroup'
-                            value={paciente.paciente_id}
-                            checked={value === paciente.paciente_id}
-                            onChange={handleChange}
-                          />
-                        </Table.Cell>
-                        <Table.Cell>{paciente.nombre}</Table.Cell>
-                        <Table.Cell>{paciente.apellido}</Table.Cell>
-                        <Table.Cell>{paciente.cedula}</Table.Cell>
-                        <Table.Cell>{paciente.telefono}</Table.Cell>
-                      </Table.Row>
-                    );
-                  })}
+                  <Table.Row key={paciente.paciente_id}>
+                    <Table.Cell collapsing></Table.Cell>
+                    <Table.Cell>{paciente.nombre}</Table.Cell>
+                    <Table.Cell>{paciente.apellido}</Table.Cell>
+                    <Table.Cell>{paciente.cedula}</Table.Cell>
+                    <Table.Cell>{paciente.telefono}</Table.Cell>
+                  </Table.Row>
                 </Table.Body>
               </Table>
             </Global>
@@ -70,4 +59,4 @@ const Listado = ({ pacientes, autoComplete }) => {
   );
 };
 
-export default Listado;
+export default Buscar;

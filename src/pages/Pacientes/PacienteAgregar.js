@@ -1,10 +1,18 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Layout from '../components/Layout/Layout';
-import Editar from '../components/Paciente/Editar/Editar';
-import Navbar from '../components/Paciente/Editar/NavbarEditar';
-import { api_url } from '../components/utils';
+import Layout from '../../components/Layout/Layout';
+import Agregar from '../../components/Paciente/Agregar/Agregar';
+import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
+import { api_url } from '../../components/utils';
+import { mapStateToProps } from '../../components/utils';
+import {
+  estadoCivilDropdown,
+  etniasDropdown,
+  nivelDeInstruccionDropdown,
+  tipoDeSangreDropdown,
+} from '../../components/utils';
 
 class PacienteAgregar extends Component {
   constructor(props) {
@@ -13,22 +21,22 @@ class PacienteAgregar extends Component {
       success: false,
       error: null,
       loading: true,
-      activePage: '3',
+      activePage: '',
       paciente: {
-        // tipo_de_sangre_id: null,
-        // etnia_id: null,
-        // nivel_de_instruccion_id: null,
-        // estado_civil_id: null,
-        // nombre: '',
-        // apellido: '',
-        // cedula: '',
-        // fecha_nacimiento: '',
-        // lugar_nacimiento: '',
-        // direccion: '',
-        // telefono: '',
-        // contacto_emergencia_nombre: '',
-        // contacto_emergencia_telefono: '',
-        // created_at: new Date(),
+        tipo_de_sangre_id: null,
+        etnia_id: null,
+        nivel_de_instruccion_id: null,
+        estado_civil_id: null,
+        nombre: '',
+        apellido: '',
+        cedula: '',
+        fecha_nacimiento: '',
+        lugar_nacimiento: '',
+        direccion: '',
+        telefono: '',
+        contacto_emergencia_nombre: '',
+        contacto_emergencia_telefono: '',
+        created_at: new Date(),
       },
       etnias: {},
       tipoDeSangre: {},
@@ -38,25 +46,22 @@ class PacienteAgregar extends Component {
       optionTS: [],
       optionNI: [],
       optionE: [],
-      a: true,
     };
   }
   componentDidMount() {
-    if (this.state.a) {
+    if (this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/');
     }
   }
+
   fetchData = async () => {
     this.setState({
       loading: true,
       error: null,
     });
     try {
-      const { data: pacienteA } = await axios.get(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
-      );
       const { data: etnias } = await axios.get(`${api_url}/api/etnias`);
       const { data: estadosCiviles } = await axios.get(
         `${api_url}/api/estados_civiles`
@@ -72,13 +77,10 @@ class PacienteAgregar extends Component {
         estadoCivil: estadosCiviles.data,
         tipoDeSangre: tiposDeSangre.data,
         nivelDeInstruccion: nivelesDeInstruccion.data,
-        paciente: pacienteA.data,
-
         loading: false,
       });
       this.opcionesSelect();
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -87,49 +89,11 @@ class PacienteAgregar extends Component {
   };
   //funcion para cargar los dropdown del componente agregar
   opcionesSelect = () => {
-    let opcion = [];
-    Object.values(this.state.estadoCivil).map((item) => {
-      opcion.push({
-        key: item.estado_civil_id,
-        text: item.estado_civil.trim(),
-        value: item.estado_civil_id,
-      });
-      this.setState({
-        optionEC: opcion,
-      });
-    });
-    opcion = [];
-    Object.values(this.state.tipoDeSangre).map((item) => {
-      opcion.push({
-        key: item.tipo_de_sangre_id,
-        text: item.tipo_de_sangre.trim(),
-        value: item.tipo_de_sangre_id,
-      });
-      this.setState({
-        optionTS: opcion,
-      });
-    });
-    opcion = [];
-    Object.values(this.state.nivelDeInstruccion).map((item) => {
-      opcion.push({
-        key: item.nivel_de_instruccion_id,
-        text: item.nivel_de_instruccion.trim(),
-        value: item.nivel_de_instruccion_id,
-      });
-      this.setState({
-        optionNI: opcion,
-      });
-    });
-    opcion = [];
-    Object.values(this.state.etnias).map((item) => {
-      opcion.push({
-        key: item.etnia_id,
-        text: item.etnia.trim(),
-        value: item.etnia_id,
-      });
-      this.setState({
-        optionE: opcion,
-      });
+    this.setState({
+      optionEC: estadoCivilDropdown(this.state.estadoCivil),
+      optionE: etniasDropdown(this.state.etnias),
+      optionNI: nivelDeInstruccionDropdown(this.state.nivelDeInstruccion),
+      optionTS: tipoDeSangreDropdown(this.state.tipoDeSangre),
     });
   };
 
@@ -166,10 +130,7 @@ class PacienteAgregar extends Component {
       error: null,
     });
     try {
-      await axios.put(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
-        this.state.paciente
-      );
+      await axios.post(`${api_url}/api/paciente`, this.state.paciente);
       this.setState({
         loading: false,
         success: true,
@@ -196,14 +157,23 @@ class PacienteAgregar extends Component {
   handleOnChangeE = (e, data) => {
     this.state.paciente.etnia_id = data.value;
   };
+
+  closeModal = () => {
+    this.setState({
+      success: false,
+    });
+    this.props.history.push('/pacientes');
+  };
+
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
           <Navbar />
-          <Editar
+          <Agregar
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}
             estadoCivil={this.state.optionEC}
@@ -216,6 +186,7 @@ class PacienteAgregar extends Component {
             handleOnChangeNI={this.handleOnChangeNI}
             handleOnChangeE={this.handleOnChangeE}
             success={this.state.success}
+            closeModal={this.closeModal}
           />
         </Layout>
       </React.Fragment>
@@ -223,4 +194,4 @@ class PacienteAgregar extends Component {
   }
 }
 
-export default PacienteAgregar;
+export default connect(mapStateToProps, null)(PacienteAgregar);
