@@ -1,18 +1,14 @@
 import React from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
-const ModalEliminar = ({ deleteM, open, closeModal }) => {
+const ModalEliminar = ({ deleteM, open, closeModal, content }) => {
   return (
     <Modal closeIcon open={open} onClose={closeModal}>
       <Header icon='medkit' content='Eliminar Paciente' />
       <Modal.Content>
-        <b>¿Realmente desea eliminar este paciente?</b>
-        <br />
-        <hr />
         <p>
           <b>
-            <Icon name='warning circle' /> Se eliminarán consigo las citas e
-            historia clínica asociada al paciente{' '}
+            <Icon name='warning circle' /> {content}
           </b>
         </p>
       </Modal.Content>

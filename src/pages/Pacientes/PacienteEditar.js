@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-
+import { Notification } from 'rsuite';
 import Layout from '../../components/Layout/Layout';
 import Editar from '../../components/Paciente/Editar/Editar';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
-import { api_url } from '../../components/utils';
+import { api_url, trimData } from '../../components/utils';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../components/utils';
+import _ from 'lodash';
 import {
   estadoCivilDropdown,
   etniasDropdown,
@@ -34,7 +35,7 @@ class PacienteAgregar extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user.isLoggedIn) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/');
@@ -67,6 +68,7 @@ class PacienteAgregar extends Component {
         paciente: pacienteA.data,
         loading: false,
       });
+      trimData(this.state.paciente);
       this.opcionesSelect();
     } catch (error) {
       console.log(error);
@@ -76,6 +78,7 @@ class PacienteAgregar extends Component {
       });
     }
   };
+
   //funcion para cargar los dropdown del componente editar
   opcionesSelect = () => {
     this.setState({
@@ -119,6 +122,7 @@ class PacienteAgregar extends Component {
       loading: true,
       error: null,
     });
+    trimData(this.state.paciente);
     try {
       await axios.put(
         `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
@@ -130,6 +134,8 @@ class PacienteAgregar extends Component {
         error: null,
         paciente: {},
       });
+      this.open('success');
+      this.props.history.push('/pacientes');
     } catch (error) {
       this.setState({
         loading: false,
@@ -137,6 +143,15 @@ class PacienteAgregar extends Component {
       });
     }
   };
+
+  //abrir notificacion de exitoso
+  open(funcName) {
+    Notification[funcName]({
+      title: 'Paciente editado exitosamente',
+      description: <div style={{ width: 320 }} rows={3} />,
+    });
+  }
+
   //obtener datos de dropdown
   handleOnChangeEC = (e, data) => {
     this.state.paciente.estado_civil_id = data.value;
@@ -161,10 +176,11 @@ class PacienteAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
-          <Navbar />
+          <Navbar success={this.state.success} />
           <Editar
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}

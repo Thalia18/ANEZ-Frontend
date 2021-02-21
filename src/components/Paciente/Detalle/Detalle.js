@@ -2,21 +2,13 @@ import React from 'react';
 import Media from 'react-media';
 import { Header, Icon, Segment, Table } from 'semantic-ui-react';
 import { Global } from '../../../global';
-import { GLOBAL_MEDIA_QUERIES } from '../../utils';
+import { GLOBAL_MEDIA_QUERIES, calculaEdad } from '../../utils';
 import { HeaderCell, HeaderSubCell } from './DetalleStyles';
 
 import 'semantic-ui-css/semantic.min.css';
 
 const Detalle = ({ paciente }) => {
-  var hoy = new Date();
-  var nacimiento = new Date(paciente.fecha_nacimiento);
-  const tiempo = hoy.getTime() - nacimiento.getTime();
-  const tiempodias = tiempo / 1000 / 60 / 60 / 24;
-  const tiempoyear = Math.floor(tiempodias / 365.25);
-  const tiempomeses = Math.floor((tiempodias - tiempoyear * 365.25) / 31);
-  const dias = Math.floor(tiempodias - tiempoyear * 365.25 - tiempomeses * 31);
-  const edad =
-    tiempoyear + ' años ' + tiempomeses + ' meses ' + dias + ' días ';
+  const edad = calculaEdad(paciente.fecha_nacimiento);
 
   const styled = { fontWeight: 'bold' };
   return (
@@ -24,7 +16,7 @@ const Detalle = ({ paciente }) => {
       {(matches) => (
         <Segment>
           <Global
-            style={matches.medium ? { height: '30em' } : { height: '50em' }}
+            style={matches.medium ? { height: '29em' } : { height: '49em' }}
           >
             <Header as='h1' textAlign='center'>
               <Header.Content>
@@ -33,7 +25,11 @@ const Detalle = ({ paciente }) => {
             </Header>
             <hr />
             <br />
-            <Table fixed celled size={matches.medium ? 'small' : 'large'}>
+            <Table
+              fixed={matches.medium ? true : null}
+              celled
+              size={matches.medium ? 'small' : 'large'}
+            >
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell colSpan='8'>
@@ -58,44 +54,54 @@ const Detalle = ({ paciente }) => {
                   </Table.Cell>
                   <Table.Cell collapsing style={styled}>
                     Fecha de nacimiento
-                  </Table.Cell>
-                  <Table.Cell>{paciente.fecha_nacimiento}</Table.Cell>
-                  <Table.Cell collapsing style={styled}>
+                    <br />
+                    <hr />
                     Edad
                   </Table.Cell>
-                  <Table.Cell>{edad}</Table.Cell>
+                  <Table.Cell colSpan='3'>
+                    {paciente.fecha_nacimiento}
+                    <br />
+                    <hr />
+                    {edad}
+                  </Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell collapsing style={styled}>
                     Dirección domicilio
                   </Table.Cell>
-                  <Table.Cell colSpan='5'>{paciente.direccion}</Table.Cell>
+                  <Table.Cell colSpan='4'>{paciente.direccion}</Table.Cell>
                   <Table.Cell collapsing style={styled}>
                     Teléfono
                   </Table.Cell>
-                  <Table.Cell>{paciente.telefono}</Table.Cell>
+                  <Table.Cell colSpan='2'>{paciente.telefono}</Table.Cell>
                 </Table.Row>
 
                 <Table.Row>
-                  <Table.Cell collapsing style={styled}>
+                  <Table.Cell collapsing style={styled} colSpan='2'>
                     Estado civil
                   </Table.Cell>
-                  <Table.Cell>{paciente.estadocivil.estado_civil}</Table.Cell>
-                  <Table.Cell collapsing style={styled}>
+                  <Table.Cell colSpan='2'>
+                    {paciente.estadocivil.estado_civil.toUpperCase()}
+                  </Table.Cell>
+                  <Table.Cell collapsing style={styled} colSpan='2'>
                     Etnia
                   </Table.Cell>
-                  <Table.Cell>{paciente.etnias.etnia}</Table.Cell>
-                  <Table.Cell collapsing style={styled}>
+                  <Table.Cell colSpan='2'>
+                    {paciente.etnias.etnia.toUpperCase()}
+                  </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell collapsing style={styled} colSpan='2'>
                     Tipo de sangre
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell colSpan='2'>
                     {paciente.tipodesangre.tipo_de_sangre}
                   </Table.Cell>
-                  <Table.Cell collapsing style={styled}>
+                  <Table.Cell collapsing style={styled} colSpan='2'>
                     Nivel de instrucción
                   </Table.Cell>
-                  <Table.Cell>
-                    {paciente.niveldeinstruccion.nivel_de_instruccion}
+                  <Table.Cell colSpan='2'>
+                    {paciente.niveldeinstruccion.nivel_de_instruccion.toUpperCase()}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>

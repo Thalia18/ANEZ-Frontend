@@ -2,10 +2,11 @@ import axios from 'axios';
 import React, { Component } from 'react';
 
 import Layout from '../../components/Layout/Layout';
-import Detalle from '../../components/Paciente/Detalle/Detalle';
-import Navbar from '../../components/Paciente/Detalle/NavbarDetalle';
+import Detalle from '../../components/HistoriaClinica/Detalle/Detalle';
+import Navbar from '../../components/HistoriaClinica/Detalle/NavbarDetalle';
 import { api_url } from '../../components/utils';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
+import Modal from '../../components/Modales/ModalNotExists';
 import { connect } from 'react-redux';
 import { mapStateToProps } from '../../components/utils';
 
@@ -17,6 +18,8 @@ class PacienteDetalle extends Component {
       error: null,
       loading: true,
       paciente: {},
+      historiaClinica: {},
+      notExistHC: true,
     };
   }
   componentDidMount() {
@@ -35,11 +38,24 @@ class PacienteDetalle extends Component {
       const { data } = await axios.get(
         `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
       );
+      const { data: historiaClinica } = await axios.get(
+        `${api_url}/api/historia_paciente/${this.props.match.params.pacienteId}`
+      );
       this.setState({
         paciente: data.data,
+        historiaClinica: historiaClinica.data,
         loading: false,
       });
+
+      if (this.state.historiaClinica !== null) {
+        this.setState({
+          notExistHC: false,
+        });
+      }
+      console.log(this.state.historiaClinica);
+      console.log(this.state.notExistHC);
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -50,23 +66,26 @@ class PacienteDetalle extends Component {
   deleteData = async () => {
     try {
       await axios.delete(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+        `${api_url}/api/historia_clinica/${this.state.historiaClinica.historia_clinica_id}`
       );
       this.setState({
         loading: false,
       });
-      this.props.history.push('/pacientes');
+      this.props.history.push('/historias_clinicas');
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
       });
     }
   };
+  //close modal exists
   closeModal = () => {
     this.setState({
       open: false,
     });
+    this.props.history.push('/historias_clinicas');
   };
   onClickDelete = () => {
     this.setState({
@@ -79,18 +98,33 @@ class PacienteDetalle extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='3'>
+        <Layout activeKeyP='2'>
           <Navbar
             onClickDelete={this.onClickDelete}
             pacienteId={this.props.match.params.pacienteId}
           />
-          <Detalle paciente={this.state.paciente} />
+          {this.state.notExistHC && (
+            <Modal
+              notExistsHC={this.state.notExistHC}
+              header='Historia clínica'
+              content={`${this.state.paciente.apellido} ${this.state.paciente.nombre}`}
+              closeModal={this.closeModal}
+              pacienteId={this.state.paciente.paciente_id}
+            />
+          )}
+          {!this.state.notExistHC && (
+            <Detalle
+              paciente={this.state.paciente}
+              historia_clinica={this.state.historiaClinica}
+            />
+          )}
+
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}
             closeModal={this.closeModal}
-            content='Se eliminarán consigo la  historia clínica y citas 
-            asociadas al paciente.  ¿Desea continuar?'
+            content='Se eliminarán consigo las evoluciones  
+            asociadas a la Historia Clínica.  ¿Desea continuar?'
           />
         </Layout>
       </React.Fragment>

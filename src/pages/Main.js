@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { mapStateToProps } from '../components/utils';
 
 const Main = ({ user, ...props }) => {
-  if (user.isLoggedIn)
+  if (user != null && user.isLoggedIn)
     return (
       <div style={{ height: '100%' }}>
         <Layout activeKeyP='1'>

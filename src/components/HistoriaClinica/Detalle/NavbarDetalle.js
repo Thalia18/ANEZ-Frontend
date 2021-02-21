@@ -22,7 +22,14 @@ const NavbarPacientes = ({ onClickDelete, pacienteId }) => {
                   history.goBack();
                 }}
               />
-
+              <Nav.Item
+                icon={<Icon icon='stethoscope' />}
+                componentClass={Link}
+                key={pacienteId}
+                to={`/paciente_editar/${pacienteId}`}
+              >
+                Agregar evolución
+              </Nav.Item>
               <Nav.Item
                 icon={<Icon icon='pencil' />}
                 componentClass={Link}

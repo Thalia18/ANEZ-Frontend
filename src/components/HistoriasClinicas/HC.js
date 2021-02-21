@@ -3,8 +3,8 @@ import Media from 'react-media';
 import { Checkbox, Header, Icon, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../global';
-import { GLOBAL_MEDIA_QUERIES } from '../utils/';
-import Navbar from './Navbar';
+import { GLOBAL_MEDIA_QUERIES } from '../utils';
+import Navbar from '../Pacientes/Navbar';
 import 'semantic-ui-css/semantic.min.css';
 
 const Listado = ({
@@ -33,8 +33,8 @@ const Listado = ({
             >
               <Header as='h1' textAlign='center'>
                 <Header.Content>
-                  <Icon name='users' />
-                  Pacientes
+                  <Icon name='heartbeat' />
+                  Historias clínicas
                 </Header.Content>
               </Header>
               <hr />

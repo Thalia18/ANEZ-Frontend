@@ -10,9 +10,21 @@ import { GLOBAL_MEDIA_QUERIES } from '../utils/';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const NavbarPacientes = ({ autoComplete, pacienteId, ...props }) => {
-  let url = pacienteId === undefined ? '/pacientes' : `/paciente/${pacienteId}`;
-
+const NavbarPacientes = ({
+  autoComplete,
+  pacienteId,
+  pageInitial,
+  pageSecond,
+  reload,
+  ...props
+}) => {
+  let url =
+    pacienteId === undefined ? { pageSecond } : `${pageInitial}/${pacienteId}`;
+  let urlHC =
+    pacienteId === undefined
+      ? { pageSecond }
+      : `/historia_clinica_agregar/${pacienteId}`;
+  let history = useHistory();
   let source = [];
   autoComplete.data.forEach((element) => {
     let list = {
@@ -85,15 +97,20 @@ const NavbarPacientes = ({ autoComplete, pacienteId, ...props }) => {
       clearTimeout(timeoutRef.current);
     };
   }, []);
-
-  console.log(value, 'value Nav');
-
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
-        <Navbar>
+        <Navbar style={{ background: 'rgba(0,161,213, 0.1)' }}>
           <Navbar.Body>
             <Nav>
+              {!matches.medium && (
+                <Nav.Item
+                  icon={<Icon icon='angle-left' />}
+                  onClick={() => {
+                    history.goBack();
+                  }}
+                />
+              )}
               <Nav.Item
                 icon={<Icon icon='plus-circle' />}
                 componentClass={Link}
@@ -101,7 +118,12 @@ const NavbarPacientes = ({ autoComplete, pacienteId, ...props }) => {
               >
                 Agregar Paciente
               </Nav.Item>
-              <Nav.Item icon={<Icon icon='heartbeat' />}>
+              <Nav.Item
+                icon={<Icon icon='heartbeat' />}
+                componentClass={Link}
+                key={pacienteId}
+                to={urlHC}
+              >
                 Agregar Historia clínica
               </Nav.Item>
               <Nav.Item icon={<Icon icon='calendar' />}>Agendar cita</Nav.Item>
@@ -144,9 +166,12 @@ const NavbarPacientes = ({ autoComplete, pacienteId, ...props }) => {
                       </Grid.Column>
                     </Grid>
                     <Button
-                      onClick={() =>
-                        props.history.push(`/paciente_buscar/${value}`)
-                      }
+                      onClick={() => {
+                        value === ''
+                          ? props.history.push({ pageSecond })
+                          : props.history.push(`${reload}/${value}`);
+                        window.location.reload();
+                      }}
                       style={
                         matches.medium
                           ? { marginLeft: '-1.3em', marginTop: '-1.2em' }

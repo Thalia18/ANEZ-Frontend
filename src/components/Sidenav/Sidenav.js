@@ -61,13 +61,20 @@ const SidenavC = ({ user, activeKeyP, ...props }) => {
                     style={{
                       justifyContent: 'center',
                     }}
+                    componentClass={Link}
+                    to='/main'
                   >
                     <Logo src='https://i.ibb.co/hLjvrdL/logoANEZ.png' />
                   </Nav.Item>
                   <Nav.Item eventKey='1'>
                     <Icon icon='calendar' /> Citas
                   </Nav.Item>
-                  <Nav.Item eventKey='2'>
+
+                  <Nav.Item
+                    eventKey='2'
+                    componentClass={Link}
+                    to='/historias_clinicas'
+                  >
                     <Icon icon='heartbeat' /> Historias clínicas
                   </Nav.Item>
                   <Nav.Item eventKey='3' componentClass={Link} to='/pacientes'>
@@ -99,7 +106,7 @@ const SidenavC = ({ user, activeKeyP, ...props }) => {
               </Navbar.Body>
             </Navbar>
             <Segment
-              style={matches.medium ? { height: '90%' } : { height: '93%' }}
+              style={matches.medium ? { height: '92%' } : { height: '93%' }}
             >
               {props.children}
             </Segment>

@@ -19,7 +19,7 @@ class Pacientes extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user.isLoggedIn) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/');
@@ -52,13 +52,15 @@ class Pacientes extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.pacientes);
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
           <Buscar
             paciente={this.state.pacientes}
             autoComplete={this.state.autocomplete}
+            pageInitial='/paciente'
+            pageSecond='/pacientes'
+            reload='/paciente_buscar'
           />
         </Layout>
       </React.Fragment>

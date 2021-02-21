@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { setUser } from '../actions';
 import Login from '../components/Login/Login';
-import { withRouter } from 'react-router-dom';
 import { api_url } from '../components/utils/';
 
 class LoginG extends Component {

@@ -5,7 +5,6 @@ import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
 import { GLOBAL_MEDIA_QUERIES } from '../../utils';
-import ModalSuccess from '../../Modales/ModalSuccess';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -21,8 +20,6 @@ const Editar = ({
   handleOnChangeE,
   handleOnChangeTS,
   handleOnChangeNI,
-  success,
-  closeModal,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
@@ -70,7 +67,6 @@ const Editar = ({
                   name='nombre'
                   value={letters(formPaciente.nombre)}
                   required
-                  type='text'
                 />
                 <Form.Input
                   label='Apellidos'
@@ -249,12 +245,6 @@ const Editar = ({
                 </Form.Input>
               </Form.Group>
             </Form>
-            <ModalSuccess
-              success={success}
-              header='Edición Paciente'
-              content='Paciente editado exitosamente'
-              closeModal={closeModal}
-            />
           </Global>
         </Segment>
       )}

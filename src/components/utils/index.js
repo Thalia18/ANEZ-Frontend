@@ -8,10 +8,17 @@ export const GLOBAL_MEDIA_QUERIES = {
   large: '(min-width: 1200px)',
 };
 
-//uso de redux para saber si esta logeado
+//uso de redux para saber si esta loggeado
 export const mapStateToProps = (state) => {
   return {
     user: state.user,
+  };
+};
+
+//uso de redux para autocomplete
+export const mapStateToPropsPacientes = (state) => {
+  return {
+    autocomplete: state.autocomplete,
   };
 };
 
@@ -20,7 +27,7 @@ export const estadoCivilDropdown = (estadoCivilList) => {
   Object.values(estadoCivilList).map((item) => {
     opcion.push({
       key: item.estado_civil_id,
-      text: item.estado_civil.trim(),
+      text: item.estado_civil.trim().toUpperCase(),
       value: item.estado_civil_id,
     });
   });
@@ -42,7 +49,7 @@ export const nivelDeInstruccionDropdown = (nivelDeInstruccionList) => {
   Object.values(nivelDeInstruccionList).map((item) => {
     opcion.push({
       key: item.nivel_de_instruccion_id,
-      text: item.nivel_de_instruccion.trim(),
+      text: item.nivel_de_instruccion.trim().toUpperCase(),
       value: item.nivel_de_instruccion_id,
     });
   });
@@ -53,9 +60,52 @@ export const etniasDropdown = (etniasList) => {
   Object.values(etniasList).map((item) => {
     opcion.push({
       key: item.etnia_id,
-      text: item.etnia.trim(),
+      text: item.etnia.trim().toUpperCase(),
       value: item.etnia_id,
     });
   });
   return opcion;
 };
+
+//mayuscula primera letra y quitar espacios
+export const trimData = (obj) => {
+  Object.keys(obj).map(
+    (k) =>
+      (obj[k] =
+        typeof obj[k] == 'string' ? obj[k].trim().toUpperCase() : obj[k])
+  );
+};
+
+// export const trimData = (obj) => {
+//   Object.keys(obj).map(
+//     (k) =>
+//       (obj[k] =
+//         typeof obj[k] == 'string'
+//           ? obj[k]
+//               .trim()
+//               .replace(/(^\w{1})|(\s{1}\w{1})/g, (match) => match.toUpperCase())
+//           : obj[k])
+//   );
+// };
+
+export const onlyTrimData = (obj) => {
+  Object.keys(obj).map(
+    (k) => (obj[k] = typeof obj[k] == 'string' ? obj[k].trim() : obj[k])
+  );
+};
+
+//calcular edad
+export const calculaEdad = (fecha_nacimiento) => {
+  var hoy = new Date();
+  var nacimiento = new Date(fecha_nacimiento);
+  const tiempo = hoy.getTime() - nacimiento.getTime();
+  const tiempodias = tiempo / 1000 / 60 / 60 / 24;
+  const tiempoyear = Math.floor(tiempodias / 365.25);
+  const tiempomeses = Math.floor((tiempodias - tiempoyear * 365.25) / 31);
+  const dias = Math.floor(tiempodias - tiempoyear * 365.25 - tiempomeses * 31);
+  const edad =
+    tiempoyear + ' AÑOS ' + tiempomeses + ' MESES ' + dias + ' DÍAS ';
+  return edad;
+};
+
+export const colorBackground = { background: 'rgba(0,161,213, 0.1)' };

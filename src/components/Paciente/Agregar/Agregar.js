@@ -1,11 +1,17 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
-import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
+import {
+  Checkbox,
+  Form,
+  Header,
+  Icon,
+  Segment,
+  Message,
+} from 'semantic-ui-react';
 
 import { Global } from '../../../global';
 import { GLOBAL_MEDIA_QUERIES } from '../../utils';
-import ModalSuccess from '../../Modales/ModalSuccess';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -21,8 +27,8 @@ const Agregar = ({
   handleOnChangeE,
   handleOnChangeTS,
   handleOnChangeNI,
-  success,
-  closeModal,
+  campos,
+  fechaError,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
@@ -47,7 +53,7 @@ const Agregar = ({
       {(matches) => (
         <Segment>
           <Global
-            style={matches.medium ? { height: '32em' } : { height: '50em' }}
+            style={matches.medium ? { height: '37em' } : { height: '50em' }}
           >
             <Header as='h1' textAlign='center'>
               <Header.Content>
@@ -55,7 +61,16 @@ const Agregar = ({
               </Header.Content>
             </Header>
             <hr />
-            <br />
+            <Message
+              hidden={!campos}
+              warning
+              header='Seleccione Estado Civil, Etnia, Nivel de Instrucción y Tipo de Sangre'
+            />
+            <Message
+              hidden={!fechaError}
+              error
+              header='Error en la fecha de nacimiento'
+            />
             <Form
               size={matches.medium ? 'tiny' : null}
               onSubmit={onClickButtonSavePaciente}
@@ -70,7 +85,6 @@ const Agregar = ({
                   name='nombre'
                   value={letters(formPaciente.nombre)}
                   required
-                  type='text'
                 />
                 <Form.Input
                   label='Apellidos'
@@ -111,6 +125,7 @@ const Agregar = ({
                     onChange={handleChange}
                     name='cedula'
                     value={formPaciente.cedula}
+                    required
                   />
                 </Form.Input>
               </Form.Group>
@@ -142,7 +157,6 @@ const Agregar = ({
                   width={6}
                   name='estado_civil_id'
                   onChange={handleOnChangeEC}
-                  selection
                   required
                 />
               </Form.Group>
@@ -154,7 +168,6 @@ const Agregar = ({
                   width={6}
                   name='etnia_id'
                   onChange={handleOnChangeE}
-                  selection
                   required
                 />
                 <Form.Select
@@ -164,7 +177,6 @@ const Agregar = ({
                   width={6}
                   name='nivel_de_instruccion_id'
                   onChange={handleOnChangeNI}
-                  selection
                   required
                 />
                 <Form.Select
@@ -174,7 +186,6 @@ const Agregar = ({
                   width={6}
                   name='tipo_de_sangre_id'
                   onChange={handleOnChangeTS}
-                  selection
                   required
                 />
               </Form.Group>
@@ -192,16 +203,15 @@ const Agregar = ({
                   label='Teléfono'
                   placeholder='Teléfono'
                   width={6}
-                  type='number'
                   required
                 >
                   <InputMask
                     mask='999999999999999'
-                    // type='tel'
                     onChange={handleChange}
                     maskChar={null}
                     name='telefono'
                     value={formPaciente.telefono}
+                    required
                   />
                 </Form.Input>
               </Form.Group>
@@ -229,12 +239,6 @@ const Agregar = ({
                 </Form.Input>
               </Form.Group>
             </Form>
-            <ModalSuccess
-              success={success}
-              header='Nuevo Paciente'
-              content='Paciente creado exitosamente'
-              closeModal={closeModal}
-            />
           </Global>
         </Segment>
       )}

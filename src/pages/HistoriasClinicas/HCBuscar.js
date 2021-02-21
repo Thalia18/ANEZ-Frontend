@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Layout from '../../components/Layout/Layout';
-import Listado from '../../components/Pacientes/Listado';
+import Buscar from '../../components/Pacientes/Buscar';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
-class Pacientes extends Component {
+class HCBuscar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +15,7 @@ class Pacientes extends Component {
       loading: true,
       pacientes: {},
       autocomplete: {},
+      buscar: '',
     };
   }
   componentDidMount() {
@@ -30,7 +31,9 @@ class Pacientes extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(`${api_url}/api/pacientes`);
+      const { data } = await axios.get(
+        `${api_url}/api/cedula_paciente/${this.props.match.params.cedula}`
+      );
       const autoComplete = await axios.get(`${api_url}/api/autocomplete`);
 
       this.setState({
@@ -51,13 +54,13 @@ class Pacientes extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='3'>
-          <Listado
-            pacientes={Object.values(this.state.pacientes)}
+        <Layout activeKeyP='2'>
+          <Buscar
+            paciente={this.state.pacientes}
             autoComplete={this.state.autocomplete}
-            pageInitial='/paciente'
-            pageSecond='/pacientes'
-            reload='/paciente_buscar'
+            pageInitial='/historia_clinica'
+            pageSecond='/historias_clinicas'
+            reload='/historia_clinica_buscar'
           />
         </Layout>
       </React.Fragment>
@@ -65,4 +68,4 @@ class Pacientes extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(Pacientes);
+export default connect(mapStateToProps, null)(HCBuscar);

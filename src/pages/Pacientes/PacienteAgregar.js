@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Notification } from 'rsuite';
 
 import Layout from '../../components/Layout/Layout';
 import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url } from '../../components/utils';
+import { api_url, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 import {
   estadoCivilDropdown,
@@ -46,10 +47,13 @@ class PacienteAgregar extends Component {
       optionTS: [],
       optionNI: [],
       optionE: [],
+      buttonDisable: true,
+      fechaError: false,
+      campos: true,
     };
   }
   componentDidMount() {
-    if (this.props.user.isLoggedIn) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/');
@@ -120,6 +124,33 @@ class PacienteAgregar extends Component {
         [e.target.name]: e.target.value,
       },
     });
+    var hoy = new Date();
+    var nacimiento = new Date(this.state.paciente.fecha_nacimiento);
+    if (
+      this.state.paciente.etnia_id !== null &&
+      this.state.paciente.nivel_de_instruccion_id !== null &&
+      this.state.paciente.estado_civil_id !== null &&
+      this.state.paciente.tipo_de_sangre_id !== null
+      // this.state.paciente.nombre !== '' &&
+      // this.state.paciente.apellido !== '' &&
+      // this.state.paciente.cedula !== '' &&
+      // this.state.paciente.lugar_nacimiento !== '' &&
+      // this.state.paciente.direccion !== '' &&
+      // this.state.paciente.fecha_nacimiento !== ''
+    ) {
+      if (nacimiento < hoy) {
+        this.setState({
+          buttonDisable: false,
+          campos: false,
+          fechaError: false,
+        });
+      } else {
+        this.setState({
+          fechaError: true,
+          campos: true,
+        });
+      }
+    }
   };
 
   //guardar paciente
@@ -129,6 +160,7 @@ class PacienteAgregar extends Component {
       loading: true,
       error: null,
     });
+    trimData(this.state.paciente);
     try {
       await axios.post(`${api_url}/api/paciente`, this.state.paciente);
       this.setState({
@@ -137,6 +169,8 @@ class PacienteAgregar extends Component {
         error: null,
         paciente: {},
       });
+      this.open('success');
+      this.props.history.push('/pacientes');
     } catch (error) {
       this.setState({
         loading: false,
@@ -144,6 +178,15 @@ class PacienteAgregar extends Component {
       });
     }
   };
+
+  //abrir notificacion de exitoso
+  open(funcName) {
+    Notification[funcName]({
+      title: 'Paciente guardado exitosamente',
+      description: <div style={{ width: 320 }} rows={3} />,
+    });
+  }
+
   //obtener datos de dropdown
   handleOnChangeEC = (e, data) => {
     this.state.paciente.estado_civil_id = data.value;
@@ -158,21 +201,13 @@ class PacienteAgregar extends Component {
     this.state.paciente.etnia_id = data.value;
   };
 
-  closeModal = () => {
-    this.setState({
-      success: false,
-    });
-    this.props.history.push('/pacientes');
-  };
-
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
-          <Navbar />
+          <Navbar buttonDisable={this.state.buttonDisable} />
           <Agregar
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}
@@ -185,8 +220,8 @@ class PacienteAgregar extends Component {
             handleOnChangeTS={this.handleOnChangeTS}
             handleOnChangeNI={this.handleOnChangeNI}
             handleOnChangeE={this.handleOnChangeE}
-            success={this.state.success}
-            closeModal={this.closeModal}
+            fechaError={this.state.fechaError}
+            campos={this.state.campos}
           />
         </Layout>
       </React.Fragment>
