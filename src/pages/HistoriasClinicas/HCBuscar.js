@@ -61,6 +61,7 @@ class HCBuscar extends Component {
             pageInitial='/historia_clinica'
             pageSecond='/historias_clinicas'
             reload='/historia_clinica_buscar'
+            optionNav='HC'
           />
         </Layout>
       </React.Fragment>

@@ -1,16 +1,16 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import Layout from '../../components/Layout/Layout';
 import Detalle from '../../components/HistoriaClinica/Detalle/Detalle';
 import Navbar from '../../components/HistoriaClinica/Detalle/NavbarDetalle';
-import { api_url } from '../../components/utils';
+import Layout from '../../components/Layout/Layout';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Modal from '../../components/Modales/ModalNotExists';
-import { connect } from 'react-redux';
+import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
-class PacienteDetalle extends Component {
+class HCDetalle extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,8 +52,6 @@ class PacienteDetalle extends Component {
           notExistHC: false,
         });
       }
-      console.log(this.state.historiaClinica);
-      console.log(this.state.notExistHC);
     } catch (error) {
       console.log(error);
       this.setState({
@@ -73,7 +71,6 @@ class PacienteDetalle extends Component {
       });
       this.props.history.push('/historias_clinicas');
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -85,7 +82,7 @@ class PacienteDetalle extends Component {
     this.setState({
       open: false,
     });
-    this.props.history.push('/historias_clinicas');
+    this.props.history.push(`/historias_clinicas`);
   };
   onClickDelete = () => {
     this.setState({
@@ -102,6 +99,11 @@ class PacienteDetalle extends Component {
           <Navbar
             onClickDelete={this.onClickDelete}
             pacienteId={this.props.match.params.pacienteId}
+            historiaId={
+              !this.state.notExistHC
+                ? this.state.historiaClinica.historia_clinica_id
+                : null
+            }
           />
           {this.state.notExistHC && (
             <Modal
@@ -132,4 +134,4 @@ class PacienteDetalle extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(PacienteDetalle);
+export default connect(mapStateToProps, null)(HCDetalle);

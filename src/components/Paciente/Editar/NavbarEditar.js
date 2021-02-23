@@ -1,12 +1,13 @@
 import React from 'react';
 import Media from 'react-media';
 import { useHistory } from 'react-router-dom';
-import { Icon, Nav, Navbar, Button } from 'rsuite';
-import { GLOBAL_MEDIA_QUERIES, colorBackground } from '../../utils';
+import { Button, Icon, Nav, Navbar } from 'rsuite';
+
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 import 'rsuite/dist/styles/rsuite-default.css';
-
 import 'semantic-ui-css/semantic.min.css';
+
 const NavbarPacientesEditar = () => {
   let history = useHistory();
 
@@ -22,6 +23,8 @@ const NavbarPacientesEditar = () => {
                   history.goBack();
                 }}
               />
+            </Nav>
+            <Nav pullRight>
               <Nav.Item>
                 <Button
                   form='formEditar'

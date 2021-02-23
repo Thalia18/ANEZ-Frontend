@@ -16,6 +16,8 @@ const NavbarPacientes = ({
   pageInitial,
   pageSecond,
   reload,
+  optionNav,
+  historiaId,
   ...props
 }) => {
   let url =
@@ -24,6 +26,7 @@ const NavbarPacientes = ({
     pacienteId === undefined
       ? { pageSecond }
       : `/historia_clinica_agregar/${pacienteId}`;
+
   let history = useHistory();
   let source = [];
   autoComplete.data.forEach((element) => {
@@ -32,7 +35,7 @@ const NavbarPacientes = ({
       price: element.apellido + ' ' + element.nombre,
       title:
         element.cedula.trim() +
-        ' ➜ ' +
+        ' ' +
         element.apellido.trim() +
         ' ' +
         element.nombre.trim(),
@@ -111,22 +114,38 @@ const NavbarPacientes = ({
                   }}
                 />
               )}
-              <Nav.Item
-                icon={<Icon icon='plus-circle' />}
-                componentClass={Link}
-                to={`/paciente_agregar`}
-              >
-                Agregar Paciente
-              </Nav.Item>
-              <Nav.Item
-                icon={<Icon icon='heartbeat' />}
-                componentClass={Link}
-                key={pacienteId}
-                to={urlHC}
-              >
-                Agregar Historia clínica
-              </Nav.Item>
-              <Nav.Item icon={<Icon icon='calendar' />}>Agendar cita</Nav.Item>
+              {optionNav === 'HC' && (
+                <Nav.Item
+                  icon={<Icon icon='heartbeat' />}
+                  componentClass={Link}
+                  key={pacienteId}
+                  to={urlHC}
+                >
+                  Agregar Historia clínica
+                </Nav.Item>
+              )}
+              {optionNav === 'PC' && (
+                <>
+                  <Nav.Item
+                    icon={<Icon icon='plus-circle' />}
+                    componentClass={Link}
+                    to={`/paciente_agregar`}
+                  >
+                    Agregar Paciente
+                  </Nav.Item>
+                  <Nav.Item
+                    icon={<Icon icon='heartbeat' />}
+                    componentClass={Link}
+                    key={pacienteId}
+                    to={urlHC}
+                  >
+                    Agregar Historia clínica
+                  </Nav.Item>
+                  <Nav.Item icon={<Icon icon='calendar' />}>
+                    Agendar cita
+                  </Nav.Item>
+                </>
+              )}
 
               <Nav.Item
                 icon={<Icon icon='eye' />}

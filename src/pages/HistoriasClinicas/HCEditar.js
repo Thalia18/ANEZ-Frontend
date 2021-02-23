@@ -1,40 +1,23 @@
 import axios from 'axios';
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Agregar from '../../components/HistoriaClinica/Agregar/Agregar';
+import Editar from '../../components/HistoriaClinica/Editar/Editar';
 import Layout from '../../components/Layout/Layout';
-import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
+import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
-class HCAgregar extends Component {
+class HCEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       success: false,
       error: null,
       loading: true,
-      activePage: '',
       paciente: {},
-      HCporId: {},
-      existHC: false,
-      historiaClinica: {
-        paciente_id: null,
-        antecedente_patologico_personal: '',
-        antecedente_quirurgico: '',
-        alergia: '',
-        gesta: '',
-        parto: '',
-        cesarea: '',
-        aborto: '',
-        metodo_anticonceptivo: '',
-        created_at: new Date(),
-      },
-
-      //   buttonDisable: true,
-      //   fechaError: false,
-      //   campos: true,
+      historiaClinica: {},
     };
   }
   componentDidMount() {
@@ -44,30 +27,26 @@ class HCAgregar extends Component {
       this.props.history.push('/');
     }
   }
-
   fetchData = async () => {
     this.setState({
       loading: true,
       error: null,
     });
     try {
-      const { data: paciente } = await axios.get(
+      const { data: pacienteA } = await axios.get(
         `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
       );
       const { data: historia } = await axios.get(
-        `${api_url}/api/historia_paciente/${this.props.match.params.pacienteId}`
+        `${api_url}/api/historia_clinica/${this.props.match.params.historiaId}`
       );
+
       this.setState({
-        hCporId: historia.data,
-        paciente: paciente.data,
+        paciente: pacienteA.data,
+        historiaClinica: historia.data,
         loading: false,
       });
-
-      if (this.state.hCporId !== null) {
-        this.setState({
-          existHC: true,
-        });
-      }
+      trimData(this.state.paciente);
+      trimData(this.state.historiaClinica);
     } catch (error) {
       console.log(error);
       this.setState({
@@ -77,7 +56,7 @@ class HCAgregar extends Component {
     }
   };
 
-  //setear los datos del formulario de historia clinica
+  //setear los datos del formulario de paciente
   handleChange = (e) => {
     this.setState({
       historiaClinica: {
@@ -94,11 +73,12 @@ class HCAgregar extends Component {
         aborto: this.state.historiaClinica.aborto,
         metodo_anticonceptivo: this.state.historiaClinica.metodo_anticonceptivo,
         [e.target.name]: e.target.value,
+        updated_at: new Date(),
       },
     });
   };
 
-  //guardar historia clinica
+  //guardar paciente
   onClickButtonSaveHC = async (e) => {
     e.preventDefault();
     this.setState({
@@ -107,24 +87,26 @@ class HCAgregar extends Component {
     });
     trimData(this.state.historiaClinica);
     try {
-      await axios.post(
-        `${api_url}/api/historia_clinica`,
+      await axios.put(
+        `${api_url}/api/historia_clinica/${this.props.match.params.historiaId}`,
         this.state.historiaClinica
       );
       this.setState({
         loading: false,
         success: true,
         error: null,
-        historiaClinica: {},
       });
       openNotification(
         'success',
         'Historias clínicas',
-        'Historia clínica guardada exitosamente',
+        'Historia clínica editada exitosamente',
         ''
       );
-      this.props.history.push('/historias_clinicas');
+      this.props.history.push(
+        `/historia_clinica/${this.state.paciente.paciente_id}`
+      );
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -135,19 +117,16 @@ class HCAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
-          <Navbar buttonDisable={false} />
-          <Agregar
-            paciente={this.state.paciente}
+          <Navbar success={this.state.success} />
+          <Editar
             onClickButtonSaveHC={this.onClickButtonSaveHC}
-            formHC={this.state.historiaClinica}
             handleChange={this.handleChange}
-            existsHC={this.state.existHC}
-            header='Historia clínica'
-            content={`${this.state.paciente.apellido} ${this.state.paciente.nombre}`}
-            pacienteId={this.state.paciente.paciente_id}
+            formHC={this.state.historiaClinica}
+            paciente={this.state.paciente}
           />
         </Layout>
       </React.Fragment>
@@ -155,4 +134,4 @@ class HCAgregar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(HCAgregar);
+export default connect(mapStateToProps, null)(HCEditar);

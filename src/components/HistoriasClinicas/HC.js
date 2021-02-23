@@ -3,8 +3,9 @@ import Media from 'react-media';
 import { Checkbox, Header, Icon, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../global';
-import { GLOBAL_MEDIA_QUERIES } from '../utils';
 import Navbar from '../Pacientes/Navbar';
+import { GLOBAL_MEDIA_QUERIES } from '../utils';
+
 import 'semantic-ui-css/semantic.min.css';
 
 const Listado = ({
@@ -13,6 +14,7 @@ const Listado = ({
   pageInitial,
   pageSecond,
   reload,
+  optionNav,
 }) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
@@ -26,6 +28,7 @@ const Listado = ({
             pageInitial={pageInitial}
             pageSecond={pageSecond}
             reload={reload}
+            optionNav={optionNav}
           />
           <Segment>
             <Global

@@ -2,20 +2,19 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import Listado from '../../components/Evoluciones/Listado';
 import Layout from '../../components/Layout/Layout';
-import Buscar from '../../components/Pacientes/Buscar';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
-class PacientesBuscar extends Component {
+class Evoluciones extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       loading: true,
-      pacientes: {},
+      evoluciones: {},
       autocomplete: {},
-      buscar: '',
     };
   }
   componentDidMount() {
@@ -32,16 +31,19 @@ class PacientesBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/cedula_paciente/${this.props.match.params.cedula}`
+        `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}`
       );
-      const autoComplete = await axios.get(`${api_url}/api/autocomplete`);
+      const autoComplete = await axios.get(
+        `${api_url}/api/evoluciones_autocomplete/${this.props.match.params.historiaId}`
+      );
 
       this.setState({
-        pacientes: data.data,
+        evoluciones: data.data,
         autocomplete: autoComplete.data,
         loading: false,
       });
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -54,14 +56,10 @@ class PacientesBuscar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='3'>
-          <Buscar
-            paciente={this.state.pacientes}
+        <Layout activeKeyP='2'>
+          <Listado
+            evoluciones={Object.values(this.state.evoluciones)}
             autoComplete={this.state.autocomplete}
-            pageInitial='/paciente'
-            pageSecond='/pacientes'
-            reload='/paciente_buscar'
-            optionNav='PC'
           />
         </Layout>
       </React.Fragment>
@@ -69,4 +67,4 @@ class PacientesBuscar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(PacientesBuscar);
+export default connect(mapStateToProps, null)(Evoluciones);

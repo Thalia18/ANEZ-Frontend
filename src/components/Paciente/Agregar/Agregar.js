@@ -6,8 +6,8 @@ import {
   Form,
   Header,
   Icon,
-  Segment,
   Message,
+  Segment,
 } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
@@ -29,12 +29,13 @@ const Agregar = ({
   handleOnChangeNI,
   campos,
   fechaError,
+  cedulaLength,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
     setValue(value);
     if (value === 'RUC') {
-      setMask('9999999999-999');
+      setMask('9999999999-001');
     }
     if (value === 'Cédula') {
       setMask('999999999-9');
@@ -69,7 +70,12 @@ const Agregar = ({
             <Message
               hidden={!fechaError}
               error
-              header='Error en la fecha de nacimiento'
+              header='Fecha de nacimiento no válida'
+            />
+            <Message
+              hidden={!cedulaLength}
+              error
+              header='Número de cédula no válido'
             />
             <Form
               size={matches.medium ? 'tiny' : null}
@@ -125,6 +131,7 @@ const Agregar = ({
                     onChange={handleChange}
                     name='cedula'
                     value={formPaciente.cedula}
+                    maskChar={null}
                     required
                   />
                 </Form.Input>

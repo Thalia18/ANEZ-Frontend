@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Layout from '../../components/Layout/Layout';
+import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Detalle from '../../components/Paciente/Detalle/Detalle';
 import Navbar from '../../components/Paciente/Detalle/NavbarDetalle';
 import { api_url } from '../../components/utils';
-import ModalEliminar from '../../components/Modales/ModalEliminar';
-import { connect } from 'react-redux';
 import { mapStateToProps } from '../../components/utils';
 
 class PacienteDetalle extends Component {

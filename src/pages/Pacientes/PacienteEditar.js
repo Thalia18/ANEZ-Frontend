@@ -1,28 +1,21 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Notification } from 'rsuite';
+import { connect } from 'react-redux';
+
 import Layout from '../../components/Layout/Layout';
 import Editar from '../../components/Paciente/Editar/Editar';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
-import { api_url, trimData } from '../../components/utils';
-import { connect } from 'react-redux';
+import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import _ from 'lodash';
-import {
-  estadoCivilDropdown,
-  etniasDropdown,
-  tipoDeSangreDropdown,
-  nivelDeInstruccionDropdown,
-} from '../../components/utils';
+import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, tipoDeSangreDropdown } from '../../components/utils';
 
-class PacienteAgregar extends Component {
+class PacienteEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       success: false,
       error: null,
       loading: true,
-      activePage: '3',
       paciente: {},
       etnias: {},
       tipoDeSangre: {},
@@ -134,7 +127,12 @@ class PacienteAgregar extends Component {
         error: null,
         paciente: {},
       });
-      this.open('success');
+      openNotification(
+        'success',
+        'Pacientes',
+        'Paciente editado exitosamente',
+        ''
+      );
       this.props.history.push('/pacientes');
     } catch (error) {
       this.setState({
@@ -143,14 +141,6 @@ class PacienteAgregar extends Component {
       });
     }
   };
-
-  //abrir notificacion de exitoso
-  open(funcName) {
-    Notification[funcName]({
-      title: 'Paciente editado exitosamente',
-      description: <div style={{ width: 320 }} rows={3} />,
-    });
-  }
 
   //obtener datos de dropdown
   handleOnChangeEC = (e, data) => {
@@ -202,4 +192,4 @@ class PacienteAgregar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(PacienteAgregar);
+export default connect(mapStateToProps, null)(PacienteEditar);

@@ -3,12 +3,12 @@ import Media from 'react-media';
 import { Link, useHistory } from 'react-router-dom';
 import { Icon, Nav, Navbar } from 'rsuite';
 
-import { GLOBAL_MEDIA_QUERIES, colorBackground } from '../../utils';
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const NavbarPacientes = ({ onClickDelete, pacienteId }) => {
+const NavbarPacientes = ({ onClickDelete, pacienteId, historiaId }) => {
   let history = useHistory();
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -26,15 +26,25 @@ const NavbarPacientes = ({ onClickDelete, pacienteId }) => {
                 icon={<Icon icon='stethoscope' />}
                 componentClass={Link}
                 key={pacienteId}
-                to={`/paciente_editar/${pacienteId}`}
+                to={`/evolucion_agregar/${historiaId}/${pacienteId}`}
               >
                 Agregar evolución
               </Nav.Item>
               <Nav.Item
+                icon={<Icon icon='eye' />}
+                componentClass={Link}
+                key={pacienteId}
+                to={`/evoluciones/${historiaId}`}
+              >
+                Ver evoluciones
+              </Nav.Item>
+            </Nav>
+            <Nav pullRight>
+              <Nav.Item
                 icon={<Icon icon='pencil' />}
                 componentClass={Link}
                 key={pacienteId}
-                to={`/paciente_editar/${pacienteId}`}
+                to={`/historia_clinica_editar/${historiaId}/${pacienteId}`}
               >
                 Editar
               </Nav.Item>

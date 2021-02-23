@@ -1,12 +1,11 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Notification } from 'rsuite';
 
 import Layout from '../../components/Layout/Layout';
 import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, trimData } from '../../components/utils';
+import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 import {
   estadoCivilDropdown,
@@ -22,7 +21,7 @@ class PacienteAgregar extends Component {
       success: false,
       error: null,
       loading: true,
-      activePage: '',
+      result: '',
       paciente: {
         tipo_de_sangre_id: null,
         etnia_id: null,
@@ -50,6 +49,7 @@ class PacienteAgregar extends Component {
       buttonDisable: true,
       fechaError: false,
       campos: true,
+      cedulaLength: false,
     };
   }
   componentDidMount() {
@@ -85,6 +85,7 @@ class PacienteAgregar extends Component {
       });
       this.opcionesSelect();
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -130,24 +131,32 @@ class PacienteAgregar extends Component {
       this.state.paciente.etnia_id !== null &&
       this.state.paciente.nivel_de_instruccion_id !== null &&
       this.state.paciente.estado_civil_id !== null &&
-      this.state.paciente.tipo_de_sangre_id !== null
-      // this.state.paciente.nombre !== '' &&
-      // this.state.paciente.apellido !== '' &&
-      // this.state.paciente.cedula !== '' &&
-      // this.state.paciente.lugar_nacimiento !== '' &&
-      // this.state.paciente.direccion !== '' &&
-      // this.state.paciente.fecha_nacimiento !== ''
+      this.state.paciente.tipo_de_sangre_id !== null &&
+      this.state.paciente.cedula !== null
     ) {
+      this.setState({
+        campos: false,
+      });
       if (nacimiento < hoy) {
         this.setState({
           buttonDisable: false,
-          campos: false,
           fechaError: false,
         });
       } else {
         this.setState({
           fechaError: true,
-          campos: true,
+          buttonDisable: true,
+        });
+      }
+      if (this.state.paciente.cedula.length >= 10) {
+        this.setState({
+          buttonDisable: false,
+          cedulaLength: false,
+        });
+      } else {
+        this.setState({
+          cedulaLength: true,
+          buttonDisable: true,
         });
       }
     }
@@ -162,30 +171,40 @@ class PacienteAgregar extends Component {
     });
     trimData(this.state.paciente);
     try {
-      await axios.post(`${api_url}/api/paciente`, this.state.paciente);
+      const result = await axios.post(
+        `${api_url}/api/paciente`,
+        this.state.paciente
+      );
       this.setState({
         loading: false,
         success: true,
         error: null,
-        paciente: {},
+        result: result.data,
       });
-      this.open('success');
+      if (this.state.result.data.exist) {
+        openNotification(
+          'warning',
+          'Pacientes',
+          'Ya existe un paciente registrado con el número de cédula ',
+          `${this.state.paciente.cedula}`
+        );
+      } else {
+        openNotification(
+          'success',
+          'Pacientes',
+          'Paciente creado exitosamente',
+          ''
+        );
+      }
       this.props.history.push('/pacientes');
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
       });
     }
   };
-
-  //abrir notificacion de exitoso
-  open(funcName) {
-    Notification[funcName]({
-      title: 'Paciente guardado exitosamente',
-      description: <div style={{ width: 320 }} rows={3} />,
-    });
-  }
 
   //obtener datos de dropdown
   handleOnChangeEC = (e, data) => {
@@ -222,6 +241,7 @@ class PacienteAgregar extends Component {
             handleOnChangeE={this.handleOnChangeE}
             fechaError={this.state.fechaError}
             campos={this.state.campos}
+            cedulaLength={this.state.cedulaLength}
           />
         </Layout>
       </React.Fragment>

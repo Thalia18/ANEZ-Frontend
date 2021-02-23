@@ -1,3 +1,5 @@
+import { Notification } from 'rsuite';
+
 //utilizar globalmente para la conexion con la api
 export const api_url = 'http://localhost:3300' || process.env.API_URL;
 
@@ -22,6 +24,7 @@ export const mapStateToPropsPacientes = (state) => {
   };
 };
 
+//funciones para cargar datos de estado civil, etnias, tipos de sangre y niveles de instruccion
 export const estadoCivilDropdown = (estadoCivilList) => {
   let opcion = [];
   Object.values(estadoCivilList).map((item) => {
@@ -88,6 +91,7 @@ export const trimData = (obj) => {
 //   );
 // };
 
+//unicamente quitar los espacios
 export const onlyTrimData = (obj) => {
   Object.keys(obj).map(
     (k) => (obj[k] = typeof obj[k] == 'string' ? obj[k].trim() : obj[k])
@@ -108,4 +112,19 @@ export const calculaEdad = (fecha_nacimiento) => {
   return edad;
 };
 
+//color usado para navbar y fondo de app
 export const colorBackground = { background: 'rgba(0,161,213, 0.1)' };
+
+//notificacion de success
+export const openNotification = (funcName, header, content, span) => {
+  Notification[funcName]({
+    title: header,
+    duration: 4000,
+    description: (
+      <div style={{ width: 320 }} rows={3}>
+        {content}
+        <b>{span}</b>
+      </div>
+    ),
+  });
+};

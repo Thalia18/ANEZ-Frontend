@@ -58,6 +58,7 @@ class Pacientes extends Component {
             pageInitial='/paciente'
             pageSecond='/pacientes'
             reload='/paciente_buscar'
+            optionNav='PC'
           />
         </Layout>
       </React.Fragment>

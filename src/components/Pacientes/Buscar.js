@@ -14,6 +14,7 @@ const Buscar = ({
   pageInitial,
   pageSecond,
   reload,
+  optionNav,
 }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
@@ -25,6 +26,7 @@ const Buscar = ({
             pageInitial={pageInitial}
             pageSecond={pageSecond}
             reload={reload}
+            optionNav={optionNav}
           />
           <Segment>
             <Global

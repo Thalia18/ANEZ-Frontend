@@ -4,7 +4,6 @@ import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
-import Modal from '../../Modales/ModalExists';
 import { GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -14,16 +13,12 @@ const Agregar = ({
   onClickButtonSaveHC,
   handleChange,
   formHC,
-  existsHC,
-  header,
-  content,
   pacienteId,
 }) => {
   const [value, setValue] = React.useState(true);
   const handleChangeCheck = (e) => {
     setValue(!value);
   };
-
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
@@ -49,7 +44,7 @@ const Agregar = ({
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveHC}
-                id='formAgregar'
+                id='formEditar'
               >
                 <Form.Group>
                   <Form.TextArea
@@ -149,12 +144,6 @@ const Agregar = ({
                 </Segment>
               </Form>
             </div>
-            <Modal
-              existsHC={existsHC}
-              header={header}
-              content={content}
-              pacienteId={pacienteId}
-            />
           </Global>
         </Segment>
       )}

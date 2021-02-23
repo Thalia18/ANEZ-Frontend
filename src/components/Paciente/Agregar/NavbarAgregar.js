@@ -1,9 +1,9 @@
 import React from 'react';
 import Media from 'react-media';
 import { useHistory } from 'react-router-dom';
-import { Icon, Nav, Navbar, Button } from 'rsuite';
+import { Button, Icon, Nav, Navbar } from 'rsuite';
 
-import { GLOBAL_MEDIA_QUERIES, colorBackground } from '../../utils';
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -22,6 +22,8 @@ const NavbarPacientes = ({ buttonDisable }) => {
                   history.goBack();
                 }}
               />
+            </Nav>
+            <Nav pullRight>
               {buttonDisable && (
                 <Nav.Item icon={<Icon icon='save' />}>Guardar</Nav.Item>
               )}

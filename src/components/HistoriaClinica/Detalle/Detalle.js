@@ -1,11 +1,12 @@
 import React from 'react';
 import Media from 'react-media';
 import { Header, Icon, Segment, Table } from 'semantic-ui-react';
+
 import { Global } from '../../../global';
-import { GLOBAL_MEDIA_QUERIES, calculaEdad } from '../../utils';
+import HCHeader from '../../HistoriasClinicas/HCHeader';
+import { calculaEdad, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
-import HCHeader from '../../HistoriasClinicas/HCHeader';
 
 const Detalle = ({ paciente, historia_clinica }) => {
   return (

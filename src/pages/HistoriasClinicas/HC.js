@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Layout from '../../components/Layout/Layout';
 import Listado from '../../components/HistoriasClinicas/HC';
+import Layout from '../../components/Layout/Layout';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
@@ -58,6 +58,7 @@ class Pacientes extends Component {
             pageInitial='/historia_clinica'
             pageSecond='/historias_clinicas'
             reload='/historia_clinica_buscar'
+            optionNav='HC'
           />
         </Layout>
       </React.Fragment>

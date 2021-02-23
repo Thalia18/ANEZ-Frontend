@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
-const ModalExists = ({ existsHC, header, content, closeModal, pacienteId }) => {
+const ModalExists = ({ existsHC, header, content, pacienteId }) => {
   let history = useHistory();
   return (
-    <Modal closeIcon open={existsHC} onClose={closeModal}>
+    <Modal closeIcon open={existsHC} onClose={() => history.goBack()}>
       <Header icon='medkit' content={header} />
       <Modal.Content>
         <p>
