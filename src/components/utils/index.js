@@ -128,3 +128,23 @@ export const openNotification = (funcName, header, content, span) => {
     ),
   });
 };
+
+//const para medium scroll
+export const mediumScroll = {
+  height: '22em',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+};
+
+//const para mas de medium scroll
+export const maxMediumScroll = {
+  height: '40em',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+};
+
+//const para medium height
+export const mediumHeight = { height: '38em' };
+
+//const para mas de medium height
+export const masMediumHeight = { height: '53em' };

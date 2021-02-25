@@ -3,7 +3,7 @@ import Media from 'react-media';
 import { Checkbox, Header, Icon, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../global';
-import { GLOBAL_MEDIA_QUERIES } from '../utils/';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils/';
 import Navbar from './Navbar';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -31,9 +31,7 @@ const Listado = ({
             optionNav={optionNav}
           />
           <Segment>
-            <Global
-              style={matches.medium ? { height: '30em' } : { height: '50em' }}
-            >
+            <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as='h1' textAlign='center'>
                 <Header.Content>
                   <Icon name='users' />

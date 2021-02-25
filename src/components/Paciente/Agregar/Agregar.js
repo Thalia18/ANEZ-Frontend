@@ -11,7 +11,11 @@ import {
 } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
-import { GLOBAL_MEDIA_QUERIES } from '../../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  mediumHeight,
+} from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -28,7 +32,7 @@ const Agregar = ({
   handleOnChangeTS,
   handleOnChangeNI,
   campos,
-  fechaError,
+
   cedulaLength,
 }) => {
   const [value, setValue] = React.useState('Cédula');
@@ -48,14 +52,17 @@ const Agregar = ({
       return newValue;
     }
   };
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
 
+  today = yyyy + '-' + mm + '-' + dd;
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
         <Segment>
-          <Global
-            style={matches.medium ? { height: '37em' } : { height: '50em' }}
-          >
+          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
                 <Icon name='add circle' /> Nuevo Paciente
@@ -67,11 +74,7 @@ const Agregar = ({
               warning
               header='Seleccione Estado Civil, Etnia, Nivel de Instrucción y Tipo de Sangre'
             />
-            <Message
-              hidden={!fechaError}
-              error
-              header='Fecha de nacimiento no válida'
-            />
+
             <Message
               hidden={!cedulaLength}
               error
@@ -154,6 +157,7 @@ const Agregar = ({
                   onChange={handleChange}
                   name='fecha_nacimiento'
                   value={formPaciente.fecha_nacimiento}
+                  max={today}
                   required
                 />
 

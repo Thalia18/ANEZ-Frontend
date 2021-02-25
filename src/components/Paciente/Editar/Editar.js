@@ -4,7 +4,11 @@ import Media from 'react-media';
 import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
-import { GLOBAL_MEDIA_QUERIES } from '../../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  mediumHeight,
+} from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -43,9 +47,7 @@ const Editar = ({
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
         <Segment>
-          <Global
-            style={matches.medium ? { height: '32em' } : { height: '50em' }}
-          >
+          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
                 <Icon name='pencil' /> Editar Paciente

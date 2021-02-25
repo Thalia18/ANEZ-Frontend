@@ -4,7 +4,13 @@ import { Header, Icon, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
-import { calculaEdad, GLOBAL_MEDIA_QUERIES } from '../../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  maxMediumScroll,
+  mediumHeight,
+  mediumScroll,
+} from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -13,9 +19,7 @@ const Detalle = ({ paciente, historia_clinica }) => {
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <Segment>
-          <Global
-            style={matches.medium ? { height: '35em' } : { height: '53em' }}
-          >
+          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
                 <Icon name='dna' /> Historia clínica
@@ -24,13 +28,7 @@ const Detalle = ({ paciente, historia_clinica }) => {
             <hr />
             <HCHeader paciente={paciente} />
 
-            <div
-              style={
-                matches.medium
-                  ? { height: '22em', overflow: 'auto' }
-                  : { height: '40em', overflow: 'auto' }
-              }
-            >
+            <div style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Table celled striped>
                 <Table.Body>
                   <Table.Row>

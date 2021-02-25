@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Icon } from 'semantic-ui-react';
+import { Button, Form, Icon, Image } from 'semantic-ui-react';
 
 class Fotos extends React.Component {
   constructor(props) {
@@ -21,13 +21,14 @@ class Fotos extends React.Component {
     return this.state.fotos.map((el, i) => (
       <div key={i}>
         <Form.Group>
-          <Form.Input
+          <Form.TextArea
             placeholder='Foto URL'
             name='foto_url'
-            width={15}
+            width={13}
             value={el.foto_url || ''}
             onChange={this.handleChange.bind(this, i)}
           />
+          <Image src={el.foto_url || ''} size='small' rounded />
           <Button onClick={this.removeClick.bind(this, i)}>
             <Icon name='trash' />
           </Button>
@@ -42,6 +43,7 @@ class Fotos extends React.Component {
     fotos[i] = { ...fotos[i], [name]: value };
     this.props.fotosList[i] = { ...fotos[i], [name]: value };
     this.setState({ fotos });
+    console.log(this.props.fotosList);
   }
 
   removeClick(i, e) {

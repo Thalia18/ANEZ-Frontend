@@ -17,15 +17,15 @@ class EvolucionAgregar extends Component {
       loading: true,
       paciente: {},
       evolucion: {
-        historia_clinica_id: null,
-        fecha: new Date(),
-        motivo_consulta: '',
-        fecha_ultima_menstruacion: undefined,
-        procedimiento: '',
-        diagnostico: '',
-        tratamiento: '',
-        proximo_control: undefined,
-        created_at: new Date(),
+        // historia_clinica_id: null,
+        // fecha: new Date(),
+        // motivo_consulta: '',
+        // fecha_ultima_menstruacion: undefined,
+        // procedimiento: '',
+        // diagnostico: '',
+        // tratamiento: '',
+        // proximo_control: undefined,
+        // created_at: new Date(),
       },
       fotos: {
         evolucion_id: null,
@@ -34,6 +34,8 @@ class EvolucionAgregar extends Component {
       evolucionId: null,
       fotoList: [{ foto_url: '' }],
       buttonDisable: false,
+      fotoExists: {},
+      fotosUpdate: [{ foto_url: '' }],
     };
   }
   componentDidMount() {
@@ -49,14 +51,28 @@ class EvolucionAgregar extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+      const { data: paciente } = await axios.get(
+        `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
+      );
+      const { data: evolucion } = await axios.get(
+        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
+      );
+      const { data: fotos } = await axios.get(
+        `${api_url}/api/fotos_evolucion/${this.props.match.params.evolucionId}`
+      );
+      const { data: fotosP } = await axios.get(
+        `${api_url}/api/fotos_evolucion_p/${this.props.match.params.evolucionId}`
       );
 
       this.setState({
-        paciente: data.data,
+        paciente: paciente.data.pacientes,
+        evolucion: evolucion.data,
+        fotoList: fotosP.data,
+        fotoExists: fotos.data,
         loading: false,
       });
+      console.log(typeof this.state.fotoList);
+      console.log(typeof this.state.fotoExists);
     } catch (error) {
       console.log(error);
       this.setState({
@@ -82,6 +98,7 @@ class EvolucionAgregar extends Component {
         [e.target.name]: e.target.value,
       },
     });
+    console.log(this.state.fotoList, 'list editar');
   };
 
   //guardar historia clinica
@@ -93,15 +110,17 @@ class EvolucionAgregar extends Component {
     });
     trimData(this.state.evolucion);
     try {
-      const evolucion = await axios.post(
-        `${api_url}/api/evolucion`,
+      this.deleteImages(this.state.fotoExists);
+
+      await axios.put(
+        `${api_url}/api/evolucion/${this.state.evolucion.evolucion_id}`,
         this.state.evolucion
       );
 
       this.setState({
         loading: false,
         success: true,
-        evolucionId: evolucion.data.data.evolucion_id,
+        evolucionId: this.state.evolucion.evolucion_id,
         error: null,
       });
       //comprueba si existen fotos y las guarda
@@ -110,7 +129,7 @@ class EvolucionAgregar extends Component {
           for (const element of this.state.fotoList) {
             this.setState({
               fotos: {
-                ...this.state.fotos,
+                // ...this.state.fotos,
                 evolucion_id: this.state.evolucionId,
                 foto_url: element.foto_url,
                 created_at: new Date(),
@@ -128,7 +147,7 @@ class EvolucionAgregar extends Component {
         ''
       );
       this.props.history.push(
-        `/historia_clinica/${this.state.paciente.paciente_id}`
+        `/evolucion/${this.props.match.params.evolucionId}/${this.props.match.params.historiaId}`
       );
     } catch (error) {
       console.log(error);
@@ -139,9 +158,29 @@ class EvolucionAgregar extends Component {
     }
   };
 
+  //borra las imagenes para la edicion
+  deleteImages = async (list) => {
+    try {
+      for (const element of list) {
+        await axios.delete(`${api_url}/api/foto/${element.foto_id}`);
+      }
+      this.setState({
+        loading: false,
+        success: true,
+        error: null,
+      });
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error,
+      });
+    }
+  };
+
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.fotoExists, 'exists');
 
     return (
       <React.Fragment>
@@ -157,7 +196,7 @@ class EvolucionAgregar extends Component {
             handleRemoveClick={this.removeFoto}
             handleInputChange={this.handleChangeFoto}
             fotosList={this.state.fotoList}
-            form='formAgregar'
+            form={'formEditar'}
           />
         </Layout>
       </React.Fragment>

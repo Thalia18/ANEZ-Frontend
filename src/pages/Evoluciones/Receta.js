@@ -7,7 +7,7 @@ import Layout from '../../components/Layout/Layout';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
-class Evoluciones extends Component {
+class Receta extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,7 +15,6 @@ class Evoluciones extends Component {
       loading: true,
       evoluciones: {},
       autocomplete: {},
-      paciente: {},
     };
   }
   componentDidMount() {
@@ -31,22 +30,20 @@ class Evoluciones extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(
-        `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}`
-      );
-      const autoComplete = await axios.get(
-        `${api_url}/api/evoluciones_autocomplete/${this.props.match.params.historiaId}`
-      );
-      const { data: paciente } = await axios.get(
-        `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
-      );
+      //   const { data } = await axios.get(
+      //     `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}`
+      //   );
+      //   const autoComplete = await axios.get(
+      //     `${api_url}/api/evoluciones_autocomplete/${this.props.match.params.historiaId}`
+      //   );
+
       this.setState({
-        evoluciones: data.data,
-        autocomplete: autoComplete.data,
-        paciente: paciente.data.pacientes,
+        // evoluciones: data.data,
+        // autocomplete: autoComplete.data,
         loading: false,
       });
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -60,15 +57,14 @@ class Evoluciones extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
-          <Listado
+          {/* <Listado
             evoluciones={Object.values(this.state.evoluciones)}
             autoComplete={this.state.autocomplete}
-            paciente={this.state.paciente}
-          />
+          /> */}
         </Layout>
       </React.Fragment>
     );
   }
 }
 
-export default connect(mapStateToProps, null)(Evoluciones);
+export default connect(mapStateToProps, null)(Receta);

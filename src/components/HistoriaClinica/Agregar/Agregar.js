@@ -5,7 +5,7 @@ import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import Modal from '../../Modales/ModalExists';
-import { GLOBAL_MEDIA_QUERIES } from '../../utils';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -28,9 +28,7 @@ const Agregar = ({
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
         <Segment>
-          <Global
-            style={matches.medium ? { height: '35em' } : { height: '53em' }}
-          >
+          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
                 <Icon name='add circle' /> Nueva Historia Clínica
@@ -39,13 +37,7 @@ const Agregar = ({
             <hr />
             <HCHeader paciente={paciente} />
 
-            <div
-              style={
-                matches.medium
-                  ? { height: '22em', overflowY: 'auto', overflowX: 'hidden' }
-                  : { height: '40em', overflowY: 'auto', overflowX: 'hidden' }
-              }
-            >
+            <div style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveHC}

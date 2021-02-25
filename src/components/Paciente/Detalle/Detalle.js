@@ -1,8 +1,14 @@
 import React from 'react';
 import Media from 'react-media';
 import { Header, Icon, Segment, Table } from 'semantic-ui-react';
+
 import { Global } from '../../../global';
-import { GLOBAL_MEDIA_QUERIES, calculaEdad } from '../../utils';
+import {
+  calculaEdad,
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  mediumHeight,
+} from '../../utils';
 import { HeaderCell, HeaderSubCell } from './DetalleStyles';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -15,9 +21,7 @@ const Detalle = ({ paciente }) => {
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <Segment>
-          <Global
-            style={matches.medium ? { height: '29em' } : { height: '49em' }}
-          >
+          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
                 <Icon name='dna' /> Datos Paciente

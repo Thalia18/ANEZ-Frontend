@@ -1,23 +1,10 @@
 import React from 'react';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
-import {
-  GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  maxMediumScroll,
-  mediumHeight,
-  mediumScroll,
-} from '../../utils';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
 import Fotos from '../Fotos/Agregar';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -46,7 +33,7 @@ const Agregar = ({
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
-                <Icon name='add circle' /> Nueva Evolución
+                <Icon name='add circle' /> Editar Evolución
               </Header.Content>
             </Header>
             <hr />
@@ -56,7 +43,7 @@ const Agregar = ({
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveEvolucion}
-                id='formAgregar'
+                id='formEditar'
               >
                 <Form.Group>
                   <Form.TextArea

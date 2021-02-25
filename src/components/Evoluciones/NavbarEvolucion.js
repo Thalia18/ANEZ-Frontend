@@ -10,11 +10,18 @@ import { GLOBAL_MEDIA_QUERIES } from '../utils/';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const NavbarPacientes = ({ autoComplete, historiaId, ...props }) => {
-  let url =
-    historiaId === undefined ? '/evolucion' : `/evolucion/${historiaId}`;
-
+const NavbarPacientes = ({ autoComplete, evolucionId, paciente, ...props }) => {
   let history = useHistory();
+
+  let url =
+    evolucionId === undefined
+      ? `/evoluciones/${props.match.params.historiaId}`
+      : `/evolucion/${evolucionId}/${props.match.params.historiaId}`;
+  let urlReceta =
+    evolucionId === undefined
+      ? `/evoluciones/${props.match.params.historiaId}`
+      : `/receta/${evolucionId}`;
+
   const [value, setValue] = React.useState([]);
 
   return (
@@ -26,23 +33,25 @@ const NavbarPacientes = ({ autoComplete, historiaId, ...props }) => {
               {!matches.medium && (
                 <Nav.Item
                   icon={<Icon icon='angle-left' />}
-                  onClick={() => {
-                    history.goBack();
-                  }}
+                  componentClass={Link}
+                  to={`/historia_clinica/${paciente.paciente_id}`}
+                  // onClick={() => {
+                  //   history.goBack();
+                  // }}
                 />
               )}
               <Nav.Item
                 icon={<Icon icon='file-text' />}
                 componentClass={Link}
-                key={historiaId}
-                to={url}
+                key={evolucionId}
+                to={urlReceta}
               >
                 Generar receta
               </Nav.Item>
               <Nav.Item
                 icon={<Icon icon='eye' />}
                 componentClass={Link}
-                key={historiaId}
+                key={evolucionId}
                 to={url}
               >
                 Ver

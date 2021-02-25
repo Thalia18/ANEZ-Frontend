@@ -1,32 +1,36 @@
 import React from 'react';
 import Media from 'react-media';
-import { Checkbox, Header, Icon, Label, Segment, Table } from 'semantic-ui-react';
+import { Checkbox, Header, Icon, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../global';
-import { GLOBAL_MEDIA_QUERIES } from '../utils/';
+import HCHeader from '../HistoriasClinicas/HCHeader';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils/';
 import Navbar from './NavbarEvolucion';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Listado = ({ evoluciones, autoComplete }) => {
+const Listado = ({ evoluciones, autoComplete, paciente }) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar autoComplete={autoComplete} historiaId={value} />
+          <Navbar
+            autoComplete={autoComplete}
+            evolucionId={value}
+            paciente={paciente}
+          />
           <Segment>
-            <Global
-              style={matches.medium ? { height: '30em' } : { height: '50em' }}
-            >
+            <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as='h1' textAlign='center'>
                 <Header.Content>
-                  <Icon name='users' />
+                  <Icon name='dna' />
                   Evoluciones
                 </Header.Content>
               </Header>
               <hr />
+              <HCHeader paciente={paciente} />
               <br />
               <Table compact celled definition>
                 <Table.Body>

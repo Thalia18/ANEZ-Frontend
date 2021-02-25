@@ -7,12 +7,7 @@ import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import {
-  estadoCivilDropdown,
-  etniasDropdown,
-  nivelDeInstruccionDropdown,
-  tipoDeSangreDropdown,
-} from '../../components/utils';
+import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, tipoDeSangreDropdown } from '../../components/utils';
 
 class PacienteAgregar extends Component {
   constructor(props) {
@@ -47,7 +42,7 @@ class PacienteAgregar extends Component {
       optionNI: [],
       optionE: [],
       buttonDisable: true,
-      fechaError: false,
+
       campos: true,
       cedulaLength: false,
     };
@@ -125,8 +120,8 @@ class PacienteAgregar extends Component {
         [e.target.name]: e.target.value,
       },
     });
-    var hoy = new Date();
-    var nacimiento = new Date(this.state.paciente.fecha_nacimiento);
+
+    //setea variables para mensajes de error y alerta
     if (
       this.state.paciente.etnia_id !== null &&
       this.state.paciente.nivel_de_instruccion_id !== null &&
@@ -137,17 +132,7 @@ class PacienteAgregar extends Component {
       this.setState({
         campos: false,
       });
-      if (nacimiento < hoy) {
-        this.setState({
-          buttonDisable: false,
-          fechaError: false,
-        });
-      } else {
-        this.setState({
-          fechaError: true,
-          buttonDisable: true,
-        });
-      }
+
       if (this.state.paciente.cedula.length >= 10) {
         this.setState({
           buttonDisable: false,
@@ -239,7 +224,6 @@ class PacienteAgregar extends Component {
             handleOnChangeTS={this.handleOnChangeTS}
             handleOnChangeNI={this.handleOnChangeNI}
             handleOnChangeE={this.handleOnChangeE}
-            fechaError={this.state.fechaError}
             campos={this.state.campos}
             cedulaLength={this.state.cedulaLength}
           />
