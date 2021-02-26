@@ -1,23 +1,10 @@
 import React from 'react';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
 
-import { Global } from '../../../global';
+import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
-import {
-  GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  maxMediumScroll,
-  mediumHeight,
-  mediumScroll,
-} from '../../utils';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
 import Fotos from '../Fotos/Agregar';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -52,7 +39,7 @@ const Agregar = ({
             <hr />
             <HCHeader paciente={paciente} />
 
-            <div style={matches.medium ? mediumScroll : maxMediumScroll}>
+            <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveEvolucion}
@@ -105,13 +92,20 @@ const Agregar = ({
                 </Form.Group>
                 <Form.Group>
                   <Form.TextArea
-                    label='Tratamiento'
-                    placeholder='Tratamiento'
-                    width={16}
+                    label='Medicación'
+                    placeholder='Medicación'
+                    width={8}
                     onChange={handleChange}
-                    name='tratamiento'
-                    value={formEvolucion.tratamiento}
-                    required
+                    name='medicacion'
+                    value={formEvolucion.medicacion}
+                  />
+                  <Form.TextArea
+                    label='Indicaciones'
+                    placeholder='Indicaciones'
+                    width={8}
+                    onChange={handleChange}
+                    name='indicacion'
+                    value={formEvolucion.indicacion}
                   />
                 </Form.Group>
                 <Form.Input
@@ -137,7 +131,7 @@ const Agregar = ({
                   <Fotos fotosList={fotosList} />
                 </Segment>
               </Form>
-            </div>
+            </DivScroll>
           </Global>
         </Segment>
       )}

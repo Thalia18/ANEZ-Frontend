@@ -2,15 +2,15 @@ import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
 import { Link, useHistory, withRouter } from 'react-router-dom';
-import { DateRangePicker, Icon, InputGroup, Nav, Navbar } from 'rsuite';
-import { Button, Form, Grid, Search } from 'semantic-ui-react';
+import { Container, DateRangePicker, Icon, Nav, Navbar } from 'rsuite';
+import { Button, Form } from 'semantic-ui-react';
 
 import { GLOBAL_MEDIA_QUERIES } from '../utils/';
 
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const NavbarPacientes = ({ autoComplete, evolucionId, paciente, ...props }) => {
+const NavbarPacientes = ({ evolucionId, paciente, ...props }) => {
   let history = useHistory();
 
   let url =
@@ -23,6 +23,12 @@ const NavbarPacientes = ({ autoComplete, evolucionId, paciente, ...props }) => {
       : `/receta/${evolucionId}`;
 
   const [value, setValue] = React.useState([]);
+  const fecha = (date) => {
+    let dia = date.getDate();
+    let mes = date.getMonth() + 1;
+    let año = date.getFullYear();
+    return año + '-' + mes + '-' + dia;
+  };
 
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
@@ -35,9 +41,6 @@ const NavbarPacientes = ({ autoComplete, evolucionId, paciente, ...props }) => {
                   icon={<Icon icon='angle-left' />}
                   componentClass={Link}
                   to={`/historia_clinica/${paciente.paciente_id}`}
-                  // onClick={() => {
-                  //   history.goBack();
-                  // }}
                 />
               )}
               <Nav.Item
@@ -58,15 +61,33 @@ const NavbarPacientes = ({ autoComplete, evolucionId, paciente, ...props }) => {
               </Nav.Item>
             </Nav>
             <Nav pullRight style={{ marginTop: '0.8em', marginRight: '1em' }}>
-              <DateRangePicker
-                showOneCalendar
-                placeholder='Buscar'
-                style={{ width: 280 }}
-                value={value}
-                onChange={(value) => {
-                  setValue(Object.values(value));
-                }}
-              />
+              <Container style={{ marginTop: '-0.1em' }}>
+                <Form>
+                  <DateRangePicker
+                    showOneCalendar
+                    placeholder='Buscar'
+                    style={{ width: 280 }}
+                    value={value}
+                    onChange={(value) => {
+                      setValue(Object.values(value));
+                    }}
+                  />
+                  <Button
+                    onClick={() => {
+                      value.length === 0
+                        ? window.location.reload()
+                        : props.history.push(
+                            `/evolucion_buscar/${
+                              props.match.params.historiaId
+                            }/${fecha(value[0])}/${fecha(value[1])}`
+                          );
+                      window.location.reload();
+                    }}
+                  >
+                    <Icon icon='search' />
+                  </Button>
+                </Form>
+              </Container>
             </Nav>
           </Navbar.Body>
         </Navbar>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
+import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
 const ModalNotExists = ({
   notExistsHC,
@@ -25,7 +25,7 @@ const ModalNotExists = ({
             history.push(`/historia_clinica_agregar/${pacienteId}`);
           }}
         >
-          <Icon name='checkmark' /> Crear
+          <Icon name='plus' /> Crear
         </Button>
         <Button color='green' onClick={closeModal}>
           <Icon name='checkmark' /> Ok

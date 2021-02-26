@@ -23,7 +23,8 @@ class EvolucionAgregar extends Component {
         fecha_ultima_menstruacion: undefined,
         procedimiento: '',
         diagnostico: '',
-        tratamiento: '',
+        medicacion: '',
+        indicacion: '',
         proximo_control: undefined,
         created_at: new Date(),
       },
@@ -77,7 +78,8 @@ class EvolucionAgregar extends Component {
           .fecha_ultima_menstruacion,
         procedimiento: this.state.evolucion.procedimiento,
         diagnostico: this.state.evolucion.diagnostico,
-        tratamiento: this.state.evolucion.tratamiento,
+        medicacion: this.state.evolucion.medicacion,
+        indicacion: this.state.evolucion.indicacion,
         proximo_control: this.state.evolucion.proximo_control,
         [e.target.name]: e.target.value,
       },
@@ -157,7 +159,6 @@ class EvolucionAgregar extends Component {
             handleRemoveClick={this.removeFoto}
             handleInputChange={this.handleChangeFoto}
             fotosList={this.state.fotoList}
-            form='formAgregar'
           />
         </Layout>
       </React.Fragment>

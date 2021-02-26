@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
 import { Link, useHistory, withRouter } from 'react-router-dom';
-import { Icon, InputGroup, Nav, Navbar } from 'rsuite';
+import { Container, Icon, InputGroup, Nav, Navbar } from 'rsuite';
 import { Button, Form, Grid, Search } from 'semantic-ui-react';
 
 import { GLOBAL_MEDIA_QUERIES } from '../utils/';
@@ -121,7 +121,7 @@ const NavbarPacientes = ({
                   key={pacienteId}
                   to={urlHC}
                 >
-                  Agregar Historia clínica
+                  Crear Historia clínica
                 </Nav.Item>
               )}
               {optionNav === 'PC' && (
@@ -131,7 +131,7 @@ const NavbarPacientes = ({
                     componentClass={Link}
                     to={`/paciente_agregar`}
                   >
-                    Agregar Paciente
+                    Crear Paciente
                   </Nav.Item>
                   <Nav.Item
                     icon={<Icon icon='heartbeat' />}
@@ -139,7 +139,7 @@ const NavbarPacientes = ({
                     key={pacienteId}
                     to={urlHC}
                   >
-                    Agregar Historia clínica
+                    Crear Historia clínica
                   </Nav.Item>
                   <Nav.Item icon={<Icon icon='calendar' />}>
                     Agendar cita
@@ -157,51 +157,64 @@ const NavbarPacientes = ({
               </Nav.Item>
             </Nav>
             <Nav pullRight>
-              <InputGroup inside>
-                <Form>
-                  <Form.Group inline>
-                    <Grid
-                      style={
-                        matches.medium
-                          ? { marginBottom: 3, marginRight: 3 }
-                          : { marginTop: 0.2, marginRight: 3 }
-                      }
-                    >
-                      <Grid.Column width={16}>
-                        <Search
-                          input={{ icon: 'search', iconPosition: 'left' }}
-                          loading={loading}
-                          resultRenderer={resultRenderer}
-                          onResultSelect={(e, data) =>
-                            dispatch({
-                              type: 'UPDATE_SELECTION',
-                              selection: data.result.description.trim(),
-                            })
-                          }
-                          onSearchChange={handleSearchChange}
-                          results={results}
-                          value={value}
-                        />
-                      </Grid.Column>
-                    </Grid>
-                    <Button
-                      onClick={() => {
-                        value === ''
-                          ? props.history.push({ pageSecond })
-                          : props.history.push(`${reload}/${value}`);
-                        window.location.reload();
-                      }}
-                      style={
-                        matches.medium
-                          ? { marginLeft: '-1.3em', marginTop: '-1.2em' }
-                          : { marginLeft: '-1.3em', marginTop: '0.8em' }
-                      }
-                    >
-                      <Icon icon='search' />
-                    </Button>
-                  </Form.Group>
-                </Form>
-              </InputGroup>
+              <Container
+                style={{
+                  marginTop: '0.2em',
+                  marginBottom: '-0.8em',
+                  marginRight: '1em',
+                }}
+              >
+                <InputGroup inside>
+                  <Form>
+                    <Form.Group inline>
+                      {/* <Grid>
+                        <Grid.Column width={16}> */}
+                      <Search
+                        input={{ icon: 'search', iconPosition: 'left' }}
+                        loading={loading}
+                        resultRenderer={resultRenderer}
+                        onResultSelect={(e, data) =>
+                          dispatch({
+                            type: 'UPDATE_SELECTION',
+                            selection: data.result.description.trim(),
+                          })
+                        }
+                        onSearchChange={handleSearchChange}
+                        results={results}
+                        value={value}
+                        style={
+                          matches.medium
+                            ? { marginRight: '1.3em', marginTop: '0.5em' }
+                            : {
+                                marginRight: '1.3em',
+                                marginTop: '0.4em',
+                              }
+                        }
+                      />
+                      {/* </Grid.Column>
+                      </Grid> */}
+                      <Button
+                        onClick={() => {
+                          value === ''
+                            ? props.history.push({ pageSecond })
+                            : props.history.push(`${reload}/${value}`);
+                          window.location.reload();
+                        }}
+                        style={
+                          matches.medium
+                            ? { marginLeft: '-1.3em', marginTop: '0.5em' }
+                            : {
+                                marginLeft: '-1.3em',
+                                marginTop: '0.4em',
+                              }
+                        }
+                      >
+                        <Icon icon='search' />
+                      </Button>
+                    </Form.Group>
+                  </Form>
+                </InputGroup>
+              </Container>
             </Nav>
           </Navbar.Body>
         </Navbar>

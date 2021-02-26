@@ -1,19 +1,24 @@
 import React from 'react';
 import Media from 'react-media';
-import { useHistory } from 'react-router-dom';
-import { Button, Checkbox, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
+import {
+  Checkbox,
+  Header,
+  Icon,
+  Message,
+  Segment,
+  Table,
+} from 'semantic-ui-react';
 
 import { Global } from '../../global';
 import HCHeader from '../HistoriasClinicas/HCHeader';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils/';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils';
 import Navbar from './NavbarEvolucion';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Listado = ({ evoluciones, paciente, historiaId }) => {
+const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
-  let history = useHistory();
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -23,12 +28,13 @@ const Listado = ({ evoluciones, paciente, historiaId }) => {
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as='h1' textAlign='center'>
                 <Header.Content>
-                  <Icon name='dna' />
-                  Evoluciones
+                  <Icon name='search' />
+                  Resultados de la búsqueda
                 </Header.Content>
               </Header>
               <hr />
               <HCHeader paciente={paciente} />
+              <br />
               {evoluciones.length > 0 && (
                 <Table compact celled definition>
                   <Table.Body>
@@ -59,23 +65,16 @@ const Listado = ({ evoluciones, paciente, historiaId }) => {
                 </Table>
               )}
               {evoluciones.length === 0 && (
-                <Message info>
+                <Message warning>
                   <Message.Header>
                     <Icon name='info circle' />
-                    Aún no se han agregado evoluciones
+                    No se encontraron resultados
                   </Message.Header>
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <Button
-                    color='blue'
-                    onClick={() => {
-                      history.push(
-                        `/evolucion_agregar/${historiaId}/${paciente.paciente_id}`
-                      );
-                    }}
-                  >
-                    <Icon name='plus' /> Crear evolución
-                  </Button>
+                  <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen evoluciones
+                    registradas desde el <b>{fecha1}</b> hasta el{' '}
+                    <b>{fecha2}</b>
+                  </p>
                 </Message>
               )}
             </Global>

@@ -32,8 +32,8 @@ const Buscar = ({
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as='h1' textAlign='center'>
                 <Header.Content>
-                  <Icon name='users' />
-                  Paciente
+                  <Icon name='search' />
+                  Resultados de la búsqueda
                 </Header.Content>
               </Header>
               <hr />

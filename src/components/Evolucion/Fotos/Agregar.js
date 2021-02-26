@@ -43,7 +43,6 @@ class Fotos extends React.Component {
     fotos[i] = { ...fotos[i], [name]: value };
     this.props.fotosList[i] = { ...fotos[i], [name]: value };
     this.setState({ fotos });
-    console.log(this.props.fotosList);
   }
 
   removeClick(i, e) {

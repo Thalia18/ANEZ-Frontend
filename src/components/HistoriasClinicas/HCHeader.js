@@ -1,14 +1,16 @@
 import React from 'react';
 import { Segment, Table } from 'semantic-ui-react';
+
+import { calculaEdad, GLOBAL_MEDIA_QUERIES } from '../utils';
+
 import 'semantic-ui-css/semantic.min.css';
-import { GLOBAL_MEDIA_QUERIES, calculaEdad } from '../utils';
 
 const HCHeader = ({ paciente }) => {
   let edad = calculaEdad(paciente.fecha_nacimiento);
 
   return (
     <Segment>
-      <Table size='large'>
+      <Table>
         <Table.Header>
           <Table.Row>
             <Table.Cell>

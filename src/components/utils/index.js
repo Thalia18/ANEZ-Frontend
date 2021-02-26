@@ -132,7 +132,7 @@ export const openNotification = (funcName, header, content, span) => {
 //const para medium scroll
 export const mediumScroll = {
   height: '22em',
-  overflowY: 'auto',
+  overflowY: 'auto ::-webkit-scrollbar {display:none;}',
   overflowX: 'hidden',
 };
 

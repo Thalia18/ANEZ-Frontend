@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import EvolucionAgregarPage from './pages/Evoluciones/EvolucionAgregar';
+import EvolucionBuscarPage from './pages/Evoluciones/EvolucionBuscar';
 import EvolucionPage from './pages/Evoluciones/EvolucionDetalle';
 import EvolucionesPage from './pages/Evoluciones/Evoluciones';
 import EvolucionEditarPage from './pages/Evoluciones/EvolucionesEditar';
@@ -86,6 +87,11 @@ function App() {
           exact
           path='/evoluciones/:historiaId'
           component={EvolucionesPage}
+        />
+        <Route
+          exact
+          path='/evolucion_buscar/:historiaId/:fecha1/:fecha2'
+          component={EvolucionBuscarPage}
         />
         //pagina de receta
         <Route exact path='/receta/:evolucionId' component={RecetaPage} />

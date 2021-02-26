@@ -1,11 +1,25 @@
 import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
-import { Grid, Header, Icon, Image, Modal, Segment, Table } from 'semantic-ui-react';
+import {
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Modal,
+  Segment,
+  Table,
+} from 'semantic-ui-react';
 
-import { Global } from '../../../global';
+import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  maxMediumScroll,
+  mediumHeight,
+  mediumScroll,
+} from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -24,7 +38,7 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist }) => {
             <hr />
             <HCHeader paciente={paciente} />
 
-            <div style={matches.medium ? mediumScroll : maxMediumScroll}>
+            <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Table celled striped>
                 <Table.Body>
                   <Table.Row>
@@ -61,9 +75,15 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist }) => {
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>
-                      <b>Tratamiento</b>
+                      <b>Medicación</b>
                     </Table.Cell>
-                    <Table.Cell>{evolucion.tratamiento}</Table.Cell>
+                    <Table.Cell>{evolucion.medicacion}</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>
+                      <b>Indicaciones</b>
+                    </Table.Cell>
+                    <Table.Cell>{evolucion.indicacion}</Table.Cell>
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>
@@ -133,7 +153,7 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist }) => {
                   </Grid>
                 </Segment>
               )}
-            </div>
+            </DivScroll>
           </Global>
         </Segment>
       )}

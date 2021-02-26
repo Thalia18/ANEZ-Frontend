@@ -2,10 +2,16 @@ import React from 'react';
 import Media from 'react-media';
 import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
-import { Global } from '../../../global';
+import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import Modal from '../../Modales/ModalExists';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  maxMediumScroll,
+  mediumHeight,
+  mediumScroll,
+} from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -37,7 +43,7 @@ const Agregar = ({
             <hr />
             <HCHeader paciente={paciente} />
 
-            <div style={matches.medium ? mediumScroll : maxMediumScroll}>
+            <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveHC}
@@ -140,7 +146,7 @@ const Agregar = ({
                   </Form.Group>
                 </Segment>
               </Form>
-            </div>
+            </DivScroll>
             <Modal
               existsHC={existsHC}
               header={header}

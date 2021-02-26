@@ -50,7 +50,6 @@ class PacienteDetalle extends Component {
         fotos: fotos.data,
         loading: false,
       });
-      console.log(this.state.fotos);
       if (this.state.fotos.length > 0) {
         this.setState({
           fotosExist: true,

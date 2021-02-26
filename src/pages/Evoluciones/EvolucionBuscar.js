@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Listado from '../../components/Evoluciones/Listado';
+import Listado from '../../components/Evoluciones/Buscar';
 import Layout from '../../components/Layout/Layout';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
@@ -13,7 +13,7 @@ class Evoluciones extends Component {
     this.state = {
       error: null,
       loading: true,
-      evoluciones: {},
+      buscarList: {},
       paciente: {},
     };
   }
@@ -30,18 +30,18 @@ class Evoluciones extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(
-        `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}`
+      const { data: buscarList } = await axios.get(
+        `${api_url}/api/evoluciones_fecha/${this.props.match.params.historiaId}/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}`
       );
-
       const { data: paciente } = await axios.get(
         `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
       );
       this.setState({
-        evoluciones: data.data,
+        buscarList: buscarList.data,
         paciente: paciente.data.pacientes,
         loading: false,
       });
+      console.log(this.state.buscarList.data);
     } catch (error) {
       this.setState({
         loading: false,
@@ -53,13 +53,15 @@ class Evoluciones extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.buscarList);
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
           <Listado
-            evoluciones={Object.values(this.state.evoluciones)}
+            evoluciones={Object.values(this.state.buscarList)}
             paciente={this.state.paciente}
-            historiaId={this.props.match.params.historiaId}
+            fecha1={this.props.match.params.fecha1}
+            fecha2={this.props.match.params.fecha2}
           />
         </Layout>
       </React.Fragment>

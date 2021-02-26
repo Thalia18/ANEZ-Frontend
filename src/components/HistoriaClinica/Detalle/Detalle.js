@@ -2,7 +2,7 @@ import React from 'react';
 import Media from 'react-media';
 import { Header, Icon, Segment, Table } from 'semantic-ui-react';
 
-import { Global } from '../../../global';
+import { Global, DivScroll } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
   GLOBAL_MEDIA_QUERIES,
@@ -28,7 +28,7 @@ const Detalle = ({ paciente, historia_clinica }) => {
             <hr />
             <HCHeader paciente={paciente} />
 
-            <div style={matches.medium ? mediumScroll : maxMediumScroll}>
+            <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Table celled striped>
                 <Table.Body>
                   <Table.Row>
@@ -105,7 +105,7 @@ const Detalle = ({ paciente, historia_clinica }) => {
                   </Table.Row>
                 </Table.Body>
               </Table>
-            </div>
+            </DivScroll>
           </Global>
         </Segment>
       )}

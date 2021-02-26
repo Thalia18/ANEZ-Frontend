@@ -28,7 +28,7 @@ const NavbarPacientes = ({ onClickDelete, pacienteId, historiaId }) => {
                 key={pacienteId}
                 to={`/evolucion_agregar/${historiaId}/${pacienteId}`}
               >
-                Agregar evolución
+                Crear evolución
               </Nav.Item>
               <Nav.Item
                 icon={<Icon icon='eye' />}

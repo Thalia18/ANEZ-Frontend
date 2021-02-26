@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Agregar from '../../components/Evolucion/Agregar/Agregar';
+import Editar from '../../components/Evolucion/Editar/Editar';
 import Layout from '../../components/Layout/Layout';
-import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
+import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
@@ -16,17 +16,7 @@ class EvolucionAgregar extends Component {
       error: null,
       loading: true,
       paciente: {},
-      evolucion: {
-        // historia_clinica_id: null,
-        // fecha: new Date(),
-        // motivo_consulta: '',
-        // fecha_ultima_menstruacion: undefined,
-        // procedimiento: '',
-        // diagnostico: '',
-        // tratamiento: '',
-        // proximo_control: undefined,
-        // created_at: new Date(),
-      },
+      evolucion: {},
       fotos: {
         evolucion_id: null,
         foto_url: '',
@@ -71,10 +61,7 @@ class EvolucionAgregar extends Component {
         fotoExists: fotos.data,
         loading: false,
       });
-      console.log(typeof this.state.fotoList);
-      console.log(typeof this.state.fotoExists);
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -93,12 +80,13 @@ class EvolucionAgregar extends Component {
           .fecha_ultima_menstruacion,
         procedimiento: this.state.evolucion.procedimiento,
         diagnostico: this.state.evolucion.diagnostico,
-        tratamiento: this.state.evolucion.tratamiento,
+        medicacion: this.state.evolucion.medicacion,
+        indicacion: this.state.evolucion.indicacion,
         proximo_control: this.state.evolucion.proximo_control,
         [e.target.name]: e.target.value,
+        updated_at: new Date(),
       },
     });
-    console.log(this.state.fotoList, 'list editar');
   };
 
   //guardar historia clinica
@@ -129,7 +117,7 @@ class EvolucionAgregar extends Component {
           for (const element of this.state.fotoList) {
             this.setState({
               fotos: {
-                // ...this.state.fotos,
+                ...this.state.fotos,
                 evolucion_id: this.state.evolucionId,
                 foto_url: element.foto_url,
                 created_at: new Date(),
@@ -150,7 +138,6 @@ class EvolucionAgregar extends Component {
         `/evolucion/${this.props.match.params.evolucionId}/${this.props.match.params.historiaId}`
       );
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -180,14 +167,13 @@ class EvolucionAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.fotoExists, 'exists');
 
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
-          <Navbar buttonDisable={this.state.buttonDisable} />
+          <Navbar />
 
-          <Agregar
+          <Editar
             paciente={this.state.paciente}
             onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
             formEvolucion={this.state.evolucion}
@@ -196,7 +182,6 @@ class EvolucionAgregar extends Component {
             handleRemoveClick={this.removeFoto}
             handleInputChange={this.handleChangeFoto}
             fotosList={this.state.fotoList}
-            form={'formEditar'}
           />
         </Layout>
       </React.Fragment>
