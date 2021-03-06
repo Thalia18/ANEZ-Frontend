@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Message, Form, Grid, Segment } from 'semantic-ui-react';
 import Media from 'react-media';
+import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react';
 
 import { GLOBAL_MEDIA_QUERIES } from '../utils';
 
@@ -66,6 +66,7 @@ const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
                     onChange={handleChange}
                     name='contrasena'
                     value={formUser.contrasena}
+                    autoComplete='on'
                     required
                   />
                   <br />

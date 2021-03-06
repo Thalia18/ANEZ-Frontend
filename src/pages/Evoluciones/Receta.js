@@ -2,10 +2,14 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Listado from '../../components/Evoluciones/Listado';
+import Navbar from '../../components/Evolucion/Receta/NavbarReceta';
+import RecetaPDF from '../../components/Evolucion/Receta/PDFReceta';
+import RecetaTemplate from '../../components/Evolucion/Receta/RecetaTemplate';
 import Layout from '../../components/Layout/Layout';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
+
+import 'semantic-ui-css/semantic.min.css';
 
 class Receta extends Component {
   constructor(props) {
@@ -13,8 +17,8 @@ class Receta extends Component {
     this.state = {
       error: null,
       loading: true,
-      evoluciones: {},
-      autocomplete: {},
+      especialidad: {},
+      evolucion: {},
     };
   }
   componentDidMount() {
@@ -30,20 +34,19 @@ class Receta extends Component {
       error: null,
     });
     try {
-      //   const { data } = await axios.get(
-      //     `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}`
-      //   );
-      //   const autoComplete = await axios.get(
-      //     `${api_url}/api/evoluciones_autocomplete/${this.props.match.params.historiaId}`
-      //   );
-
+      const { data: especialidad } = await axios.get(
+        `${api_url}/api/especialidad_medico/${this.props.user.medico_id}`
+      );
+      const { data: evolucion } = await axios.get(
+        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
+      );
       this.setState({
-        // evoluciones: data.data,
-        // autocomplete: autoComplete.data,
+        especialidad: especialidad.data,
+        evolucion: evolucion.data,
         loading: false,
       });
+      console.log(this.state.evolucion);
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -57,10 +60,29 @@ class Receta extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
-          {/* <Listado
-            evoluciones={Object.values(this.state.evoluciones)}
-            autoComplete={this.state.autocomplete}
-          /> */}
+          {/* <PDFViewer style={{ width: '100%', height: '100%' }}>
+                      <RecetaPDF
+                        consultorio={this.state.consultorio}
+                        especialidad={this.state.especialidad}
+                        nombreMedico={this.props.user.nombre.trim()}
+                        apellidoMedico={this.props.user.apellido.trim()}
+                      />
+                    </PDFViewer> */}
+          <RecetaPDF
+            consultorio={this.props.consultorio}
+            especialidad={this.state.especialidad}
+            evolucion={this.state.evolucion}
+            nombreMedico={this.props.user.nombre.trim()}
+            apellidoMedico={this.props.user.apellido.trim()}
+          />
+          <RecetaTemplate
+            style={{ display: 'none' }}
+            consultorio={this.props.consultorio}
+            especialidad={this.state.especialidad}
+            evolucion={this.state.evolucion}
+            nombreMedico={this.props.user.nombre.trim()}
+            apellidoMedico={this.props.user.apellido.trim()}
+          />
         </Layout>
       </React.Fragment>
     );

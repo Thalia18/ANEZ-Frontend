@@ -14,7 +14,7 @@ import { Logo } from './SidenavStyles';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const SidenavC = ({ user, activeKeyP, ...props }) => {
+const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
   const [expanded, setExpanded] = React.useState(true);
   let [activeKey, setActiveKey] = React.useState(Object.values(activeKeyP)[0]);
 
@@ -64,7 +64,7 @@ const SidenavC = ({ user, activeKeyP, ...props }) => {
                     componentClass={Link}
                     to='/main'
                   >
-                    <Logo src='https://i.ibb.co/hLjvrdL/logoANEZ.png' />
+                    <Logo src={consultorio.logo} />
                   </Nav.Item>
                   <Nav.Item eventKey='1'>
                     <Icon icon='calendar' /> Citas

@@ -10,9 +10,9 @@ const logoutUser = (state, action) => ({
   ...state,
   user: action.payload,
 });
-const applySetAutocomplete = (state, action) => ({
+const applySetConsultorio = (state, action) => ({
   ...state,
-  autocomplete: action.payload,
+  consultorio: action.payload,
 });
 function authTypeReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -22,8 +22,8 @@ function authTypeReducer(state = INITIAL_STATE, action) {
     case 'LOGOUT_USER': {
       return logoutUser(state, action);
     }
-    case 'SET_AUTOCOMPLETE': {
-      return applySetAutocomplete(state, action);
+    case 'SET_CONSULTORIO': {
+      return applySetConsultorio(state, action);
     }
 
     default:

@@ -1,6 +1,6 @@
 import React from 'react';
 import Media from 'react-media';
-import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';

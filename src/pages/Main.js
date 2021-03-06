@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Layout from '../components/Layout/Layout';
 import Slider from '../components/Slider/Slider';
-import { connect } from 'react-redux';
 import { mapStateToProps } from '../components/utils';
 
 const Main = ({ user, ...props }) => {

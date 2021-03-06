@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@progress/kendo-drawing": "1.9.4",
+    "@progress/kendo-react-pdf": "2.0.0",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.1.0",
     "@testing-library/user-event": "12.1.10",
@@ -19,6 +21,7 @@
     "redux-persist": "6.0.0",
     "redux-thunk": "2.3.0",
     "rsuite": "4.8.9",
+    "rxjs": "^6.6.6",
     "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "2.0.3",
     "styled-components": "5.2.1",

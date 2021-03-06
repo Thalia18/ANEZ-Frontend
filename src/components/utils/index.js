@@ -14,6 +14,7 @@ export const GLOBAL_MEDIA_QUERIES = {
 export const mapStateToProps = (state) => {
   return {
     user: state.user,
+    consultorio: state.consultorio,
   };
 };
 

@@ -6,7 +6,7 @@ export const logoutUser = (payload) => ({
   type: 'LOGOUT_USER',
   payload,
 });
-export const setAutocomplete = (payload) => ({
-  type: 'SET_AUTOCOMPLETE',
+export const setConsultorio = (payload) => ({
+  type: 'SET_CONSULTORIO',
   payload,
 });

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { setUser } from '../actions';
+import { setConsultorio, setUser } from '../actions';
 import Login from '../components/Login/Login';
 import { api_url } from '../components/utils/';
 
@@ -19,6 +19,7 @@ class LoginG extends Component {
         contrasena: '',
       },
       userConfirm: {},
+      consultorio: {},
     };
   }
   componentDidMount() {
@@ -55,7 +56,14 @@ class LoginG extends Component {
         loading: false,
         correctUser: false,
       });
+      const { data: consultorio } = await axios.get(
+        `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`
+      );
+      this.setState({
+        consultorio: consultorio.data,
+      });
       this.props.setUser(this.state.userConfirm);
+      this.props.setConsultorio(this.state.consultorio);
       this.props.history.push('/main');
     } catch (error) {
       this.setState({
@@ -85,5 +93,6 @@ class LoginG extends Component {
 
 const mapDispatchToProps = {
   setUser,
+  setConsultorio,
 };
 export default withRouter(connect(null, mapDispatchToProps)(LoginG));
