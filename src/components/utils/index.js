@@ -15,6 +15,8 @@ export const mapStateToProps = (state) => {
   return {
     user: state.user,
     consultorio: state.consultorio,
+    especialidad: state.especialidad,
+    subcategorias: state.subcategorias,
   };
 };
 
@@ -149,3 +151,32 @@ export const mediumHeight = { height: '38em' };
 
 //const para mas de medium height
 export const masMediumHeight = { height: '53em' };
+
+//const para medium scroll
+export const mediumHeightScroll = {
+  height: '45em',
+  overflowY: 'auto ::-webkit-scrollbar {display:none;}',
+  overflowX: 'hidden',
+};
+
+//eliminar tildes de Receta
+export const eliminarTildes = (texto) => {
+  return texto
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase();
+};
+
+//para cie10
+export const cie10Dropdown = (subcategorias) => {
+  let opcion = [];
+  Object.values(subcategorias).map((item) => {
+    opcion.push({
+      key: item.subcategoria_id,
+      text: item.descripcion.trim().toUpperCase(),
+      code: item.codigo,
+      value: item.subcategoria_id,
+    });
+  });
+  return opcion;
+};

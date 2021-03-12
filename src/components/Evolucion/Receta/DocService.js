@@ -1,10 +1,9 @@
 import { savePDF } from '@progress/kendo-react-pdf';
 
-import Template from './RecetaTemplate';
-
 class DocService {
   createPdf = (html) => {
     savePDF(html, {
+      keepTogether: 'p',
       paperSize: 'A4',
       fileName: 'form.pdf',
       landscape: true,

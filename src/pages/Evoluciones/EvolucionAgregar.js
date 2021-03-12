@@ -35,6 +35,7 @@ class EvolucionAgregar extends Component {
       evolucionId: null,
       fotoList: [{ foto_url: '' }],
       buttonDisable: false,
+      cie10List: {},
     };
   }
   componentDidMount() {
@@ -54,8 +55,10 @@ class EvolucionAgregar extends Component {
         `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
       );
 
+      const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
       this.setState({
         paciente: data.data,
+        cie10List: cie10List.data,
         loading: false,
       });
     } catch (error) {
@@ -144,6 +147,7 @@ class EvolucionAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.cie10List);
 
     return (
       <React.Fragment>

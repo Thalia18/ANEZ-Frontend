@@ -1,23 +1,10 @@
 import React from 'react';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
 
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
-import {
-  GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  maxMediumScroll,
-  mediumHeight,
-  mediumScroll,
-} from '../../utils';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
 import Fotos from '../Fotos/Agregar';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -111,6 +98,8 @@ const Agregar = ({
                     onChange={handleChange}
                     name='medicacion'
                     value={formEvolucion.medicacion}
+                    maxLength={1300}
+                    rows={10}
                   />
                   <Form.TextArea
                     label='Indicaciones'
@@ -119,6 +108,8 @@ const Agregar = ({
                     onChange={handleChange}
                     name='indicacion'
                     value={formEvolucion.indicacion}
+                    maxLength={1300}
+                    rows={10}
                   />
                 </Form.Group>
                 <Form.Input

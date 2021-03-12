@@ -1,6 +1,6 @@
 import React from 'react';
 import Media from 'react-media';
-import { Segment } from 'semantic-ui-react';
+import { Grid, Segment } from 'semantic-ui-react';
 
 import { DivScroll, Global } from '../../../global';
 import {
@@ -10,6 +10,7 @@ import {
   mediumHeight,
   mediumScroll,
 } from '../../utils';
+import Header from './Header';
 import Navbar from './NavbarReceta';
 
 export default (props) => {
@@ -22,7 +23,9 @@ export default (props) => {
           <Navbar createPdf={createPdf} />
 
           <Segment>
-            <Global style={matches.medium ? mediumHeight : masMediumHeight}>
+            <Global
+              style={matches.medium ? { height: '45em' } : masMediumHeight}
+            >
               <br />
 
               {/* <DivScroll
@@ -34,6 +37,7 @@ export default (props) => {
                   </section> */}
 
               <section ref={bodyRef}>{props.children}</section>
+
               {/* </section> */}
               {/* </DivScroll> */}
             </Global>

@@ -14,6 +14,11 @@ const applySetConsultorio = (state, action) => ({
   ...state,
   consultorio: action.payload,
 });
+const applySetEspecialidad = (state, action) => ({
+  ...state,
+  especialidad: action.payload,
+});
+
 function authTypeReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'SET_USER': {
@@ -24,6 +29,9 @@ function authTypeReducer(state = INITIAL_STATE, action) {
     }
     case 'SET_CONSULTORIO': {
       return applySetConsultorio(state, action);
+    }
+    case 'SET_ESPECIALIDAD': {
+      return applySetEspecialidad(state, action);
     }
 
     default:

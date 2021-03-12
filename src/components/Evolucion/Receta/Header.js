@@ -1,41 +1,40 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
+import { Container, Grid, Image } from 'semantic-ui-react';
 
-import { Container, Grid, Icon, Image } from 'semantic-ui-react';
-
-import { mapStateToProps } from '../../utils';
+import { eliminarTildes, mapStateToProps } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Header = ({ user, consultorio }) => {
+const Header = ({ user, consultorio, especialidad }) => {
+  console.log(especialidad);
   return (
     <Grid>
       <Grid.Column width={5}>
-        <Image src={consultorio.logo} style={{ height: '6em' }} />
+        <Image src={consultorio.logo} style={{ height: '7.5em' }} />
       </Grid.Column>
       <Grid.Column width={9} textAlign='center'>
         <Container style={{ marginTop: '1em' }}>
-          <Container>{consultorio.nombre}</Container>
+          <Container>{eliminarTildes(consultorio.nombre)}</Container>
 
           <Container
             style={{
               fontStyle: 'italic',
-              fontSize: '0.9em',
+              fontSize: '1.3em',
               fontWeight: 'bold',
               fontFamily: 'Bookman, URW Bookman L, serif',
             }}
           >
-            DRA.&nbsp; {user.nombre}
+            DR(A).&nbsp; {eliminarTildes(user.nombre)}
             &nbsp;
-            {user.apellido}
+            {eliminarTildes(user.apellido)}
           </Container>
           <Container
             style={{
-              fontSize: '0.7em',
+              fontSize: '0.9em',
             }}
           >
-            {/* {especialidad} */}
+            {eliminarTildes(especialidad.especialidades.especialidad)}
           </Container>
         </Container>
       </Grid.Column>

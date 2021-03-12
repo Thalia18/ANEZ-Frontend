@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import Navbar from '../../components/Evolucion/Receta/NavbarReceta';
 import RecetaPDF from '../../components/Evolucion/Receta/PDFReceta';
-import RecetaTemplate from '../../components/Evolucion/Receta/RecetaTemplate';
 import Layout from '../../components/Layout/Layout';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
@@ -69,14 +68,6 @@ class Receta extends Component {
                       />
                     </PDFViewer> */}
           <RecetaPDF
-            consultorio={this.props.consultorio}
-            especialidad={this.state.especialidad}
-            evolucion={this.state.evolucion}
-            nombreMedico={this.props.user.nombre.trim()}
-            apellidoMedico={this.props.user.apellido.trim()}
-          />
-          <RecetaTemplate
-            style={{ display: 'none' }}
             consultorio={this.props.consultorio}
             especialidad={this.state.especialidad}
             evolucion={this.state.evolucion}

@@ -10,3 +10,7 @@ export const setConsultorio = (payload) => ({
   type: 'SET_CONSULTORIO',
   payload,
 });
+export const setEspecialidad = (payload) => ({
+  type: 'SET_ESPECIALIDAD',
+  payload,
+});
