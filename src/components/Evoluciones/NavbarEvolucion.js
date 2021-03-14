@@ -39,8 +39,11 @@ const NavbarPacientes = ({ evolucionId, paciente, ...props }) => {
               {!matches.medium && (
                 <Nav.Item
                   icon={<Icon icon='angle-left' />}
-                  componentClass={Link}
-                  to={`/historia_clinica/${paciente.paciente_id}`}
+                  // componentClass={Link}
+                  // to={`/historia_clinica/${paciente.paciente_id}`}
+                  onClick={() => {
+                    history.goBack();
+                  }}
                 />
               )}
               <Nav.Item

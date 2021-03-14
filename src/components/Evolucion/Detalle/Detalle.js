@@ -19,11 +19,12 @@ import {
   maxMediumScroll,
   mediumHeight,
   mediumScroll,
+  saltos,
 } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Detalle = ({ paciente, evolucion, fotos, fotosExist }) => {
+const Detalle = ({ paciente, evolucion, fotos, fotosExist, cie10 }) => {
   const [open, setOpen] = React.useState(false);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
@@ -51,7 +52,9 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist }) => {
                     <Table.Cell width={3}>
                       <b>Motivo de consulta</b>
                     </Table.Cell>
-                    <Table.Cell>{evolucion.motivo_consulta}</Table.Cell>
+                    <Table.Cell style={saltos}>
+                      {evolucion.motivo_consulta}
+                    </Table.Cell>
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>
@@ -65,7 +68,9 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist }) => {
                     <Table.Cell>
                       <b>Procedimiento</b>
                     </Table.Cell>
-                    <Table.Cell>{evolucion.procedimiento}</Table.Cell>
+                    <Table.Cell style={saltos}>
+                      {evolucion.procedimiento}
+                    </Table.Cell>
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>
@@ -73,17 +78,42 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist }) => {
                     </Table.Cell>
                     <Table.Cell>{evolucion.diagnostico}</Table.Cell>
                   </Table.Row>
+                  {cie10.length > 0 && (
+                    <Table.Row>
+                      <Table.Cell style={saltos}>
+                        <b>Diagnóstico CIE 10</b>
+                      </Table.Cell>
+                      <Table.Cell>
+                        {cie10.map((item) => {
+                          return (
+                            <p key={item.categoria_id}>
+                              {item.categorias.codigo.trim() +
+                                ' ➜ ' +
+                                item.categorias.descripcion
+                                  .trim()
+                                  .toUpperCase()}
+                              <br />
+                            </p>
+                          );
+                        })}
+                      </Table.Cell>
+                    </Table.Row>
+                  )}
                   <Table.Row>
                     <Table.Cell>
                       <b>Medicación</b>
                     </Table.Cell>
-                    <Table.Cell>{evolucion.medicacion}</Table.Cell>
+                    <Table.Cell style={saltos}>
+                      {evolucion.medicacion}
+                    </Table.Cell>
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>
                       <b>Indicaciones</b>
                     </Table.Cell>
-                    <Table.Cell>{evolucion.indicacion}</Table.Cell>
+                    <Table.Cell style={saltos}>
+                      {evolucion.indicacion}
+                    </Table.Cell>
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>

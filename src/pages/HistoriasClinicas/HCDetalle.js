@@ -53,7 +53,6 @@ class HCDetalle extends Component {
         });
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,

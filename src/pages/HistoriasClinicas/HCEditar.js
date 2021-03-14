@@ -48,7 +48,6 @@ class HCEditar extends Component {
       trimData(this.state.paciente);
       trimData(this.state.historiaClinica);
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -106,7 +105,6 @@ class HCEditar extends Component {
         `/historia_clinica/${this.state.paciente.paciente_id}`
       );
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,

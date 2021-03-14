@@ -1,10 +1,23 @@
 import React from 'react';
 import Media from 'react-media';
-import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
+import {
+  Checkbox,
+  Dropdown,
+  Form,
+  Header,
+  Icon,
+  Segment,
+} from 'semantic-ui-react';
 
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  maxMediumScroll,
+  mediumHeight,
+  mediumScroll,
+} from '../../utils';
 import Fotos from '../Fotos/Agregar';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -15,6 +28,9 @@ const Agregar = ({
   handleChange,
   formEvolucion,
   fotosList,
+  cie10,
+  handleOnChangeCie10,
+  cie10List,
 }) => {
   const [value, setValue] = React.useState(true);
   const handleChangeCheck = (e) => {
@@ -79,17 +95,32 @@ const Agregar = ({
                     required
                   />
                 </Form.Group>
-                <Form.Group>
-                  <Form.TextArea
-                    label='Diagnóstico'
-                    placeholder='Diagnóstico'
-                    width={16}
-                    onChange={handleChange}
-                    name='diagnostico'
-                    value={formEvolucion.diagnostico}
-                    required
-                  />
-                </Form.Group>
+                <Segment>
+                  <Form.Group>
+                    <Form.TextArea
+                      label='Diagnóstico'
+                      placeholder='Diagnóstico'
+                      width={16}
+                      onChange={handleChange}
+                      name='diagnostico'
+                      value={formEvolucion.diagnostico}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Dropdown
+                      clearable
+                      fluid
+                      multiple
+                      search
+                      selection
+                      options={cie10}
+                      placeholder='Seleccione código CIE 10'
+                      onChange={handleOnChangeCie10}
+                      defaultValue={cie10List}
+                    />
+                  </Form.Group>
+                </Segment>
                 <Form.Group>
                   <Form.TextArea
                     label='Medicación'

@@ -7,7 +7,12 @@ import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, tipoDeSangreDropdown } from '../../components/utils';
+import {
+  estadoCivilDropdown,
+  etniasDropdown,
+  nivelDeInstruccionDropdown,
+  tipoDeSangreDropdown,
+} from '../../components/utils';
 
 class PacienteAgregar extends Component {
   constructor(props) {
@@ -80,7 +85,6 @@ class PacienteAgregar extends Component {
       });
       this.opcionesSelect();
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -183,7 +187,6 @@ class PacienteAgregar extends Component {
       }
       this.props.history.push('/pacientes');
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,

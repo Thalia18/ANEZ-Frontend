@@ -7,7 +7,6 @@ import { eliminarTildes, mapStateToProps } from '../../utils';
 import 'semantic-ui-css/semantic.min.css';
 
 const Header = ({ user, consultorio, especialidad }) => {
-  console.log(especialidad);
   return (
     <Grid>
       <Grid.Column width={5}>

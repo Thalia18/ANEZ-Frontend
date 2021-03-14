@@ -16,7 +16,6 @@ export const mapStateToProps = (state) => {
     user: state.user,
     consultorio: state.consultorio,
     especialidad: state.especialidad,
-    subcategorias: state.subcategorias,
   };
 };
 
@@ -33,7 +32,7 @@ export const estadoCivilDropdown = (estadoCivilList) => {
   Object.values(estadoCivilList).map((item) => {
     opcion.push({
       key: item.estado_civil_id,
-      text: item.estado_civil.trim().toUpperCase(),
+      text: item.estado_civil.trim(),
       value: item.estado_civil_id,
     });
   });
@@ -55,7 +54,7 @@ export const nivelDeInstruccionDropdown = (nivelDeInstruccionList) => {
   Object.values(nivelDeInstruccionList).map((item) => {
     opcion.push({
       key: item.nivel_de_instruccion_id,
-      text: item.nivel_de_instruccion.trim().toUpperCase(),
+      text: item.nivel_de_instruccion.trim(),
       value: item.nivel_de_instruccion_id,
     });
   });
@@ -66,7 +65,7 @@ export const etniasDropdown = (etniasList) => {
   Object.values(etniasList).map((item) => {
     opcion.push({
       key: item.etnia_id,
-      text: item.etnia.trim().toUpperCase(),
+      text: item.etnia.trim(),
       value: item.etnia_id,
     });
   });
@@ -159,6 +158,12 @@ export const mediumHeightScroll = {
   overflowX: 'hidden',
 };
 
+//const para saltos de linea
+export const saltos = {
+  whiteSpace: 'pre-wrap',
+  textAlign: 'justify',
+};
+
 //eliminar tildes de Receta
 export const eliminarTildes = (texto) => {
   return texto
@@ -168,15 +173,17 @@ export const eliminarTildes = (texto) => {
 };
 
 //para cie10
-export const cie10Dropdown = (subcategorias) => {
+export const cie10Dropdown = (categorias) => {
   let opcion = [];
-  Object.values(subcategorias).map((item) => {
-    opcion.push({
-      key: item.subcategoria_id,
-      text: item.descripcion.trim().toUpperCase(),
-      code: item.codigo,
-      value: item.subcategoria_id,
+  if (categorias) {
+    Object.values(categorias).map((item) => {
+      opcion.push({
+        key: item.categoria_id,
+        text:
+          item.codigo.trim() + ' ➜ ' + item.descripcion.trim().toUpperCase(),
+        value: item.categoria_id,
+      });
     });
-  });
+  }
   return opcion;
 };

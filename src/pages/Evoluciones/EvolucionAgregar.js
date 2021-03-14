@@ -1,12 +1,11 @@
-import axios from 'axios';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
 import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import { api_url, openNotification, trimData } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { cie10Dropdown, mapStateToProps } from '../../components/utils';
+import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class EvolucionAgregar extends Component {
   constructor(props) {
@@ -35,7 +34,9 @@ class EvolucionAgregar extends Component {
       evolucionId: null,
       fotoList: [{ foto_url: '' }],
       buttonDisable: false,
-      cie10List: {},
+      categoriaEvolucion: {},
+      cie10: [],
+      cie10List: [],
     };
   }
   componentDidMount() {
@@ -58,11 +59,10 @@ class EvolucionAgregar extends Component {
       const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
       this.setState({
         paciente: data.data,
-        cie10List: cie10List.data,
+        cie10: cie10Dropdown(cie10List.data),
         loading: false,
       });
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -126,6 +126,25 @@ class EvolucionAgregar extends Component {
           }
         }
       }
+
+      //almacenar datos de cie10
+      if (this.state.cie10List.length > 0) {
+        for (const element of this.state.cie10List) {
+          this.setState({
+            categoriaEvolucion: {
+              ...this.state.categoriaEvolucion,
+              categoria_id: element,
+              evolucion_id: this.state.evolucionId,
+              created_at: new Date(),
+              update_at: null,
+            },
+          });
+          await axios.post(
+            `${api_url}/api/categoria_evolucion`,
+            this.state.categoriaEvolucion
+          );
+        }
+      }
       openNotification(
         'success',
         'Evoluciones',
@@ -136,18 +155,20 @@ class EvolucionAgregar extends Component {
         `/historia_clinica/${this.state.paciente.paciente_id}`
       );
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
       });
     }
   };
+  //obtener datos de dropdown
+  handleOnChangeCie10 = (e, data) => {
+    this.state.cie10List = data.value;
+  };
 
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.cie10List);
 
     return (
       <React.Fragment>
@@ -156,7 +177,9 @@ class EvolucionAgregar extends Component {
 
           <Agregar
             paciente={this.state.paciente}
+            cie10={this.state.cie10}
             onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
+            handleOnChangeCie10={this.handleOnChangeCie10}
             formEvolucion={this.state.evolucion}
             handleChange={this.handleChange}
             handleAddClick={this.addFoto}

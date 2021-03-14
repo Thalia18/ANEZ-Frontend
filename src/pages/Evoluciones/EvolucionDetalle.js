@@ -1,13 +1,12 @@
-import axios from 'axios';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
 import Detalle from '../../components/Evolucion/Detalle/Detalle';
 import Navbar from '../../components/Evolucion/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
+import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class PacienteDetalle extends Component {
   constructor(props) {
@@ -20,6 +19,7 @@ class PacienteDetalle extends Component {
       evolucion: {},
       fotos: {},
       fotosExist: false,
+      cie10: {},
     };
   }
   componentDidMount() {
@@ -44,10 +44,14 @@ class PacienteDetalle extends Component {
       const { data: fotos } = await axios.get(
         `${api_url}/api/fotos_evolucion/${this.props.match.params.evolucionId}`
       );
+      const { data: cie10 } = await axios.get(
+        `${api_url}/api/categoria_evolucion/${this.props.match.params.evolucionId}`
+      );
       this.setState({
         paciente: paciente.data.pacientes,
         evolucion: evolucion.data,
         fotos: fotos.data,
+        cie10: cie10.data,
         loading: false,
       });
       if (this.state.fotos.length > 0) {
@@ -103,21 +107,13 @@ class PacienteDetalle extends Component {
             historiaId={this.props.match.params.historiaId}
             evolucionId={this.props.match.params.evolucionId}
           />
-          {/* {this.state.fotosExist && ( */}
           <Detalle
             paciente={this.state.paciente}
             evolucion={this.state.evolucion}
             fotos={this.state.fotos}
             fotosExist={this.state.fotosExist}
+            cie10={this.state.cie10}
           />
-          {/* )} */}
-          {/* {!this.state.fotosExist && (
-            <Detalle
-              paciente={this.state.paciente}
-              evolucion={this.state.evolucion}
-              fotosExist={this.state.fotosExist}
-            />
-          )} */}
 
           <ModalEliminar
             deleteM={this.deleteData}

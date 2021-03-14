@@ -44,7 +44,6 @@ class Receta extends Component {
         evolucion: evolucion.data,
         loading: false,
       });
-      console.log(this.state.evolucion);
     } catch (error) {
       this.setState({
         loading: false,

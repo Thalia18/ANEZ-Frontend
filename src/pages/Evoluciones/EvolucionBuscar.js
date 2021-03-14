@@ -41,7 +41,6 @@ class Evoluciones extends Component {
         paciente: paciente.data.pacientes,
         loading: false,
       });
-      console.log(this.state.buscarList.data);
     } catch (error) {
       this.setState({
         loading: false,
@@ -53,7 +52,6 @@ class Evoluciones extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.buscarList);
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>

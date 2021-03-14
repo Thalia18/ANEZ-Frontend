@@ -18,7 +18,6 @@ class App extends Component {
   createPdf = (html) => Doc.createPdf(html);
 
   render() {
-    console.log(this.props.evolucion.medicacion);
     return (
       <React.Fragment>
         <PdfContainer createPdf={this.createPdf}>

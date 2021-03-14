@@ -7,7 +7,12 @@ import Editar from '../../components/Paciente/Editar/Editar';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, tipoDeSangreDropdown } from '../../components/utils';
+import {
+  estadoCivilDropdown,
+  etniasDropdown,
+  nivelDeInstruccionDropdown,
+  tipoDeSangreDropdown,
+} from '../../components/utils';
 
 class PacienteEditar extends Component {
   constructor(props) {
@@ -64,7 +69,6 @@ class PacienteEditar extends Component {
       trimData(this.state.paciente);
       this.opcionesSelect();
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,

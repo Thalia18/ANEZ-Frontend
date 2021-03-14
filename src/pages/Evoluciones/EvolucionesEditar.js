@@ -6,7 +6,7 @@ import Editar from '../../components/Evolucion/Editar/Editar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { cie10Dropdown, mapStateToProps } from '../../components/utils';
 
 class EvolucionAgregar extends Component {
   constructor(props) {
@@ -26,6 +26,10 @@ class EvolucionAgregar extends Component {
       buttonDisable: false,
       fotoExists: {},
       fotosUpdate: [{ foto_url: '' }],
+      categoriaEvolucion: {},
+      cie10: [],
+      cie10List: [],
+      cie10Exist: {},
     };
   }
   componentDidMount() {
@@ -53,12 +57,18 @@ class EvolucionAgregar extends Component {
       const { data: fotosP } = await axios.get(
         `${api_url}/api/fotos_evolucion_p/${this.props.match.params.evolucionId}`
       );
-
+      const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
+      const { data: cie10Edit } = await axios.get(
+        `${api_url}/api/categoria_evolucion/${this.props.match.params.evolucionId}`
+      );
       this.setState({
         paciente: paciente.data.pacientes,
         evolucion: evolucion.data,
         fotoList: fotosP.data,
         fotoExists: fotos.data,
+        cie10: cie10Dropdown(cie10List.data),
+        cie10List: this.selectedCIe10(cie10Edit.data),
+        cie10Exist: cie10Edit.data,
         loading: false,
       });
     } catch (error) {
@@ -67,6 +77,17 @@ class EvolucionAgregar extends Component {
         error: error,
       });
     }
+  };
+
+  //identificar los cie10 seleccionados
+  selectedCIe10 = (cie10) => {
+    let opcion = [];
+    if (cie10) {
+      Object.values(cie10).map((item) => {
+        opcion.push(item.categoria_id);
+      });
+    }
+    return opcion;
   };
 
   //setear los datos del formulario de evolucion
@@ -99,6 +120,7 @@ class EvolucionAgregar extends Component {
     trimData(this.state.evolucion);
     try {
       this.deleteImages(this.state.fotoExists);
+      this.deleteCie10();
 
       await axios.put(
         `${api_url}/api/evolucion/${this.state.evolucion.evolucion_id}`,
@@ -121,11 +143,27 @@ class EvolucionAgregar extends Component {
                 evolucion_id: this.state.evolucionId,
                 foto_url: element.foto_url,
                 created_at: new Date(),
-                update_at: null,
               },
             });
             await axios.post(`${api_url}/api/foto`, this.state.fotos);
           }
+        }
+      }
+      //almacenar datos de cie10
+      if (this.state.cie10List.length > 0) {
+        for (const element of this.state.cie10List) {
+          this.setState({
+            categoriaEvolucion: {
+              ...this.state.categoriaEvolucion,
+              categoria_id: element,
+              evolucion_id: this.state.evolucionId,
+              created_at: new Date(),
+            },
+          });
+          await axios.post(
+            `${api_url}/api/categoria_evolucion`,
+            this.state.categoriaEvolucion
+          );
         }
       }
       openNotification(
@@ -164,10 +202,32 @@ class EvolucionAgregar extends Component {
     }
   };
 
+  //borra las imagenes para la edicion
+  deleteCie10 = async () => {
+    try {
+      await axios.delete(
+        `${api_url}/api/categoria_evolucion/${this.props.match.params.evolucionId}`
+      );
+
+      this.setState({
+        loading: false,
+        success: true,
+        error: null,
+      });
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error,
+      });
+    }
+  };
+  //obtener datos de dropdown
+  handleOnChangeCie10 = (e, data) => {
+    this.state.cie10List = data.value;
+  };
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
@@ -175,7 +235,10 @@ class EvolucionAgregar extends Component {
 
           <Editar
             paciente={this.state.paciente}
+            cie10={this.state.cie10}
+            cie10List={this.state.cie10List}
             onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
+            handleOnChangeCie10={this.handleOnChangeCie10}
             formEvolucion={this.state.evolucion}
             handleChange={this.handleChange}
             handleAddClick={this.addFoto}
