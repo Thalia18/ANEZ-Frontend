@@ -6,6 +6,7 @@ import {
   maxMediumScroll,
   mediumHeight,
   mediumScroll,
+  fechaActual,
 } from '../../utils';
 import Fotos from '../Fotos/Agregar';
 import _ from 'lodash';
@@ -35,11 +36,6 @@ const Agregar = ({
   const handleChangeCheck = (e) => {
     setValue(!value);
   };
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0');
-  var yyyy = today.getFullYear();
-  today = yyyy + '-' + mm + '-' + dd;
 
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -80,7 +76,7 @@ const Agregar = ({
                     onChange={handleChange}
                     name='fecha_ultima_menstruacion'
                     value={formEvolucion.fecha_ultima_menstruacion}
-                    max={today}
+                    max={fechaActual()}
                   />
                 </Form.Group>
                 <Form.Group>
@@ -149,7 +145,7 @@ const Agregar = ({
                   onChange={handleChange}
                   name='proximo_control'
                   value={formEvolucion.proximo_control}
-                  min={today}
+                  min={fechaActual()}
                 />
                 <Form.Field>
                   <Checkbox

@@ -5,13 +5,7 @@ import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import Modal from '../../Modales/ModalExists';
-import {
-  GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  maxMediumScroll,
-  mediumHeight,
-  mediumScroll,
-} from '../../utils';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -85,7 +79,7 @@ const Agregar = ({
                 <Form.Field>
                   <Checkbox
                     toggle
-                    label='Ingresar datos de abortos, cesáreas, gestas, partos y método anticonceptivo '
+                    label='Ingresar antecedentes gineco-obstétricos'
                     name='checkboxRadioGroup'
                     checked={value === false}
                     onChange={handleChangeCheck}

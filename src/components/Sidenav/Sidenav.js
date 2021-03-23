@@ -66,7 +66,7 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                   >
                     <Logo src={consultorio.logo} />
                   </Nav.Item>
-                  <Nav.Item eventKey='1'>
+                  <Nav.Item eventKey='1' componentClass={Link} to='/citas'>
                     <Icon icon='calendar' /> Citas
                   </Nav.Item>
 
@@ -106,7 +106,7 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
               </Navbar.Body>
             </Navbar>
             <Segment
-              style={matches.medium ? { height: '92%' } : { height: '93%' }}
+              style={matches.medium ? { height: '92%' } : { height: '94%' }}
             >
               {props.children}
             </Segment>

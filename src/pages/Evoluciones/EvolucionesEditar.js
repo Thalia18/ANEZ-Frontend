@@ -8,7 +8,7 @@ import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { cie10Dropdown, mapStateToProps } from '../../components/utils';
 
-class EvolucionAgregar extends Component {
+class EvolucionEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -252,4 +252,4 @@ class EvolucionAgregar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(EvolucionAgregar);
+export default connect(mapStateToProps, null)(EvolucionEditar);

@@ -5,7 +5,7 @@ class DocService {
     savePDF(html, {
       keepTogether: 'p',
       paperSize: 'A4',
-      fileName: 'form.pdf',
+      fileName: 'ANEZ.pdf',
       landscape: true,
       margin: 3,
     });

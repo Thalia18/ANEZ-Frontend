@@ -10,20 +10,24 @@ import {
 } from 'semantic-ui-react';
 
 import { Global } from '../../global';
-import HCHeader from '../HistoriasClinicas/HCHeader';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils';
-import Navbar from './NavbarEvolucion';
+import {
+  fechaFormato,
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  mediumHeight,
+} from '../utils';
+import Navbar from './NavbarCitas';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
+const Buscar = ({ citas, fecha1, fecha2, citaId }) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar evolucionId={value} paciente={paciente} pagina='evolucion' />
+          <Navbar verNav={true} citaId={value} />
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as='h1' textAlign='center'>
@@ -33,29 +37,36 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
                 </Header.Content>
               </Header>
               <hr />
-              <HCHeader paciente={paciente} />
               <br />
-              {evoluciones.length > 0 && (
+              {citas.length > 0 && (
                 <Table compact celled definition>
                   <Table.Body>
-                    {evoluciones.map((evolucion) => {
+                    {citas.map((cita) => {
                       return (
-                        <Table.Row key={evolucion.evolucion_id}>
+                        <Table.Row key={cita.cita_id}>
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle
                               name='checkboxRadioGroup'
-                              value={evolucion.evolucion_id}
-                              checked={value === evolucion.evolucion_id}
+                              value={cita.cita_id}
+                              checked={value === cita.cita_id}
                               onChange={handleChange}
                             />
                           </Table.Cell>
                           <Table.Cell>
-                            <b>Fecha:</b> {evolucion.fecha}
+                            <Icon name='calendar alternate' />
+                            {fechaFormato(cita.fecha)} &nbsp; &nbsp; &nbsp;
+                            <Icon name='time' /> {cita.hora}
                             <br />
-                            <b>Motivo consulta:</b>{' '}
-                            {evolucion.motivo_consulta.slice(0, 300).trim() +
-                              '...'}
+                            <b>Paciente:</b>{' '}
+                            {cita.pacientes.nombre +
+                              ' ' +
+                              cita.pacientes.apellido}
+                            <br />
+                            <b>Motivo cita:</b>{' '}
+                            {cita.motivo_cita
+                              ? cita.motivo_cita.slice(0, 300).trim()
+                              : ''}
                             <br />
                           </Table.Cell>
                         </Table.Row>
@@ -64,16 +75,15 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
                   </Table.Body>
                 </Table>
               )}
-              {evoluciones.length === 0 && (
+              {citas.length === 0 && (
                 <Message warning>
                   <Message.Header>
                     <Icon name='info circle' />
                     No se encontraron resultados
                   </Message.Header>
                   <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen evoluciones
-                    registradas desde el <b>{fecha1}</b> hasta el{' '}
-                    <b>{fecha2}</b>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen citas registradas
+                    desde el <b>{fecha1}</b> hasta el <b>{fecha2}</b>
                   </p>
                 </Message>
               )}
@@ -85,4 +95,4 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
   );
 };
 
-export default Listado;
+export default Buscar;

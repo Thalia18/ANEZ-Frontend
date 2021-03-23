@@ -19,7 +19,7 @@ const ModalExists = ({ existsHC, header, content, pacienteId }) => {
             history.push(`/historia_clinica/${pacienteId}`);
           }}
         >
-          <Icon name='checkmark' /> Ver
+          <Icon name='eye' /> Ver
         </Button>
         <Button color='green' onClick={() => history.goBack()}>
           <Icon name='checkmark' /> Ok

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Detalle from '../../components/Evolucion/Detalle/Detalle';
+import Detalle from '../../components/Cita/Detalle/Detalle';
 import Navbar from '../../components/Evolucion/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
@@ -16,11 +16,7 @@ class PacienteDetalle extends Component {
       open: false,
       error: null,
       loading: true,
-      paciente: {},
-      evolucion: {},
-      fotos: {},
-      fotosExist: false,
-      cie10: {},
+      cita: {},
     };
   }
   componentDidMount() {
@@ -36,30 +32,14 @@ class PacienteDetalle extends Component {
       error: null,
     });
     try {
-      const { data: evolucion } = await axios.get(
-        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
+      const { data: cita } = await axios.get(
+        `${api_url}/api/cita/${this.props.match.params.citaId}`
       );
-      const { data: paciente } = await axios.get(
-        `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
-      );
-      const { data: fotos } = await axios.get(
-        `${api_url}/api/fotos_evolucion/${this.props.match.params.evolucionId}`
-      );
-      const { data: cie10 } = await axios.get(
-        `${api_url}/api/categoria_evolucion/${this.props.match.params.evolucionId}`
-      );
+
       this.setState({
-        paciente: paciente.data.pacientes,
-        evolucion: evolucion.data,
-        fotos: fotos.data,
-        cie10: cie10.data,
+        cita: cita.data,
         loading: false,
       });
-      if (this.state.fotos.length > 0) {
-        this.setState({
-          fotosExist: true,
-        });
-      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -71,14 +51,12 @@ class PacienteDetalle extends Component {
   deleteData = async () => {
     try {
       await axios.delete(
-        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
+        `${api_url}/api/cita/${this.props.match.params.citaId}`
       );
       this.setState({
         loading: false,
       });
-      this.props.history.push(
-        `/evoluciones/${this.props.match.params.historiaId}`
-      );
+      this.props.history.push(`/citas`);
     } catch (error) {
       this.setState({
         loading: false,
@@ -102,19 +80,9 @@ class PacienteDetalle extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
-          <Navbar
-            onClickDelete={this.onClickDelete}
-            historiaId={this.props.match.params.historiaId}
-            evolucionId={this.props.match.params.evolucionId}
-          />
-          <Detalle
-            paciente={this.state.paciente}
-            evolucion={this.state.evolucion}
-            fotos={this.state.fotos}
-            fotosExist={this.state.fotosExist}
-            cie10={this.state.cie10}
-          />
+        <Layout activeKeyP='1'>
+          <Navbar onClickDelete={this.onClickDelete} />
+          <Detalle cita={this.state.cita} />
 
           <ModalEliminar
             deleteM={this.deleteData}

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { validate } from 'email-validator';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -34,6 +35,7 @@ class PacienteAgregar extends Component {
         lugar_nacimiento: '',
         direccion: '',
         telefono: '',
+        email: '',
         contacto_emergencia_nombre: '',
         contacto_emergencia_telefono: '',
         created_at: new Date(),
@@ -47,7 +49,7 @@ class PacienteAgregar extends Component {
       optionNI: [],
       optionE: [],
       buttonDisable: true,
-
+      emailCorrect: false,
       campos: true,
       cedulaLength: false,
     };
@@ -117,6 +119,7 @@ class PacienteAgregar extends Component {
         lugar_nacimiento: this.state.paciente.lugar_nacimiento,
         direccion: this.state.paciente.direccion,
         telefono: this.state.paciente.telefono,
+        email: this.state.paciente.email,
         contacto_emergencia_nombre: this.state.paciente
           .contacto_emergencia_nombre,
         contacto_emergencia_telefono: this.state.paciente
@@ -131,13 +134,14 @@ class PacienteAgregar extends Component {
       this.state.paciente.nivel_de_instruccion_id !== null &&
       this.state.paciente.estado_civil_id !== null &&
       this.state.paciente.tipo_de_sangre_id !== null &&
-      this.state.paciente.cedula !== null
+      this.state.paciente.cedula !== null &&
+      this.state.paciente.email !== null
     ) {
       this.setState({
         campos: false,
       });
 
-      if (this.state.paciente.cedula.length >= 10) {
+      if (this.state.paciente.cedula.length >= 11) {
         this.setState({
           buttonDisable: false,
           cedulaLength: false,
@@ -145,6 +149,18 @@ class PacienteAgregar extends Component {
       } else {
         this.setState({
           cedulaLength: true,
+          buttonDisable: true,
+        });
+      }
+
+      if (validate(this.state.paciente.email)) {
+        this.setState({
+          buttonDisable: false,
+          emailCorrect: false,
+        });
+      } else {
+        this.setState({
+          emailCorrect: true,
           buttonDisable: true,
         });
       }
@@ -211,6 +227,7 @@ class PacienteAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
@@ -229,6 +246,7 @@ class PacienteAgregar extends Component {
             handleOnChangeE={this.handleOnChangeE}
             campos={this.state.campos}
             cedulaLength={this.state.cedulaLength}
+            emailCorrect={this.state.emailCorrect}
           />
         </Layout>
       </React.Fragment>

@@ -1,11 +1,12 @@
+import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { cie10Dropdown, mapStateToProps } from '../../components/utils';
-import axios from 'axios';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 class EvolucionAgregar extends Component {
   constructor(props) {
@@ -169,7 +170,6 @@ class EvolucionAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>

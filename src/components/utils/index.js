@@ -133,23 +133,23 @@ export const openNotification = (funcName, header, content, span) => {
 
 //const para medium scroll
 export const mediumScroll = {
-  height: '22em',
+  height: '23em',
   overflowY: 'auto ::-webkit-scrollbar {display:none;}',
   overflowX: 'hidden',
 };
 
 //const para mas de medium scroll
 export const maxMediumScroll = {
-  height: '40em',
+  height: '41em',
   overflowY: 'auto',
   overflowX: 'hidden',
 };
 
 //const para medium height
-export const mediumHeight = { height: '38em' };
+export const mediumHeight = { height: '40em' };
 
 //const para mas de medium height
-export const masMediumHeight = { height: '53em' };
+export const masMediumHeight = { height: '60em' };
 
 //const para medium scroll
 export const mediumHeightScroll = {
@@ -186,4 +186,56 @@ export const cie10Dropdown = (categorias) => {
     });
   }
   return opcion;
+};
+
+//crear arreglo para calendario de citas
+export const citasList = (citas) => {
+  let opcion = [];
+  if (citas) {
+    Object.values(citas).map((item) => {
+      var fecha = new Date(item.fecha);
+
+      var hora = item.hora.split(':');
+      var month = fecha.getUTCMonth();
+      var day = fecha.getUTCDate();
+      var year = fecha.getUTCFullYear();
+      var seconds = hora[2];
+      var minutes = hora[1];
+      var hour = hora[0];
+      opcion.push({
+        cita_id: item.cita_id,
+        title:
+          item.pacientes.nombre.trim() + ' ' + item.pacientes.apellido.trim(),
+        start: new Date(year, month, day, hour, minutes, seconds),
+        end: new Date(year, month, day, hour, minutes, seconds),
+      });
+    });
+  }
+  return opcion;
+};
+
+//fechas con formato
+export const fechaFormato = (fecha) => {
+  var options = { year: 'numeric', month: 'long', day: 'numeric' };
+  let a = new Date(fecha.replace(/-/g, '/'));
+  return a.toLocaleDateString('es-ES', options).toUpperCase();
+};
+
+//only letters
+export const letters = (value) => {
+  if (value !== undefined) {
+    var newValue = value.replaceAll(/[^a-zA-Z​\s]+/g, '');
+    return newValue;
+  }
+};
+
+//fecha actual
+export const fechaActual = () => {
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd;
+  return today;
 };

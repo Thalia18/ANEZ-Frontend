@@ -1,11 +1,19 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
-import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
+import {
+  Checkbox,
+  Form,
+  Header,
+  Icon,
+  Message,
+  Segment,
+} from 'semantic-ui-react';
 
 import { Global } from '../../../global';
 import {
   GLOBAL_MEDIA_QUERIES,
+  letters,
   masMediumHeight,
   mediumHeight,
 } from '../../utils';
@@ -24,6 +32,8 @@ const Editar = ({
   handleOnChangeE,
   handleOnChangeTS,
   handleOnChangeNI,
+  cedulaLength,
+  emailCorrect,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
@@ -36,12 +46,6 @@ const Editar = ({
     }
   };
   const [mask, setMask] = React.useState('999999999-9');
-  const letters = (value) => {
-    if (value !== undefined) {
-      var newValue = value.replaceAll(/[^a-zA-Z​\s]+/g, '');
-      return newValue;
-    }
-  };
 
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -54,6 +58,16 @@ const Editar = ({
               </Header.Content>
             </Header>
             <hr />
+            <Message
+              hidden={!cedulaLength}
+              error
+              header='Número de cédula no válido'
+            />
+            <Message
+              hidden={!emailCorrect}
+              error
+              header='Correo electrónico no válido'
+            />
             <br />
             <Form
               size={matches.medium ? 'tiny' : null}
@@ -108,6 +122,7 @@ const Editar = ({
                     mask={mask}
                     onChange={handleChange}
                     name='cedula'
+                    maskChar={null}
                     value={formPaciente.cedula}
                   />
                 </Form.Input>
@@ -130,6 +145,7 @@ const Editar = ({
                   onChange={handleChange}
                   name='fecha_nacimiento'
                   value={formPaciente.fecha_nacimiento}
+                  min={'1921-01-01'}
                   required
                 />
 
@@ -200,26 +216,37 @@ const Editar = ({
                 <Form.Input
                   label='Dirección domicilio'
                   placeholder='Dirección domicilio'
-                  width={10}
+                  width={16}
                   onChange={handleChange}
                   name='direccion'
                   value={formPaciente.direccion}
+                  required
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Input
+                  label='Correo electrónico'
+                  placeholder='Correo electrónico'
+                  width={10}
+                  type='email'
+                  onChange={handleChange}
+                  name='email'
+                  value={formPaciente.email}
                   required
                 />
                 <Form.Input
                   label='Teléfono'
                   placeholder='Teléfono'
                   width={6}
-                  type='number'
                   required
                 >
                   <InputMask
                     mask='999999999999999'
-                    // type='tel'
                     onChange={handleChange}
                     maskChar={null}
                     name='telefono'
                     value={formPaciente.telefono}
+                    required
                   />
                 </Form.Input>
               </Form.Group>

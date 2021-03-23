@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { validate } from 'email-validator';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -30,6 +31,9 @@ class PacienteEditar extends Component {
       optionTS: [],
       optionNI: [],
       optionE: [],
+      buttonDisable: true,
+      emailCorrect: false,
+      cedulaLength: false,
     };
   }
   componentDidMount() {
@@ -102,6 +106,7 @@ class PacienteEditar extends Component {
         lugar_nacimiento: this.state.paciente.lugar_nacimiento,
         direccion: this.state.paciente.direccion,
         telefono: this.state.paciente.telefono,
+        email: this.state.paciente.email,
         contacto_emergencia_nombre: this.state.paciente
           .contacto_emergencia_nombre,
         contacto_emergencia_telefono: this.state.paciente
@@ -110,6 +115,34 @@ class PacienteEditar extends Component {
         updated_at: new Date(),
       },
     });
+    //verificar correo valido
+    if (
+      this.state.paciente.cedula !== null &&
+      this.state.paciente.email !== null
+    ) {
+      if (this.state.paciente.cedula.length >= 11) {
+        this.setState({
+          buttonDisable: false,
+          cedulaLength: false,
+        });
+      } else {
+        this.setState({
+          cedulaLength: true,
+          buttonDisable: true,
+        });
+      }
+      if (validate(this.state.paciente.email)) {
+        this.setState({
+          buttonDisable: false,
+          emailCorrect: false,
+        });
+      } else {
+        this.setState({
+          emailCorrect: true,
+          buttonDisable: true,
+        });
+      }
+    }
   };
 
   //guardar paciente
@@ -174,7 +207,10 @@ class PacienteEditar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
-          <Navbar success={this.state.success} />
+          <Navbar
+            success={this.state.success}
+            buttonDisable={this.state.buttonDisable}
+          />
           <Editar
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}
@@ -189,6 +225,8 @@ class PacienteEditar extends Component {
             handleOnChangeE={this.handleOnChangeE}
             success={this.state.success}
             closeModal={this.closeModal}
+            emailCorrect={this.state.emailCorrect}
+            cedulaLength={this.state.cedulaLength}
           />
         </Layout>
       </React.Fragment>

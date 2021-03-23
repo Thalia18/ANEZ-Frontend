@@ -8,12 +8,14 @@ import {
   Image,
   Modal,
   Segment,
+  Tab,
   Table,
 } from 'semantic-ui-react';
 
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
+  fechaFormato,
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
   maxMediumScroll,
@@ -40,14 +42,12 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist, cie10 }) => {
             <HCHeader paciente={paciente} />
 
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
+              <Segment basic textAlign='center'>
+                <Icon name='calendar alternate' />
+                {fechaFormato(evolucion.fecha)}
+              </Segment>
               <Table celled striped>
                 <Table.Body>
-                  <Table.Row>
-                    <Table.Cell width={3}>
-                      <b>Fecha</b>
-                    </Table.Cell>
-                    <Table.Cell>{evolucion.fecha}</Table.Cell>
-                  </Table.Row>
                   <Table.Row>
                     <Table.Cell width={3}>
                       <b>Motivo de consulta</b>
@@ -61,7 +61,9 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist, cie10 }) => {
                       <b>Fecha última menstruación</b>
                     </Table.Cell>
                     <Table.Cell>
-                      {evolucion.fecha_ultima_menstruacion}
+                      {evolucion.fecha_ultima_menstruacion
+                        ? fechaFormato(evolucion.fecha_ultima_menstruacion)
+                        : ''}
                     </Table.Cell>
                   </Table.Row>
                   <Table.Row>
@@ -99,8 +101,27 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist, cie10 }) => {
                       </Table.Cell>
                     </Table.Row>
                   )}
+
                   <Table.Row>
                     <Table.Cell>
+                      <b>Próximo control</b>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {evolucion.proximo_control
+                        ? fechaFormato(evolucion.proximo_control)
+                        : ''}
+                    </Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+              <Segment basic>
+                <Icon name='pills' />
+                <b>Receta</b>
+              </Segment>
+              <Table celled striped>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell width={3}>
                       <b>Medicación</b>
                     </Table.Cell>
                     <Table.Cell style={saltos}>
@@ -115,15 +136,12 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist, cie10 }) => {
                       {evolucion.indicacion}
                     </Table.Cell>
                   </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>
-                      <b>Próximo control</b>
-                    </Table.Cell>
-                    <Table.Cell>{evolucion.proximo_control}</Table.Cell>
-                  </Table.Row>
                 </Table.Body>
               </Table>
-              <b>Fotos</b>
+              <Segment basic>
+                <Icon name='picture' />
+                <b>Fotos</b>
+              </Segment>
               {fotosExist && (
                 <Segment>
                   <Grid columns={4}>

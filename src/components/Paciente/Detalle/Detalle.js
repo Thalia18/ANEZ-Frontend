@@ -5,6 +5,7 @@ import { Header, Icon, Segment, Table } from 'semantic-ui-react';
 import { Global } from '../../../global';
 import {
   calculaEdad,
+  fechaFormato,
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
   mediumHeight,
@@ -63,7 +64,7 @@ const Detalle = ({ paciente }) => {
                     Edad
                   </Table.Cell>
                   <Table.Cell colSpan='3'>
-                    {paciente.fecha_nacimiento}
+                    {fechaFormato(paciente.fecha_nacimiento)}
                     <br />
                     <hr />
                     {edad}
@@ -73,13 +74,18 @@ const Detalle = ({ paciente }) => {
                   <Table.Cell collapsing style={styled}>
                     Dirección domicilio
                   </Table.Cell>
-                  <Table.Cell colSpan='4'>{paciente.direccion}</Table.Cell>
+                  <Table.Cell colSpan='6'>{paciente.direccion}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell collapsing style={styled}>
+                    Correo electrónico
+                  </Table.Cell>
+                  <Table.Cell colSpan='4'>{paciente.email}</Table.Cell>
                   <Table.Cell collapsing style={styled}>
                     Teléfono
                   </Table.Cell>
                   <Table.Cell colSpan='2'>{paciente.telefono}</Table.Cell>
                 </Table.Row>
-
                 <Table.Row>
                   <Table.Cell collapsing style={styled} colSpan='2'>
                     Estado civil

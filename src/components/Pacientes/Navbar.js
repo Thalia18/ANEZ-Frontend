@@ -27,6 +27,9 @@ const NavbarPacientes = ({
       ? { pageSecond }
       : `/historia_clinica_agregar/${pacienteId}`;
 
+  let urlCita =
+    pacienteId === undefined ? { pageSecond } : `/cita_agregar/${pacienteId}`;
+
   let history = useHistory();
   let source = [];
   autoComplete.data.forEach((element) => {
@@ -120,20 +123,23 @@ const NavbarPacientes = ({
                   componentClass={Link}
                   key={pacienteId}
                   to={urlHC}
+                  key={Math.random()}
                 >
                   Crear Historia clínica
                 </Nav.Item>
               )}
               {optionNav === 'PC' && (
-                <>
+                <React.Fragment>
                   <Nav.Item
                     icon={<Icon icon='plus-circle' />}
                     componentClass={Link}
                     to={`/paciente_agregar`}
+                    key={Math.random()}
                   >
                     Crear Paciente
                   </Nav.Item>
                   <Nav.Item
+                    key={Math.random()}
                     icon={<Icon icon='heartbeat' />}
                     componentClass={Link}
                     key={pacienteId}
@@ -141,10 +147,16 @@ const NavbarPacientes = ({
                   >
                     Crear Historia clínica
                   </Nav.Item>
-                  <Nav.Item icon={<Icon icon='calendar' />}>
+                  <Nav.Item
+                    icon={<Icon icon='calendar' />}
+                    componentClass={Link}
+                    key={pacienteId}
+                    to={urlCita}
+                    key={Math.random()}
+                  >
                     Agendar cita
                   </Nav.Item>
-                </>
+                </React.Fragment>
               )}
 
               <Nav.Item

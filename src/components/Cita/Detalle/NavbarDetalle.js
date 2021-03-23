@@ -19,7 +19,6 @@ const NavbarPacientes = ({ onClickDelete, evolucionId, historiaId }) => {
               <Nav.Item
                 icon={<Icon icon='angle-left' />}
                 onClick={() => {
-                  // history.go(-2);
                   history.goBack();
                 }}
               />

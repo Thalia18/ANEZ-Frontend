@@ -1,7 +1,15 @@
 import React from 'react';
 import Media from 'react-media';
 import { useHistory } from 'react-router-dom';
-import { Button, Checkbox, Header, Icon, Message, Segment, Table } from 'semantic-ui-react';
+import {
+  Button,
+  Checkbox,
+  Header,
+  Icon,
+  Message,
+  Segment,
+  Table,
+} from 'semantic-ui-react';
 
 import { Global } from '../../global';
 import HCHeader from '../HistoriasClinicas/HCHeader';
@@ -18,7 +26,7 @@ const Listado = ({ evoluciones, paciente, historiaId }) => {
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar evolucionId={value} paciente={paciente} />
+          <Navbar evolucionId={value} paciente={paciente} pagina='evolucion' />
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as='h1' textAlign='center'>
@@ -42,6 +50,7 @@ const Listado = ({ evoluciones, paciente, historiaId }) => {
                               value={evolucion.evolucion_id}
                               checked={value === evolucion.evolucion_id}
                               onChange={handleChange}
+                              key={evolucion.evolucion_id + 'Check'}
                             />
                           </Table.Cell>
                           <Table.Cell>

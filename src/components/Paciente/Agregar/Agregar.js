@@ -12,7 +12,9 @@ import {
 
 import { Global } from '../../../global';
 import {
+  fechaActual,
   GLOBAL_MEDIA_QUERIES,
+  letters,
   masMediumHeight,
   mediumHeight,
 } from '../../utils';
@@ -32,8 +34,8 @@ const Agregar = ({
   handleOnChangeTS,
   handleOnChangeNI,
   campos,
-
   cedulaLength,
+  emailCorrect,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
@@ -46,18 +48,7 @@ const Agregar = ({
     }
   };
   const [mask, setMask] = React.useState('999999999-9');
-  const letters = (value) => {
-    if (value !== undefined) {
-      var newValue = value.replaceAll(/[^a-zA-Z​\s]+/g, '');
-      return newValue;
-    }
-  };
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0');
-  var yyyy = today.getFullYear();
 
-  today = yyyy + '-' + mm + '-' + dd;
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
@@ -79,6 +70,11 @@ const Agregar = ({
               hidden={!cedulaLength}
               error
               header='Número de cédula no válido'
+            />
+            <Message
+              hidden={!emailCorrect}
+              error
+              header='Correo electrónico no válido'
             />
             <Form
               size={matches.medium ? 'tiny' : null}
@@ -157,7 +153,8 @@ const Agregar = ({
                   onChange={handleChange}
                   name='fecha_nacimiento'
                   value={formPaciente.fecha_nacimiento}
-                  max={today}
+                  min={'1921-01-01'}
+                  max={fechaActual()}
                   required
                 />
 
@@ -204,10 +201,22 @@ const Agregar = ({
                 <Form.Input
                   label='Dirección domicilio'
                   placeholder='Dirección domicilio'
-                  width={10}
+                  width={16}
                   onChange={handleChange}
                   name='direccion'
                   value={formPaciente.direccion}
+                  required
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Input
+                  label='Correo electrónico'
+                  placeholder='Correo electrónico'
+                  width={10}
+                  type='email'
+                  onChange={handleChange}
+                  name='email'
+                  value={formPaciente.email}
                   required
                 />
                 <Form.Input

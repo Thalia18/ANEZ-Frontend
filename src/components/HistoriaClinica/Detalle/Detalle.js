@@ -1,8 +1,8 @@
 import React from 'react';
 import Media from 'react-media';
-import { Header, Icon, Segment, Table } from 'semantic-ui-react';
+import { Header, Icon, Segment, Tab, Table } from 'semantic-ui-react';
 
-import { Global, DivScroll } from '../../../global';
+import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
   GLOBAL_MEDIA_QUERIES,
@@ -29,10 +29,14 @@ const Detalle = ({ paciente, historia_clinica }) => {
             <HCHeader paciente={paciente} />
 
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
+              <Segment basic>
+                <Icon name='syringe' />
+                <b>Antecedentes médicos</b>
+              </Segment>
               <Table celled striped>
                 <Table.Body>
                   <Table.Row>
-                    <Table.Cell collapsing>
+                    <Table.Cell width={3}>
                       <b>Antecedentes patológicos</b>
                     </Table.Cell>
                     <Table.Cell>
@@ -53,6 +57,15 @@ const Detalle = ({ paciente, historia_clinica }) => {
                     </Table.Cell>
                     <Table.Cell>{historia_clinica.alergia}</Table.Cell>
                   </Table.Row>
+                </Table.Body>
+              </Table>
+              <Segment basic>
+                <Icon name='intergender' />
+
+                <b>Antecedentes gineco-obstétricos</b>
+              </Segment>
+              <Table celled striped>
+                <Table.Body>
                   <Table.Row>
                     <Table.Cell>
                       <b>Abortos</b>
@@ -94,7 +107,7 @@ const Detalle = ({ paciente, historia_clinica }) => {
                     </Table.Cell>
                   </Table.Row>
                   <Table.Row>
-                    <Table.Cell>
+                    <Table.Cell width={3}>
                       <b>Método anticonceptivo</b>
                     </Table.Cell>
                     <Table.Cell>
