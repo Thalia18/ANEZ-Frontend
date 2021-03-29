@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Editar from '../../components/Evolucion/Editar/Editar';
+import Editar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
@@ -234,6 +234,7 @@ class EvolucionEditar extends Component {
           <Navbar />
 
           <Editar
+            id='formEditar'
             paciente={this.state.paciente}
             cie10={this.state.cie10}
             cie10List={this.state.cie10List}

@@ -18,6 +18,7 @@ const Agregar = ({
   header,
   content,
   pacienteId,
+  id,
 }) => {
   const [value, setValue] = React.useState(true);
   const handleChangeCheck = (e) => {
@@ -41,7 +42,7 @@ const Agregar = ({
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveHC}
-                id='formAgregar'
+                id={id}
               >
                 <Form.Group>
                   <Form.TextArea

@@ -233,6 +233,7 @@ class PacienteAgregar extends Component {
         <Layout activeKeyP='3'>
           <Navbar buttonDisable={this.state.buttonDisable} />
           <Agregar
+            id='formAgregar'
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}
             estadoCivil={this.state.optionEC}

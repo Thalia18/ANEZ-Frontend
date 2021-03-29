@@ -1,23 +1,10 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
-import {
-  fechaActual,
-  GLOBAL_MEDIA_QUERIES,
-  letters,
-  masMediumHeight,
-  mediumHeight,
-} from '../../utils';
+import { fechaActual, GLOBAL_MEDIA_QUERIES, letters, masMediumHeight, mediumHeight } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -36,6 +23,7 @@ const Agregar = ({
   campos,
   cedulaLength,
   emailCorrect,
+  id,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
@@ -79,7 +67,7 @@ const Agregar = ({
             <Form
               size={matches.medium ? 'tiny' : null}
               onSubmit={onClickButtonSavePaciente}
-              id='formAgregar'
+              id={id}
             >
               <Form.Group>
                 <Form.Input

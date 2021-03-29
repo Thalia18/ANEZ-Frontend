@@ -121,6 +121,7 @@ class PacienteDetalle extends Component {
             open={this.state.open}
             closeModal={this.closeModal}
             content='¿Desea continuar?'
+            headerC='Eliminar Evolución'
           />
         </Layout>
       </React.Fragment>

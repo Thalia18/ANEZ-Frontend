@@ -6,7 +6,7 @@ import Agregar from '../../components/Cita/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import { api_url, openNotification, trimData } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { horasMinutos, mapStateToProps } from '../../components/utils';
 
 class EvolucionAgregar extends Component {
   constructor(props) {
@@ -87,8 +87,8 @@ class EvolucionAgregar extends Component {
         success: true,
         error: null,
       });
-
-      if (cita.exist) {
+      console.log(cita.data.exist);
+      if (cita.data.exist) {
         openNotification(
           'info',
           'Citas',
@@ -107,15 +107,9 @@ class EvolucionAgregar extends Component {
       });
     }
   };
-  getHour = (date) => {
-    var minutes = date.getMinutes();
-    var hour = date.getHours();
-    this.setState({
-      cita: {
-        ...this.state.cita,
-        hora: hour + ':' + minutes + ':00',
-      },
-    });
+
+  handleOnChangeHora = (e, data) => {
+    this.state.cita.hora = data.value;
   };
 
   render() {
@@ -130,9 +124,10 @@ class EvolucionAgregar extends Component {
           <Agregar
             paciente={this.state.paciente}
             onClickButtonSaveCita={this.onClickButtonSaveCita}
-            getHour={this.getHour}
             formCita={this.state.cita}
             handleChange={this.handleChange}
+            horas={horasMinutos(8, 20)}
+            handleOnChangeHora={this.handleOnChangeHora}
           />
         </Layout>
       </React.Fragment>

@@ -4,16 +4,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Layout from '../../components/Layout/Layout';
-import Editar from '../../components/Paciente/Editar/Editar';
+import Editar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import {
-  estadoCivilDropdown,
-  etniasDropdown,
-  nivelDeInstruccionDropdown,
-  tipoDeSangreDropdown,
-} from '../../components/utils';
+import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, tipoDeSangreDropdown } from '../../components/utils';
 
 class PacienteEditar extends Component {
   constructor(props) {
@@ -212,6 +207,8 @@ class PacienteEditar extends Component {
             buttonDisable={this.state.buttonDisable}
           />
           <Editar
+            id='formEditar'
+            campos={false}
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}
             estadoCivil={this.state.optionEC}

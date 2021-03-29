@@ -20,7 +20,7 @@ const NavbarPacientesEditar = ({ buttonDisable }) => {
               <Nav.Item
                 icon={<Icon icon='angle-left' />}
                 onClick={() => {
-                  history.goBack();
+                  history.go(-2);
                 }}
               />
             </Nav>

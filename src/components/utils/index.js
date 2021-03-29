@@ -121,9 +121,9 @@ export const colorBackground = { background: 'rgba(0,161,213, 0.1)' };
 export const openNotification = (funcName, header, content, span) => {
   Notification[funcName]({
     title: header,
-    duration: 4000,
+    duration: 5000,
     description: (
-      <div style={{ width: 320 }} rows={3}>
+      <div style={{ width: 320 }} rows={4}>
         {content}
         <b>{span}</b>
       </div>
@@ -238,4 +238,33 @@ export const fechaActual = () => {
 
   today = yyyy + '-' + mm + '-' + dd;
   return today;
+};
+
+//para llenar horas y minutos
+export const horasMinutos = (inicio, fin) => {
+  let opcion = [];
+  for (let i = inicio; i <= fin; i++) {
+    for (let j = 0; j <= 45; j++) {
+      var hora =
+        j == 0 || j == 5
+          ? i.toString() + ':' + '0' + j.toString()
+          : i.toString() + ':' + j.toString();
+      opcion.push({
+        key: hora,
+        text: hora,
+        value: hora,
+      });
+      j += 14;
+    }
+  }
+  return opcion;
+};
+
+//mostrar la hora
+export const horaShow = (hora) => {
+  var horaF = hora.split(':');
+  var minutes = horaF[1];
+  var hour = horaF[0];
+
+  return hour + ':' + minutes;
 };

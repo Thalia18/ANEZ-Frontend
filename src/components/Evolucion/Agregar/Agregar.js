@@ -1,14 +1,3 @@
-import { DivScroll, Global } from '../../../global';
-import HCHeader from '../../HistoriasClinicas/HCHeader';
-import {
-  GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  maxMediumScroll,
-  mediumHeight,
-  mediumScroll,
-  fechaActual,
-} from '../../utils';
-import Fotos from '../Fotos/Agregar';
 import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
@@ -21,6 +10,18 @@ import {
   Segment,
 } from 'semantic-ui-react';
 
+import { DivScroll, Global } from '../../../global';
+import HCHeader from '../../HistoriasClinicas/HCHeader';
+import {
+  fechaActual,
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  maxMediumScroll,
+  mediumHeight,
+  mediumScroll,
+} from '../../utils';
+import Fotos from '../Fotos/Agregar';
+
 import 'semantic-ui-css/semantic.min.css';
 
 const Agregar = ({
@@ -31,6 +32,7 @@ const Agregar = ({
   fotosList,
   cie10,
   handleOnChangeCie10,
+  id,
 }) => {
   const [value, setValue] = React.useState(true);
   const handleChangeCheck = (e) => {
@@ -54,7 +56,7 @@ const Agregar = ({
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveEvolucion}
-                id='formAgregar'
+                id={id}
               >
                 <Form.Group>
                   <Form.TextArea

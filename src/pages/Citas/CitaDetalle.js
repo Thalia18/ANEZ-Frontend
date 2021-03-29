@@ -89,6 +89,7 @@ class PacienteDetalle extends Component {
             open={this.state.open}
             closeModal={this.closeModal}
             content='¿Desea continuar?'
+            headerC='Eliminar Cita'
           />
         </Layout>
       </React.Fragment>

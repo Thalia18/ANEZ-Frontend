@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Editar from '../../components/HistoriaClinica/Editar/Editar';
+import Editar from '../../components/HistoriaClinica/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
@@ -121,6 +121,8 @@ class HCEditar extends Component {
         <Layout activeKeyP='2'>
           <Navbar success={this.state.success} />
           <Editar
+            id='formEditar'
+            existsHC={false}
             onClickButtonSaveHC={this.onClickButtonSaveHC}
             handleChange={this.handleChange}
             formHC={this.state.historiaClinica}

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
-const ModalEliminar = ({ deleteM, open, closeModal, content }) => {
+const ModalEliminar = ({ deleteM, open, closeModal, content, headerC }) => {
   return (
     <Modal closeIcon open={open} onClose={closeModal}>
-      <Header icon='medkit' content='Eliminar Paciente' />
+      <Header icon='medkit' content={headerC} />
       <Modal.Content>
         <p>
           <b>

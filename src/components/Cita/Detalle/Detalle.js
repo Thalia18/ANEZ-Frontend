@@ -8,6 +8,7 @@ import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
   fechaFormato,
   GLOBAL_MEDIA_QUERIES,
+  horaShow,
   masMediumHeight,
   maxMediumScroll,
   mediumHeight,
@@ -41,7 +42,7 @@ const Detalle = ({ cita }) => {
                       <Icon name='calendar alternate' />
                       {fechaFormato(cita.fecha)} &nbsp;&nbsp;&nbsp;&nbsp;
                       <Icon name='time' />
-                      {cita.hora}
+                      {horaShow(cita.hora)}
                     </Table.Cell>
                   </Table.Row>
                   <Table.Row>

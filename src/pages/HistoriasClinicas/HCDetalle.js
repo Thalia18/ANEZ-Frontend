@@ -126,6 +126,7 @@ class HCDetalle extends Component {
             closeModal={this.closeModal}
             content='Se eliminarán consigo las evoluciones  
             asociadas a la Historia Clínica.  ¿Desea continuar?'
+            headerC='Eliminar Historia Clínica'
           />
         </Layout>
       </React.Fragment>
