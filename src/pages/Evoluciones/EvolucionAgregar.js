@@ -176,6 +176,8 @@ class EvolucionAgregar extends Component {
           <Navbar buttonDisable={this.state.buttonDisable} />
 
           <Agregar
+            headerC='Nueva Evolución'
+            icon='add circle'
             id='formAgregar'
             paciente={this.state.paciente}
             cie10={this.state.cie10}

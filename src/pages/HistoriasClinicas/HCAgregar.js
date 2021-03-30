@@ -139,6 +139,8 @@ class HCAgregar extends Component {
         <Layout activeKeyP='2'>
           <Navbar buttonDisable={false} />
           <Agregar
+            headerC='Nueva Historia Clínica'
+            icon='add circle'
             id='formAgregar'
             paciente={this.state.paciente}
             onClickButtonSaveHC={this.onClickButtonSaveHC}

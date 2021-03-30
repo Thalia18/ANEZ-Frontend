@@ -8,7 +8,7 @@ import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const NavbarPacientes = ({ onClickDelete, evolucionId, historiaId }) => {
+const NavbarPacientes = ({ onClickDelete, pacienteId, citaId }) => {
   let history = useHistory();
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -27,8 +27,8 @@ const NavbarPacientes = ({ onClickDelete, evolucionId, historiaId }) => {
               <Nav.Item
                 icon={<Icon icon='pencil' />}
                 componentClass={Link}
-                key={evolucionId}
-                to={`/evolucion_editar/${evolucionId}/${historiaId}`}
+                key={pacienteId}
+                to={`/cita_editar/${pacienteId}/${citaId}`}
               >
                 Editar
               </Nav.Item>

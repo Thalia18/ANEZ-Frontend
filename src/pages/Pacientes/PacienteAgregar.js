@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { validate } from 'email-validator';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -12,6 +11,7 @@ import {
   estadoCivilDropdown,
   etniasDropdown,
   nivelDeInstruccionDropdown,
+  regexEmail,
   tipoDeSangreDropdown,
 } from '../../components/utils';
 
@@ -153,7 +153,7 @@ class PacienteAgregar extends Component {
         });
       }
 
-      if (validate(this.state.paciente.email)) {
+      if (this.state.paciente.email.match(regexEmail)) {
         this.setState({
           buttonDisable: false,
           emailCorrect: false,
@@ -200,8 +200,8 @@ class PacienteAgregar extends Component {
           'Paciente creado exitosamente',
           ''
         );
+        this.props.history.push('/pacientes');
       }
-      this.props.history.push('/pacientes');
     } catch (error) {
       this.setState({
         loading: false,
@@ -233,6 +233,8 @@ class PacienteAgregar extends Component {
         <Layout activeKeyP='3'>
           <Navbar buttonDisable={this.state.buttonDisable} />
           <Agregar
+            header='Nuevo Paciente'
+            icon='add circle'
             id='formAgregar'
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}

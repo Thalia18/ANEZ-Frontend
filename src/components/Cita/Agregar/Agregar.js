@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
-import { DatePicker } from 'rsuite';
-import { Dropdown, Form, Header, Icon, Segment } from 'semantic-ui-react';
+import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
@@ -13,6 +12,7 @@ import {
   maxMediumScroll,
   mediumHeight,
   mediumScroll,
+  horasMinutos,
 } from '../../utils';
 
 import 'rsuite/dist/styles/rsuite-default.css';
@@ -25,9 +25,11 @@ const Agregar = ({
   handleChange,
   horas,
   handleOnChangeHora,
+  id,
+  horaActual,
 }) => {
   const [value, setValue] = React.useState(new Date());
-
+  var a = formCita.hora.split(':');
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
@@ -45,7 +47,7 @@ const Agregar = ({
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveCita}
-                id='formAgregar'
+                id={id}
               >
                 <Form.Group>
                   <Form.Input
@@ -65,6 +67,7 @@ const Agregar = ({
                     options={horas}
                     placeholder='Hora'
                     onChange={handleOnChangeHora}
+                    defaultValue={a[0] + ':' + a[1]}
                     name='hora'
                     required
                   />

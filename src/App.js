@@ -6,6 +6,7 @@ import CitasAgregarPage from './pages/Citas/CitaAgregar';
 import CitaBuscarPage from './pages/Citas/CitaBuscar';
 import CitaPage from './pages/Citas/CitaDetalle';
 import CitasPage from './pages/Citas/Citas';
+import CitasEditarPage from './pages/Citas/CitasEditar';
 import EvolucionAgregarPage from './pages/Evoluciones/EvolucionAgregar';
 import EvolucionBuscarPage from './pages/Evoluciones/EvolucionBuscar';
 import EvolucionPage from './pages/Evoluciones/EvolucionDetalle';
@@ -53,7 +54,7 @@ function App() {
           />
           <Route
             exact
-            path='/paciente_buscar/:cedula'
+            path='/paciente_buscar/:buscar'
             component={PacienteBuscarPage}
           />
           {/* //paginas de historias clinicas */}
@@ -75,7 +76,7 @@ function App() {
           />
           <Route
             exact
-            path='/historia_clinica_buscar/:cedula'
+            path='/historia_clinica_buscar/:buscar'
             component={HCBuscarPage}
           />
           {/* //paginas de evoluciones */}
@@ -107,7 +108,7 @@ function App() {
           {/* //pagina de receta */}
           <Route exact path='/receta/:evolucionId' component={RecetaPage} />
           {/* //paginas de citas */}
-          <Route exact path='/citas' component={CitasPage} />
+          <Route exact path='/citas/:fecha' component={CitasPage} />
           <Route
             exact
             path='/citas_buscar/:fecha1/:fecha2'
@@ -118,6 +119,11 @@ function App() {
             exact
             path='/cita_agregar/:pacienteId'
             component={CitasAgregarPage}
+          />
+          <Route
+            exact
+            path='/cita_editar/:pacienteId/:citaId'
+            component={CitasEditarPage}
           />
         </IntlProvider>
       </Switch>

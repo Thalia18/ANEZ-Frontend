@@ -33,6 +33,8 @@ const Agregar = ({
   cie10,
   handleOnChangeCie10,
   id,
+  headerC,
+  icon,
 }) => {
   const [value, setValue] = React.useState(true);
   const handleChangeCheck = (e) => {
@@ -46,7 +48,8 @@ const Agregar = ({
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
-                <Icon name='add circle' /> Nueva Evolución
+                <Icon name={icon} />
+                {headerC}
               </Header.Content>
             </Header>
             <hr />

@@ -36,9 +36,8 @@ const messages = {
   showMore: (total) => `+ ${total} evento(s) adicional(s)`,
 };
 
-const Listado = ({ citas, ...props }) => {
+const Listado = ({ citas, changeMonth, fechaUltima, ...props }) => {
   const history = useHistory();
-
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -67,6 +66,12 @@ const Listado = ({ citas, ...props }) => {
                 onSelectEvent={(event) =>
                   history.push(`/cita_detalle/${event.cita_id}`)
                 }
+                date={fechaUltima}
+                defaultDate={fechaUltima}
+                onNavigate={(date) => {
+                  changeMonth(date);
+                  console.log(date, 'date listado');
+                }}
               />
             </Global>
           </Segment>

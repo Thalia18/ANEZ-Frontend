@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { validate } from 'email-validator';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -8,7 +7,13 @@ import Editar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, tipoDeSangreDropdown } from '../../components/utils';
+import {
+  estadoCivilDropdown,
+  etniasDropdown,
+  nivelDeInstruccionDropdown,
+  regexEmail,
+  tipoDeSangreDropdown,
+} from '../../components/utils';
 
 class PacienteEditar extends Component {
   constructor(props) {
@@ -27,8 +32,10 @@ class PacienteEditar extends Component {
       optionNI: [],
       optionE: [],
       buttonDisable: true,
-      emailCorrect: false,
-      cedulaLength: false,
+
+      emailCorrect: undefined,
+      cedulaLength: undefined,
+      pacienteOriginal: {},
     };
   }
   componentDidMount() {
@@ -63,6 +70,7 @@ class PacienteEditar extends Component {
         tipoDeSangre: tiposDeSangre.data,
         nivelDeInstruccion: nivelesDeInstruccion.data,
         paciente: pacienteA.data,
+        pacienteOriginal: pacienteA.data,
         loading: false,
       });
       trimData(this.state.paciente);
@@ -110,31 +118,23 @@ class PacienteEditar extends Component {
         updated_at: new Date(),
       },
     });
+
     //verificar correo valido
-    if (
-      this.state.paciente.cedula !== null &&
-      this.state.paciente.email !== null
-    ) {
-      if (this.state.paciente.cedula.length >= 11) {
+    if (this.state.paciente.email !== null) {
+      if (this.state.paciente.email.search(regexEmail) !== -1) {
         this.setState({
-          buttonDisable: false,
-          cedulaLength: false,
-        });
-      } else {
-        this.setState({
-          cedulaLength: true,
-          buttonDisable: true,
-        });
-      }
-      if (validate(this.state.paciente.email)) {
-        this.setState({
-          buttonDisable: false,
+          // buttonDisable: false,
           emailCorrect: false,
         });
       } else {
         this.setState({
-          emailCorrect: true,
           buttonDisable: true,
+          emailCorrect: true,
+        });
+      }
+      if (!this.state.emailCorrect && !this.state.cedulaLength) {
+        this.setState({
+          buttonDisable: false,
         });
       }
     }
@@ -167,6 +167,14 @@ class PacienteEditar extends Component {
       );
       this.props.history.push('/pacientes');
     } catch (error) {
+      openNotification(
+        'warning',
+        'Pacientes',
+        'Ya existe un paciente registrado con el número de cédula ',
+        `${this.state.paciente.cedula}`
+      );
+      this.props.history.goBack();
+
       this.setState({
         loading: false,
         error: error,
@@ -177,15 +185,27 @@ class PacienteEditar extends Component {
   //obtener datos de dropdown
   handleOnChangeEC = (e, data) => {
     this.state.paciente.estado_civil_id = data.value;
+    this.setState({
+      buttonDisable: false,
+    });
   };
   handleOnChangeTS = (e, data) => {
     this.state.paciente.tipo_de_sangre_id = data.value;
+    this.setState({
+      buttonDisable: false,
+    });
   };
   handleOnChangeNI = (e, data) => {
     this.state.paciente.nivel_de_instruccion_id = data.value;
+    this.setState({
+      buttonDisable: false,
+    });
   };
   handleOnChangeE = (e, data) => {
     this.state.paciente.etnia_id = data.value;
+    this.setState({
+      buttonDisable: false,
+    });
   };
 
   closeModal = () => {
@@ -198,7 +218,6 @@ class PacienteEditar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>
@@ -207,8 +226,10 @@ class PacienteEditar extends Component {
             buttonDisable={this.state.buttonDisable}
           />
           <Editar
+            header='Editar Paciente'
+            icon='edit'
             id='formEditar'
-            campos={false}
+            // campos={false}
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}
             estadoCivil={this.state.optionEC}

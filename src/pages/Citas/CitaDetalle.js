@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Detalle from '../../components/Cita/Detalle/Detalle';
-import Navbar from '../../components/Evolucion/Detalle/NavbarDetalle';
+import Navbar from '../../components/Cita/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
-class PacienteDetalle extends Component {
+class CitaDetalle extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,9 +81,12 @@ class PacienteDetalle extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>
-          <Navbar onClickDelete={this.onClickDelete} />
+          <Navbar
+            onClickDelete={this.onClickDelete}
+            pacienteId={this.state.cita.paciente_id}
+            citaId={this.props.match.params.citaId}
+          />
           <Detalle cita={this.state.cita} />
-
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}
@@ -97,4 +100,4 @@ class PacienteDetalle extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(PacienteDetalle);
+export default connect(mapStateToProps, null)(CitaDetalle);

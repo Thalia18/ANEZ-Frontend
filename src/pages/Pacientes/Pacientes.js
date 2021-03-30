@@ -14,7 +14,6 @@ class Pacientes extends Component {
       error: null,
       loading: true,
       pacientes: {},
-      autocomplete: {},
     };
   }
   componentDidMount() {
@@ -31,11 +30,9 @@ class Pacientes extends Component {
     });
     try {
       const { data } = await axios.get(`${api_url}/api/pacientes`);
-      const autoComplete = await axios.get(`${api_url}/api/autocomplete`);
 
       this.setState({
         pacientes: data.data,
-        autocomplete: autoComplete.data,
         loading: false,
       });
     } catch (error) {
@@ -53,8 +50,9 @@ class Pacientes extends Component {
       <React.Fragment>
         <Layout activeKeyP='3'>
           <Listado
+            header='Pacientes'
+            icon='users'
             pacientes={Object.values(this.state.pacientes)}
-            autoComplete={this.state.autocomplete}
             pageInitial='/paciente'
             pageSecond='/pacientes'
             reload='/paciente_buscar'

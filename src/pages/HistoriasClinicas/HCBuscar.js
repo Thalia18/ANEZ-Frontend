@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Layout from '../../components/Layout/Layout';
-import Buscar from '../../components/Pacientes/Buscar';
+import Listado from '../../components/Pacientes/Listado';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
@@ -14,8 +14,6 @@ class HCBuscar extends Component {
       error: null,
       loading: true,
       pacientes: {},
-      autocomplete: {},
-      buscar: '',
     };
   }
   componentDidMount() {
@@ -32,13 +30,11 @@ class HCBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/cedula_paciente/${this.props.match.params.cedula}`
+        `${api_url}/api/pacientes_buscar/${this.props.match.params.buscar}`
       );
-      const autoComplete = await axios.get(`${api_url}/api/autocomplete`);
 
       this.setState({
         pacientes: data.data,
-        autocomplete: autoComplete.data,
         loading: false,
       });
     } catch (error) {
@@ -55,13 +51,18 @@ class HCBuscar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
-          <Buscar
-            paciente={this.state.pacientes}
-            autoComplete={this.state.autocomplete}
+          <Listado
+            header='Resultado de la búsqueda'
+            icon='search'
+            pacientes={Object.values(this.state.pacientes)}
             pageInitial='/historia_clinica'
             pageSecond='/historias_clinicas'
             reload='/historia_clinica_buscar'
             optionNav='HC'
+            buscar={
+              Object.values(this.state.pacientes).length > 0 ? false : true
+            }
+            busqueda={this.props.match.params.buscar}
           />
         </Layout>
       </React.Fragment>

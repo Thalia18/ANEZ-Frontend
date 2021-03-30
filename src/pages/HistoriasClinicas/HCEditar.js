@@ -121,6 +121,8 @@ class HCEditar extends Component {
         <Layout activeKeyP='2'>
           <Navbar success={this.state.success} />
           <Editar
+            headerC='Editar Historia Clínica'
+            icon='edit'
             id='formEditar'
             existsHC={false}
             onClickButtonSaveHC={this.onClickButtonSaveHC}

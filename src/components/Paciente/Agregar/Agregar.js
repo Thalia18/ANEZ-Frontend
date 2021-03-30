@@ -1,10 +1,24 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
-import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
+import {
+  Checkbox,
+  Form,
+  Header,
+  Icon,
+  Message,
+  Segment,
+} from 'semantic-ui-react';
 
 import { Global } from '../../../global';
-import { fechaActual, GLOBAL_MEDIA_QUERIES, letters, masMediumHeight, mediumHeight } from '../../utils';
+import {
+  fechaActual,
+  GLOBAL_MEDIA_QUERIES,
+  letters,
+  numbers,
+  masMediumHeight,
+  mediumHeight,
+} from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -21,21 +35,25 @@ const Agregar = ({
   handleOnChangeTS,
   handleOnChangeNI,
   campos,
-  cedulaLength,
   emailCorrect,
   id,
+  header,
+  icon,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
     setValue(value);
     if (value === 'RUC') {
       setMask('9999999999-001');
+      setPattern('.{14}');
     }
     if (value === 'Cédula') {
-      setMask('999999999-9');
+      setMask('9999999999');
+      setPattern('.{10}');
     }
   };
-  const [mask, setMask] = React.useState('999999999-9');
+  const [mask, setMask] = React.useState('9999999999');
+  const [pattern, setPattern] = React.useState('.{10}');
 
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -44,7 +62,7 @@ const Agregar = ({
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
-                <Icon name='add circle' /> Nuevo Paciente
+                <Icon name={icon} /> {header}
               </Header.Content>
             </Header>
             <hr />
@@ -52,12 +70,6 @@ const Agregar = ({
               hidden={!campos}
               warning
               header='Seleccione Estado Civil, Etnia, Nivel de Instrucción y Tipo de Sangre'
-            />
-
-            <Message
-              hidden={!cedulaLength}
-              error
-              header='Número de cédula no válido'
             />
             <Message
               hidden={!emailCorrect}
@@ -118,6 +130,7 @@ const Agregar = ({
                     onChange={handleChange}
                     name='cedula'
                     value={formPaciente.cedula}
+                    pattern={pattern}
                     maskChar={null}
                     required
                   />
@@ -152,6 +165,7 @@ const Agregar = ({
                   options={estadoCivil}
                   width={6}
                   name='estado_civil_id'
+                  defaultValue={formPaciente.estado_civil_id}
                   onChange={handleOnChangeEC}
                   required
                 />
@@ -164,6 +178,7 @@ const Agregar = ({
                   width={6}
                   name='etnia_id'
                   onChange={handleOnChangeE}
+                  defaultValue={formPaciente.etnia_id}
                   required
                 />
                 <Form.Select
@@ -173,6 +188,7 @@ const Agregar = ({
                   width={6}
                   name='nivel_de_instruccion_id'
                   onChange={handleOnChangeNI}
+                  defaultValue={formPaciente.nivel_de_instruccion_id}
                   required
                 />
                 <Form.Select
@@ -182,6 +198,7 @@ const Agregar = ({
                   width={6}
                   name='tipo_de_sangre_id'
                   onChange={handleOnChangeTS}
+                  defaultValue={formPaciente.tipo_de_sangre_id}
                   required
                 />
               </Form.Group>

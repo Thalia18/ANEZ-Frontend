@@ -8,7 +8,7 @@ import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { horasMinutos, mapStateToProps } from '../../components/utils';
 
-class CitasAgregar extends Component {
+class CitasEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,14 +16,7 @@ class CitasAgregar extends Component {
       error: null,
       loading: true,
       paciente: {},
-      cita: {
-        fecha: '',
-        hora: '',
-        motivo_cita: '',
-        created_at: new Date(),
-        medico_id: '',
-        paciente_id: '',
-      },
+      cita: {},
     };
   }
   componentDidMount() {
@@ -42,8 +35,12 @@ class CitasAgregar extends Component {
       const { data } = await axios.get(
         `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
       );
+      const { data: cita } = await axios.get(
+        `${api_url}/api/cita/${this.props.match.params.citaId}`
+      );
       this.setState({
         paciente: data.data,
+        cita: cita.data,
         loading: false,
       });
     } catch (error) {
@@ -64,6 +61,7 @@ class CitasAgregar extends Component {
         medico_id: this.props.user.medico_id,
         paciente_id: this.props.match.params.pacienteId,
         [e.target.name]: e.target.value,
+        updated_at: new Date(),
       },
     });
   };
@@ -77,8 +75,8 @@ class CitasAgregar extends Component {
     });
     trimData(this.state.cita);
     try {
-      const { data: cita } = await axios.post(
-        `${api_url}/api/cita`,
+      const { data: cita } = await axios.put(
+        `${api_url}/api/cita/${this.props.match.params.citaId}`,
         this.state.cita
       );
 
@@ -94,12 +92,15 @@ class CitasAgregar extends Component {
           `El ${this.state.cita.fecha} a las ${this.state.cita.hora} ya existe una cita agendada para el paciente ${cita.data.pacientes.apellido} ${cita.data.pacientes.nombre}`,
           ''
         );
+        // this.props.history.push(
+        //   `/cita_editar/${cita.paciente_id}/${cita.cita_id}`
+        // );
       } else {
         openNotification('success', 'Citas', 'Cita agendada exitosamente', '');
+        this.props.history.push(`/citas`);
       }
-
-      this.props.history.push(`/citas`);
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -124,6 +125,7 @@ class CitasAgregar extends Component {
             id='formAgregar'
             paciente={this.state.paciente}
             onClickButtonSaveCita={this.onClickButtonSaveCita}
+            horaActual={horasMinutos(this.state.cita.hora)}
             formCita={this.state.cita}
             handleChange={this.handleChange}
             horas={horasMinutos(8, 20)}
@@ -135,4 +137,4 @@ class CitasAgregar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(CitasAgregar);
+export default connect(mapStateToProps, null)(CitasEditar);

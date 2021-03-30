@@ -1,12 +1,13 @@
-import Buscar from '../../components/Citas/Buscar';
-import Layout from '../../components/Layout/Layout';
-import { api_url, citasList } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class Citas extends Component {
+import Buscar from '../../components/Citas/Buscar';
+import Layout from '../../components/Layout/Layout';
+import { api_url, citasList } from '../../components/utils';
+import { mapStateToProps } from '../../components/utils';
+
+class CitasBuscar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,4 +65,4 @@ class Citas extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(Citas);
+export default connect(mapStateToProps, null)(CitasBuscar);

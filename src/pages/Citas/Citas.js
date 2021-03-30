@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 
 import CitasCalendar from '../../components/Citas/Listado';
 import Layout from '../../components/Layout/Layout';
-import { api_url, citasList } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  citasList,
+  mapStateToProps,
+  fechaCitas,
+} from '../../components/utils';
 
 class Citas extends Component {
   constructor(props) {
@@ -16,6 +20,8 @@ class Citas extends Component {
       loading: true,
       citas: {},
       citaList: [],
+      fecha: '',
+      fechaBuscar: '',
     };
   }
   componentDidMount() {
@@ -31,8 +37,9 @@ class Citas extends Component {
       error: null,
     });
     try {
-      const { data: citas } = await axios.get(`${api_url}/api/citas`);
-
+      const { data: citas } = await axios.get(
+        `${api_url}/api/citas_fecha/${this.props.match.params.fecha}`
+      );
       this.setState({
         citaList: citasList(citas.data),
         loading: false,
@@ -45,13 +52,31 @@ class Citas extends Component {
     }
   };
 
+  changeMonth = (e) => {
+    // this.setState({
+    //   fecha: e,
+    // });
+    // console.log(this.state.fecha, 'fechaaaaa');
+    console.log(fechaCitas(e), 'eeee');
+    this.props.history.push(`/citas/${fechaCitas(e)}`);
+
+    setTimeout(() => {
+      window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}`;
+    }, 100);
+  };
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.fecha, 'fecha prin', fechaCitas(this.state.fecha));
+    console.log(this.state.citaList);
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>
-          <CitasCalendar citas={this.state.citaList} />
+          <CitasCalendar
+            citas={this.state.citaList}
+            changeMonth={this.changeMonth}
+            fechaUltima={new Date(this.props.match.params.fecha)}
+          />
         </Layout>
       </React.Fragment>
     );

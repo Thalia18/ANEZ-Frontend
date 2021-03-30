@@ -5,7 +5,13 @@ import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import Modal from '../../Modales/ModalExists';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  maxMediumScroll,
+  mediumHeight,
+  mediumScroll,
+} from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -19,6 +25,8 @@ const Agregar = ({
   content,
   pacienteId,
   id,
+  headerC,
+  icon,
 }) => {
   const [value, setValue] = React.useState(true);
   const handleChangeCheck = (e) => {
@@ -32,7 +40,7 @@ const Agregar = ({
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as='h1' textAlign='center'>
               <Header.Content>
-                <Icon name='add circle' /> Nueva Historia Clínica
+                <Icon name={icon} /> {headerC}
               </Header.Content>
             </Header>
             <hr />

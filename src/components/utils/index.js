@@ -229,6 +229,15 @@ export const letters = (value) => {
   }
 };
 
+//only numbers
+export const numbers = (value) => {
+  if (value !== undefined) {
+    // var newValue = value.replaceAll(/[^0-9{1,9}\-0-9]+/g, '');
+    var newValue = value.match(/[0-9{9,10}\-0-9{1,3}]/gs);
+    return newValue;
+  }
+};
+
 //fecha actual
 export const fechaActual = () => {
   var today = new Date();
@@ -245,10 +254,9 @@ export const horasMinutos = (inicio, fin) => {
   let opcion = [];
   for (let i = inicio; i <= fin; i++) {
     for (let j = 0; j <= 45; j++) {
-      var hora =
-        j == 0 || j == 5
-          ? i.toString() + ':' + '0' + j.toString()
-          : i.toString() + ':' + j.toString();
+      var horas = i < 10 ? +'0' + i.toString() : i.toString();
+      var minutos = j == 0 || j == 5 ? '0' + j.toString() : j.toString();
+      var hora = horas + ':' + minutos;
       opcion.push({
         key: hora,
         text: hora,
@@ -267,4 +275,18 @@ export const horaShow = (hora) => {
   var hour = horaF[0];
 
   return hour + ':' + minutes;
+};
+
+//validar correos
+export var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/g;
+
+//enviar fecha para buscar por mes
+export const fechaCitas = (fecha) => {
+  var fechaN = fecha === '' ? new Date() : fecha;
+  var fechaF = new Date(fechaN.getFullYear(), fechaN.getMonth() + 1, 0);
+
+  var month = fechaF.getUTCMonth() + 1;
+  var day = fechaF.getUTCDate();
+  var year = fechaF.getUTCFullYear();
+  return year + '-' + month + '-' + day;
 };

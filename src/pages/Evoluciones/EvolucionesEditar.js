@@ -234,6 +234,8 @@ class EvolucionEditar extends Component {
           <Navbar />
 
           <Editar
+            headerC='Editar Evolución'
+            icon='edit'
             id='formEditar'
             paciente={this.state.paciente}
             cie10={this.state.cie10}
