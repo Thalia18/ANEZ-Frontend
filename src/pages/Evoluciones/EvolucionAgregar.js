@@ -5,8 +5,15 @@ import { connect } from 'react-redux';
 import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, openNotification, trimData } from '../../components/utils';
-import { cie10Dropdown, mapStateToProps } from '../../components/utils';
+import {
+  cie10Dropdown,
+  mapStateToProps,
+  saveCIE10,
+  saveFotos,
+  api_url,
+  openNotification,
+  trimData,
+} from '../../components/utils';
 
 class EvolucionAgregar extends Component {
   constructor(props) {
@@ -26,18 +33,15 @@ class EvolucionAgregar extends Component {
         medicacion: '',
         indicacion: '',
         proximo_control: undefined,
+        foto: '',
+        diagnostico_cie10: '',
         created_at: new Date(),
-      },
-      fotos: {
-        evolucion_id: null,
-        foto_url: '',
       },
       evolucionId: null,
       fotoList: [{ foto_url: '' }],
       buttonDisable: false,
-      categoriaEvolucion: {},
-      cie10: [],
       cie10List: [],
+      cie10: [],
     };
   }
   componentDidMount() {
@@ -85,6 +89,8 @@ class EvolucionAgregar extends Component {
         medicacion: this.state.evolucion.medicacion,
         indicacion: this.state.evolucion.indicacion,
         proximo_control: this.state.evolucion.proximo_control,
+        diagnostico_cie10: this.state.evolucion.diagnostico_cie10,
+        foto: this.state.evolucion.foto,
         [e.target.name]: e.target.value,
       },
     });
@@ -97,6 +103,8 @@ class EvolucionAgregar extends Component {
       loading: true,
       error: null,
     });
+    this.state.evolucion.diagnostico_cie10 = saveCIE10(this.state.cie10List);
+    this.state.evolucion.foto = saveFotos(this.state.fotoList);
     trimData(this.state.evolucion);
     try {
       const evolucion = await axios.post(
@@ -110,42 +118,6 @@ class EvolucionAgregar extends Component {
         evolucionId: evolucion.data.data.evolucion_id,
         error: null,
       });
-      //comprueba si existen fotos y las guarda
-      if (this.state.fotoList.length > 0) {
-        if (this.state.fotoList[0].foto_url !== '') {
-          for (const element of this.state.fotoList) {
-            this.setState({
-              fotos: {
-                ...this.state.fotos,
-                evolucion_id: this.state.evolucionId,
-                foto_url: element.foto_url,
-                created_at: new Date(),
-                update_at: null,
-              },
-            });
-            await axios.post(`${api_url}/api/foto`, this.state.fotos);
-          }
-        }
-      }
-
-      //almacenar datos de cie10
-      if (this.state.cie10List.length > 0) {
-        for (const element of this.state.cie10List) {
-          this.setState({
-            categoriaEvolucion: {
-              ...this.state.categoriaEvolucion,
-              categoria_id: element,
-              evolucion_id: this.state.evolucionId,
-              created_at: new Date(),
-              update_at: null,
-            },
-          });
-          await axios.post(
-            `${api_url}/api/categoria_evolucion`,
-            this.state.categoriaEvolucion
-          );
-        }
-      }
       openNotification(
         'success',
         'Evoluciones',
@@ -170,6 +142,8 @@ class EvolucionAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.evolucion);
+    console.log(this.state.fotosList);
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
@@ -187,7 +161,6 @@ class EvolucionAgregar extends Component {
             handleChange={this.handleChange}
             handleAddClick={this.addFoto}
             handleRemoveClick={this.removeFoto}
-            handleInputChange={this.handleChangeFoto}
             fotosList={this.state.fotoList}
           />
         </Layout>

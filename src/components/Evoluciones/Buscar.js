@@ -11,7 +11,12 @@ import {
 
 import { Global } from '../../global';
 import HCHeader from '../HistoriasClinicas/HCHeader';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  mediumHeight,
+  fechaFormato,
+} from '../utils';
 import Navbar from './NavbarEvolucion';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -72,8 +77,8 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
                   </Message.Header>
                   <p>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen evoluciones
-                    registradas desde el <b>{fecha1}</b> hasta el{' '}
-                    <b>{fecha2}</b>
+                    registradas desde el <b>{fechaFormato(fecha1)}</b> hasta el{' '}
+                    <b>{fechaFormato(fecha2)}</b>
                   </p>
                 </Message>
               )}

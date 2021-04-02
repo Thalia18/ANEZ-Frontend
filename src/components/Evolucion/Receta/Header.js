@@ -6,7 +6,7 @@ import { eliminarTildes, mapStateToProps } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Header = ({ user, consultorio, especialidad }) => {
+const Header = ({ user, consultorio }) => {
   return (
     <Grid>
       <Grid.Column width={5}>
@@ -33,7 +33,7 @@ const Header = ({ user, consultorio, especialidad }) => {
               fontSize: '0.9em',
             }}
           >
-            {eliminarTildes(especialidad.especialidades.especialidad)}
+            {eliminarTildes(user.especialidad[0].especialidad)}
           </Container>
         </Container>
       </Grid.Column>

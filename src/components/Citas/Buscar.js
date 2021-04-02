@@ -83,7 +83,8 @@ const Buscar = ({ citas, fecha1, fecha2, citaId }) => {
                   </Message.Header>
                   <p>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen citas registradas
-                    desde el <b>{fecha1}</b> hasta el <b>{fecha2}</b>
+                    desde el <b>{fechaFormato(fecha1)}</b> hasta el{' '}
+                    <b>{fechaFormato(fecha2)}</b>
                   </p>
                 </Message>
               )}

@@ -16,7 +16,6 @@ class Receta extends Component {
     this.state = {
       error: null,
       loading: true,
-      especialidad: {},
       evolucion: {},
     };
   }
@@ -33,14 +32,10 @@ class Receta extends Component {
       error: null,
     });
     try {
-      const { data: especialidad } = await axios.get(
-        `${api_url}/api/especialidad_medico/${this.props.user.medico_id}`
-      );
       const { data: evolucion } = await axios.get(
         `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
       );
       this.setState({
-        especialidad: especialidad.data,
         evolucion: evolucion.data,
         loading: false,
       });
@@ -58,17 +53,8 @@ class Receta extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
-          {/* <PDFViewer style={{ width: '100%', height: '100%' }}>
-                      <RecetaPDF
-                        consultorio={this.state.consultorio}
-                        especialidad={this.state.especialidad}
-                        nombreMedico={this.props.user.nombre.trim()}
-                        apellidoMedico={this.props.user.apellido.trim()}
-                      />
-                    </PDFViewer> */}
           <RecetaPDF
             consultorio={this.props.consultorio}
-            especialidad={this.state.especialidad}
             evolucion={this.state.evolucion}
             nombreMedico={this.props.user.nombre.trim()}
             apellidoMedico={this.props.user.apellido.trim()}

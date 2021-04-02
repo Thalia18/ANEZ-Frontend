@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { setConsultorio, setEspecialidad, setUser } from '../actions';
+import { setConsultorio, setUser } from '../actions';
 import Login from '../components/Login/Login';
 import { api_url } from '../components/utils/';
 
@@ -20,7 +20,6 @@ class LoginG extends Component {
       },
       userConfirm: {},
       consultorio: {},
-      especialidad: {},
     };
   }
   componentDidMount() {
@@ -60,16 +59,12 @@ class LoginG extends Component {
       const { data: consultorio } = await axios.get(
         `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`
       );
-      const { data: especialidad } = await axios.get(
-        `${api_url}/api/especialidad_medico/${this.state.userConfirm.medico_id}`
-      );
+
       this.setState({
         consultorio: consultorio.data,
-        especialidad: especialidad.data,
       });
       this.props.setUser(this.state.userConfirm);
       this.props.setConsultorio(this.state.consultorio);
-      this.props.setEspecialidad(this.state.especialidad);
       this.props.history.push('/main');
     } catch (error) {
       this.setState({
@@ -99,6 +94,5 @@ class LoginG extends Component {
 const mapDispatchToProps = {
   setUser,
   setConsultorio,
-  setEspecialidad,
 };
 export default withRouter(connect(null, mapDispatchToProps)(LoginG));

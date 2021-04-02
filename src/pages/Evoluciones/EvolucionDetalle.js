@@ -18,9 +18,6 @@ class PacienteDetalle extends Component {
       loading: true,
       paciente: {},
       evolucion: {},
-      fotos: {},
-      fotosExist: false,
-      cie10: {},
     };
   }
   componentDidMount() {
@@ -42,25 +39,14 @@ class PacienteDetalle extends Component {
       const { data: paciente } = await axios.get(
         `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
       );
-      const { data: fotos } = await axios.get(
-        `${api_url}/api/fotos_evolucion/${this.props.match.params.evolucionId}`
-      );
-      const { data: cie10 } = await axios.get(
-        `${api_url}/api/categoria_evolucion/${this.props.match.params.evolucionId}`
-      );
+
       this.setState({
         paciente: paciente.data.pacientes,
         evolucion: evolucion.data,
-        fotos: fotos.data,
-        cie10: cie10.data,
         loading: false,
       });
-      if (this.state.fotos.length > 0) {
-        this.setState({
-          fotosExist: true,
-        });
-      }
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -111,9 +97,6 @@ class PacienteDetalle extends Component {
           <Detalle
             paciente={this.state.paciente}
             evolucion={this.state.evolucion}
-            fotos={this.state.fotos}
-            fotosExist={this.state.fotosExist}
-            cie10={this.state.cie10}
           />
 
           <ModalEliminar

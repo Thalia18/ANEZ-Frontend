@@ -15,7 +15,6 @@ export const mapStateToProps = (state) => {
   return {
     user: state.user,
     consultorio: state.consultorio,
-    especialidad: state.especialidad,
   };
 };
 
@@ -181,7 +180,13 @@ export const cie10Dropdown = (categorias) => {
         key: item.categoria_id,
         text:
           item.codigo.trim() + ' ➜ ' + item.descripcion.trim().toUpperCase(),
-        value: item.categoria_id,
+        value: (
+          item.categoria_id +
+          '$' +
+          item.codigo.trim() +
+          ' ➜ ' +
+          item.descripcion.trim().toUpperCase()
+        ).toString(),
       });
     });
   }
@@ -289,4 +294,34 @@ export const fechaCitas = (fecha) => {
   var day = fechaF.getUTCDate();
   var year = fechaF.getUTCFullYear();
   return year + '-' + month + '-' + day;
+};
+
+//saveCIE10 JSON
+export const saveCIE10 = (lista) => {
+  let opcion = [];
+  if (lista !== undefined) {
+    lista.map((item) => {
+      var a2 = item;
+      // a2.split(' $ ', 2);
+      opcion.push({
+        id: parseInt(a2.substr(0, a2.lastIndexOf('$'))),
+        value: a2.substr(a2.lastIndexOf('$') + 1, a2.length).replace('$', ''),
+      });
+    });
+  }
+  return opcion;
+};
+
+//save fotos JSON
+export const saveFotos = (lista) => {
+  let opcion = [];
+  if (lista !== undefined) {
+    lista.map((item, i) => {
+      opcion.push({
+        id: parseInt(i),
+        value: item.foto_url,
+      });
+    });
+  }
+  return opcion;
 };

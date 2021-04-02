@@ -26,7 +26,7 @@ import {
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Detalle = ({ paciente, evolucion, fotos, fotosExist, cie10 }) => {
+const Detalle = ({ paciente, evolucion }) => {
   const [open, setOpen] = React.useState(false);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
@@ -80,20 +80,16 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist, cie10 }) => {
                     </Table.Cell>
                     <Table.Cell>{evolucion.diagnostico}</Table.Cell>
                   </Table.Row>
-                  {cie10.length > 0 && (
+                  {evolucion.diagnostico_cie10.length > 0 && (
                     <Table.Row>
                       <Table.Cell style={saltos}>
                         <b>Diagnóstico CIE 10</b>
                       </Table.Cell>
                       <Table.Cell>
-                        {cie10.map((item) => {
+                        {evolucion.diagnostico_cie10.map((item) => {
                           return (
-                            <p key={item.categoria_id}>
-                              {item.categorias.codigo.trim() +
-                                ' ➜ ' +
-                                item.categorias.descripcion
-                                  .trim()
-                                  .toUpperCase()}
+                            <p key={item.id}>
+                              {item.value}
                               <br />
                             </p>
                           );
@@ -138,68 +134,70 @@ const Detalle = ({ paciente, evolucion, fotos, fotosExist, cie10 }) => {
                   </Table.Row>
                 </Table.Body>
               </Table>
-              <Segment basic>
-                <Icon name='picture' />
-                <b>Fotos</b>
-              </Segment>
-              {fotosExist && (
-                <Segment>
-                  <Grid columns={4}>
-                    <Grid.Row>
-                      {fotos.map((foto) => {
-                        return (
-                          <Modal
-                            key={foto.foto_id}
-                            basic
-                            closeIcon
-                            onClose={() => setOpen(false)}
-                            trigger={
-                              <Grid.Column>
+              {evolucion.foto.length > 0 && evolucion.foto[0].value !== '' && (
+                <React.Fragment>
+                  <Segment basic>
+                    <Icon name='picture' />
+                    <b>Fotos</b>
+                  </Segment>
+                  <Segment>
+                    <Grid columns={4}>
+                      <Grid.Row>
+                        {evolucion.foto.map((foto) => {
+                          return (
+                            <Modal
+                              key={foto.id}
+                              basic
+                              closeIcon
+                              onClose={() => setOpen(false)}
+                              trigger={
+                                <Grid.Column>
+                                  <Image
+                                    src={foto.value}
+                                    rounded
+                                    style={
+                                      matches.medium
+                                        ? {
+                                            height: '6em',
+                                            width: '11em',
+                                            cursor: 'zoom-in',
+                                          }
+                                        : {
+                                            height: '10em',
+                                            width: '15em',
+                                            cursor: 'zoom-in',
+                                          }
+                                    }
+                                  />
+                                  <br />
+                                </Grid.Column>
+                              }
+                            >
+                              <Modal.Content image>
                                 <Image
-                                  src={foto.foto_url}
-                                  rounded
+                                  src={foto.value}
                                   style={
                                     matches.medium
                                       ? {
-                                          height: '6em',
-                                          width: '11em',
-                                          cursor: 'zoom-in',
+                                          height: '25em',
+                                          width: 'auto',
                                         }
                                       : {
-                                          height: '10em',
-                                          width: '15em',
-                                          cursor: 'zoom-in',
+                                          height: '35em',
+                                          width: 'auto',
                                         }
                                   }
+                                  centered
+                                  rounded
                                 />
-                                <br />
-                              </Grid.Column>
-                            }
-                          >
-                            <Modal.Content image>
-                              <Image
-                                src={foto.foto_url}
-                                style={
-                                  matches.medium
-                                    ? {
-                                        height: '25em',
-                                        width: 'auto',
-                                      }
-                                    : {
-                                        height: '35em',
-                                        width: 'auto',
-                                      }
-                                }
-                                centered
-                                rounded
-                              />
-                            </Modal.Content>
-                          </Modal>
-                        );
-                      })}
-                    </Grid.Row>
-                  </Grid>
-                </Segment>
+                              </Modal.Content>
+                            </Modal>
+                          );
+                        })}
+                      </Grid.Row>
+                    </Grid>
+                  </Segment>
+                </React.Fragment>
               )}
             </DivScroll>
           </Global>

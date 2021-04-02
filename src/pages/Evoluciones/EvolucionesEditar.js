@@ -5,8 +5,15 @@ import { connect } from 'react-redux';
 import Editar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
-import { api_url, openNotification, trimData } from '../../components/utils';
-import { cie10Dropdown, mapStateToProps } from '../../components/utils';
+import {
+  cie10Dropdown,
+  mapStateToProps,
+  saveCIE10,
+  saveFotos,
+  api_url,
+  openNotification,
+  trimData,
+} from '../../components/utils';
 
 class EvolucionEditar extends Component {
   constructor(props) {
@@ -17,10 +24,7 @@ class EvolucionEditar extends Component {
       loading: true,
       paciente: {},
       evolucion: {},
-      fotos: {
-        evolucion_id: null,
-        foto_url: '',
-      },
+
       evolucionId: null,
       fotoList: [{ foto_url: '' }],
       buttonDisable: false,
@@ -51,27 +55,18 @@ class EvolucionEditar extends Component {
       const { data: evolucion } = await axios.get(
         `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
       );
-      const { data: fotos } = await axios.get(
-        `${api_url}/api/fotos_evolucion/${this.props.match.params.evolucionId}`
-      );
-      const { data: fotosP } = await axios.get(
-        `${api_url}/api/fotos_evolucion_p/${this.props.match.params.evolucionId}`
-      );
       const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
-      const { data: cie10Edit } = await axios.get(
-        `${api_url}/api/categoria_evolucion/${this.props.match.params.evolucionId}`
-      );
+
       this.setState({
         paciente: paciente.data.pacientes,
         evolucion: evolucion.data,
-        fotoList: fotosP.data,
-        fotoExists: fotos.data,
         cie10: cie10Dropdown(cie10List.data),
-        cie10List: this.selectedCIe10(cie10Edit.data),
-        cie10Exist: cie10Edit.data,
+        // cie10List: this.selectedCIe10(evolucion.data.diagnostico_cie10),
+        fotoList: this.selectedFoto(evolucion.data.foto),
         loading: false,
       });
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -80,16 +75,25 @@ class EvolucionEditar extends Component {
   };
 
   //identificar los cie10 seleccionados
-  selectedCIe10 = (cie10) => {
+  selectedCIe10 = (lista) => {
     let opcion = [];
-    if (cie10) {
-      Object.values(cie10).map((item) => {
-        opcion.push(item.categoria_id);
+    if (lista) {
+      lista.map((item) => {
+        opcion.push(item.id + '$' + item.value);
       });
     }
     return opcion;
   };
 
+  selectedFoto = (lista) => {
+    let opcion = [];
+    if (lista) {
+      lista.map((item) => {
+        opcion.push({ foto_url: item.value });
+      });
+    }
+    return opcion;
+  };
   //setear los datos del formulario de evolucion
   handleChange = (e) => {
     this.setState({
@@ -104,6 +108,8 @@ class EvolucionEditar extends Component {
         medicacion: this.state.evolucion.medicacion,
         indicacion: this.state.evolucion.indicacion,
         proximo_control: this.state.evolucion.proximo_control,
+        diagnostico_cie10: this.state.evolucion.diagnostico_cie10,
+        foto: this.state.evolucion.foto,
         [e.target.name]: e.target.value,
         updated_at: new Date(),
       },
@@ -117,11 +123,10 @@ class EvolucionEditar extends Component {
       loading: true,
       error: null,
     });
+    this.state.evolucion.diagnostico_cie10 = saveCIE10(this.state.cie10List);
+    this.state.evolucion.foto = saveFotos(this.state.fotoList);
     trimData(this.state.evolucion);
     try {
-      this.deleteImages(this.state.fotoExists);
-      this.deleteCie10();
-
       await axios.put(
         `${api_url}/api/evolucion/${this.state.evolucion.evolucion_id}`,
         this.state.evolucion
@@ -133,39 +138,7 @@ class EvolucionEditar extends Component {
         evolucionId: this.state.evolucion.evolucion_id,
         error: null,
       });
-      //comprueba si existen fotos y las guarda
-      if (this.state.fotoList.length > 0) {
-        if (this.state.fotoList[0].foto_url !== '') {
-          for (const element of this.state.fotoList) {
-            this.setState({
-              fotos: {
-                ...this.state.fotos,
-                evolucion_id: this.state.evolucionId,
-                foto_url: element.foto_url,
-                created_at: new Date(),
-              },
-            });
-            await axios.post(`${api_url}/api/foto`, this.state.fotos);
-          }
-        }
-      }
-      //almacenar datos de cie10
-      if (this.state.cie10List.length > 0) {
-        for (const element of this.state.cie10List) {
-          this.setState({
-            categoriaEvolucion: {
-              ...this.state.categoriaEvolucion,
-              categoria_id: element,
-              evolucion_id: this.state.evolucionId,
-              created_at: new Date(),
-            },
-          });
-          await axios.post(
-            `${api_url}/api/categoria_evolucion`,
-            this.state.categoriaEvolucion
-          );
-        }
-      }
+
       openNotification(
         'success',
         'Evoluciones',
@@ -183,44 +156,6 @@ class EvolucionEditar extends Component {
     }
   };
 
-  //borra las imagenes para la edicion
-  deleteImages = async (list) => {
-    try {
-      for (const element of list) {
-        await axios.delete(`${api_url}/api/foto/${element.foto_id}`);
-      }
-      this.setState({
-        loading: false,
-        success: true,
-        error: null,
-      });
-    } catch (error) {
-      this.setState({
-        loading: false,
-        error: error,
-      });
-    }
-  };
-
-  //borra las imagenes para la edicion
-  deleteCie10 = async () => {
-    try {
-      await axios.delete(
-        `${api_url}/api/categoria_evolucion/${this.props.match.params.evolucionId}`
-      );
-
-      this.setState({
-        loading: false,
-        success: true,
-        error: null,
-      });
-    } catch (error) {
-      this.setState({
-        loading: false,
-        error: error,
-      });
-    }
-  };
   //obtener datos de dropdown
   handleOnChangeCie10 = (e, data) => {
     this.state.cie10List = data.value;
@@ -228,6 +163,13 @@ class EvolucionEditar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.evolucion);
+    console.log(saveCIE10(this.state.cie10List), 'save');
+    console.log(
+      this.selectedCIe10(this.state.evolucion.diagnostico_cie10),
+      'selected'
+    );
+    console.log(this.state.cie10List, 'cie');
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
@@ -239,15 +181,14 @@ class EvolucionEditar extends Component {
             id='formEditar'
             paciente={this.state.paciente}
             cie10={this.state.cie10}
-            cie10List={this.state.cie10List}
             onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
             handleOnChangeCie10={this.handleOnChangeCie10}
             formEvolucion={this.state.evolucion}
             handleChange={this.handleChange}
-            handleAddClick={this.addFoto}
-            handleRemoveClick={this.removeFoto}
-            handleInputChange={this.handleChangeFoto}
             fotosList={this.state.fotoList}
+            cie10List={this.selectedCIe10(
+              this.state.evolucion.diagnostico_cie10
+            )}
           />
         </Layout>
       </React.Fragment>

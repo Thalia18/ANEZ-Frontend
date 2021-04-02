@@ -35,6 +35,7 @@ const Agregar = ({
   id,
   headerC,
   icon,
+  cie10List,
 }) => {
   const [value, setValue] = React.useState(true);
   const handleChangeCheck = (e) => {
@@ -108,15 +109,17 @@ const Agregar = ({
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Dropdown
+                    <Form.Select
                       clearable
                       fluid
                       multiple
                       search
                       selection
+                      width={16}
                       options={cie10}
                       placeholder='Seleccione código CIE 10'
                       onChange={handleOnChangeCie10}
+                      defaultValue={cie10List}
                     />
                   </Form.Group>
                 </Segment>
