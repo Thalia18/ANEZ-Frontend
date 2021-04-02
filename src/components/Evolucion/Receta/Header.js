@@ -33,7 +33,7 @@ const Header = ({ user, consultorio }) => {
               fontSize: '0.9em',
             }}
           >
-            {eliminarTildes(user.especialidad[0].especialidad)}
+            {eliminarTildes(user.especialidad[0].value)}
           </Container>
         </Container>
       </Grid.Column>

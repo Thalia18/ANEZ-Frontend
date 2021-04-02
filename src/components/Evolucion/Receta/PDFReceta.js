@@ -15,7 +15,7 @@ class App extends Component {
     super(props);
   }
 
-  createPdf = (html) => Doc.createPdf(html);
+  createPdf = (html) => Doc.createPdf(html, this.props.paciente);
 
   render() {
     return (

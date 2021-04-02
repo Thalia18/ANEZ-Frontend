@@ -1,11 +1,11 @@
 import { savePDF } from '@progress/kendo-react-pdf';
 
 class DocService {
-  createPdf = (html) => {
+  createPdf = (html, paciente) => {
     savePDF(html, {
       keepTogether: 'p',
       paperSize: 'A4',
-      fileName: 'ANEZ.pdf',
+      fileName: `${paciente}.pdf`,
       landscape: true,
       margin: 3,
     });

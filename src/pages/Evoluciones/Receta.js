@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Navbar from '../../components/Evolucion/Receta/NavbarReceta';
 import RecetaPDF from '../../components/Evolucion/Receta/PDFReceta';
 import Layout from '../../components/Layout/Layout';
 import { api_url } from '../../components/utils';
@@ -17,6 +16,7 @@ class Receta extends Component {
       error: null,
       loading: true,
       evolucion: {},
+      paciente: {},
     };
   }
   componentDidMount() {
@@ -35,8 +35,12 @@ class Receta extends Component {
       const { data: evolucion } = await axios.get(
         `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
       );
+      const { data: paciente } = await axios.get(
+        `${api_url}/api/paciente_historia/${evolucion.data.historia_clinica_id}`
+      );
       this.setState({
         evolucion: evolucion.data,
+        paciente: paciente.data,
         loading: false,
       });
     } catch (error) {
@@ -50,6 +54,7 @@ class Receta extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.paciente);
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
@@ -58,6 +63,12 @@ class Receta extends Component {
             evolucion={this.state.evolucion}
             nombreMedico={this.props.user.nombre.trim()}
             apellidoMedico={this.props.user.apellido.trim()}
+            paciente={
+              `Receta ANEZ ${this.state.evolucion.fecha} ` +
+              this.state.paciente.pacientes.nombre +
+              ' ' +
+              this.state.paciente.pacientes.apellido
+            }
           />
         </Layout>
       </React.Fragment>

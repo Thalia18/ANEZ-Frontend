@@ -163,13 +163,6 @@ class EvolucionEditar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.evolucion);
-    console.log(saveCIE10(this.state.cie10List), 'save');
-    console.log(
-      this.selectedCIe10(this.state.evolucion.diagnostico_cie10),
-      'selected'
-    );
-    console.log(this.state.cie10List, 'cie');
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
