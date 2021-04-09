@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 
 import Buscar from '../../components/Citas/Buscar';
 import Layout from '../../components/Layout/Layout';
-import { api_url, citasList } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { api_url, mapStateToProps } from '../../components/utils';
 
 class CitasBuscar extends Component {
   constructor(props) {
@@ -16,6 +15,8 @@ class CitasBuscar extends Component {
       loading: true,
       citas: {},
       citaList: [],
+      paginas: {},
+      page: 1,
     };
   }
   componentDidMount() {
@@ -32,20 +33,26 @@ class CitasBuscar extends Component {
     });
     try {
       const { data: citas } = await axios.get(
-        `${api_url}/api/citas_fecha/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}`
+        `${api_url}/api/citas_fecha/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}?page=${this.state.page}`
       );
 
       this.setState({
         citas: citas.data,
-
+        paginas: citas.info,
         loading: false,
       });
     } catch (error) {
+      console.log(error);
+
       this.setState({
         loading: false,
         error: error,
       });
     }
+  };
+  handleChangePage = (e, value) => {
+    this.state.page = value.activePage;
+    this.fetchData();
   };
 
   render() {
@@ -58,6 +65,8 @@ class CitasBuscar extends Component {
             citas={this.state.citas}
             fecha1={this.props.match.params.fecha1}
             fecha2={this.props.match.params.fecha2}
+            paginas={this.state.paginas}
+            handleChangePage={this.handleChangePage}
           />
         </Layout>
       </React.Fragment>

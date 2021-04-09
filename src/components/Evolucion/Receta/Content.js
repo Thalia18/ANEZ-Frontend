@@ -9,8 +9,8 @@ const Content = ({ texto }) => {
   return (
     <ContainerC
       style={{
-        height: '35em',
-        margin: '1em',
+        height: '31em',
+        margin: '0.5em',
         whiteSpace: 'pre-wrap',
         textAlign: 'justify',
         overflow: 'auto  ',

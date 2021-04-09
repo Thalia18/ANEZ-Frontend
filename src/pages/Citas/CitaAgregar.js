@@ -5,8 +5,14 @@ import { connect } from 'react-redux';
 import Agregar from '../../components/Cita/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, openNotification, trimData } from '../../components/utils';
-import { horasMinutos, mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  fechaCitas,
+  horasMinutos,
+  mapStateToProps,
+  openNotification,
+  trimData,
+} from '../../components/utils';
 
 class CitasAgregar extends Component {
   constructor(props) {
@@ -68,7 +74,7 @@ class CitasAgregar extends Component {
     });
   };
 
-  //guardar historia clinica
+  //guardar cita
   onClickButtonSaveCita = async (e) => {
     e.preventDefault();
     this.setState({
@@ -96,9 +102,8 @@ class CitasAgregar extends Component {
         );
       } else {
         openNotification('success', 'Citas', 'Cita agendada exitosamente', '');
+        this.props.history.push(`/citas/${fechaCitas(new Date())}`);
       }
-
-      this.props.history.push(`/citas`);
     } catch (error) {
       this.setState({
         loading: false,
@@ -114,7 +119,6 @@ class CitasAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.cita);
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>

@@ -8,11 +8,11 @@ import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
   fechaActual,
   GLOBAL_MEDIA_QUERIES,
+  horasMinutos,
   masMediumHeight,
   maxMediumScroll,
   mediumHeight,
   mediumScroll,
-  horasMinutos,
 } from '../../utils';
 
 import 'rsuite/dist/styles/rsuite-default.css';
@@ -81,7 +81,6 @@ const Agregar = ({
                     onChange={handleChange}
                     name='motivo_cita'
                     value={formCita.motivo_cita}
-                    required
                   />
                 </Form.Group>
               </Form>

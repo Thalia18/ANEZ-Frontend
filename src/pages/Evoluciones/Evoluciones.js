@@ -15,6 +15,8 @@ class Evoluciones extends Component {
       loading: true,
       evoluciones: {},
       paciente: {},
+      paginas: {},
+      page: 1,
     };
   }
   componentDidMount() {
@@ -31,7 +33,7 @@ class Evoluciones extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}`
+        `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}?page=${this.state.page}`
       );
 
       const { data: paciente } = await axios.get(
@@ -40,6 +42,8 @@ class Evoluciones extends Component {
       this.setState({
         evoluciones: data.data,
         paciente: paciente.data.pacientes,
+        paginas: data.info,
+
         loading: false,
       });
     } catch (error) {
@@ -48,6 +52,10 @@ class Evoluciones extends Component {
         error: error,
       });
     }
+  };
+  handleChangePage = (e, value) => {
+    this.state.page = value.activePage;
+    this.fetchData();
   };
 
   render() {
@@ -60,6 +68,8 @@ class Evoluciones extends Component {
             evoluciones={Object.values(this.state.evoluciones)}
             paciente={this.state.paciente}
             historiaId={this.props.match.params.historiaId}
+            paginas={this.state.paginas}
+            handleChangePage={this.handleChangePage}
           />
         </Layout>
       </React.Fragment>

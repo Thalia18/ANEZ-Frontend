@@ -15,13 +15,7 @@ export const mapStateToProps = (state) => {
   return {
     user: state.user,
     consultorio: state.consultorio,
-  };
-};
-
-//uso de redux para autocomplete
-export const mapStateToPropsPacientes = (state) => {
-  return {
-    autocomplete: state.autocomplete,
+    categorias: state.categorias,
   };
 };
 

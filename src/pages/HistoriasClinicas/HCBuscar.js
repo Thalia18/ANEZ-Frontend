@@ -14,6 +14,8 @@ class HCBuscar extends Component {
       error: null,
       loading: true,
       pacientes: {},
+      paginas: {},
+      page: 1,
     };
   }
   componentDidMount() {
@@ -35,6 +37,8 @@ class HCBuscar extends Component {
 
       this.setState({
         pacientes: data.data,
+        paginas: data.info,
+
         loading: false,
       });
     } catch (error) {
@@ -44,7 +48,10 @@ class HCBuscar extends Component {
       });
     }
   };
-
+  handleChangePage = (e, value) => {
+    this.state.page = value.activePage;
+    this.fetchData();
+  };
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
@@ -63,6 +70,8 @@ class HCBuscar extends Component {
               Object.values(this.state.pacientes).length > 0 ? false : true
             }
             busqueda={this.props.match.params.buscar}
+            paginas={this.state.paginas}
+            handleChangePage={this.handleChangePage}
           />
         </Layout>
       </React.Fragment>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Grid } from 'semantic-ui-react';
 
-import { eliminarTildes } from '../../utils';
+import { eliminarTildes, fechaFormato } from '../../utils';
 import Content from './Content';
 import Doc from './DocService';
 import Footer from './Footer';
@@ -9,6 +9,19 @@ import Header from './Header';
 import PdfContainer from './PdfContainer';
 
 import 'semantic-ui-css/semantic.min.css';
+
+const Datos = ({ paciente, fecha }) => {
+  return (
+    <React.Fragment>
+      <p align='center'>{fechaFormato(fecha)}</p>
+      <p>
+        <b>PACIENTE:</b>
+        {paciente.substring(22, paciente.length)}
+      </p>
+      <br />
+    </React.Fragment>
+  );
+};
 
 class App extends Component {
   constructor(props) {
@@ -40,6 +53,10 @@ class App extends Component {
 
               <Grid.Row>
                 <Grid.Column width={8}>
+                  <Datos
+                    paciente={this.props.paciente}
+                    fecha={this.props.evolucion.fecha}
+                  />
                   <b>MEDICACION:</b>
                   <br />
                   <Content texto={this.props.evolucion.medicacion} />
@@ -50,6 +67,10 @@ class App extends Component {
                   />
                 </Grid.Column>
                 <Grid.Column width={8}>
+                  <Datos
+                    paciente={this.props.paciente}
+                    fecha={this.props.evolucion.fecha}
+                  />
                   <b>INDICACIONES:</b>
                   <br />
                   <Content texto={this.props.evolucion.indicacion} />

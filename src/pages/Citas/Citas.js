@@ -7,8 +7,8 @@ import Layout from '../../components/Layout/Layout';
 import {
   api_url,
   citasList,
-  mapStateToProps,
   fechaCitas,
+  mapStateToProps,
 } from '../../components/utils';
 
 class Citas extends Component {
@@ -56,19 +56,15 @@ class Citas extends Component {
     // this.setState({
     //   fecha: e,
     // });
-    // console.log(this.state.fecha, 'fechaaaaa');
-    console.log(fechaCitas(e), 'eeee');
     this.props.history.push(`/citas/${fechaCitas(e)}`);
 
     setTimeout(() => {
       window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}`;
-    }, 100);
+    }, 10);
   };
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.fecha, 'fecha prin', fechaCitas(this.state.fecha));
-    console.log(this.state.citaList);
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>

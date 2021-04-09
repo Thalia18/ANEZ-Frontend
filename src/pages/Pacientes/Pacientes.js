@@ -14,6 +14,8 @@ class Pacientes extends Component {
       error: null,
       loading: true,
       pacientes: {},
+      paginas: {},
+      page: 1,
     };
   }
   componentDidMount() {
@@ -29,10 +31,13 @@ class Pacientes extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(`${api_url}/api/pacientes`);
+      const { data } = await axios.get(
+        `${api_url}/api/pacientes?page=${this.state.page}`
+      );
 
       this.setState({
         pacientes: data.data,
+        paginas: data.info,
         loading: false,
       });
     } catch (error) {
@@ -41,6 +46,10 @@ class Pacientes extends Component {
         error: error,
       });
     }
+  };
+  handleChangePage = (e, value) => {
+    this.state.page = value.activePage;
+    this.fetchData();
   };
 
   render() {
@@ -57,6 +66,8 @@ class Pacientes extends Component {
             pageSecond='/pacientes'
             reload='/paciente_buscar'
             optionNav='PC'
+            paginas={this.state.paginas}
+            handleChangePage={this.handleChangePage}
           />
         </Layout>
       </React.Fragment>

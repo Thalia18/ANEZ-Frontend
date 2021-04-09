@@ -1,15 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
 import { useHistory } from 'react-router-dom';
-import {
-  Button,
-  Checkbox,
-  Header,
-  Icon,
-  Message,
-  Segment,
-  Table,
-} from 'semantic-ui-react';
+import { Button, Checkbox, Header, Icon, Message, Pagination, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../global';
 import HCHeader from '../HistoriasClinicas/HCHeader';
@@ -18,7 +10,13 @@ import Navbar from './NavbarEvolucion';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Listado = ({ evoluciones, paciente, historiaId }) => {
+const Listado = ({
+  evoluciones,
+  paciente,
+  historiaId,
+  paginas,
+  handleChangePage,
+}) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
   let history = useHistory();
@@ -37,6 +35,7 @@ const Listado = ({ evoluciones, paciente, historiaId }) => {
               </Header>
               <hr />
               <HCHeader paciente={paciente} />
+              <br />
               {evoluciones.length > 0 && (
                 <Table compact celled definition>
                   <Table.Body>
@@ -88,6 +87,15 @@ const Listado = ({ evoluciones, paciente, historiaId }) => {
                 </Message>
               )}
             </Global>
+            <Segment basic align='center'>
+              <Pagination
+                onPageChange={handleChangePage}
+                pointing
+                secondary
+                activePage={paginas.page}
+                totalPages={paginas.totalPages}
+              />
+            </Segment>
           </Segment>
         </React.Fragment>
       )}

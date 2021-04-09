@@ -6,12 +6,12 @@ import Editar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import {
+  api_url,
   cie10Dropdown,
   mapStateToProps,
+  openNotification,
   saveCIE10,
   saveFotos,
-  api_url,
-  openNotification,
   trimData,
 } from '../../components/utils';
 
@@ -66,7 +66,6 @@ class EvolucionEditar extends Component {
         loading: false,
       });
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -116,7 +115,7 @@ class EvolucionEditar extends Component {
     });
   };
 
-  //guardar historia clinica
+  //guardar evolucion
   onClickButtonSaveEvolucion = async (e) => {
     e.preventDefault();
     this.setState({
@@ -125,6 +124,15 @@ class EvolucionEditar extends Component {
     });
     this.state.evolucion.diagnostico_cie10 = saveCIE10(this.state.cie10List);
     this.state.evolucion.foto = saveFotos(this.state.fotoList);
+    this.state.evolucion.indicacion = this.state.evolucion.indicacion.substring(
+      0,
+      1200
+    );
+
+    this.state.evolucion.medicacion = this.state.evolucion.medicacion.substring(
+      0,
+      1200
+    );
     trimData(this.state.evolucion);
     try {
       await axios.put(

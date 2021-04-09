@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { setConsultorio, setUser } from '../actions';
+import { setCategorias, setConsultorio, setUser } from '../actions';
 import Login from '../components/Login/Login';
 import { api_url } from '../components/utils/';
 
@@ -20,6 +20,7 @@ class LoginG extends Component {
       },
       userConfirm: {},
       consultorio: {},
+      categorias: {},
     };
   }
   componentDidMount() {
@@ -56,15 +57,23 @@ class LoginG extends Component {
         loading: false,
         correctUser: false,
       });
-      const { data: consultorio } = await axios.get(
-        `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`
-      );
+      if (this.state.userConfirm) {
+        const { data: consultorio } = await axios.get(
+          `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`
+        );
+        const { data: cie10List } = await axios.get(
+          `${api_url}/api/categorias`
+        );
 
-      this.setState({
-        consultorio: consultorio.data,
-      });
-      this.props.setUser(this.state.userConfirm);
-      this.props.setConsultorio(this.state.consultorio);
+        this.setState({
+          consultorio: consultorio.data,
+          categorias: cie10List.data,
+        });
+        this.props.setUser(this.state.userConfirm);
+        this.props.setConsultorio(this.state.consultorio);
+        this.props.setCategorias(this.state.categorias);
+      }
+
       this.props.history.push('/main');
     } catch (error) {
       this.setState({
@@ -94,5 +103,6 @@ class LoginG extends Component {
 const mapDispatchToProps = {
   setUser,
   setConsultorio,
+  setCategorias,
 };
 export default withRouter(connect(null, mapDispatchToProps)(LoginG));

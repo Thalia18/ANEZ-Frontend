@@ -70,7 +70,6 @@ const Listado = ({ citas, changeMonth, fechaUltima, ...props }) => {
                 defaultDate={fechaUltima}
                 onNavigate={(date) => {
                   changeMonth(date);
-                  console.log(date, 'date listado');
                 }}
               />
             </Global>

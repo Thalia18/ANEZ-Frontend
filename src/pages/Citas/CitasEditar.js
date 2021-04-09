@@ -66,7 +66,7 @@ class CitasEditar extends Component {
     });
   };
 
-  //guardar historia clinica
+  //guardar cita
   onClickButtonSaveCita = async (e) => {
     e.preventDefault();
     this.setState({
@@ -100,7 +100,6 @@ class CitasEditar extends Component {
         this.props.history.push(`/citas`);
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -115,7 +114,6 @@ class CitasEditar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.cita);
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>

@@ -6,12 +6,12 @@ import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
+  api_url,
   cie10Dropdown,
   mapStateToProps,
+  openNotification,
   saveCIE10,
   saveFotos,
-  api_url,
-  openNotification,
   trimData,
 } from '../../components/utils';
 
@@ -61,10 +61,10 @@ class EvolucionAgregar extends Component {
         `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
       );
 
-      const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
+      // const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
       this.setState({
         paciente: data.data,
-        cie10: cie10Dropdown(cie10List.data),
+        // cie10: cie10Dropdown(cie10List.data),
         loading: false,
       });
     } catch (error) {
@@ -96,7 +96,7 @@ class EvolucionAgregar extends Component {
     });
   };
 
-  //guardar historia clinica
+  //guardar evolucion
   onClickButtonSaveEvolucion = async (e) => {
     e.preventDefault();
     this.setState({
@@ -105,6 +105,16 @@ class EvolucionAgregar extends Component {
     });
     this.state.evolucion.diagnostico_cie10 = saveCIE10(this.state.cie10List);
     this.state.evolucion.foto = saveFotos(this.state.fotoList);
+    this.state.evolucion.indicacion = this.state.evolucion.indicacion.substring(
+      0,
+      1200
+    );
+
+    this.state.evolucion.medicacion = this.state.evolucion.medicacion.substring(
+      0,
+      1200
+    );
+
     trimData(this.state.evolucion);
     try {
       const evolucion = await axios.post(
@@ -142,8 +152,6 @@ class EvolucionAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.evolucion);
-    console.log(this.state.fotosList);
     return (
       <React.Fragment>
         <Layout activeKeyP='2'>
@@ -154,7 +162,8 @@ class EvolucionAgregar extends Component {
             icon='add circle'
             id='formAgregar'
             paciente={this.state.paciente}
-            cie10={this.state.cie10}
+            // cie10={this.state.cie10}
+            cie10={cie10Dropdown(this.props.categorias)}
             onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
             handleOnChangeCie10={this.handleOnChangeCie10}
             formEvolucion={this.state.evolucion}

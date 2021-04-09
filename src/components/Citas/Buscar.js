@@ -1,26 +1,14 @@
 import React from 'react';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Header,
-  Icon,
-  Message,
-  Segment,
-  Table,
-} from 'semantic-ui-react';
+import { Checkbox, Header, Icon, Message, Pagination, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../global';
-import {
-  fechaFormato,
-  GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  mediumHeight,
-} from '../utils';
+import { fechaFormato, GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils';
 import Navbar from './NavbarCitas';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Buscar = ({ citas, fecha1, fecha2, citaId }) => {
+const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage }) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
   return (
@@ -89,6 +77,15 @@ const Buscar = ({ citas, fecha1, fecha2, citaId }) => {
                 </Message>
               )}
             </Global>
+            <Segment basic align='center'>
+              <Pagination
+                onPageChange={handleChangePage}
+                pointing
+                secondary
+                activePage={paginas.page}
+                totalPages={paginas.totalPages}
+              />
+            </Segment>
           </Segment>
         </React.Fragment>
       )}

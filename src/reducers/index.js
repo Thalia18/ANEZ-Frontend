@@ -14,6 +14,10 @@ const applySetConsultorio = (state, action) => ({
   ...state,
   consultorio: action.payload,
 });
+const applySetCategorias = (state, action) => ({
+  ...state,
+  categorias: action.payload,
+});
 
 function authTypeReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -26,7 +30,9 @@ function authTypeReducer(state = INITIAL_STATE, action) {
     case 'SET_CONSULTORIO': {
       return applySetConsultorio(state, action);
     }
-
+    case 'SET_CATEGORIAS': {
+      return applySetCategorias(state, action);
+    }
     default:
       return state;
   }

@@ -1,8 +1,7 @@
+import { eliminarTildes, mapStateToProps } from '../../utils';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Grid, Image } from 'semantic-ui-react';
-
-import { eliminarTildes, mapStateToProps } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 

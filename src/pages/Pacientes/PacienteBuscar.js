@@ -14,6 +14,8 @@ class PacientesBuscar extends Component {
       error: null,
       loading: true,
       pacientes: {},
+      paginas: {},
+      page: 1,
     };
   }
   componentDidMount() {
@@ -30,11 +32,12 @@ class PacientesBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/pacientes_buscar/${this.props.match.params.buscar}`
+        `${api_url}/api/pacientes_buscar/${this.props.match.params.buscar}?page=${this.state.page}`
       );
 
       this.setState({
         pacientes: data.data,
+        paginas: data.info,
         loading: false,
       });
     } catch (error) {
@@ -43,6 +46,10 @@ class PacientesBuscar extends Component {
         error: error,
       });
     }
+  };
+  handleChangePage = (e, value) => {
+    this.state.page = value.activePage;
+    this.fetchData();
   };
 
   render() {
@@ -63,6 +70,8 @@ class PacientesBuscar extends Component {
               Object.values(this.state.pacientes).length > 0 ? false : true
             }
             busqueda={this.props.match.params.buscar}
+            paginas={this.state.paginas}
+            handleChangePage={this.handleChangePage}
           />
         </Layout>
       </React.Fragment>

@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Listado from '../../components/HistoriasClinicas/HC';
 import Layout from '../../components/Layout/Layout';
+import Listado from '../../components/Pacientes/Listado';
 import { api_url } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
 
@@ -15,6 +15,8 @@ class Pacientes extends Component {
       loading: true,
       pacientes: {},
       autocomplete: {},
+      paginas: {},
+      page: 1,
     };
   }
   componentDidMount() {
@@ -31,11 +33,11 @@ class Pacientes extends Component {
     });
     try {
       const { data } = await axios.get(`${api_url}/api/pacientes`);
-      const autoComplete = await axios.get(`${api_url}/api/autocomplete`);
 
       this.setState({
         pacientes: data.data,
-        autocomplete: autoComplete.data,
+        paginas: data.info,
+
         loading: false,
       });
     } catch (error) {
@@ -45,6 +47,10 @@ class Pacientes extends Component {
       });
     }
   };
+  handleChangePage = (e, value) => {
+    this.state.page = value.activePage;
+    this.fetchData();
+  };
 
   render() {
     if (this.state.loading) return <div>loading</div>;
@@ -53,12 +59,16 @@ class Pacientes extends Component {
       <React.Fragment>
         <Layout activeKeyP='2'>
           <Listado
+            header='Historias clínicas'
+            icon='heartbeat'
             pacientes={Object.values(this.state.pacientes)}
             autoComplete={this.state.autocomplete}
             pageInitial='/historia_clinica'
             pageSecond='/historias_clinicas'
             reload='/historia_clinica_buscar'
             optionNav='HC'
+            paginas={this.state.paginas}
+            handleChangePage={this.handleChangePage}
           />
         </Layout>
       </React.Fragment>

@@ -131,7 +131,7 @@ const Agregar = ({
                     onChange={handleChange}
                     name='medicacion'
                     value={formEvolucion.medicacion}
-                    maxLength={1300}
+                    maxLength={1200}
                     rows={10}
                   />
                   <Form.TextArea
@@ -141,7 +141,7 @@ const Agregar = ({
                     onChange={handleChange}
                     name='indicacion'
                     value={formEvolucion.indicacion}
-                    maxLength={1300}
+                    maxLength={1200}
                     rows={10}
                   />
                 </Form.Group>

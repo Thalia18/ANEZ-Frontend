@@ -1,13 +1,6 @@
 import React from 'react';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Header,
-  Icon,
-  Segment,
-  Table,
-  Message,
-} from 'semantic-ui-react';
+import { Checkbox, Header, Icon, Message, Pagination, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../global';
 import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils/';
@@ -25,6 +18,8 @@ const Listado = ({
   icon,
   buscar,
   busqueda,
+  paginas,
+  handleChangePage,
 }) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
@@ -85,6 +80,7 @@ const Listado = ({
                   </Table.Body>
                 </Table>
               )}
+
               {buscar && (
                 <Message warning>
                   <Message.Header>
@@ -98,6 +94,15 @@ const Listado = ({
                 </Message>
               )}
             </Global>
+            <Segment basic align='center'>
+              <Pagination
+                onPageChange={handleChangePage}
+                pointing
+                secondary
+                activePage={paginas.page}
+                totalPages={paginas.totalPages}
+              />
+            </Segment>
           </Segment>
         </React.Fragment>
       )}

@@ -77,7 +77,7 @@ class HCEditar extends Component {
     });
   };
 
-  //guardar paciente
+  //guardar historia clinica
   onClickButtonSaveHC = async (e) => {
     e.preventDefault();
     this.setState({
