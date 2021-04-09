@@ -58,20 +58,21 @@ class LoginG extends Component {
         correctUser: false,
       });
       if (this.state.userConfirm) {
-        const { data: consultorio } = await axios.get(
-          `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`
-        );
-        const { data: cie10List } = await axios.get(
-          `${api_url}/api/categorias`
-        );
-
-        this.setState({
-          consultorio: consultorio.data,
-          categorias: cie10List.data,
-        });
+        if (this.state.userConfirm.rol.trim() !== 'recepcionista') {
+          const { data: cie10List } = await axios.get(
+            `${api_url}/api/categorias`
+          );
+          // const { data: consultorio } = await axios.get(
+          //   `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`
+          // );
+          this.setState({
+            categorias: cie10List.data,
+            // consultorio: consultorio.data,
+          });
+          this.props.setCategorias(this.state.categorias);
+          // this.props.setConsultorio(this.state.consultorio);
+        }
         this.props.setUser(this.state.userConfirm);
-        this.props.setConsultorio(this.state.consultorio);
-        this.props.setCategorias(this.state.categorias);
       }
 
       this.props.history.push('/main');

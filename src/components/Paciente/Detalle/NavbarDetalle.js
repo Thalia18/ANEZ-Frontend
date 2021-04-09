@@ -8,7 +8,7 @@ import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const NavbarPacientes = ({ onClickDelete, pacienteId }) => {
+const NavbarPacientes = ({ onClickDelete, pacienteId, user }) => {
   let history = useHistory();
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -32,13 +32,15 @@ const NavbarPacientes = ({ onClickDelete, pacienteId }) => {
               >
                 Editar
               </Nav.Item>
-              <Nav.Item
-                onClick={onClickDelete}
-                // componentClass='button'
-                icon={<Icon icon='trash' />}
-              >
-                Eliminar
-              </Nav.Item>
+              {user.rol.trim() !== 'recepcionista' && (
+                <Nav.Item
+                  onClick={onClickDelete}
+                  // componentClass='button'
+                  icon={<Icon icon='trash' />}
+                >
+                  Eliminar
+                </Nav.Item>
+              )}
             </Nav>
           </Navbar.Body>
         </Navbar>

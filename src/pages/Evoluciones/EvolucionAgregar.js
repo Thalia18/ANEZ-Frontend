@@ -45,7 +45,12 @@ class EvolucionAgregar extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      (this.props.user.rol.trim() === 'medico' ||
+        this.props.user.rol.trim() === 'admin')
+    ) {
       this.fetchData();
     } else {
       this.props.history.push('/');

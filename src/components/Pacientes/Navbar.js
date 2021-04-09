@@ -17,6 +17,7 @@ const NavbarPacientes = ({
   reload,
   optionNav,
   historiaId,
+  user,
   ...props
 }) => {
   let url =
@@ -67,15 +68,18 @@ const NavbarPacientes = ({
                   >
                     Crear Paciente
                   </Nav.Item>
-                  <Nav.Item
-                    key={Math.random()}
-                    icon={<Icon icon='heartbeat' />}
-                    componentClass={Link}
-                    key={pacienteId}
-                    to={urlHC}
-                  >
-                    Crear Historia clínica
-                  </Nav.Item>
+                  {user.rol.trim() !== 'recepcionista' && (
+                    <Nav.Item
+                      key={Math.random()}
+                      icon={<Icon icon='heartbeat' />}
+                      componentClass={Link}
+                      key={pacienteId}
+                      to={urlHC}
+                    >
+                      Crear Historia clínica
+                    </Nav.Item>
+                  )}
+
                   <Nav.Item
                     icon={<Icon icon='calendar' />}
                     componentClass={Link}

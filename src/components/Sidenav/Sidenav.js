@@ -7,7 +7,7 @@ import { Dropdown, Icon, Nav, Navbar, Sidenav } from 'rsuite';
 import { Grid, Segment } from 'semantic-ui-react';
 
 import { logoutUser } from '../../actions';
-import { mapStateToProps, GLOBAL_MEDIA_QUERIES, fechaCitas } from '../utils';
+import { fechaCitas, GLOBAL_MEDIA_QUERIES, mapStateToProps } from '../utils';
 import { Logo } from './SidenavStyles';
 
 import 'rsuite/dist/styles/rsuite-default.css';
@@ -42,7 +42,7 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
     props.logoutUser([]);
     history.push('/');
   };
-
+  console.log(user);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -73,16 +73,45 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                     <Icon icon='calendar' /> Citas
                   </Nav.Item>
 
-                  <Nav.Item
-                    eventKey='2'
-                    componentClass={Link}
-                    to='/historias_clinicas'
-                  >
-                    <Icon icon='heartbeat' /> Historias clínicas
-                  </Nav.Item>
+                  {user.rol.trim() !== 'recepcionista' && (
+                    <Nav.Item
+                      eventKey='2'
+                      componentClass={Link}
+                      to='/historias_clinicas'
+                    >
+                      <Icon icon='heartbeat' /> Historias clínicas
+                    </Nav.Item>
+                  )}
                   <Nav.Item eventKey='3' componentClass={Link} to='/pacientes'>
                     <Icon icon='people-group' /> Pacientes
                   </Nav.Item>
+                  {user.rol.trim() === 'admin' && (
+                    <Nav.Item
+                      eventKey='4'
+                      componentClass={Link}
+                      to='/pacientes'
+                    >
+                      <Icon icon='user-circle' /> Usuarios
+                    </Nav.Item>
+                  )}
+                  {user.rol.trim() === 'admin' && (
+                    <Nav.Item
+                      eventKey='5'
+                      componentClass={Link}
+                      to='/pacientes'
+                    >
+                      <Icon icon='user-md' /> Personal
+                    </Nav.Item>
+                  )}
+                  {user.rol.trim() === 'admin' && (
+                    <Nav.Item
+                      eventKey='6'
+                      componentClass={Link}
+                      to='/pacientes'
+                    >
+                      <Icon icon='hospital-o' /> Consultorios
+                    </Nav.Item>
+                  )}
                 </Nav>
               </Sidenav.Body>
             </Sidenav>

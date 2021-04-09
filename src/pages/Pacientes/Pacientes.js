@@ -68,6 +68,7 @@ class Pacientes extends Component {
             optionNav='PC'
             paginas={this.state.paginas}
             handleChangePage={this.handleChangePage}
+            user={this.props.user}
           />
         </Layout>
       </React.Fragment>
