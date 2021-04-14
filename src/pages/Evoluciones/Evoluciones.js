@@ -72,7 +72,6 @@ class Evoluciones extends Component {
           <Listado
             evoluciones={Object.values(this.state.evoluciones)}
             paciente={this.state.paciente}
-            historiaId={this.props.match.params.historiaId}
             paginas={this.state.paginas}
             handleChangePage={this.handleChangePage}
           />

@@ -5,15 +5,7 @@ import { connect } from 'react-redux';
 import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import {
-  api_url,
-  cie10Dropdown,
-  mapStateToProps,
-  openNotification,
-  saveCIE10,
-  saveFotos,
-  trimData,
-} from '../../components/utils';
+import { api_url, cie10Dropdown, mapStateToProps, openNotification, saveCIE10, saveFotos, trimData } from '../../components/utils';
 
 class EvolucionAgregar extends Component {
   constructor(props) {
@@ -140,7 +132,7 @@ class EvolucionAgregar extends Component {
         ''
       );
       this.props.history.push(
-        `/historia_clinica/${this.state.paciente.paciente_id}`
+        `/evoluciones/${this.state.paciente.paciente_id}`
       );
     } catch (error) {
       this.setState({

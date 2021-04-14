@@ -13,11 +13,11 @@ const ModalEliminar = ({ deleteM, open, closeModal, content, headerC }) => {
         </p>
       </Modal.Content>
       <Modal.Actions>
-        <Button color='red' onClick={closeModal}>
-          <Icon name='remove' /> No
-        </Button>
         <Button color='green' onClick={deleteM}>
           <Icon name='checkmark' /> Si
+        </Button>
+        <Button color='red' onClick={closeModal}>
+          <Icon name='remove' /> No
         </Button>
       </Modal.Actions>
     </Modal>

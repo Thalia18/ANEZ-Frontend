@@ -59,9 +59,9 @@ const Listado = ({
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell />
-                      <Table.HeaderCell>Apellido</Table.HeaderCell>
+                      <Table.HeaderCell>Apellidos</Table.HeaderCell>
 
-                      <Table.HeaderCell>Nombre</Table.HeaderCell>
+                      <Table.HeaderCell>Nombres</Table.HeaderCell>
                       <Table.HeaderCell>Cédula</Table.HeaderCell>
                       <Table.HeaderCell>Teléfono</Table.HeaderCell>
                     </Table.Row>

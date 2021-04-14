@@ -42,7 +42,6 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
     props.logoutUser([]);
     history.push('/');
   };
-  console.log(user);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -96,15 +95,6 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                   )}
                   {user.rol.trim() === 'admin' && (
                     <Nav.Item
-                      eventKey='5'
-                      componentClass={Link}
-                      to='/pacientes'
-                    >
-                      <Icon icon='user-md' /> Personal
-                    </Nav.Item>
-                  )}
-                  {user.rol.trim() === 'admin' && (
-                    <Nav.Item
                       eventKey='6'
                       componentClass={Link}
                       to='/pacientes'
@@ -127,7 +117,7 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                 </Nav>
                 <Nav pullRight>
                   <Dropdown
-                    icon={<Icon icon='user-md' size='lg' />}
+                    icon={<Icon icon='user-circle-o' size='lg' />}
                     title={user.usuario}
                     size='md'
                     style={{ marginRight: '2em' }}

@@ -21,8 +21,8 @@ const ModalExists = ({ existsHC, header, content, pacienteId }) => {
         >
           <Icon name='eye' /> Ver
         </Button>
-        <Button color='green' onClick={() => history.goBack()}>
-          <Icon name='checkmark' /> Ok
+        <Button color='red' onClick={() => history.goBack()}>
+          <Icon name='close' /> Cerrar
         </Button>
       </Modal.Actions>
     </Modal>

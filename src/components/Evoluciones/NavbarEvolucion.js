@@ -40,9 +40,7 @@ const NavbarPacientes = ({ evolucionId, paciente, ...props }) => {
                 <Nav.Item
                   icon={<Icon icon='angle-left' />}
                   onClick={() => {
-                    history.push(
-                      `/historia_clinica/${props.match.params.historiaId}`
-                    );
+                    history.goBack();
                   }}
                 />
               )}

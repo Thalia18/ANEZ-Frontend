@@ -27,8 +27,8 @@ const ModalNotExists = ({
         >
           <Icon name='plus' /> Crear
         </Button>
-        <Button color='green' onClick={closeModal}>
-          <Icon name='checkmark' /> Ok
+        <Button color='red' onClick={() => history.goBack()}>
+          <Icon name='close' /> Cerrar
         </Button>
       </Modal.Actions>
     </Modal>
