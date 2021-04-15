@@ -1,0 +1,12 @@
+// import { render, screen } from '@testing-library/react';
+// import App from './App';
+// import ProviderMock from './__mocks__/ProviderMock';
+// test('renders learn react link', () => {
+//   render(
+//     <ProviderMock>
+//       <App />
+//     </ProviderMock>
+//   );
+//   const linkElement = screen.getByText(/learn react/i);
+//   expect(linkElement).toBeInTheDocument();
+// });

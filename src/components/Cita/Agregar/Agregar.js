@@ -26,7 +26,6 @@ const Agregar = ({
   horas,
   handleOnChangeHora,
   id,
-  horaActual,
 }) => {
   const [value, setValue] = React.useState(new Date());
   var a = formCita.hora.split(':');

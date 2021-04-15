@@ -1,7 +1,10 @@
 import { Notification } from 'rsuite';
 
 //utilizar globalmente para la conexion con la api
-export const api_url = 'http://localhost:3300' || process.env.API_URL;
+// export const api_url = 'http://localhost:3300' || process.env.API_URL;
+export const api_url =
+  'http://ec2-18-216-31-109.us-east-2.compute.amazonaws.com' ||
+  process.env.API_URL;
 
 //para el componenete Media - responsive design
 export const GLOBAL_MEDIA_QUERIES = {
