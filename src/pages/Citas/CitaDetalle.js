@@ -17,6 +17,7 @@ class CitaDetalle extends Component {
       error: null,
       loading: true,
       cita: {},
+      medico: {},
     };
   }
   componentDidMount() {
@@ -35,9 +36,13 @@ class CitaDetalle extends Component {
       const { data: cita } = await axios.get(
         `${api_url}/api/cita/${this.props.match.params.citaId}`
       );
+      const { data: medico } = await axios.get(
+        `${api_url}/api/medicos_usuario/${cita.data.medico_id}`
+      );
 
       this.setState({
         cita: cita.data,
+        medico: medico.data[0],
         loading: false,
       });
     } catch (error) {
@@ -78,6 +83,7 @@ class CitaDetalle extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.medico);
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>
@@ -86,7 +92,7 @@ class CitaDetalle extends Component {
             pacienteId={this.state.cita.paciente_id}
             citaId={this.props.match.params.citaId}
           />
-          <Detalle cita={this.state.cita} />
+          <Detalle cita={this.state.cita} medico={this.state.medico} />
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}

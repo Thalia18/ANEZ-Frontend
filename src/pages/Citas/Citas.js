@@ -9,6 +9,7 @@ import {
   citasList,
   fechaCitas,
   mapStateToProps,
+  fechaCitasDia,
 } from '../../components/utils';
 
 class Citas extends Component {
@@ -22,6 +23,7 @@ class Citas extends Component {
       citaList: [],
       fecha: '',
       fechaBuscar: '',
+      view: 'month',
     };
   }
   componentDidMount() {
@@ -45,6 +47,7 @@ class Citas extends Component {
         loading: false,
       });
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -52,19 +55,44 @@ class Citas extends Component {
     }
   };
 
-  changeMonth = (e) => {
-    // this.setState({
-    //   fecha: e,
-    // });
-    this.props.history.push(`/citas/${fechaCitas(e)}`);
+  changeMonth = (e, view, action) => {
+    if (action === 'DATE') {
+      // this.props.history.push(`/citas/${fechaCitas(e, 'day')}/day`);
+      console.log(action, 'action', e, 'afssd');
+      this.state.view = view;
 
-    setTimeout(() => {
-      window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}`;
-    }, 10);
+      setTimeout(() => {
+        window.location.href = `http://localhost:3000/citas/${fechaCitas(
+          e,
+          'day'
+        )}/day`;
+      }, 10);
+    } else {
+      if (view === 'day') {
+        this.props.history.push(`/citas/${fechaCitas(e, view)}/${view}`);
+        console.log(action, 'action', e);
+        this.state.view = view;
+
+        setTimeout(() => {
+          window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+        }, 10);
+      }
+      if (view === 'month') {
+        this.props.history.push(`/citas/${fechaCitas(e, view)}/${view}`);
+        console.log(action, 'action', e);
+        this.state.view = view;
+
+        setTimeout(() => {
+          window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+        }, 10);
+      }
+    }
   };
+
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>
@@ -72,6 +100,7 @@ class Citas extends Component {
             citas={this.state.citaList}
             changeMonth={this.changeMonth}
             fechaUltima={new Date(this.props.match.params.fecha)}
+            view={this.props.match.params.view}
           />
         </Layout>
       </React.Fragment>

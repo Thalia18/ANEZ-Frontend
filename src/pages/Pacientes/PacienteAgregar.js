@@ -7,7 +7,13 @@ import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, regexEmail, tipoDeSangreDropdown } from '../../components/utils';
+import {
+  estadoCivilDropdown,
+  etniasDropdown,
+  nivelDeInstruccionDropdown,
+  regexEmail,
+  tipoDeSangreDropdown,
+} from '../../components/utils';
 
 class PacienteAgregar extends Component {
   constructor(props) {
@@ -221,7 +227,6 @@ class PacienteAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>

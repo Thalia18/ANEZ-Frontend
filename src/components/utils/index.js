@@ -1,8 +1,8 @@
 import { Notification } from 'rsuite';
 
 //utilizar globalmente para la conexion con la api
-// export const api_url = 'http://localhost:3300' || process.env.API_URL;
-export const api_url = 'https://0a659e67d741.ngrok.io' || process.env.API_URL;
+export const api_url = 'http://localhost:3300' || process.env.API_URL;
+// export const api_url = 'https://d37d9f41e05c.ngrok.io' || process.env.API_URL;
 
 //para el componenete Media - responsive design
 export const GLOBAL_MEDIA_QUERIES = {
@@ -280,12 +280,32 @@ export const horaShow = (hora) => {
 //validar correos
 export var regexEmail = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/g;
 
-//enviar fecha para buscar por mes
-export const fechaCitas = (fecha) => {
-  var fechaN = fecha === '' ? new Date() : fecha;
-  var fechaF = new Date(fechaN.getFullYear(), fechaN.getMonth() + 1, 0);
+//enviar fecha para buscar por mes ultimo dia del mes
+export const fechaCitas = (fecha, view) => {
+  if (view === 'day') {
+    var fechaN = fecha === '' ? new Date() : fecha;
+    // var fechaF = new Date(fechaN.getFullYear(), fechaN.getMonth() + 1);
 
-  var month = fechaF.getUTCMonth() + 1;
+    var month = fechaN.getUTCMonth() + 1;
+    var day = fechaN.getUTCDate();
+    var year = fechaN.getUTCFullYear();
+    return year + '-' + month + '-' + day;
+  } else {
+    var fechaN = fecha === '' ? new Date() : fecha;
+    var fechaF = new Date(fechaN.getFullYear(), fechaN.getMonth() + 1, 0);
+
+    var month = fechaF.getUTCMonth() + 1;
+    var day = fechaF.getUTCDate();
+    var year = fechaF.getUTCFullYear();
+    return year + '-' + month + '-' + day;
+  }
+};
+
+export const fechaCitasDia = (fecha, value) => {
+  var fechaN = fecha === '' ? new Date() : fecha;
+  var fechaF = new Date(fechaN.getFullYear(), fechaN.getMonth() + 1);
+
+  var month = fechaF.getUTCMonth();
   var day = fechaF.getUTCDate();
   var year = fechaF.getUTCFullYear();
   return year + '-' + month + '-' + day;
@@ -318,5 +338,57 @@ export const saveFotos = (lista) => {
       });
     });
   }
+  return opcion;
+};
+
+//llenar dropdown especialidades
+export const especialidadesDropdown = (especialidadesList) => {
+  let opcion = [];
+  Object.values(especialidadesList).map((item) => {
+    opcion.push({
+      key: item.especialidad_id,
+      text: item.especialidad.trim().toUpperCase(),
+      value: item.especialidad_id,
+    });
+  });
+  return opcion;
+};
+
+//llenar dropdown doctores por especialidades
+export const especialidadesDoctoresDropdown = (especialidadesDoctoresList) => {
+  let opcion = [];
+  if (Object.values(especialidadesDoctoresList).length > 0) {
+    Object.values(especialidadesDoctoresList).map((item) => {
+      opcion.push({
+        key: item.medico_id,
+        text:
+          'DR(A). ' +
+          item.nombre.trim().toUpperCase() +
+          ' ' +
+          item.apellido.trim().toUpperCase(),
+        value: item.medico_id,
+      });
+    });
+  } else {
+    opcion.push({
+      key: 0,
+      text: 'NO HAY RESULTADOS',
+
+      value: 0,
+    });
+  }
+  return opcion;
+};
+
+//llenar dropdown de roles
+export const rolesDropdown = (rolesList) => {
+  let opcion = [];
+  Object.values(rolesList).map((item) => {
+    opcion.push({
+      key: item.rol_id,
+      text: item.rol.trim().toUpperCase(),
+      value: item.rol_id,
+    });
+  });
   return opcion;
 };

@@ -25,6 +25,7 @@ import PacienteBuscarPage from './pages/Pacientes/PacienteBuscar';
 import PacienteDetallePage from './pages/Pacientes/PacienteDetalle';
 import PacienteEditarPage from './pages/Pacientes/PacienteEditar';
 import PacientesPage from './pages/Pacientes/Pacientes';
+import UsuariosPage from './pages/Admin/Usuarios/Usuarios';
 
 function App() {
   return (
@@ -108,7 +109,7 @@ function App() {
           {/* //pagina de receta */}
           <Route exact path='/receta/:evolucionId' component={RecetaPage} />
           {/* //paginas de citas */}
-          <Route exact path='/citas/:fecha' component={CitasPage} />
+          <Route exact path='/citas/:fecha/:view' component={CitasPage} />
           <Route
             exact
             path='/citas_buscar/:fecha1/:fecha2'
@@ -125,6 +126,8 @@ function App() {
             path='/cita_editar/:pacienteId/:citaId'
             component={CitasEditarPage}
           />
+          {/* //páginas de admin */}
+          <Route exact path='/admin/usuarios' component={UsuariosPage} />
         </IntlProvider>
       </Switch>
     </BrowserRouter>

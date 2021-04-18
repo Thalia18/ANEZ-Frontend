@@ -2,30 +2,23 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Listado from '../../components/Evoluciones/Listado';
-import Layout from '../../components/Layout/Layout';
-import { api_url } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import Layout from '../../../components/Layout/Layout';
+import Listado from '../../../components/Admin/Usuarios/Listado';
+import { api_url, mapStateToProps } from '../../../components/utils';
 
-class Evoluciones extends Component {
+class Pacientes extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       loading: true,
-      evoluciones: {},
-      paciente: {},
+      usuarios: {},
       paginas: {},
       page: 1,
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
-        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/');
@@ -38,17 +31,12 @@ class Evoluciones extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}?page=${this.state.page}`
+        `${api_url}/api/usuarios?page=${this.state.page}`
       );
 
-      const { data: paciente } = await axios.get(
-        `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
-      );
       this.setState({
-        evoluciones: data.data,
-        paciente: paciente.data.pacientes,
+        usuarios: data.data,
         paginas: data.info,
-
         loading: false,
       });
     } catch (error) {
@@ -68,12 +56,14 @@ class Evoluciones extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP='4'>
           <Listado
-            evoluciones={Object.values(this.state.evoluciones)}
-            paciente={this.state.paciente}
+            header='Usuarios'
+            icon='user circle outline'
+            usuarios={Object.values(this.state.usuarios)}
             paginas={this.state.paginas}
             handleChangePage={this.handleChangePage}
+            user={this.props.user}
           />
         </Layout>
       </React.Fragment>
@@ -81,4 +71,4 @@ class Evoluciones extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(Evoluciones);
+export default connect(mapStateToProps, null)(Pacientes);

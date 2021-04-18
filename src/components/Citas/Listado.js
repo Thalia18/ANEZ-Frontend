@@ -11,7 +11,6 @@ import Navbar from './NavbarCitas';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'semantic-ui-css/semantic.min.css';
-
 moment.locale('es', {
   months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split(
     '_'
@@ -36,8 +35,18 @@ const messages = {
   showMore: (total) => `+ ${total} evento(s) adicional(s)`,
 };
 
-const Listado = ({ citas, changeMonth, fechaUltima, ...props }) => {
+const Listado = ({
+  citas,
+  changeMonth,
+  fechaUltima,
+  // changeView,
+  view,
+  ...props
+}) => {
   const history = useHistory();
+  const [views, setView] = React.useState('month');
+
+  console.log(view);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -61,16 +70,21 @@ const Listado = ({ citas, changeMonth, fechaUltima, ...props }) => {
                 endAccessor='end'
                 messages={messages}
                 step={15}
-                timeslots={8}
+                min={new Date(0, 0, 0, 8, 0, 0)}
+                max={new Date(0, 0, 0, 21, 0, 0)}
+                timeslots={2}
                 style={{ height: 500 }}
                 onSelectEvent={(event) =>
                   history.push(`/cita_detalle/${event.cita_id}`)
                 }
                 date={fechaUltima}
+                views={['month', 'day']}
                 defaultDate={fechaUltima}
-                onNavigate={(date) => {
-                  changeMonth(date);
+                defaultView={view}
+                onNavigate={(date, views, action) => {
+                  changeMonth(date, views, action);
                 }}
+                onView={(view) => setView(view)}
               />
             </Global>
           </Segment>

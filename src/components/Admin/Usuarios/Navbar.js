@@ -5,7 +5,7 @@ import { Link, useHistory, withRouter } from 'react-router-dom';
 import { Container, Icon, InputGroup, Nav, Navbar } from 'rsuite';
 import { Button, Form } from 'semantic-ui-react';
 
-import { GLOBAL_MEDIA_QUERIES } from '../utils/';
+import { GLOBAL_MEDIA_QUERIES } from '../../utils/';
 
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -47,50 +47,17 @@ const NavbarPacientes = ({
                   }}
                 />
               )}
-              {optionNav === 'HC' && (
+
+              <React.Fragment>
                 <Nav.Item
-                  icon={<Icon icon='heartbeat' />}
+                  icon={<Icon icon='plus-circle' />}
                   componentClass={Link}
-                  key={pacienteId}
-                  to={urlHC}
+                  to={`/paciente_agregar`}
                   key={Math.random()}
                 >
-                  Crear Historia clínica
+                  Crear Usuario
                 </Nav.Item>
-              )}
-              {optionNav === 'PC' && (
-                <React.Fragment>
-                  <Nav.Item
-                    icon={<Icon icon='plus-circle' />}
-                    componentClass={Link}
-                    to={`/paciente_agregar`}
-                    key={Math.random()}
-                  >
-                    Crear Paciente
-                  </Nav.Item>
-                  {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
-                    <Nav.Item
-                      key={Math.random()}
-                      icon={<Icon icon='heartbeat' />}
-                      componentClass={Link}
-                      key={pacienteId}
-                      to={urlHC}
-                    >
-                      Crear Historia clínica
-                    </Nav.Item>
-                  )}
-
-                  <Nav.Item
-                    icon={<Icon icon='calendar' />}
-                    componentClass={Link}
-                    key={pacienteId}
-                    to={urlCita}
-                    key={Math.random()}
-                  >
-                    Agendar cita
-                  </Nav.Item>
-                </React.Fragment>
-              )}
+              </React.Fragment>
 
               <Nav.Item
                 icon={<Icon icon='eye' />}

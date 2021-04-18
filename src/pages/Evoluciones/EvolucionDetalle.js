@@ -24,8 +24,8 @@ class PacienteDetalle extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      (this.props.user.rol.trim() === 'medico' ||
-        this.props.user.rol.trim() === 'admin')
+      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
+        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
     ) {
       this.fetchData();
     } else {

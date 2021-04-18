@@ -8,7 +8,6 @@ import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
   fechaActual,
   GLOBAL_MEDIA_QUERIES,
-  horasMinutos,
   masMediumHeight,
   maxMediumScroll,
   mediumHeight,
@@ -26,6 +25,10 @@ const Agregar = ({
   horas,
   handleOnChangeHora,
   id,
+  especialidades,
+  handleOnChangeEspecialidad,
+  medicos,
+  handleOnChangeMedico,
 }) => {
   const [value, setValue] = React.useState(new Date());
   var a = formCita.hora.split(':');
@@ -48,6 +51,26 @@ const Agregar = ({
                 onSubmit={onClickButtonSaveCita}
                 id={id}
               >
+                <Form.Group>
+                  <Form.Select
+                    label='Especialidades'
+                    width={6}
+                    options={especialidades}
+                    placeholder='Especialidades'
+                    onChange={handleOnChangeEspecialidad}
+                    name='especialidades'
+                    required
+                  />
+                  <Form.Select
+                    label='Médicos'
+                    width={6}
+                    options={medicos}
+                    placeholder='Médicos'
+                    onChange={handleOnChangeMedico}
+                    name='medico_id'
+                    required
+                  />
+                </Form.Group>
                 <Form.Group>
                   <Form.Input
                     label='Fecha'

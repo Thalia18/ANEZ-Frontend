@@ -67,12 +67,12 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                   <Nav.Item
                     eventKey='1'
                     componentClass={Link}
-                    to={`/citas/${fechaCitas(new Date())}`}
+                    to={`/citas/${fechaCitas(new Date())}/month`}
                   >
                     <Icon icon='calendar' /> Citas
                   </Nav.Item>
 
-                  {user.rol.trim() !== 'recepcionista' && (
+                  {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
                     <Nav.Item
                       eventKey='2'
                       componentClass={Link}
@@ -84,16 +84,16 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                   <Nav.Item eventKey='3' componentClass={Link} to='/pacientes'>
                     <Icon icon='people-group' /> Pacientes
                   </Nav.Item>
-                  {user.rol.trim() === 'admin' && (
+                  {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                     <Nav.Item
                       eventKey='4'
                       componentClass={Link}
-                      to='/pacientes'
+                      to='/admin/usuarios'
                     >
                       <Icon icon='user-circle' /> Usuarios
                     </Nav.Item>
                   )}
-                  {user.rol.trim() === 'admin' && (
+                  {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                     <Nav.Item
                       eventKey='6'
                       componentClass={Link}

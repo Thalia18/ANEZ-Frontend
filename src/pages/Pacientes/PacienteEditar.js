@@ -218,6 +218,8 @@ class PacienteEditar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.paciente);
+
     return (
       <React.Fragment>
         <Layout activeKeyP='3'>

@@ -32,7 +32,7 @@ const NavbarPacientes = ({ onClickDelete, pacienteId, user }) => {
               >
                 Editar
               </Nav.Item>
-              {user.rol.trim() !== 'recepcionista' && (
+              {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
                 <Nav.Item
                   onClick={onClickDelete}
                   // componentClass='button'

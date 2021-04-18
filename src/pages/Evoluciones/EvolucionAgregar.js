@@ -5,7 +5,15 @@ import { connect } from 'react-redux';
 import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, cie10Dropdown, mapStateToProps, openNotification, saveCIE10, saveFotos, trimData } from '../../components/utils';
+import {
+  api_url,
+  cie10Dropdown,
+  mapStateToProps,
+  openNotification,
+  saveCIE10,
+  saveFotos,
+  trimData,
+} from '../../components/utils';
 
 class EvolucionAgregar extends Component {
   constructor(props) {
@@ -40,8 +48,8 @@ class EvolucionAgregar extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      (this.props.user.rol.trim() === 'medico' ||
-        this.props.user.rol.trim() === 'admin')
+      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
+        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
     ) {
       this.fetchData();
     } else {

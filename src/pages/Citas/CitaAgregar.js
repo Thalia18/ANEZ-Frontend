@@ -12,6 +12,8 @@ import {
   mapStateToProps,
   openNotification,
   trimData,
+  especialidadesDropdown,
+  especialidadesDoctoresDropdown,
 } from '../../components/utils';
 
 class CitasAgregar extends Component {
@@ -30,6 +32,8 @@ class CitasAgregar extends Component {
         medico_id: '',
         paciente_id: '',
       },
+      especialidades: [],
+      medicos: [],
     };
   }
   componentDidMount() {
@@ -48,8 +52,12 @@ class CitasAgregar extends Component {
       const { data } = await axios.get(
         `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
       );
+      const { data: especialidades } = await axios.get(
+        `${api_url}/api/especialidades`
+      );
       this.setState({
         paciente: data.data,
+        especialidades: especialidadesDropdown(especialidades.data),
         loading: false,
       });
     } catch (error) {
@@ -67,7 +75,7 @@ class CitasAgregar extends Component {
         ...this.state.cita,
         fecha: this.state.cita.fecha,
         motivo_cita: this.state.cita.motivo_cita,
-        medico_id: this.props.user.medico_id,
+        medico_id: this.state.cita.medico_id,
         paciente_id: this.props.match.params.pacienteId,
         [e.target.name]: e.target.value,
       },
@@ -115,10 +123,29 @@ class CitasAgregar extends Component {
   handleOnChangeHora = (e, data) => {
     this.state.cita.hora = data.value;
   };
+  handleOnChangeEspecialidad = async (e, data) => {
+    try {
+      const { data: medicos } = await axios.get(
+        `${api_url}/api/medicos_especialidades/${data.value}`
+      );
+      this.setState({
+        medicos: especialidadesDoctoresDropdown(medicos.data),
+      });
+    } catch (error) {
+      console.log(error);
+      this.setState({
+        error: error,
+      });
+    }
+  };
+  handleOnChangeMedico = (e, data) => {
+    this.state.cita.medico_id = data.value;
+  };
 
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.medicos);
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>
@@ -132,6 +159,10 @@ class CitasAgregar extends Component {
             handleChange={this.handleChange}
             horas={horasMinutos(8, 20)}
             handleOnChangeHora={this.handleOnChangeHora}
+            especialidades={this.state.especialidades}
+            handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
+            medicos={this.state.medicos}
+            handleOnChangeMedico={this.handleOnChangeMedico}
           />
         </Layout>
       </React.Fragment>

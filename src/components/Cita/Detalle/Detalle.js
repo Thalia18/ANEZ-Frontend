@@ -17,7 +17,7 @@ import {
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Detalle = ({ cita }) => {
+const Detalle = ({ cita, medico }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -43,6 +43,17 @@ const Detalle = ({ cita }) => {
                       {fechaFormato(cita.fecha)} &nbsp;&nbsp;&nbsp;&nbsp;
                       <Icon name='time' />
                       {horaShow(cita.hora)}
+                    </Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell collapsing>
+                      <b>Médico</b>
+                    </Table.Cell>
+                    <Table.Cell>
+                      {'DR(A). ' +
+                        medico.nombre.trim().toUpperCase() +
+                        ' ' +
+                        medico.apellido.trim().toUpperCase()}
                     </Table.Cell>
                   </Table.Row>
                   <Table.Row>

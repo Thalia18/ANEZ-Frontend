@@ -2,21 +2,21 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Agregar from '../../components/Cita/Editar/Editar';
+import Agregar from '../../components/Cita/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
+  api_url,
+  fechaCitas,
   horasMinutos,
   mapStateToProps,
-  especialidadesDropdown,
-  especialidadesDoctoresDropdown,
-  api_url,
   openNotification,
   trimData,
-  fechaCitas,
+  especialidadesDropdown,
+  rolesDropdown,
 } from '../../components/utils';
 
-class CitasEditar extends Component {
+class CitasAgregar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,8 +24,27 @@ class CitasEditar extends Component {
       error: null,
       loading: true,
       paciente: {},
-      cita: {},
-      medico: {},
+      cita: {
+        rol_id: '',
+        consultorio_id: '',
+        usuario: '',
+        contrasena: '',
+        cedula: '',
+        nombre: '',
+        apellido: '',
+        email: '',
+        created_at: new Date(),
+      },
+      medico: {
+        usuario_id: 1,
+        especialidad: [
+          { id: 9, value: 'Cirugía general' },
+          { id: 2, value: 'Análisis clínico' },
+        ],
+      },
+
+      especialidades: [],
+      roles: [],
     };
   }
   componentDidMount() {
@@ -41,23 +60,13 @@ class CitasEditar extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
-      );
-      const { data: cita } = await axios.get(
-        `${api_url}/api/cita/${this.props.match.params.citaId}`
-      );
+      const { data: roles } = await axios.get(`${api_url}/api/roles`);
       const { data: especialidades } = await axios.get(
         `${api_url}/api/especialidades`
       );
-      const { data: medico } = await axios.get(
-        `${api_url}/api/medicos_usuario/${cita.data.medico_id}`
-      );
       this.setState({
-        paciente: data.data,
-        cita: cita.data,
-        especialidades: especialidadesDropdown(especialidades.data),
-        medico: medico.data[0],
+        roles: especialidadesDropdown(roles.data),
+        especialidades: rolesDropdown(especialidades.data),
         loading: false,
       });
     } catch (error) {
@@ -78,7 +87,6 @@ class CitasEditar extends Component {
         medico_id: this.state.cita.medico_id,
         paciente_id: this.props.match.params.pacienteId,
         [e.target.name]: e.target.value,
-        updated_at: new Date(),
       },
     });
   };
@@ -92,8 +100,8 @@ class CitasEditar extends Component {
     });
     trimData(this.state.cita);
     try {
-      const { data: cita } = await axios.put(
-        `${api_url}/api/cita/${this.props.match.params.citaId}`,
+      const { data: cita } = await axios.post(
+        `${api_url}/api/cita`,
         this.state.cita
       );
 
@@ -109,15 +117,11 @@ class CitasEditar extends Component {
           `El ${this.state.cita.fecha} a las ${this.state.cita.hora} ya existe una cita agendada para el paciente ${cita.data.pacientes.apellido} ${cita.data.pacientes.nombre}`,
           ''
         );
-        // this.props.history.push(
-        //   `/cita_editar/${cita.paciente_id}/${cita.cita_id}`
-        // );
       } else {
         openNotification('success', 'Citas', 'Cita agendada exitosamente', '');
         this.props.history.push(`/citas/${fechaCitas(new Date())}`);
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -128,29 +132,17 @@ class CitasEditar extends Component {
   handleOnChangeHora = (e, data) => {
     this.state.cita.hora = data.value;
   };
-  handleOnChangeEspecialidad = async (e, data) => {
-    try {
-      const { data: medicos } = await axios.get(
-        `${api_url}/api/medicos_especialidades/${data.value}`
-      );
-      this.setState({
-        medicos: especialidadesDoctoresDropdown(medicos.data),
-      });
-    } catch (error) {
-      console.log(error);
-      this.setState({
-        error: error,
-      });
-    }
-  };
+  //   handleOnChangeEspecialidad = async (e, data) => {
+  //     this.state.
+  //   };
   handleOnChangeMedico = (e, data) => {
     this.state.cita.medico_id = data.value;
-    console.log(data.value);
   };
+
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.cita);
+    console.log(this.state.medicos);
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>
@@ -160,7 +152,6 @@ class CitasEditar extends Component {
             id='formAgregar'
             paciente={this.state.paciente}
             onClickButtonSaveCita={this.onClickButtonSaveCita}
-            horaActual={horasMinutos(this.state.cita.hora)}
             formCita={this.state.cita}
             handleChange={this.handleChange}
             horas={horasMinutos(8, 20)}
@@ -169,7 +160,6 @@ class CitasEditar extends Component {
             handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
             medicos={this.state.medicos}
             handleOnChangeMedico={this.handleOnChangeMedico}
-            medico={this.state.medico}
           />
         </Layout>
       </React.Fragment>
@@ -177,4 +167,4 @@ class CitasEditar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(CitasEditar);
+export default connect(mapStateToProps, null)(CitasAgregar);
