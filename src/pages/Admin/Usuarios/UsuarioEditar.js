@@ -29,8 +29,9 @@ class UsuarioAgregar extends Component {
       roles: [],
       consultorios: [],
       especialidades: [],
-      usuarioNombre: '',
+
       medico: {},
+      medicoUpdate: {},
       usuario: {},
     };
   }
@@ -65,7 +66,7 @@ class UsuarioAgregar extends Component {
         especialidades: especialidadesDropdownUsuarios(especialidades.data),
         consultorios: consultorioDropdown(consultorios.data),
         usuario: usuario.data,
-        medico: medico.data !== null ? medico.data : '',
+        medico: medico.data !== null ? medico.data : {},
         loading: false,
       });
       trimData(this.state.medico);
@@ -85,8 +86,6 @@ class UsuarioAgregar extends Component {
         ...this.state.usuario,
         rol_id: this.state.usuario.rol_id,
         consultorio_id: this.state.usuario.consultorio_id,
-        usuario: this.state.usuarioNombre,
-        contrasena: this.state.usuario.contrasena,
         cedula: this.state.usuario.cedula,
         nombre: this.state.usuario.nombre,
         apellido: this.state.usuario.apellido,
@@ -116,28 +115,27 @@ class UsuarioAgregar extends Component {
     this.state.usuario.consultorio_id = data.value;
   };
   handleOnChangeEspecialidad = (e, data) => {
-    this.state.medico.especialidad = this.saveEspecialidad(data.value);
+    this.state.medicoUpdate.especialidad = this.saveEspecialidad(data.value);
   };
 
   //guardar especialidades
   saveEspecialidad = (arr) => {
     var option = [];
     arr.forEach((element) => {
-      var i = element.split(' ');
+      var i = element.split('$');
       option.push({ id: parseInt(i[0]), value: i[1] });
     });
     return option;
   };
 
   //traer especialidades selccionadas
-  especialidadesSelect = () => {
+  especialidadesSelect = (lista) => {
     let opcion = [];
-    if (this.state.medico !== '') {
-      this.state.medico.especialidad.map((item) => {
-        opcion.push(item.id + ' ' + item.value.trim().toUpperCase());
+    if (lista) {
+      lista.map((item) => {
+        opcion.push(item.id + '$' + item.value);
       });
     }
-
     return opcion;
   };
   //guardar cita
@@ -152,26 +150,31 @@ class UsuarioAgregar extends Component {
     trimData(this.state.medico);
 
     try {
-      const { data: usuario } = await axios.patch(
+      await axios.patch(
         `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
         this.state.usuario
       );
-      console.log(usuario);
       if (this.state.usuario.rol_id === 2) {
         this.setState({
-          medico: {
-            ...this.state.medico,
-            usuario_id: usuario.data.usuario_id,
-            especialidad: this.state.medico.especialidad,
+          medicoUpdate: {
+            ...this.state.medicoUpdate,
+            usuario_id: this.state.usuario.usuario_id,
+            especialidad: this.state.medicoUpdate.especialidad,
           },
         });
-        if (this.state.medico) {
+        if (Object.values(this.state.medico).length > 0) {
           await axios.put(
             `${api_url}/api/medico/${this.state.medico.medico_id}`,
-            this.state.medico
+            this.state.medicoUpdate
           );
         } else {
-          await axios.post(`${api_url}/api/medico`, this.state.medico);
+          await axios.post(`${api_url}/api/medico`, this.state.medicoUpdate);
+        }
+      } else {
+        if (Object.values(this.state.medico).length > 0) {
+          await axios.delete(
+            `${api_url}/api/medico/${this.state.medico.medico_id}`
+          );
         }
       }
 
@@ -200,7 +203,9 @@ class UsuarioAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.medico);
+    console.log(Object.values(this.state.medico));
+    console.log(this.state.medicoUpdate, 'update');
+    console.log(this.especialidadesSelect(this.state.medico.especialidad));
     return (
       <React.Fragment>
         <Layout activeKeyP='4'>
@@ -218,7 +223,10 @@ class UsuarioAgregar extends Component {
             handleOnChangeConsultorio={this.handleOnChangeConsultorio}
             handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
             emailCorrect={this.state.emailCorrect}
-            especialidadesSelect={this.especialidadesSelect()}
+            especialidadesSelect={this.especialidadesSelect(
+              this.state.medico.especialidad
+            )}
+            rol_id={this.state.usuario.rol_id}
           />
         </Layout>
       </React.Fragment>

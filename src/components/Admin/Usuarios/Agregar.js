@@ -37,9 +37,10 @@ const Agregar = ({
   onClickButtonSaveUsuario,
   emailCorrect,
   especialidadesSelect,
+  rol_id,
 }) => {
   const [value, setValue] = React.useState('Cédula');
-  const [rol, setRol] = React.useState(1);
+  const [rol, setRol] = React.useState(rol_id);
 
   // var a = formCita.hora.split(':');
   const handleChangeCheck = (e, { value }) => {
@@ -190,7 +191,7 @@ const Agregar = ({
                   <Form.Input
                     label='Usuario'
                     placeholder='Usuario'
-                    width={8}
+                    width={16}
                     type='usuario'
                     onChange={handleChange}
                     name='usuario'
@@ -237,6 +238,7 @@ const Agregar = ({
                       placeholder='Especialidades'
                       options={especialidades}
                       width={16}
+                      rows={5}
                       name='especialidad_id'
                       onChange={handleOnChangeEspecialidad}
                       defaultValue={especialidadesSelect}

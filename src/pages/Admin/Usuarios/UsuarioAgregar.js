@@ -6,16 +6,7 @@ import { connect } from 'react-redux';
 import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Layout from '../../../components/Layout/Layout';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
-import {
-  api_url,
-  consultorioDropdown,
-  especialidadesDropdownUsuarios,
-  mapStateToProps,
-  openNotification,
-  regexEmail,
-  rolesDropdown,
-  trimData,
-} from '../../../components/utils';
+import { api_url, consultorioDropdown, especialidadesDropdownUsuarios, mapStateToProps, openNotification, regexEmail, rolesDropdown, trimData } from '../../../components/utils';
 
 class UsuarioAgregar extends Component {
   constructor(props) {
@@ -237,6 +228,7 @@ class UsuarioAgregar extends Component {
             handleOnChangeConsultorio={this.handleOnChangeConsultorio}
             handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
             emailCorrect={this.state.emailCorrect}
+            rol_id={1}
           />
         </Layout>
       </React.Fragment>

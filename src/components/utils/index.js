@@ -134,7 +134,7 @@ export const mediumScroll = {
 
 //const para mas de medium scroll
 export const maxMediumScroll = {
-  height: '41em',
+  height: '45em',
   overflowY: 'auto',
   overflowX: 'hidden',
 };
@@ -414,7 +414,7 @@ export const especialidadesDropdownUsuarios = (especialidadesList) => {
       key: item.especialidad_id,
       text: item.especialidad.trim().toUpperCase(),
       value:
-        item.especialidad_id + ' ' + item.especialidad.trim().toUpperCase(),
+        item.especialidad_id + '$' + item.especialidad.trim().toUpperCase(),
     });
   });
   return opcion;
