@@ -6,7 +6,16 @@ import { connect } from 'react-redux';
 import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Layout from '../../../components/Layout/Layout';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, consultorioDropdown, especialidadesDropdownUsuarios, mapStateToProps, openNotification, regexEmail, rolesDropdown, trimData } from '../../../components/utils';
+import {
+  api_url,
+  consultorioDropdown,
+  especialidadesDropdownUsuarios,
+  mapStateToProps,
+  openNotification,
+  regexEmail,
+  rolesDropdown,
+  trimData,
+} from '../../../components/utils';
 
 class UsuarioAgregar extends Component {
   constructor(props) {
@@ -166,7 +175,6 @@ class UsuarioAgregar extends Component {
         `${api_url}/api/usuario`,
         this.state.usuario
       );
-      console.log(usuario);
       if (this.state.usuario.rol_id === 2) {
         this.setState({
           medico: {

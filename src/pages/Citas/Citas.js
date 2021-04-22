@@ -4,7 +4,13 @@ import { connect } from 'react-redux';
 
 import CitasCalendar from '../../components/Citas/Listado';
 import Layout from '../../components/Layout/Layout';
-import { api_url, citasList, fechaCitas, fechaCitasDia, mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  citasList,
+  fechaCitas,
+  fechaCitasDia,
+  mapStateToProps,
+} from '../../components/utils';
 
 class Citas extends Component {
   constructor(props) {
@@ -54,7 +60,7 @@ class Citas extends Component {
       this.state.view = view;
 
       setTimeout(() => {
-        window.location.href = `http://localhost:3000/citas/${fechaCitas(
+        window.location.href = `https://master.dek750aqk17f3.amplifyapp.com/citas/${fechaCitas(
           e,
           'day'
         )}/day`;
@@ -65,7 +71,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `https://master.dek750aqk17f3.amplifyapp.com/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
         }, 10);
       }
       if (view === 'month') {
@@ -73,7 +79,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `https://master.dek750aqk17f3.amplifyapp.com/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
         }, 10);
       }
     }
