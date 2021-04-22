@@ -30,7 +30,7 @@ const Footer = ({ user, telefono, direccion }) => {
           position: 'relative',
           display: 'inline-block',
           textAlign: 'center',
-          fontSize: '0.6em',
+          fontSize: '0.9em',
         }}
       >
         <Image src='https://i.ibb.co/WGv0hvL/Screen-Shot-2021-02-27-at-20-39-15.png' />
@@ -49,6 +49,7 @@ const Footer = ({ user, telefono, direccion }) => {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Icon name='map marker alternate' />
           {eliminarTildes(direccion)}
+          {/* ORELLANA Y AV. 6 DE DICIEMBRE */}
         </Container>
       </Container>
     </React.Fragment>
