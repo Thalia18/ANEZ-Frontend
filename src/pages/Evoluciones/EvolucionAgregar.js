@@ -140,7 +140,7 @@ class EvolucionAgregar extends Component {
         ''
       );
       this.props.history.push(
-        `/evoluciones/${this.state.paciente.paciente_id}`
+        `/evoluciones/${this.props.match.params.historiaId}`
       );
     } catch (error) {
       this.setState({

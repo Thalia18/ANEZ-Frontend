@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Layout from '../../../components/Layout/Layout';
 import Listado from '../../../components/Admin/Usuarios/Listado';
+import Layout from '../../../components/Layout/Layout';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
 class Pacientes extends Component {

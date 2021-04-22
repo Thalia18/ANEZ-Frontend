@@ -392,3 +392,30 @@ export const rolesDropdown = (rolesList) => {
   });
   return opcion;
 };
+
+//llenar dropdown de consultorios
+export const consultorioDropdown = (consultoriosList) => {
+  let opcion = [];
+  Object.values(consultoriosList).map((item) => {
+    opcion.push({
+      key: item.consultorio_id,
+      text: item.nombre.trim().toUpperCase(),
+      value: item.consultorio_id,
+    });
+  });
+  return opcion;
+};
+
+//especilidades usuarios
+export const especialidadesDropdownUsuarios = (especialidadesList) => {
+  let opcion = [];
+  Object.values(especialidadesList).map((item) => {
+    opcion.push({
+      key: item.especialidad_id,
+      text: item.especialidad.trim().toUpperCase(),
+      value:
+        item.especialidad_id + ' ' + item.especialidad.trim().toUpperCase(),
+    });
+  });
+  return opcion;
+};

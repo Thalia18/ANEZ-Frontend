@@ -5,16 +5,7 @@ import { connect } from 'react-redux';
 import Agregar from '../../components/Cita/Editar/Editar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import {
-  horasMinutos,
-  mapStateToProps,
-  especialidadesDropdown,
-  especialidadesDoctoresDropdown,
-  api_url,
-  openNotification,
-  trimData,
-  fechaCitas,
-} from '../../components/utils';
+import { api_url, especialidadesDoctoresDropdown, especialidadesDropdown, fechaCitas, horasMinutos, mapStateToProps, openNotification, trimData } from '../../components/utils';
 
 class CitasEditar extends Component {
   constructor(props) {
@@ -60,6 +51,8 @@ class CitasEditar extends Component {
         medico: medico.data[0],
         loading: false,
       });
+      trimData(this.state.cita);
+      trimData(this.state.medico);
     } catch (error) {
       this.setState({
         loading: false,
@@ -114,10 +107,9 @@ class CitasEditar extends Component {
         // );
       } else {
         openNotification('success', 'Citas', 'Cita agendada exitosamente', '');
-        this.props.history.push(`/citas/${fechaCitas(new Date())}`);
+        this.props.history.push(`/citas/${fechaCitas(new Date())}/month`);
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -137,7 +129,6 @@ class CitasEditar extends Component {
         medicos: especialidadesDoctoresDropdown(medicos.data),
       });
     } catch (error) {
-      console.log(error);
       this.setState({
         error: error,
       });
@@ -145,12 +136,10 @@ class CitasEditar extends Component {
   };
   handleOnChangeMedico = (e, data) => {
     this.state.cita.medico_id = data.value;
-    console.log(data.value);
   };
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.cita);
     return (
       <React.Fragment>
         <Layout activeKeyP='1'>

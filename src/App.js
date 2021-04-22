@@ -2,6 +2,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
 import es_ES from 'rsuite/lib/IntlProvider/locales/es_ES';
 
+import UsuarioAgregarPage from './pages/Admin/Usuarios/UsuarioAgregar';
+import UsuarioDetallePage from './pages/Admin/Usuarios/UsuarioDetalle';
+import UsuarioEditarPage from './pages/Admin/Usuarios/UsuarioEditar';
+import UsuariosPage from './pages/Admin/Usuarios/Usuarios';
 import CitasAgregarPage from './pages/Citas/CitaAgregar';
 import CitaBuscarPage from './pages/Citas/CitaBuscar';
 import CitaPage from './pages/Citas/CitaDetalle';
@@ -25,7 +29,6 @@ import PacienteBuscarPage from './pages/Pacientes/PacienteBuscar';
 import PacienteDetallePage from './pages/Pacientes/PacienteDetalle';
 import PacienteEditarPage from './pages/Pacientes/PacienteEditar';
 import PacientesPage from './pages/Pacientes/Pacientes';
-import UsuariosPage from './pages/Admin/Usuarios/Usuarios';
 
 function App() {
   return (
@@ -128,6 +131,21 @@ function App() {
           />
           {/* //páginas de admin */}
           <Route exact path='/admin/usuarios' component={UsuariosPage} />
+          <Route
+            exact
+            path='/admin/usuario_agregar'
+            component={UsuarioAgregarPage}
+          />
+          <Route
+            exact
+            path='/admin/usuario/:usuarioId'
+            component={UsuarioDetallePage}
+          />
+          <Route
+            exact
+            path='/admin/usuario_editar/:usuarioId'
+            component={UsuarioEditarPage}
+          />
         </IntlProvider>
       </Switch>
     </BrowserRouter>

@@ -10,29 +10,12 @@ import { GLOBAL_MEDIA_QUERIES } from '../../utils/';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const NavbarPacientes = ({
-  pacienteId,
-  pageInitial,
-  pageSecond,
-  reload,
-  optionNav,
-  historiaId,
-  user,
-  ...props
-}) => {
+const NavbarPacientes = ({ usuarioId, ...props }) => {
   let url =
-    pacienteId === undefined ? { pageSecond } : `${pageInitial}/${pacienteId}`;
-  let urlHC =
-    pacienteId === undefined
-      ? { pageSecond }
-      : `/historia_clinica_agregar/${pacienteId}`;
-
-  let urlCita =
-    pacienteId === undefined ? { pageSecond } : `/cita_agregar/${pacienteId}`;
+    usuarioId === undefined ? `/admin/usuarios` : `/admin/usuario/${usuarioId}`;
 
   let history = useHistory();
   let [value, setValue] = React.useState('');
-
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -52,7 +35,7 @@ const NavbarPacientes = ({
                 <Nav.Item
                   icon={<Icon icon='plus-circle' />}
                   componentClass={Link}
-                  to={`/paciente_agregar`}
+                  to={`/admin/usuario_agregar`}
                   key={Math.random()}
                 >
                   Crear Usuario
@@ -62,7 +45,7 @@ const NavbarPacientes = ({
               <Nav.Item
                 icon={<Icon icon='eye' />}
                 componentClass={Link}
-                key={pacienteId}
+                key={usuarioId}
                 to={url}
               >
                 Ver
@@ -89,8 +72,8 @@ const NavbarPacientes = ({
                       <Button
                         onClick={() => {
                           value === ''
-                            ? props.history.push({ pageSecond })
-                            : props.history.push(`${reload}/${value}`);
+                            ? props.history.push('/admin/usuarios')
+                            : props.history.push(`/admin/usuario_buscar/1`);
                           window.location.reload();
                         }}
                         style={

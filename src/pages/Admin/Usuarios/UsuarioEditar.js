@@ -30,27 +30,8 @@ class UsuarioAgregar extends Component {
       consultorios: [],
       especialidades: [],
       usuarioNombre: '',
-      medico: {
-        usuario_id: '',
-        especialidad: '',
-      },
-      usuario: {
-        rol_id: 1,
-        consultorio_id: 1,
-        usuario: '',
-        contrasena: generator
-          .generate({
-            length: 6,
-            numbers: true,
-          })
-          .toUpperCase(),
-        cedula: '',
-        nombre: '',
-        apellido: '',
-        email: '',
-        telefono: '',
-        fecha_nacimiento: '',
-      },
+      medico: {},
+      usuario: {},
     };
   }
   componentDidMount() {
@@ -73,13 +54,22 @@ class UsuarioAgregar extends Component {
       const { data: consultorios } = await axios.get(
         `${api_url}/api/consultorios`
       );
-
+      const { data: usuario } = await axios.get(
+        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`
+      );
+      const { data: medico } = await axios.get(
+        `${api_url}/api/medicos_usuario_id/${this.props.match.params.usuarioId}`
+      );
       this.setState({
         roles: rolesDropdown(roles.data),
         especialidades: especialidadesDropdownUsuarios(especialidades.data),
         consultorios: consultorioDropdown(consultorios.data),
+        usuario: usuario.data,
+        medico: medico.data !== null ? medico.data : '',
         loading: false,
       });
+      trimData(this.state.medico);
+      trimData(this.state.usuario);
     } catch (error) {
       this.setState({
         loading: false,
@@ -106,7 +96,6 @@ class UsuarioAgregar extends Component {
         [e.target.name]: e.target.value,
       },
     });
-    this.usuarioGenerator();
 
     if (this.state.usuario.email !== '') {
       if (this.state.usuario.email.match(regexEmail)) {
@@ -140,25 +129,17 @@ class UsuarioAgregar extends Component {
     return option;
   };
 
-  //generar usuario
-  usuarioGenerator = () => {
-    if (
-      this.state.usuario.nombre !== undefined &&
-      this.state.usuario.apellido !== undefined
-    ) {
-      let nombre = this.state.usuario.nombre.split(' ');
-      let apellido = this.state.usuario.apellido.split(' ');
-      let random = Math.floor(Math.random() * (999 - 100 + 1) + 100);
-      this.setState({
-        usuarioNombre: (
-          nombre[0].substr(0, 2) +
-          apellido[0] +
-          random
-        ).toUpperCase(),
+  //traer especialidades selccionadas
+  especialidadesSelect = () => {
+    let opcion = [];
+    if (this.state.medico !== '') {
+      this.state.medico.especialidad.map((item) => {
+        opcion.push(item.id + ' ' + item.value.trim().toUpperCase());
       });
     }
-  };
 
+    return opcion;
+  };
   //guardar cita
   onClickButtonSaveUsuario = async (e) => {
     e.preventDefault();
@@ -171,8 +152,8 @@ class UsuarioAgregar extends Component {
     trimData(this.state.medico);
 
     try {
-      const { data: usuario } = await axios.post(
-        `${api_url}/api/usuario`,
+      const { data: usuario } = await axios.patch(
+        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
         this.state.usuario
       );
       console.log(usuario);
@@ -180,11 +161,18 @@ class UsuarioAgregar extends Component {
         this.setState({
           medico: {
             ...this.state.medico,
-            usuario_id: usuario.data.result.usuario_id,
+            usuario_id: usuario.data.usuario_id,
             especialidad: this.state.medico.especialidad,
           },
         });
-        await axios.post(`${api_url}/api/medico`, this.state.medico);
+        if (this.state.medico) {
+          await axios.put(
+            `${api_url}/api/medico/${this.state.medico.medico_id}`,
+            this.state.medico
+          );
+        } else {
+          await axios.post(`${api_url}/api/medico`, this.state.medico);
+        }
       }
 
       this.setState({
@@ -192,23 +180,16 @@ class UsuarioAgregar extends Component {
         success: true,
         error: null,
       });
-      if (usuario.info.exist) {
-        openNotification(
-          'warning',
-          'Usuarios',
-          'Ya existe un usuario registrado con el número de cédula ',
-          `${this.state.usuario.cedula}`
-        );
-      } else {
-        openNotification(
-          'success',
-          'Usuarios',
-          'Usuario creado exitosamente',
-          ''
-        );
-        this.props.history.push('/admin/usuarios');
-      }
+
+      openNotification(
+        'success',
+        'Usuarios',
+        'Usuario editado exitosamente',
+        ''
+      );
+      this.props.history.push('/admin/usuarios');
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -219,7 +200,7 @@ class UsuarioAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-
+    console.log(this.state.medico);
     return (
       <React.Fragment>
         <Layout activeKeyP='4'>
@@ -227,7 +208,7 @@ class UsuarioAgregar extends Component {
 
           <Agregar
             id='formAgregar'
-            usuariopass={true}
+            usuariopass={false}
             onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
             formUsuario={this.state.usuario}
             handleChange={this.handleChange}
@@ -237,6 +218,7 @@ class UsuarioAgregar extends Component {
             handleOnChangeConsultorio={this.handleOnChangeConsultorio}
             handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
             emailCorrect={this.state.emailCorrect}
+            especialidadesSelect={this.especialidadesSelect()}
           />
         </Layout>
       </React.Fragment>

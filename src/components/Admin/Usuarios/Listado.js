@@ -22,32 +22,22 @@ import 'semantic-ui-css/semantic.min.css';
 
 const Listado = ({
   usuarios,
-  pageInitial,
-  pageSecond,
-  reload,
-  optionNav,
   header,
   icon,
   buscar,
   busqueda,
   paginas,
   handleChangePage,
-  user,
 }) => {
   const [value, setValue] = React.useState();
-  const handleChange = (e, { value }) => setValue(value);
+  const handleChange = (e, { value }) => {
+    setValue(value);
+  };
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar
-          // pacienteId={value}
-          // pageInitial={pageInitial}
-          // pageSecond={pageSecond}
-          // reload={reload}
-          // optionNav={optionNav}
-          // user={user}
-          />
+          <Navbar usuarioId={value} />
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as='h1' textAlign='center'>

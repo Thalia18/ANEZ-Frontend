@@ -7,13 +7,7 @@ import Editar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import {
-  estadoCivilDropdown,
-  etniasDropdown,
-  nivelDeInstruccionDropdown,
-  regexEmail,
-  tipoDeSangreDropdown,
-} from '../../components/utils';
+import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, regexEmail, tipoDeSangreDropdown } from '../../components/utils';
 
 class PacienteEditar extends Component {
   constructor(props) {
@@ -31,7 +25,7 @@ class PacienteEditar extends Component {
       optionTS: [],
       optionNI: [],
       optionE: [],
-      buttonDisable: true,
+      buttonDisable: false,
 
       emailCorrect: undefined,
       cedulaLength: undefined,
@@ -120,21 +114,16 @@ class PacienteEditar extends Component {
     });
 
     //verificar correo valido
-    if (this.state.paciente.email !== null) {
-      if (this.state.paciente.email.search(regexEmail) !== -1) {
+    if (this.state.paciente.email !== '') {
+      if (this.state.paciente.email.match(regexEmail)) {
         this.setState({
-          // buttonDisable: false,
+          buttonDisable: false,
           emailCorrect: false,
         });
       } else {
         this.setState({
-          buttonDisable: true,
           emailCorrect: true,
-        });
-      }
-      if (!this.state.emailCorrect && !this.state.cedulaLength) {
-        this.setState({
-          buttonDisable: false,
+          buttonDisable: true,
         });
       }
     }
@@ -218,7 +207,6 @@ class PacienteEditar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(this.state.paciente);
 
     return (
       <React.Fragment>

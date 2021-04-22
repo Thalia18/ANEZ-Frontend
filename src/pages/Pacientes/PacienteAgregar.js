@@ -7,13 +7,7 @@ import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import {
-  estadoCivilDropdown,
-  etniasDropdown,
-  nivelDeInstruccionDropdown,
-  regexEmail,
-  tipoDeSangreDropdown,
-} from '../../components/utils';
+import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, regexEmail, tipoDeSangreDropdown } from '../../components/utils';
 
 class PacienteAgregar extends Component {
   constructor(props) {
@@ -133,36 +127,24 @@ class PacienteAgregar extends Component {
       this.state.paciente.etnia_id !== null &&
       this.state.paciente.nivel_de_instruccion_id !== null &&
       this.state.paciente.estado_civil_id !== null &&
-      this.state.paciente.tipo_de_sangre_id !== null &&
-      this.state.paciente.cedula !== null &&
-      this.state.paciente.email !== null
+      this.state.paciente.tipo_de_sangre_id !== null
     ) {
       this.setState({
         campos: false,
       });
 
-      if (this.state.paciente.cedula.length >= 11) {
-        this.setState({
-          buttonDisable: false,
-          cedulaLength: false,
-        });
-      } else {
-        this.setState({
-          cedulaLength: true,
-          buttonDisable: true,
-        });
-      }
-
-      if (this.state.paciente.email.match(regexEmail)) {
-        this.setState({
-          buttonDisable: false,
-          emailCorrect: false,
-        });
-      } else {
-        this.setState({
-          emailCorrect: true,
-          buttonDisable: true,
-        });
+      if (this.state.paciente.email !== '') {
+        if (this.state.paciente.email.match(regexEmail)) {
+          this.setState({
+            buttonDisable: false,
+            emailCorrect: false,
+          });
+        } else {
+          this.setState({
+            emailCorrect: true,
+            buttonDisable: true,
+          });
+        }
       }
     }
   };

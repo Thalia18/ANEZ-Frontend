@@ -11,6 +11,7 @@ import Navbar from './NavbarCitas';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'semantic-ui-css/semantic.min.css';
+
 moment.locale('es', {
   months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split(
     '_'
@@ -46,7 +47,6 @@ const Listado = ({
   const history = useHistory();
   const [views, setView] = React.useState('month');
 
-  console.log(view);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (

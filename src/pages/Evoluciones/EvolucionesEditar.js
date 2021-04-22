@@ -60,16 +60,16 @@ class EvolucionEditar extends Component {
       const { data: evolucion } = await axios.get(
         `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
       );
-      const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
 
       this.setState({
         paciente: paciente.data.pacientes,
         evolucion: evolucion.data,
-        cie10: cie10Dropdown(cie10List.data),
-        // cie10List: this.selectedCIe10(evolucion.data.diagnostico_cie10),
+
         fotoList: this.selectedFoto(evolucion.data.foto),
         loading: false,
       });
+      trimData(this.state.evolucion);
+      trimData(this.state.paciente);
     } catch (error) {
       this.setState({
         loading: false,
@@ -186,7 +186,7 @@ class EvolucionEditar extends Component {
             icon='edit'
             id='formEditar'
             paciente={this.state.paciente}
-            cie10={this.state.cie10}
+            cie10={cie10Dropdown(this.props.categorias)}
             onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
             handleOnChangeCie10={this.handleOnChangeCie10}
             formEvolucion={this.state.evolucion}

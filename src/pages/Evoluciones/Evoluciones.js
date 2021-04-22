@@ -74,6 +74,7 @@ class Evoluciones extends Component {
             paciente={this.state.paciente}
             paginas={this.state.paginas}
             handleChangePage={this.handleChangePage}
+            historiaId={this.props.match.params.historiaId}
           />
         </Layout>
       </React.Fragment>

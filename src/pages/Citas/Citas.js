@@ -4,13 +4,7 @@ import { connect } from 'react-redux';
 
 import CitasCalendar from '../../components/Citas/Listado';
 import Layout from '../../components/Layout/Layout';
-import {
-  api_url,
-  citasList,
-  fechaCitas,
-  mapStateToProps,
-  fechaCitasDia,
-} from '../../components/utils';
+import { api_url, citasList, fechaCitas, fechaCitasDia, mapStateToProps } from '../../components/utils';
 
 class Citas extends Component {
   constructor(props) {
@@ -47,7 +41,6 @@ class Citas extends Component {
         loading: false,
       });
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -58,7 +51,6 @@ class Citas extends Component {
   changeMonth = (e, view, action) => {
     if (action === 'DATE') {
       // this.props.history.push(`/citas/${fechaCitas(e, 'day')}/day`);
-      console.log(action, 'action', e, 'afssd');
       this.state.view = view;
 
       setTimeout(() => {
@@ -70,7 +62,6 @@ class Citas extends Component {
     } else {
       if (view === 'day') {
         this.props.history.push(`/citas/${fechaCitas(e, view)}/${view}`);
-        console.log(action, 'action', e);
         this.state.view = view;
 
         setTimeout(() => {
@@ -79,7 +70,6 @@ class Citas extends Component {
       }
       if (view === 'month') {
         this.props.history.push(`/citas/${fechaCitas(e, view)}/${view}`);
-        console.log(action, 'action', e);
         this.state.view = view;
 
         setTimeout(() => {

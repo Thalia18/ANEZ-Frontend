@@ -1,24 +1,10 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
-import {
-  fechaActual,
-  GLOBAL_MEDIA_QUERIES,
-  letters,
-  numbers,
-  masMediumHeight,
-  mediumHeight,
-} from '../../utils';
+import { fechaActual, GLOBAL_MEDIA_QUERIES, letters, masMediumHeight, mediumHeight, numbers } from '../../utils';
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -89,6 +75,7 @@ const Agregar = ({
                   onChange={handleChange}
                   name='nombre'
                   value={letters(formPaciente.nombre)}
+                  minLength={2}
                   required
                 />
                 <Form.Input
@@ -98,6 +85,7 @@ const Agregar = ({
                   onChange={handleChange}
                   name='apellido'
                   value={letters(formPaciente.apellido)}
+                  minLength={2}
                   required
                 />
                 <Form.Field>
@@ -144,6 +132,7 @@ const Agregar = ({
                   onChange={handleChange}
                   name='lugar_nacimiento'
                   value={letters(formPaciente.lugar_nacimiento)}
+                  minLength={5}
                   required
                 />
                 <Form.Input
@@ -210,6 +199,7 @@ const Agregar = ({
                   onChange={handleChange}
                   name='direccion'
                   value={formPaciente.direccion}
+                  minLength={5}
                   required
                 />
               </Form.Group>
@@ -248,6 +238,7 @@ const Agregar = ({
                   onChange={handleChange}
                   name='contacto_emergencia_nombre'
                   value={letters(formPaciente.contacto_emergencia_nombre)}
+                  minLength={5}
                 />
                 <Form.Input
                   label='Teléfono contacto de emergencia'

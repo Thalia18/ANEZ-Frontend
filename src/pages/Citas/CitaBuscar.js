@@ -42,8 +42,6 @@ class CitasBuscar extends Component {
         loading: false,
       });
     } catch (error) {
-      console.log(error);
-
       this.setState({
         loading: false,
         error: error,
