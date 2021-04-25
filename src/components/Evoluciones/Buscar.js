@@ -1,5 +1,6 @@
 import React from 'react';
 import Media from 'react-media';
+import 'semantic-ui-css/semantic.min.css';
 import {
   Checkbox,
   Header,
@@ -8,18 +9,15 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
-
 import { Global } from '../../global';
 import HCHeader from '../HistoriasClinicas/HCHeader';
 import {
+  fechaFormato,
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
   mediumHeight,
-  fechaFormato,
 } from '../utils';
 import Navbar from './NavbarEvolucion';
-
-import 'semantic-ui-css/semantic.min.css';
 
 const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
   const [value, setValue] = React.useState();
@@ -28,12 +26,12 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar evolucionId={value} paciente={paciente} pagina='evolucion' />
+          <Navbar evolucionId={value} paciente={paciente} pagina="evolucion" />
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Header as='h1' textAlign='center'>
+              <Header as="h1" textAlign="center">
                 <Header.Content>
-                  <Icon name='search' />
+                  <Icon name="search" />
                   Resultados de la búsqueda
                 </Header.Content>
               </Header>
@@ -49,7 +47,7 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle
-                              name='checkboxRadioGroup'
+                              name="checkboxRadioGroup"
                               value={evolucion.evolucion_id}
                               checked={value === evolucion.evolucion_id}
                               onChange={handleChange}
@@ -72,7 +70,7 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
               {evoluciones.length === 0 && (
                 <Message warning>
                   <Message.Header>
-                    <Icon name='info circle' />
+                    <Icon name="info circle" />
                     No se encontraron resultados
                   </Message.Header>
                   <p>

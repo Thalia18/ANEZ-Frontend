@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 // import 'rsuite/dist/styles/rsuite-dark.css';
 import { Link, useHistory, withRouter } from 'react-router-dom';
 import { Dropdown, Icon, Nav, Navbar, Sidenav } from 'rsuite';
+import 'rsuite/dist/styles/rsuite-default.css';
+import 'semantic-ui-css/semantic.min.css';
 import { Grid, Segment } from 'semantic-ui-react';
-
 import { logoutUser } from '../../actions';
 import { fechaCitas, GLOBAL_MEDIA_QUERIES, mapStateToProps } from '../utils';
 import { Logo } from './SidenavStyles';
-
-import 'rsuite/dist/styles/rsuite-default.css';
-import 'semantic-ui-css/semantic.min.css';
 
 const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
   const [expanded, setExpanded] = React.useState(true);
@@ -60,46 +58,46 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                       justifyContent: 'center',
                     }}
                     componentClass={Link}
-                    to='/main'
+                    to="/main"
                   >
                     <Logo src={consultorio.logo} />
                   </Nav.Item>
                   <Nav.Item
-                    eventKey='1'
+                    eventKey="1"
                     componentClass={Link}
                     to={`/citas/${fechaCitas(new Date())}/month`}
                   >
-                    <Icon icon='calendar' /> Citas
+                    <Icon icon="calendar" /> Citas
                   </Nav.Item>
 
                   {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
                     <Nav.Item
-                      eventKey='2'
+                      eventKey="2"
                       componentClass={Link}
-                      to='/historias_clinicas'
+                      to="/historias_clinicas"
                     >
-                      <Icon icon='heartbeat' /> Historias clínicas
+                      <Icon icon="heartbeat" /> Historias clínicas
                     </Nav.Item>
                   )}
-                  <Nav.Item eventKey='3' componentClass={Link} to='/pacientes'>
-                    <Icon icon='people-group' /> Pacientes
+                  <Nav.Item eventKey="3" componentClass={Link} to="/pacientes">
+                    <Icon icon="people-group" /> Pacientes
                   </Nav.Item>
                   {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                     <Nav.Item
-                      eventKey='4'
+                      eventKey="4"
                       componentClass={Link}
-                      to='/admin/usuarios'
+                      to="/admin/usuarios"
                     >
-                      <Icon icon='user-circle' /> Usuarios
+                      <Icon icon="user-circle" /> Usuarios
                     </Nav.Item>
                   )}
                   {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                     <Nav.Item
-                      eventKey='6'
+                      eventKey="6"
                       componentClass={Link}
-                      to='/pacientes'
+                      to="/pacientes"
                     >
-                      <Icon icon='hospital-o' /> Consultorios
+                      <Icon icon="hospital-o" /> Consultorios
                     </Nav.Item>
                   )}
                 </Nav>
@@ -111,15 +109,15 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
               <Navbar.Body>
                 <Nav>
                   <Nav.Item
-                    icon={<Icon icon='th' size='lg' />}
+                    icon={<Icon icon="th" size="lg" />}
                     onClick={handleClick}
                   />
                 </Nav>
                 <Nav pullRight>
                   <Dropdown
-                    icon={<Icon icon='user-circle-o' size='lg' />}
+                    icon={<Icon icon="user-circle-o" size="lg" />}
                     title={user.usuario}
-                    size='md'
+                    size="md"
                     style={{ marginRight: '2em' }}
                   >
                     <Dropdown.Item onClick={logout}>Log out</Dropdown.Item>

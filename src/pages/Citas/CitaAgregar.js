@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Agregar from '../../components/Cita/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
@@ -146,11 +145,11 @@ class CitasAgregar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='1'>
+        <Layout activeKeyP="1">
           <Navbar buttonDisable={false} />
 
           <Agregar
-            id='formAgregar'
+            id="formAgregar"
             paciente={this.state.paciente}
             onClickButtonSaveCita={this.onClickButtonSaveCita}
             formCita={this.state.cita}

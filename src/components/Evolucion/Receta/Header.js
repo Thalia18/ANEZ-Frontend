@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Grid, Image } from 'semantic-ui-react';
-
-import { eliminarTildes, mapStateToProps } from '../../utils';
-
 import 'semantic-ui-css/semantic.min.css';
+import { Container, Grid, Image } from 'semantic-ui-react';
+import { eliminarTildes, mapStateToProps } from '../../utils';
 
 const Header = ({ user, consultorio }) => {
   return (
@@ -12,7 +10,7 @@ const Header = ({ user, consultorio }) => {
       <Grid.Column width={5}>
         <Image src={consultorio.logo} style={{ height: '7.5em' }} />
       </Grid.Column>
-      <Grid.Column width={9} textAlign='center'>
+      <Grid.Column width={9} textAlign="center">
         <Container style={{ marginTop: '1em' }}>
           <Container>{eliminarTildes(consultorio.nombre)}</Container>
 
@@ -39,7 +37,7 @@ const Header = ({ user, consultorio }) => {
           </Container>
         </Container>
       </Grid.Column>
-      <Image src='https://i.ibb.co/L8zMCCQ/Screen-Shot-2021-02-27-at-20-24-43.png' />
+      <Image src="https://i.ibb.co/L8zMCCQ/Screen-Shot-2021-02-27-at-20-24-43.png" />
     </Grid>
   );
 };

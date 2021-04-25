@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
 import es_ES from 'rsuite/lib/IntlProvider/locales/es_ES';
-
 import UsuarioAgregarPage from './pages/Admin/Usuarios/UsuarioAgregar';
 import UsuarioBuscarPage from './pages/Admin/Usuarios/UsuarioBuscar';
 import UsuarioDetallePage from './pages/Admin/Usuarios/UsuarioDetalle';
@@ -37,119 +36,119 @@ function App() {
       <Switch>
         <IntlProvider locale={es_ES}>
           {/* //pagina login */}
-          <Route exact path='/' component={LoginPage} />
+          <Route exact path="/" component={LoginPage} />
           {/* //pagina main */}
-          <Route exact path='/main' component={MainPage} />
+          <Route exact path="/main" component={MainPage} />
           {/* //paginas de pacientes */}
-          <Route exact path='/pacientes' component={PacientesPage} />
+          <Route exact path="/pacientes" component={PacientesPage} />
           <Route
             exact
-            path='/paciente/:pacienteId'
+            path="/paciente/:pacienteId"
             component={PacienteDetallePage}
           />
           <Route
             exact
-            path='/paciente_agregar'
+            path="/paciente_agregar"
             component={PacienteAgregarPage}
           />
           <Route
             exact
-            path='/paciente_editar/:pacienteId'
+            path="/paciente_editar/:pacienteId"
             component={PacienteEditarPage}
           />
           <Route
             exact
-            path='/paciente_buscar/:buscar'
+            path="/paciente_buscar/:buscar"
             component={PacienteBuscarPage}
           />
           {/* //paginas de historias clinicas */}
-          <Route exact path='/historias_clinicas' component={HCPage} />
+          <Route exact path="/historias_clinicas" component={HCPage} />
           <Route
             exact
-            path='/historia_clinica_agregar/:pacienteId'
+            path="/historia_clinica_agregar/:pacienteId"
             component={HCAgregarPage}
           />
           <Route
             exact
-            path='/historia_clinica/:pacienteId'
+            path="/historia_clinica/:pacienteId"
             component={HCDetallePage}
           />
           <Route
             exact
-            path='/historia_clinica_editar/:historiaId/:pacienteId'
+            path="/historia_clinica_editar/:historiaId/:pacienteId"
             component={HCEditarPage}
           />
           <Route
             exact
-            path='/historia_clinica_buscar/:buscar'
+            path="/historia_clinica_buscar/:buscar"
             component={HCBuscarPage}
           />
           {/* //paginas de evoluciones */}
           <Route
             exact
-            path='/evolucion_agregar/:historiaId/:pacienteId'
+            path="/evolucion_agregar/:historiaId/:pacienteId"
             component={EvolucionAgregarPage}
           />
           <Route
             exact
-            path='/evolucion_editar/:evolucionId/:historiaId'
+            path="/evolucion_editar/:evolucionId/:historiaId"
             component={EvolucionEditarPage}
           />
           <Route
             exact
-            path='/evolucion/:evolucionId/:historiaId'
+            path="/evolucion/:evolucionId/:historiaId"
             component={EvolucionPage}
           />
           <Route
             exact
-            path='/evoluciones/:historiaId'
+            path="/evoluciones/:historiaId"
             component={EvolucionesPage}
           />
           <Route
             exact
-            path='/evolucion_buscar/:historiaId/:fecha1/:fecha2'
+            path="/evolucion_buscar/:historiaId/:fecha1/:fecha2"
             component={EvolucionBuscarPage}
           />
           {/* //pagina de receta */}
-          <Route exact path='/receta/:evolucionId' component={RecetaPage} />
+          <Route exact path="/receta/:evolucionId" component={RecetaPage} />
           {/* //paginas de citas */}
-          <Route exact path='/citas/:fecha/:view' component={CitasPage} />
+          <Route exact path="/citas/:fecha/:view" component={CitasPage} />
           <Route
             exact
-            path='/citas_buscar/:fecha1/:fecha2'
+            path="/citas_buscar/:fecha1/:fecha2"
             component={CitaBuscarPage}
           />
-          <Route exact path='/cita_detalle/:citaId' component={CitaPage} />
+          <Route exact path="/cita_detalle/:citaId" component={CitaPage} />
           <Route
             exact
-            path='/cita_agregar/:pacienteId'
+            path="/cita_agregar/:pacienteId"
             component={CitasAgregarPage}
           />
           <Route
             exact
-            path='/cita_editar/:pacienteId/:citaId'
+            path="/cita_editar/:pacienteId/:citaId"
             component={CitasEditarPage}
           />
           {/* //páginas de admin */}
-          <Route exact path='/admin/usuarios' component={UsuariosPage} />
+          <Route exact path="/admin/usuarios" component={UsuariosPage} />
           <Route
             exact
-            path='/admin/usuario_agregar'
+            path="/admin/usuario_agregar"
             component={UsuarioAgregarPage}
           />
           <Route
             exact
-            path='/admin/usuario/:usuarioId'
+            path="/admin/usuario/:usuarioId"
             component={UsuarioDetallePage}
           />
           <Route
             exact
-            path='/admin/usuario_editar/:usuarioId'
+            path="/admin/usuario_editar/:usuarioId"
             component={UsuarioEditarPage}
           />
           <Route
             exact
-            path='/admin/usuario_buscar/:buscar'
+            path="/admin/usuario_buscar/:buscar"
             component={UsuarioBuscarPage}
           />
         </IntlProvider>

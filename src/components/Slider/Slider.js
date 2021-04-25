@@ -1,14 +1,12 @@
 import React from 'react';
 import Media from 'react-media';
 import { Carousel } from 'rsuite';
+import 'rsuite/dist/styles/rsuite-default.css';
+import 'semantic-ui-css/semantic.min.css';
 import { Segment } from 'semantic-ui-react';
-
 import { Global } from '../../global';
 import { GLOBAL_MEDIA_QUERIES } from '../utils/';
 import { SliderContainer } from './SliderStyles';
-
-import 'rsuite/dist/styles/rsuite-default.css';
-import 'semantic-ui-css/semantic.min.css';
 
 const Slider = () => {
   return (
@@ -21,18 +19,18 @@ const Slider = () => {
             <SliderContainer>
               <Carousel
                 autoplay
-                className='custom-slider'
+                className="custom-slider"
                 style={
                   matches.medium
                     ? { width: '100%', height: '85%' }
                     : { width: '90%', height: '90%', margin: 'auto' }
                 }
               >
-                <img src='https://i.ibb.co/hLjvrdL/logoANEZ.png' />
-                <img src='https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=2' />
-                <img src='https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=3' />
-                <img src='https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=4' />
-                <img src='https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=5' />
+                <img src="https://i.ibb.co/hLjvrdL/logoANEZ.png" />
+                <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=2" />
+                <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=3" />
+                <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=4" />
+                <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=5" />
               </Carousel>
             </SliderContainer>
           </Global>

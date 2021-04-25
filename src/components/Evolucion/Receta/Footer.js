@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Icon, Image } from 'semantic-ui-react';
-
-import { eliminarTildes, mapStateToProps } from '../../utils';
-
 import 'semantic-ui-css/semantic.min.css';
+import { Container, Icon, Image } from 'semantic-ui-react';
+import { eliminarTildes, mapStateToProps } from '../../utils';
 
 const Footer = ({ user, telefono, direccion }) => {
   return (
@@ -33,7 +31,7 @@ const Footer = ({ user, telefono, direccion }) => {
           fontSize: '0.9em',
         }}
       >
-        <Image src='https://i.ibb.co/WGv0hvL/Screen-Shot-2021-02-27-at-20-39-15.png' />
+        <Image src="https://i.ibb.co/WGv0hvL/Screen-Shot-2021-02-27-at-20-39-15.png" />
         <Container
           style={{
             position: 'absolute',
@@ -43,11 +41,11 @@ const Footer = ({ user, telefono, direccion }) => {
             color: '#FFF',
           }}
         >
-          <Icon name='phone' />
+          <Icon name="phone" />
           &nbsp;&nbsp;
           {eliminarTildes(telefono)}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Icon name='map marker alternate' />
+          <Icon name="map marker alternate" />
           {eliminarTildes(direccion)}
           {/* ORELLANA Y AV. 6 DE DICIEMBRE */}
         </Container>

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Editar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
@@ -178,13 +177,13 @@ class EvolucionEditar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Navbar />
 
           <Editar
-            headerC='Editar Evolución'
-            icon='edit'
-            id='formEditar'
+            headerC="Editar Evolución"
+            icon="edit"
+            id="formEditar"
             paciente={this.state.paciente}
             cie10={cie10Dropdown(this.props.categorias)}
             onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}

@@ -1,8 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
-import { Container } from 'rsuite';
+import 'semantic-ui-css/semantic.min.css';
 import { Header, Icon, Segment, Table } from 'semantic-ui-react';
-
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
@@ -15,17 +14,15 @@ import {
   mediumScroll,
 } from '../../utils';
 
-import 'semantic-ui-css/semantic.min.css';
-
 const Detalle = ({ cita, medico }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <Segment>
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as='h1' textAlign='center'>
+            <Header as="h1" textAlign="center">
               <Header.Content>
-                <Icon name='dna' /> Cita médica
+                <Icon name="dna" /> Cita médica
               </Header.Content>
             </Header>
             <hr />
@@ -39,9 +36,9 @@ const Detalle = ({ cita, medico }) => {
                       <b>Fecha y hora</b>
                     </Table.Cell>
                     <Table.Cell>
-                      <Icon name='calendar alternate' />
+                      <Icon name="calendar alternate" />
                       {fechaFormato(cita.fecha)} &nbsp;&nbsp;&nbsp;&nbsp;
-                      <Icon name='time' />
+                      <Icon name="time" />
                       {horaShow(cita.hora)}
                     </Table.Cell>
                   </Table.Row>

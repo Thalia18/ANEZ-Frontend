@@ -1,7 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
+import 'semantic-ui-css/semantic.min.css';
 import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
-
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import Modal from '../../Modales/ModalExists';
@@ -12,8 +12,6 @@ import {
   mediumHeight,
   mediumScroll,
 } from '../../utils';
-
-import 'semantic-ui-css/semantic.min.css';
 
 const Agregar = ({
   paciente,
@@ -38,7 +36,7 @@ const Agregar = ({
       {(matches) => (
         <Segment>
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as='h1' textAlign='center'>
+            <Header as="h1" textAlign="center">
               <Header.Content>
                 <Icon name={icon} /> {headerC}
               </Header.Content>
@@ -54,33 +52,33 @@ const Agregar = ({
               >
                 <Form.Group>
                   <Form.TextArea
-                    label='Antecedentes patológicos'
-                    placeholder='Antecedentes patológicos'
+                    label="Antecedentes patológicos"
+                    placeholder="Antecedentes patológicos"
                     width={16}
                     onChange={handleChange}
-                    name='antecedente_patologico_personal'
+                    name="antecedente_patologico_personal"
                     value={formHC.antecedente_patologico_personal}
                     required
                   />
                 </Form.Group>
                 <Form.Group>
                   <Form.TextArea
-                    label='Antecedentes quirúrgicos'
-                    placeholder='Antecedentes quirúrgicos'
+                    label="Antecedentes quirúrgicos"
+                    placeholder="Antecedentes quirúrgicos"
                     width={16}
                     onChange={handleChange}
-                    name='antecedente_quirurgico'
+                    name="antecedente_quirurgico"
                     value={formHC.antecedente_quirurgico}
                     required
                   />
                 </Form.Group>
                 <Form.Group>
                   <Form.TextArea
-                    label='Alergias'
-                    placeholder='Alergias'
+                    label="Alergias"
+                    placeholder="Alergias"
                     width={16}
                     onChange={handleChange}
-                    name='alergia'
+                    name="alergia"
                     value={formHC.alergia}
                     required
                   />
@@ -88,8 +86,8 @@ const Agregar = ({
                 <Form.Field>
                   <Checkbox
                     toggle
-                    label='Ingresar antecedentes gineco-obstétricos'
-                    name='checkboxRadioGroup'
+                    label="Ingresar antecedentes gineco-obstétricos"
+                    name="checkboxRadioGroup"
                     checked={value === false}
                     onChange={handleChangeCheck}
                   />
@@ -98,51 +96,51 @@ const Agregar = ({
                 <Segment hidden={value} basic>
                   <Form.Group>
                     <Form.TextArea
-                      label='Abortos'
-                      placeholder='Abortos'
+                      label="Abortos"
+                      placeholder="Abortos"
                       width={8}
                       onChange={handleChange}
-                      name='aborto'
+                      name="aborto"
                       value={formHC.aborto}
                       required={!value}
                     />
                     <Form.TextArea
-                      label='Cesáreas'
-                      placeholder='Cesáreas'
+                      label="Cesáreas"
+                      placeholder="Cesáreas"
                       width={8}
                       onChange={handleChange}
-                      name='cesarea'
+                      name="cesarea"
                       value={formHC.cesarea}
                       required={!value}
                     />
                   </Form.Group>
                   <Form.Group>
                     <Form.TextArea
-                      label='Gestas'
-                      placeholder='Gestas'
+                      label="Gestas"
+                      placeholder="Gestas"
                       width={8}
                       onChange={handleChange}
-                      name='gesta'
+                      name="gesta"
                       value={formHC.gesta}
                       required={!value}
                     />
                     <Form.TextArea
-                      label='Partos'
-                      placeholder='Partos'
+                      label="Partos"
+                      placeholder="Partos"
                       width={8}
                       onChange={handleChange}
-                      name='parto'
+                      name="parto"
                       value={formHC.parto}
                       required={!value}
                     />
                   </Form.Group>
                   <Form.Group>
                     <Form.TextArea
-                      label='Método anticonceptivo'
-                      placeholder='Método anticonceptivo'
+                      label="Método anticonceptivo"
+                      placeholder="Método anticonceptivo"
                       width={16}
                       onChange={handleChange}
-                      name='metodo_anticonceptivo'
+                      name="metodo_anticonceptivo"
                       value={formHC.metodo_anticonceptivo}
                       required={!value}
                     />

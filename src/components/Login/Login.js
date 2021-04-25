@@ -1,7 +1,6 @@
 import React from 'react';
 import Media from 'react-media';
 import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react';
-
 import { GLOBAL_MEDIA_QUERIES } from '../utils';
 
 const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
@@ -10,7 +9,7 @@ const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
         <Segment
-          textAlign='center'
+          textAlign="center"
           style={
             matches.medium
               ? { height: '47em', background: color }
@@ -26,13 +25,13 @@ const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
           >
             <Grid columns={2} style={{ borderStyle: 'outset' }}>
               <Grid.Column
-                verticalAlign='middle'
+                verticalAlign="middle"
                 width={8}
                 style={{
                   background: 'rgba(26,25,25, 0.1)',
                 }}
               >
-                <img src='https://i.ibb.co/hLjvrdL/logoANEZ.png' width='100%' />
+                <img src="https://i.ibb.co/hLjvrdL/logoANEZ.png" width="100%" />
               </Grid.Column>
 
               <Grid.Column
@@ -46,31 +45,31 @@ const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
                     Usuario o contraseña incorrecta
                   </Message.Header>
                 </Message>
-                <Form size='large' onSubmit={validateUser}>
+                <Form size="large" onSubmit={validateUser}>
                   <Form.Input
-                    icon='user'
-                    iconPosition='left'
-                    label='Usuario'
-                    placeholder='Usuario'
+                    icon="user"
+                    iconPosition="left"
+                    label="Usuario"
+                    placeholder="Usuario"
                     onChange={handleChange}
-                    name='usuario'
+                    name="usuario"
                     value={formUser.usuario}
                     required
                   />
                   <Form.Input
-                    icon='lock'
-                    iconPosition='left'
-                    label='Contraseña'
-                    placeholder='Contraseña'
-                    type='password'
+                    icon="lock"
+                    iconPosition="left"
+                    label="Contraseña"
+                    placeholder="Contraseña"
+                    type="password"
                     onChange={handleChange}
-                    name='contrasena'
+                    name="contrasena"
                     value={formUser.contrasena}
-                    autoComplete='on'
+                    autoComplete="on"
                     required
                   />
                   <br />
-                  <Button content='Login' primary size='big' />
+                  <Button content="Login" primary size="big" />
                 </Form>
               </Grid.Column>
             </Grid>

@@ -1,11 +1,20 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Layout from '../../components/Layout/Layout';
 import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, estadoCivilDropdown, etniasDropdown, mapStateToProps, nivelDeInstruccionDropdown, openNotification, regexEmail, tipoDeSangreDropdown, trimData } from '../../components/utils';
+import {
+  api_url,
+  estadoCivilDropdown,
+  etniasDropdown,
+  mapStateToProps,
+  nivelDeInstruccionDropdown,
+  openNotification,
+  regexEmail,
+  tipoDeSangreDropdown,
+  trimData,
+} from '../../components/utils';
 
 class PacienteAgregar extends Component {
   constructor(props) {
@@ -209,12 +218,12 @@ class PacienteAgregar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='3'>
+        <Layout activeKeyP="3">
           <Navbar buttonDisable={this.state.buttonDisable} />
           <Agregar
-            header='Nuevo Paciente'
-            icon='add circle'
-            id='formAgregar'
+            header="Nuevo Paciente"
+            icon="add circle"
+            id="formAgregar"
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}
             estadoCivil={this.state.optionEC}

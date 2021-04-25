@@ -1,13 +1,11 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Detalle from '../../components/Cita/Detalle/Detalle';
 import Navbar from '../../components/Cita/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
-import { api_url } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { api_url, mapStateToProps } from '../../components/utils';
 
 class CitaDetalle extends Component {
   constructor(props) {
@@ -85,7 +83,7 @@ class CitaDetalle extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='1'>
+        <Layout activeKeyP="1">
           <Navbar
             onClickDelete={this.onClickDelete}
             pacienteId={this.state.cita.paciente_id}
@@ -96,8 +94,8 @@ class CitaDetalle extends Component {
             deleteM={this.deleteData}
             open={this.state.open}
             closeModal={this.closeModal}
-            content='¿Desea continuar?'
-            headerC='Eliminar Cita'
+            content="¿Desea continuar?"
+            headerC="Eliminar Cita"
           />
         </Layout>
       </React.Fragment>

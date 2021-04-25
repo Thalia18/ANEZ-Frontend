@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Grid } from 'semantic-ui-react';
-
+import 'semantic-ui-css/semantic.min.css';
+import { Grid } from 'semantic-ui-react';
 import { eliminarTildes, fechaFormato } from '../../utils';
 import Content from './Content';
 import Doc from './DocService';
@@ -8,12 +8,10 @@ import Footer from './Footer';
 import Header from './Header';
 import PdfContainer from './PdfContainer';
 
-import 'semantic-ui-css/semantic.min.css';
-
 const Datos = ({ paciente, fecha }) => {
   return (
     <React.Fragment>
-      <p align='center'>{fechaFormato(fecha)}</p>
+      <p align="center">{fechaFormato(fecha)}</p>
       <p>
         {/* <b>PACIENTE:</b> */}
         {/* {paciente.substring(22, paciente.length)} */}

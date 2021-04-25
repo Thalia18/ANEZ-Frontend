@@ -2,11 +2,9 @@ import React from 'react';
 import Media from 'react-media';
 import { useHistory } from 'react-router-dom';
 import { Button, Icon, Nav, Navbar } from 'rsuite';
-
-import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
-
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 const NavbarPacientes = ({ buttonDisable }) => {
   let history = useHistory();
@@ -17,7 +15,7 @@ const NavbarPacientes = ({ buttonDisable }) => {
           <Navbar.Body>
             <Nav>
               <Nav.Item
-                icon={<Icon icon='angle-left' />}
+                icon={<Icon icon="angle-left" />}
                 onClick={() => {
                   history.go(-2);
                 }}
@@ -25,13 +23,13 @@ const NavbarPacientes = ({ buttonDisable }) => {
             </Nav>
             <Nav pullRight>
               {buttonDisable && (
-                <Nav.Item icon={<Icon icon='save' />}>Guardar</Nav.Item>
+                <Nav.Item icon={<Icon icon="save" />}>Guardar</Nav.Item>
               )}
               {!buttonDisable && (
                 <Nav.Item>
                   <Button
-                    form='formAgregar'
-                    type='submit'
+                    form="formAgregar"
+                    type="submit"
                     style={{
                       width: '6em',
                       height: '3em',
@@ -39,7 +37,7 @@ const NavbarPacientes = ({ buttonDisable }) => {
                       background: 'rgba(0,161,213, 0.01)',
                     }}
                   >
-                    <Icon icon='save' /> Guardar
+                    <Icon icon="save" /> Guardar
                   </Button>
                 </Nav.Item>
               )}

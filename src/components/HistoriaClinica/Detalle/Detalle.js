@@ -1,7 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
-import { Header, Icon, Segment, Tab, Table } from 'semantic-ui-react';
-
+import 'semantic-ui-css/semantic.min.css';
+import { Header, Icon, Segment, Table } from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
@@ -12,17 +12,15 @@ import {
   mediumScroll,
 } from '../../utils';
 
-import 'semantic-ui-css/semantic.min.css';
-
 const Detalle = ({ paciente, historia_clinica }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <Segment>
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as='h1' textAlign='center'>
+            <Header as="h1" textAlign="center">
               <Header.Content>
-                <Icon name='dna' /> Historia clínica
+                <Icon name="dna" /> Historia clínica
               </Header.Content>
             </Header>
             <hr />
@@ -30,7 +28,7 @@ const Detalle = ({ paciente, historia_clinica }) => {
 
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Segment basic>
-                <Icon name='syringe' />
+                <Icon name="syringe" />
                 <b>Antecedentes médicos</b>
               </Segment>
               <Table celled striped>
@@ -60,7 +58,7 @@ const Detalle = ({ paciente, historia_clinica }) => {
                 </Table.Body>
               </Table>
               <Segment basic>
-                <Icon name='intergender' />
+                <Icon name="intergender" />
 
                 <b>Antecedentes gineco-obstétricos</b>
               </Segment>

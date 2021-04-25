@@ -12,7 +12,7 @@ const ModalNotExists = ({
   let history = useHistory();
   return (
     <Modal closeIcon open={notExistsHC} onClose={closeModal}>
-      <Header icon='medkit' content={header} />
+      <Header icon="medkit" content={header} />
       <Modal.Content>
         <p>
           El paciente <b>{content}</b> no cuenta con una Historia Clínica
@@ -20,15 +20,15 @@ const ModalNotExists = ({
       </Modal.Content>
       <Modal.Actions>
         <Button
-          color='blue'
+          color="blue"
           onClick={() => {
             history.push(`/historia_clinica_agregar/${pacienteId}`);
           }}
         >
-          <Icon name='plus' /> Crear
+          <Icon name="plus" /> Crear
         </Button>
-        <Button color='red' onClick={() => history.goBack()}>
-          <Icon name='close' /> Cerrar
+        <Button color="red" onClick={() => history.goBack()}>
+          <Icon name="close" /> Cerrar
         </Button>
       </Modal.Actions>
     </Modal>

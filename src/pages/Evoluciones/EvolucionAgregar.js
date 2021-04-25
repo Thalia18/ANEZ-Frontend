@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
@@ -159,13 +158,13 @@ class EvolucionAgregar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Navbar buttonDisable={this.state.buttonDisable} />
 
           <Agregar
-            headerC='Nueva Evolución'
-            icon='add circle'
-            id='formAgregar'
+            headerC="Nueva Evolución"
+            icon="add circle"
+            id="formAgregar"
             paciente={this.state.paciente}
             // cie10={this.state.cie10}
             cie10={cie10Dropdown(this.props.categorias)}

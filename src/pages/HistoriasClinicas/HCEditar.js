@@ -1,13 +1,15 @@
 import axios from 'axios';
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Editar from '../../components/HistoriaClinica/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
-import { api_url, openNotification, trimData } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  mapStateToProps,
+  openNotification,
+  trimData,
+} from '../../components/utils';
 
 class HCEditar extends Component {
   constructor(props) {
@@ -123,12 +125,12 @@ class HCEditar extends Component {
 
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Navbar success={this.state.success} />
           <Editar
-            headerC='Editar Historia Clínica'
-            icon='edit'
-            id='formEditar'
+            headerC="Editar Historia Clínica"
+            icon="edit"
+            id="formEditar"
             existsHC={false}
             onClickButtonSaveHC={this.onClickButtonSaveHC}
             handleChange={this.handleChange}

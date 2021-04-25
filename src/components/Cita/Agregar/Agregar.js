@@ -1,8 +1,8 @@
-import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
+import 'rsuite/dist/styles/rsuite-default.css';
+import 'semantic-ui-css/semantic.min.css';
 import { Form, Header, Icon, Segment } from 'semantic-ui-react';
-
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
@@ -13,9 +13,6 @@ import {
   mediumHeight,
   mediumScroll,
 } from '../../utils';
-
-import 'rsuite/dist/styles/rsuite-default.css';
-import 'semantic-ui-css/semantic.min.css';
 
 const Agregar = ({
   paciente,
@@ -37,9 +34,9 @@ const Agregar = ({
       {(matches) => (
         <Segment>
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as='h1' textAlign='center'>
+            <Header as="h1" textAlign="center">
               <Header.Content>
-                <Icon name='add circle' /> Nueva Cita
+                <Icon name="add circle" /> Nueva Cita
               </Header.Content>
             </Header>
             <hr />
@@ -53,55 +50,55 @@ const Agregar = ({
               >
                 <Form.Group>
                   <Form.Select
-                    label='Especialidades'
+                    label="Especialidades"
                     width={6}
                     options={especialidades}
-                    placeholder='Especialidades'
+                    placeholder="Especialidades"
                     onChange={handleOnChangeEspecialidad}
-                    name='especialidades'
+                    name="especialidades"
                     required
                   />
                   <Form.Select
-                    label='Médicos'
+                    label="Médicos"
                     width={6}
                     options={medicos}
-                    placeholder='Médicos'
+                    placeholder="Médicos"
                     onChange={handleOnChangeMedico}
-                    name='medico_id'
+                    name="medico_id"
                     required
                   />
                 </Form.Group>
                 <Form.Group>
                   <Form.Input
-                    label='Fecha'
-                    placeholder='Fecha'
+                    label="Fecha"
+                    placeholder="Fecha"
                     width={4}
-                    type='date'
+                    type="date"
                     onChange={handleChange}
-                    name='fecha'
+                    name="fecha"
                     value={formCita.fecha}
                     min={fechaActual()}
                     required
                   />
                   <Form.Select
-                    label='Hora'
+                    label="Hora"
                     width={2}
                     options={horas}
-                    placeholder='Hora'
+                    placeholder="Hora"
                     onChange={handleOnChangeHora}
                     defaultValue={a[0] + ':' + a[1]}
-                    name='hora'
+                    name="hora"
                     required
                   />
                 </Form.Group>
 
                 <Form.Group>
                   <Form.TextArea
-                    label='Motivo de cita'
-                    placeholder='Motivo consulta'
+                    label="Motivo de cita"
+                    placeholder="Motivo consulta"
                     width={16}
                     onChange={handleChange}
-                    name='motivo_cita'
+                    name="motivo_cita"
                     value={formCita.motivo_cita}
                   />
                 </Form.Group>

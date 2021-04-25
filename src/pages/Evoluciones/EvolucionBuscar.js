@@ -1,11 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Listado from '../../components/Evoluciones/Buscar';
 import Layout from '../../components/Layout/Layout';
-import { api_url } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { api_url, mapStateToProps } from '../../components/utils';
 
 class Evoluciones extends Component {
   constructor(props) {
@@ -59,7 +57,7 @@ class Evoluciones extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Listado
             evoluciones={Object.values(this.state.buscarList)}
             paciente={this.state.paciente}

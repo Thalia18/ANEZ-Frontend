@@ -6,21 +6,21 @@ const ModalCita = ({ existsHC, close }) => {
   let history = useHistory();
   return (
     <Modal closeIcon open={existsHC} onClose={close}>
-      <Header icon='calendar alternate' content={'Agendar cita'} />
+      <Header icon="calendar alternate" content={'Agendar cita'} />
       <Modal.Content>
         <p>Para agendar una cita, se requiere seleccionar un paciente.</p>
       </Modal.Content>
       <Modal.Actions>
         <Button
-          color='blue'
+          color="blue"
           onClick={() => {
             history.push(`/paciente_agregar`);
           }}
         >
-          <Icon name='plus' /> Crear paciente
+          <Icon name="plus" /> Crear paciente
         </Button>
-        <Button color='green' onClick={() => history.push(`/pacientes`)}>
-          <Icon name='search' /> Buscar paciente
+        <Button color="green" onClick={() => history.push(`/pacientes`)}>
+          <Icon name="search" /> Buscar paciente
         </Button>
       </Modal.Actions>
     </Modal>

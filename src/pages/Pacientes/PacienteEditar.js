@@ -1,18 +1,19 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Layout from '../../components/Layout/Layout';
 import Editar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
-import { api_url, openNotification, trimData } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
 import {
+  api_url,
   estadoCivilDropdown,
   etniasDropdown,
+  mapStateToProps,
   nivelDeInstruccionDropdown,
+  openNotification,
   regexEmail,
   tipoDeSangreDropdown,
+  trimData,
 } from '../../components/utils';
 
 class PacienteEditar extends Component {
@@ -216,15 +217,15 @@ class PacienteEditar extends Component {
 
     return (
       <React.Fragment>
-        <Layout activeKeyP='3'>
+        <Layout activeKeyP="3">
           <Navbar
             success={this.state.success}
             buttonDisable={this.state.buttonDisable}
           />
           <Editar
-            header='Editar Paciente'
-            icon='edit'
-            id='formEditar'
+            header="Editar Paciente"
+            icon="edit"
+            id="formEditar"
             // campos={false}
             etnias={this.state.optionE}
             nivelDeInstruccion={this.state.optionNI}

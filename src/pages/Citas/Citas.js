@@ -1,10 +1,14 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import CitasCalendar from '../../components/Citas/Listado';
 import Layout from '../../components/Layout/Layout';
-import { api_url, citasList, fechaCitas, fechaCitasDia, mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  citasList,
+  fechaCitas,
+  mapStateToProps,
+} from '../../components/utils';
 
 class Citas extends Component {
   constructor(props) {
@@ -85,7 +89,7 @@ class Citas extends Component {
 
     return (
       <React.Fragment>
-        <Layout activeKeyP='1'>
+        <Layout activeKeyP="1">
           <CitasCalendar
             citas={this.state.citaList}
             changeMonth={this.changeMonth}

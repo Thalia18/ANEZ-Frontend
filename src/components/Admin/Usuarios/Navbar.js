@@ -1,14 +1,11 @@
-import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
 import { Link, useHistory, withRouter } from 'react-router-dom';
 import { Container, Icon, InputGroup, Nav, Navbar } from 'rsuite';
-import { Button, Form } from 'semantic-ui-react';
-
-import { GLOBAL_MEDIA_QUERIES } from '../../utils/';
-
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
+import { Button, Form } from 'semantic-ui-react';
+import { GLOBAL_MEDIA_QUERIES } from '../../utils/';
 
 const NavbarPacientes = ({ usuarioId, ...props }) => {
   let url =
@@ -24,7 +21,7 @@ const NavbarPacientes = ({ usuarioId, ...props }) => {
             <Nav>
               {!matches.medium && (
                 <Nav.Item
-                  icon={<Icon icon='angle-left' />}
+                  icon={<Icon icon="angle-left" />}
                   onClick={() => {
                     history.goBack();
                   }}
@@ -33,7 +30,7 @@ const NavbarPacientes = ({ usuarioId, ...props }) => {
 
               <React.Fragment>
                 <Nav.Item
-                  icon={<Icon icon='plus-circle' />}
+                  icon={<Icon icon="plus-circle" />}
                   componentClass={Link}
                   to={`/admin/usuario_agregar`}
                   key={Math.random()}
@@ -43,7 +40,7 @@ const NavbarPacientes = ({ usuarioId, ...props }) => {
               </React.Fragment>
 
               <Nav.Item
-                icon={<Icon icon='eye' />}
+                icon={<Icon icon="eye" />}
                 componentClass={Link}
                 key={usuarioId}
                 to={url}
@@ -63,7 +60,7 @@ const NavbarPacientes = ({ usuarioId, ...props }) => {
                   <Form>
                     <Form.Group inline>
                       <Form.Input
-                        placeholder='Buscar'
+                        placeholder="Buscar"
                         onChange={(e) => {
                           setValue(e.target.value);
                         }}
@@ -87,7 +84,7 @@ const NavbarPacientes = ({ usuarioId, ...props }) => {
                               }
                         }
                       >
-                        <Icon icon='search' />
+                        <Icon icon="search" />
                       </Button>
                     </Form.Group>
                   </Form>

@@ -1,12 +1,22 @@
 import React from 'react';
 import Media from 'react-media';
-import { Checkbox, Header, Icon, Message, Pagination, Segment, Table } from 'semantic-ui-react';
-
-import { Global } from '../../../global';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../../utils/';
-import Navbar from './Navbar';
-
 import 'semantic-ui-css/semantic.min.css';
+import {
+  Checkbox,
+  Header,
+  Icon,
+  Message,
+  Pagination,
+  Segment,
+  Table,
+} from 'semantic-ui-react';
+import { Global } from '../../../global';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  mediumHeight,
+} from '../../utils/';
+import Navbar from './Navbar';
 
 const Listado = ({
   usuarios,
@@ -28,7 +38,7 @@ const Listado = ({
           <Navbar usuarioId={value} />
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Header as='h1' textAlign='center'>
+              <Header as="h1" textAlign="center">
                 <Header.Content>
                   <Icon name={icon} />
                   {header}
@@ -54,7 +64,7 @@ const Listado = ({
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle
-                              name='checkboxRadioGroup'
+                              name="checkboxRadioGroup"
                               value={usuario.usuario_id}
                               checked={value === usuario.usuario_id}
                               onChange={handleChange}
@@ -73,7 +83,7 @@ const Listado = ({
               {buscar && (
                 <Message warning>
                   <Message.Header>
-                    <Icon name='info circle' />
+                    <Icon name="info circle" />
                     No se encontraron resultados
                   </Message.Header>
                   <p>
@@ -83,7 +93,7 @@ const Listado = ({
                 </Message>
               )}
             </Global>
-            <Segment basic align='center'>
+            <Segment basic align="center">
               <Pagination
                 onPageChange={handleChangePage}
                 pointing

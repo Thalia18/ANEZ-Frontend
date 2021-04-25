@@ -1,12 +1,23 @@
 import React from 'react';
 import Media from 'react-media';
-import { Checkbox, Header, Icon, Message, Pagination, Segment, Table } from 'semantic-ui-react';
-
-import { Global } from '../../global';
-import { fechaFormato, GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils';
-import Navbar from './NavbarCitas';
-
 import 'semantic-ui-css/semantic.min.css';
+import {
+  Checkbox,
+  Header,
+  Icon,
+  Message,
+  Pagination,
+  Segment,
+  Table,
+} from 'semantic-ui-react';
+import { Global } from '../../global';
+import {
+  fechaFormato,
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  mediumHeight,
+} from '../utils';
+import Navbar from './NavbarCitas';
 
 const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage }) => {
   const [value, setValue] = React.useState();
@@ -18,9 +29,9 @@ const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage }) => {
           <Navbar verNav={true} citaId={value} />
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Header as='h1' textAlign='center'>
+              <Header as="h1" textAlign="center">
                 <Header.Content>
-                  <Icon name='search' />
+                  <Icon name="search" />
                   Resultados de la búsqueda
                 </Header.Content>
               </Header>
@@ -35,16 +46,16 @@ const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage }) => {
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle
-                              name='checkboxRadioGroup'
+                              name="checkboxRadioGroup"
                               value={cita.cita_id}
                               checked={value === cita.cita_id}
                               onChange={handleChange}
                             />
                           </Table.Cell>
                           <Table.Cell>
-                            <Icon name='calendar alternate' />
+                            <Icon name="calendar alternate" />
                             {fechaFormato(cita.fecha)} &nbsp; &nbsp; &nbsp;
-                            <Icon name='time' /> {cita.hora}
+                            <Icon name="time" /> {cita.hora}
                             <br />
                             <b>Paciente:</b>{' '}
                             {cita.pacientes.nombre +
@@ -66,7 +77,7 @@ const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage }) => {
               {citas.length === 0 && (
                 <Message warning>
                   <Message.Header>
-                    <Icon name='info circle' />
+                    <Icon name="info circle" />
                     No se encontraron resultados
                   </Message.Header>
                   <p>
@@ -77,7 +88,7 @@ const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage }) => {
                 </Message>
               )}
             </Global>
-            <Segment basic align='center'>
+            <Segment basic align="center">
               <Pagination
                 onPageChange={handleChangePage}
                 pointing

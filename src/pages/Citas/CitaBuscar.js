@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Buscar from '../../components/Citas/Buscar';
 import Layout from '../../components/Layout/Layout';
 import { api_url, mapStateToProps } from '../../components/utils';
@@ -58,7 +57,7 @@ class CitasBuscar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='1'>
+        <Layout activeKeyP="1">
           <Buscar
             citas={this.state.citas}
             fecha1={this.props.match.params.fecha1}

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Listado from '../../../components/Admin/Usuarios/Listado';
 import Layout from '../../../components/Layout/Layout';
 import { api_url, mapStateToProps } from '../../../components/utils';
@@ -56,10 +55,10 @@ class Usuarios extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='4'>
+        <Layout activeKeyP="4">
           <Listado
-            header='Usuarios'
-            icon='user circle outline'
+            header="Usuarios"
+            icon="user circle outline"
             usuarios={Object.values(this.state.usuarios)}
             paginas={this.state.paginas}
             handleChangePage={this.handleChangePage}

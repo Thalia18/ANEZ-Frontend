@@ -22,15 +22,15 @@ class Fotos extends React.Component {
       <div key={i}>
         <Form.Group>
           <Form.TextArea
-            placeholder='Foto URL'
-            name='foto_url'
+            placeholder="Foto URL"
+            name="foto_url"
             width={13}
             value={el.foto_url || ''}
             onChange={this.handleChange.bind(this, i)}
           />
-          <Image src={el.foto_url || ''} size='small' rounded />
+          <Image src={el.foto_url || ''} size="small" rounded />
           <Button onClick={this.removeClick.bind(this, i)}>
-            <Icon name='trash' />
+            <Icon name="trash" />
           </Button>
         </Form.Group>
       </div>
@@ -58,7 +58,7 @@ class Fotos extends React.Component {
       <>
         {this.createUI()}
         <Button onClick={this.addClick.bind(this)}>
-          <Icon name='add' />
+          <Icon name="add" />
         </Button>
       </>
     );

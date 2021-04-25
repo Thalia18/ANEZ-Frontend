@@ -2,11 +2,19 @@ import axios from 'axios';
 import generator from 'generate-password';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Layout from '../../../components/Layout/Layout';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, consultorioDropdown, especialidadesDropdownUsuarios, mapStateToProps, openNotification, regexEmail, rolesDropdown, trimData } from '../../../components/utils';
+import {
+  api_url,
+  consultorioDropdown,
+  especialidadesDropdownUsuarios,
+  mapStateToProps,
+  openNotification,
+  regexEmail,
+  rolesDropdown,
+  trimData,
+} from '../../../components/utils';
 
 class UsuarioAgregar extends Component {
   constructor(props) {
@@ -211,11 +219,11 @@ class UsuarioAgregar extends Component {
 
     return (
       <React.Fragment>
-        <Layout activeKeyP='4'>
+        <Layout activeKeyP="4">
           <Navbar buttonDisable={this.state.buttonDisable} />
 
           <Agregar
-            id='formAgregar'
+            id="formAgregar"
             usuariopass={true}
             onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
             formUsuario={this.state.usuario}

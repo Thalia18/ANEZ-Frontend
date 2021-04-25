@@ -1,11 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Layout from '../../components/Layout/Layout';
 import Listado from '../../components/Pacientes/Listado';
-import { api_url } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { api_url, mapStateToProps } from '../../components/utils';
 
 class Pacientes extends Component {
   constructor(props) {
@@ -62,16 +60,16 @@ class Pacientes extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Listado
-            header='Historias clínicas'
-            icon='heartbeat'
+            header="Historias clínicas"
+            icon="heartbeat"
             pacientes={Object.values(this.state.pacientes)}
             autoComplete={this.state.autocomplete}
-            pageInitial='/historia_clinica'
-            pageSecond='/historias_clinicas'
-            reload='/historia_clinica_buscar'
-            optionNav='HC'
+            pageInitial="/historia_clinica"
+            pageSecond="/historias_clinicas"
+            reload="/historia_clinica_buscar"
+            optionNav="HC"
             paginas={this.state.paginas}
             handleChangePage={this.handleChangePage}
           />

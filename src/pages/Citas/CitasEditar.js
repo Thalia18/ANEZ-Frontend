@@ -1,11 +1,19 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Agregar from '../../components/Cita/Editar/Editar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, especialidadesDoctoresDropdown, especialidadesDropdown, fechaCitas, horasMinutos, mapStateToProps, openNotification, trimData } from '../../components/utils';
+import {
+  api_url,
+  especialidadesDoctoresDropdown,
+  especialidadesDropdown,
+  fechaCitas,
+  horasMinutos,
+  mapStateToProps,
+  openNotification,
+  trimData,
+} from '../../components/utils';
 
 class CitasEditar extends Component {
   constructor(props) {
@@ -142,11 +150,11 @@ class CitasEditar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='1'>
+        <Layout activeKeyP="1">
           <Navbar buttonDisable={false} />
 
           <Agregar
-            id='formAgregar'
+            id="formAgregar"
             paciente={this.state.paciente}
             onClickButtonSaveCita={this.onClickButtonSaveCita}
             horaActual={horasMinutos(this.state.cita.hora)}

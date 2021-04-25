@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
 import { setCategorias, setConsultorio, setUser } from '../actions';
 import Login from '../components/Login/Login';
 import { api_url } from '../components/utils/';

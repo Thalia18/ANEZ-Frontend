@@ -2,11 +2,9 @@ import React from 'react';
 import Media from 'react-media';
 import { Link, useHistory } from 'react-router-dom';
 import { Icon, Nav, Navbar } from 'rsuite';
-
-import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
-
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 const NavbarPacientes = ({ onClickDelete, pacienteId, historiaId }) => {
   let history = useHistory();
@@ -17,13 +15,13 @@ const NavbarPacientes = ({ onClickDelete, pacienteId, historiaId }) => {
           <Navbar.Body>
             <Nav>
               <Nav.Item
-                icon={<Icon icon='angle-left' />}
+                icon={<Icon icon="angle-left" />}
                 onClick={() => {
                   history.goBack();
                 }}
               />
               <Nav.Item
-                icon={<Icon icon='stethoscope' />}
+                icon={<Icon icon="stethoscope" />}
                 componentClass={Link}
                 key={pacienteId}
                 to={`/evolucion_agregar/${historiaId}/${pacienteId}`}
@@ -31,7 +29,7 @@ const NavbarPacientes = ({ onClickDelete, pacienteId, historiaId }) => {
                 Crear evolución
               </Nav.Item>
               <Nav.Item
-                icon={<Icon icon='eye' />}
+                icon={<Icon icon="eye" />}
                 componentClass={Link}
                 key={pacienteId}
                 to={`/evoluciones/${historiaId}`}
@@ -41,7 +39,7 @@ const NavbarPacientes = ({ onClickDelete, pacienteId, historiaId }) => {
             </Nav>
             <Nav pullRight>
               <Nav.Item
-                icon={<Icon icon='pencil' />}
+                icon={<Icon icon="pencil" />}
                 componentClass={Link}
                 key={pacienteId}
                 to={`/historia_clinica_editar/${historiaId}/${pacienteId}`}
@@ -51,7 +49,7 @@ const NavbarPacientes = ({ onClickDelete, pacienteId, historiaId }) => {
               <Nav.Item
                 onClick={onClickDelete}
                 // componentClass='button'
-                icon={<Icon icon='trash' />}
+                icon={<Icon icon="trash" />}
               >
                 Eliminar
               </Nav.Item>

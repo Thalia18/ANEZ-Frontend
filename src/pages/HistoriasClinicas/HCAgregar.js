@@ -1,12 +1,15 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Agregar from '../../components/HistoriaClinica/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, openNotification, trimData } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  mapStateToProps,
+  openNotification,
+  trimData,
+} from '../../components/utils';
 
 class HCAgregar extends Component {
   constructor(props) {
@@ -141,18 +144,18 @@ class HCAgregar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Navbar buttonDisable={false} />
           <Agregar
-            headerC='Nueva Historia Clínica'
-            icon='add circle'
-            id='formAgregar'
+            headerC="Nueva Historia Clínica"
+            icon="add circle"
+            id="formAgregar"
             paciente={this.state.paciente}
             onClickButtonSaveHC={this.onClickButtonSaveHC}
             formHC={this.state.historiaClinica}
             handleChange={this.handleChange}
             existsHC={this.state.existHC}
-            header='Historia clínica'
+            header="Historia clínica"
             content={`${this.state.paciente.apellido} ${this.state.paciente.nombre}`}
             pacienteId={this.state.paciente.paciente_id}
           />

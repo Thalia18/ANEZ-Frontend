@@ -1,14 +1,26 @@
-import _ from 'lodash';
 import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
-import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
-
-import { DivScroll, Global } from '../../../global';
-import { fechaActual, GLOBAL_MEDIA_QUERIES, letters, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
-
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
+import {
+  Checkbox,
+  Form,
+  Header,
+  Icon,
+  Message,
+  Segment,
+} from 'semantic-ui-react';
+import { DivScroll, Global } from '../../../global';
+import {
+  fechaActual,
+  GLOBAL_MEDIA_QUERIES,
+  letters,
+  masMediumHeight,
+  maxMediumScroll,
+  mediumHeight,
+  mediumScroll,
+} from '../../utils';
 
 const Agregar = ({
   handleChange,
@@ -47,9 +59,9 @@ const Agregar = ({
       {(matches) => (
         <Segment>
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as='h1' textAlign='center'>
+            <Header as="h1" textAlign="center">
               <Header.Content>
-                <Icon name='add circle' /> Nuevo Usuario
+                <Icon name="add circle" /> Nuevo Usuario
               </Header.Content>
             </Header>
             <hr />
@@ -57,7 +69,7 @@ const Agregar = ({
             <Message
               hidden={!emailCorrect}
               error
-              header='Correo electrónico no válido'
+              header="Correo electrónico no válido"
             />
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Form
@@ -66,26 +78,26 @@ const Agregar = ({
                 id={id}
               >
                 <Segment basic>
-                  <Icon name='id card' />
+                  <Icon name="id card" />
                   <b>Datos personales</b> <br />
                   <br />
                   <Form.Group>
                     <Form.Input
-                      label='Nombres'
-                      placeholder='Nombres'
+                      label="Nombres"
+                      placeholder="Nombres"
                       width={6}
                       onChange={handleChange}
-                      name='nombre'
+                      name="nombre"
                       value={letters(formUsuario.nombre)}
                       minLength={2}
                       required
                     />
                     <Form.Input
-                      label='Apellidos'
-                      placeholder='Apellidos'
+                      label="Apellidos"
+                      placeholder="Apellidos"
                       width={6}
                       onChange={handleChange}
-                      name='apellido'
+                      name="apellido"
                       value={letters(formUsuario.apellido)}
                       minLength={2}
                       required
@@ -93,17 +105,17 @@ const Agregar = ({
                     <Form.Field>
                       <Checkbox
                         radio
-                        label='Cédula'
-                        name='checkboxRadioGroup'
-                        value='Cédula'
+                        label="Cédula"
+                        name="checkboxRadioGroup"
+                        value="Cédula"
                         checked={value === 'Cédula'}
                         onChange={handleChangeCheck}
                       />
                       <Checkbox
                         radio
-                        label='RUC'
-                        name='checkboxRadioGroup'
-                        value='RUC'
+                        label="RUC"
+                        name="checkboxRadioGroup"
+                        value="RUC"
                         checked={value === 'RUC'}
                         onChange={handleChangeCheck}
                       />
@@ -117,7 +129,7 @@ const Agregar = ({
                       <InputMask
                         mask={mask}
                         onChange={handleChange}
-                        name='cedula'
+                        name="cedula"
                         value={formUsuario.cedula}
                         pattern={pattern}
                         maskChar={null}
@@ -127,12 +139,12 @@ const Agregar = ({
                   </Form.Group>
                   <Form.Group>
                     <Form.Input
-                      label='Fecha de nacimiento'
-                      placeholder='Fecha de nacimiento'
+                      label="Fecha de nacimiento"
+                      placeholder="Fecha de nacimiento"
                       width={8}
-                      type='date'
+                      type="date"
                       onChange={handleChange}
-                      name='fecha_nacimiento'
+                      name="fecha_nacimiento"
                       value={formUsuario.fecha_nacimiento}
                       min={'1921-01-01'}
                       max={fechaActual()}
@@ -140,16 +152,16 @@ const Agregar = ({
                     />
 
                     <Form.Input
-                      label='Teléfono'
-                      placeholder='Teléfono'
+                      label="Teléfono"
+                      placeholder="Teléfono"
                       width={8}
                       required
                     >
                       <InputMask
-                        mask='999999999999999'
+                        mask="999999999999999"
                         onChange={handleChange}
                         maskChar={null}
-                        name='telefono'
+                        name="telefono"
                         value={formUsuario.telefono}
                         required
                       />
@@ -157,40 +169,40 @@ const Agregar = ({
                   </Form.Group>
                   <Form.Group>
                     <Form.Input
-                      label='Correo electrónico'
-                      placeholder='Correo electrónico'
+                      label="Correo electrónico"
+                      placeholder="Correo electrónico"
                       width={16}
-                      type='email'
+                      type="email"
                       onChange={handleChange}
-                      name='email'
+                      name="email"
                       value={formUsuario.email}
                       required
                     />
                   </Form.Group>
                 </Segment>
                 <Segment basic>
-                  <Icon name='add user' />
+                  <Icon name="add user" />
                   <b>Usuario</b>
                 </Segment>
                 {!usuariopass && (
                   <Form.Input
-                    label='Usuario'
-                    placeholder='Usuario'
+                    label="Usuario"
+                    placeholder="Usuario"
                     width={16}
-                    type='usuario'
+                    type="usuario"
                     onChange={handleChange}
-                    name='usuario'
+                    name="usuario"
                     value={formUsuario.usuario}
                     readOnly
                   />
                 )}
                 <Form.Group>
                   <Form.Select
-                    label='Consultorio'
-                    placeholder='Consultorio'
+                    label="Consultorio"
+                    placeholder="Consultorio"
                     options={consultorios}
                     width={8}
-                    name='consultorio_id'
+                    name="consultorio_id"
                     onChange={(e, data) => {
                       formUsuario.consultorio_id = data.value;
                     }}
@@ -198,11 +210,11 @@ const Agregar = ({
                     required
                   />
                   <Form.Select
-                    label='Rol'
-                    placeholder='Rol'
+                    label="Rol"
+                    placeholder="Rol"
                     options={roles}
                     width={8}
-                    name='rol_id'
+                    name="rol_id"
                     onChange={(e, data) => {
                       setRol(data.value);
                       formUsuario.rol_id = data.value;
@@ -219,12 +231,12 @@ const Agregar = ({
                       multiple
                       search
                       selection
-                      label='Especialidades'
-                      placeholder='Especialidades'
+                      label="Especialidades"
+                      placeholder="Especialidades"
                       options={especialidades}
                       width={16}
                       rows={5}
-                      name='especialidad_id'
+                      name="especialidad_id"
                       onChange={handleOnChangeEspecialidad}
                       defaultValue={especialidadesSelect}
                       required
@@ -235,21 +247,21 @@ const Agregar = ({
                 {usuariopass && (
                   <Form.Group>
                     <Form.Input
-                      label='Usuario'
-                      placeholder='Usuario'
+                      label="Usuario"
+                      placeholder="Usuario"
                       width={8}
-                      type='usuario'
+                      type="usuario"
                       onChange={handleChange}
-                      name='usuario'
+                      name="usuario"
                       value={formUsuario.usuario}
                       readOnly
                     />
                     <Form.Input
-                      label='Contraseña'
-                      placeholder='Contraseña'
+                      label="Contraseña"
+                      placeholder="Contraseña"
                       width={8}
                       onChange={handleChange}
-                      name='contrasena'
+                      name="contrasena"
                       value={formUsuario.contrasena}
                       readOnly
                     />

@@ -2,12 +2,16 @@ import axios from 'axios';
 import generator from 'generate-password';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Detalle from '../../../components/Admin/Usuarios/Detalle';
 import Navbar from '../../../components/Admin/Usuarios/NavbarDetalle';
 import Layout from '../../../components/Layout/Layout';
 import ModalEliminar from '../../../components/Modales/ModalEliminar';
-import { api_url, mapStateToProps, openNotification, trimData } from '../../../components/utils';
+import {
+  api_url,
+  mapStateToProps,
+  openNotification,
+  trimData,
+} from '../../../components/utils';
 
 class UsuarioDetalle extends Component {
   constructor(props) {
@@ -114,7 +118,7 @@ class UsuarioDetalle extends Component {
     console.log(this.state.usuario);
     return (
       <React.Fragment>
-        <Layout activeKeyP='4'>
+        <Layout activeKeyP="4">
           <Navbar
             onClickDelete={this.onClickDelete}
             usuarioId={this.props.match.params.usuarioId}
@@ -125,8 +129,8 @@ class UsuarioDetalle extends Component {
             deleteM={this.deleteData}
             open={this.state.open}
             closeModal={this.closeModal}
-            content='¿Desea continuar?'
-            headerC='Eliminar Usuario'
+            content="¿Desea continuar?"
+            headerC="Eliminar Usuario"
           />
         </Layout>
       </React.Fragment>

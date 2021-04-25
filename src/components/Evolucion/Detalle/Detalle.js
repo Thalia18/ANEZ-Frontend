@@ -1,6 +1,6 @@
-import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
+import 'semantic-ui-css/semantic.min.css';
 import {
   Grid,
   Header,
@@ -8,10 +8,8 @@ import {
   Image,
   Modal,
   Segment,
-  Tab,
   Table,
 } from 'semantic-ui-react';
-
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
@@ -24,8 +22,6 @@ import {
   saltos,
 } from '../../utils';
 
-import 'semantic-ui-css/semantic.min.css';
-
 const Detalle = ({ paciente, evolucion }) => {
   const [open, setOpen] = React.useState(false);
   return (
@@ -33,17 +29,17 @@ const Detalle = ({ paciente, evolucion }) => {
       {(matches) => (
         <Segment>
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as='h1' textAlign='center'>
+            <Header as="h1" textAlign="center">
               <Header.Content>
-                <Icon name='dna' /> Evolución
+                <Icon name="dna" /> Evolución
               </Header.Content>
             </Header>
             <hr />
             <HCHeader paciente={paciente} />
 
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
-              <Segment basic textAlign='center'>
-                <Icon name='calendar alternate' />
+              <Segment basic textAlign="center">
+                <Icon name="calendar alternate" />
                 {fechaFormato(evolucion.fecha)}
               </Segment>
               <Table celled striped>
@@ -111,7 +107,7 @@ const Detalle = ({ paciente, evolucion }) => {
                 </Table.Body>
               </Table>
               <Segment basic>
-                <Icon name='pills' />
+                <Icon name="pills" />
                 <b>Receta</b>
               </Segment>
               <Table celled striped>
@@ -137,7 +133,7 @@ const Detalle = ({ paciente, evolucion }) => {
               {evolucion.foto.length > 0 && evolucion.foto[0].value !== '' && (
                 <React.Fragment>
                   <Segment basic>
-                    <Icon name='picture' />
+                    <Icon name="picture" />
                     <b>Fotos</b>
                   </Segment>
                   <Segment>

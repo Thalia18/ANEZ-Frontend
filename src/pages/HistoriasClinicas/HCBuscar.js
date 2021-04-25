@@ -1,11 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Layout from '../../components/Layout/Layout';
 import Listado from '../../components/Pacientes/Listado';
-import { api_url } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { api_url, mapStateToProps } from '../../components/utils';
 
 class HCBuscar extends Component {
   constructor(props) {
@@ -62,15 +60,15 @@ class HCBuscar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Listado
-            header='Resultado de la búsqueda'
-            icon='search'
+            header="Resultado de la búsqueda"
+            icon="search"
             pacientes={Object.values(this.state.pacientes)}
-            pageInitial='/historia_clinica'
-            pageSecond='/historias_clinicas'
-            reload='/historia_clinica_buscar'
-            optionNav='HC'
+            pageInitial="/historia_clinica"
+            pageSecond="/historias_clinicas"
+            reload="/historia_clinica_buscar"
+            optionNav="HC"
             buscar={
               Object.values(this.state.pacientes).length > 0 ? false : true
             }

@@ -1,15 +1,12 @@
-import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
 import { Link, useHistory, withRouter } from 'react-router-dom';
 import { Container, DateRangePicker, Icon, Nav, Navbar } from 'rsuite';
-import { Button, Form, Grid, Search } from 'semantic-ui-react';
-
-import Modal from '../Modales/ModalCita';
-import { GLOBAL_MEDIA_QUERIES } from '../utils';
-
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
+import { Button, Form } from 'semantic-ui-react';
+import Modal from '../Modales/ModalCita';
+import { GLOBAL_MEDIA_QUERIES } from '../utils';
 
 const NavbarCitas = ({ verNav, citaId, ...props }) => {
   let history = useHistory();
@@ -38,14 +35,14 @@ const NavbarCitas = ({ verNav, citaId, ...props }) => {
             <Nav>
               {!matches.medium && (
                 <Nav.Item
-                  icon={<Icon icon='angle-left' />}
+                  icon={<Icon icon="angle-left" />}
                   onClick={() => {
                     history.goBack();
                   }}
                 />
               )}
               <Nav.Item
-                icon={<Icon icon='calendar' />}
+                icon={<Icon icon="calendar" />}
                 onClick={() => {
                   setModal(true);
                 }}
@@ -54,7 +51,7 @@ const NavbarCitas = ({ verNav, citaId, ...props }) => {
               </Nav.Item>
               {verNav && (
                 <Nav.Item
-                  icon={<Icon icon='eye' />}
+                  icon={<Icon icon="eye" />}
                   componentClass={Link}
                   // key={evolucionId}
                   to={url}
@@ -68,7 +65,7 @@ const NavbarCitas = ({ verNav, citaId, ...props }) => {
                 <Form>
                   <DateRangePicker
                     showOneCalendar
-                    placeholder='Buscar'
+                    placeholder="Buscar"
                     style={{ width: 280 }}
                     value={value}
                     onChange={(value) => {
@@ -87,7 +84,7 @@ const NavbarCitas = ({ verNav, citaId, ...props }) => {
                       window.location.reload();
                     }}
                   >
-                    <Icon icon='search' />
+                    <Icon icon="search" />
                   </Button>
                 </Form>
               </Container>

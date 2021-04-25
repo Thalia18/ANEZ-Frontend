@@ -2,11 +2,9 @@ import React from 'react';
 import Media from 'react-media';
 import { Link, useHistory } from 'react-router-dom';
 import { Icon, Nav, Navbar } from 'rsuite';
-
-import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
-
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 const NavbarPacientes = ({ onClickDelete, usuarioId, onClickRecuperar }) => {
   let history = useHistory();
@@ -17,7 +15,7 @@ const NavbarPacientes = ({ onClickDelete, usuarioId, onClickRecuperar }) => {
           <Navbar.Body>
             <Nav>
               <Nav.Item
-                icon={<Icon icon='angle-left' />}
+                icon={<Icon icon="angle-left" />}
                 onClick={() => {
                   history.goBack();
                 }}
@@ -28,12 +26,12 @@ const NavbarPacientes = ({ onClickDelete, usuarioId, onClickRecuperar }) => {
               <Nav.Item
                 onClick={onClickRecuperar}
                 // componentClass='button'
-                icon={<Icon icon='key' />}
+                icon={<Icon icon="key" />}
               >
                 Recuperar contraseña
               </Nav.Item>
               <Nav.Item
-                icon={<Icon icon='pencil' />}
+                icon={<Icon icon="pencil" />}
                 componentClass={Link}
                 key={usuarioId}
                 to={`/admin/usuario_editar/${usuarioId}`}
@@ -44,7 +42,7 @@ const NavbarPacientes = ({ onClickDelete, usuarioId, onClickRecuperar }) => {
               <Nav.Item
                 onClick={onClickDelete}
                 // componentClass='button'
-                icon={<Icon icon='trash' />}
+                icon={<Icon icon="trash" />}
               >
                 Eliminar
               </Nav.Item>

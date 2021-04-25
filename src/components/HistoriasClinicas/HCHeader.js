@@ -1,9 +1,7 @@
 import React from 'react';
-import { Icon, Segment, Table } from 'semantic-ui-react';
-
-import { calculaEdad, GLOBAL_MEDIA_QUERIES } from '../utils';
-
 import 'semantic-ui-css/semantic.min.css';
+import { Icon, Segment, Table } from 'semantic-ui-react';
+import { calculaEdad } from '../utils';
 
 const HCHeader = ({ paciente }) => {
   let edad = calculaEdad(paciente.fecha_nacimiento);
@@ -14,7 +12,7 @@ const HCHeader = ({ paciente }) => {
         <Table.Header>
           <Table.Row>
             <Table.Cell>
-              <Icon name='user' /> <b>Datos del paciente</b>
+              <Icon name="user" /> <b>Datos del paciente</b>
             </Table.Cell>
           </Table.Row>
           <Table.Row>

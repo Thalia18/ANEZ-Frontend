@@ -1,16 +1,8 @@
 import React from 'react';
 import Media from 'react-media';
-import { Grid, Segment } from 'semantic-ui-react';
-
-import { DivScroll, Global } from '../../../global';
-import {
-  GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  maxMediumScroll,
-  mediumHeight,
-  mediumScroll,
-} from '../../utils';
-import Header from './Header';
+import { Segment } from 'semantic-ui-react';
+import { Global } from '../../../global';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight } from '../../utils';
 import Navbar from './NavbarReceta';
 
 export default (props) => {

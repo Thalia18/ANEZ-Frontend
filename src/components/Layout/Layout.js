@@ -1,7 +1,7 @@
 import React from 'react';
-import Sidenav from '../Sidenav/Sidenav';
-import { GLOBAL_MEDIA_QUERIES, colorBackground } from '../utils';
 import Media from 'react-media';
+import Sidenav from '../Sidenav/Sidenav';
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../utils';
 
 const Layout = ({ activeKeyP, ...props }) => {
   return (

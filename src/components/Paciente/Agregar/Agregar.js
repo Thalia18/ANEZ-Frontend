@@ -1,12 +1,23 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
-import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
-
-import { Global } from '../../../global';
-import { fechaActual, GLOBAL_MEDIA_QUERIES, letters, masMediumHeight, mediumHeight, numbers } from '../../utils';
-
 import 'semantic-ui-css/semantic.min.css';
+import {
+  Checkbox,
+  Form,
+  Header,
+  Icon,
+  Message,
+  Segment,
+} from 'semantic-ui-react';
+import { Global } from '../../../global';
+import {
+  fechaActual,
+  GLOBAL_MEDIA_QUERIES,
+  letters,
+  masMediumHeight,
+  mediumHeight,
+} from '../../utils';
 
 const Agregar = ({
   etnias,
@@ -46,7 +57,7 @@ const Agregar = ({
       {(matches) => (
         <Segment>
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as='h1' textAlign='center'>
+            <Header as="h1" textAlign="center">
               <Header.Content>
                 <Icon name={icon} /> {header}
               </Header.Content>
@@ -55,12 +66,12 @@ const Agregar = ({
             <Message
               hidden={!campos}
               warning
-              header='Seleccione Estado Civil, Etnia, Nivel de Instrucción y Tipo de Sangre'
+              header="Seleccione Estado Civil, Etnia, Nivel de Instrucción y Tipo de Sangre"
             />
             <Message
               hidden={!emailCorrect}
               error
-              header='Correo electrónico no válido'
+              header="Correo electrónico no válido"
             />
             <Form
               size={matches.medium ? 'tiny' : null}
@@ -69,21 +80,21 @@ const Agregar = ({
             >
               <Form.Group>
                 <Form.Input
-                  label='Nombres'
-                  placeholder='Nombres'
+                  label="Nombres"
+                  placeholder="Nombres"
                   width={6}
                   onChange={handleChange}
-                  name='nombre'
+                  name="nombre"
                   value={letters(formPaciente.nombre)}
                   minLength={2}
                   required
                 />
                 <Form.Input
-                  label='Apellidos'
-                  placeholder='Apellidos'
+                  label="Apellidos"
+                  placeholder="Apellidos"
                   width={5}
                   onChange={handleChange}
-                  name='apellido'
+                  name="apellido"
                   value={letters(formPaciente.apellido)}
                   minLength={2}
                   required
@@ -91,17 +102,17 @@ const Agregar = ({
                 <Form.Field>
                   <Checkbox
                     radio
-                    label='Cédula'
-                    name='checkboxRadioGroup'
-                    value='Cédula'
+                    label="Cédula"
+                    name="checkboxRadioGroup"
+                    value="Cédula"
                     checked={value === 'Cédula'}
                     onChange={handleChangeCheck}
                   />
                   <Checkbox
                     radio
-                    label='RUC'
-                    name='checkboxRadioGroup'
-                    value='RUC'
+                    label="RUC"
+                    name="checkboxRadioGroup"
+                    value="RUC"
                     checked={value === 'RUC'}
                     onChange={handleChangeCheck}
                   />
@@ -116,7 +127,7 @@ const Agregar = ({
                   <InputMask
                     mask={mask}
                     onChange={handleChange}
-                    name='cedula'
+                    name="cedula"
                     value={formPaciente.cedula}
                     pattern={pattern}
                     maskChar={null}
@@ -126,22 +137,22 @@ const Agregar = ({
               </Form.Group>
               <Form.Group>
                 <Form.Input
-                  label='Lugar de nacimiento'
-                  placeholder='Lugar de nacimiento'
+                  label="Lugar de nacimiento"
+                  placeholder="Lugar de nacimiento"
                   width={6}
                   onChange={handleChange}
-                  name='lugar_nacimiento'
+                  name="lugar_nacimiento"
                   value={letters(formPaciente.lugar_nacimiento)}
                   minLength={5}
                   required
                 />
                 <Form.Input
-                  label='Fecha de nacimiento'
-                  placeholder='Fecha de nacimiento'
+                  label="Fecha de nacimiento"
+                  placeholder="Fecha de nacimiento"
                   width={4}
-                  type='date'
+                  type="date"
                   onChange={handleChange}
-                  name='fecha_nacimiento'
+                  name="fecha_nacimiento"
                   value={formPaciente.fecha_nacimiento}
                   min={'1921-01-01'}
                   max={fechaActual()}
@@ -149,11 +160,11 @@ const Agregar = ({
                 />
 
                 <Form.Select
-                  label='Estado civil'
-                  placeholder='Estado civil'
+                  label="Estado civil"
+                  placeholder="Estado civil"
                   options={estadoCivil}
                   width={6}
-                  name='estado_civil_id'
+                  name="estado_civil_id"
                   defaultValue={formPaciente.estado_civil_id}
                   onChange={handleOnChangeEC}
                   required
@@ -161,31 +172,31 @@ const Agregar = ({
               </Form.Group>
               <Form.Group>
                 <Form.Select
-                  label='Etnia'
-                  placeholder='Etnia'
+                  label="Etnia"
+                  placeholder="Etnia"
                   options={etnias}
                   width={6}
-                  name='etnia_id'
+                  name="etnia_id"
                   onChange={handleOnChangeE}
                   defaultValue={formPaciente.etnia_id}
                   required
                 />
                 <Form.Select
-                  label='Nivel de instrucción'
-                  placeholder='Nivel de instrucción'
+                  label="Nivel de instrucción"
+                  placeholder="Nivel de instrucción"
                   options={nivelDeInstruccion}
                   width={6}
-                  name='nivel_de_instruccion_id'
+                  name="nivel_de_instruccion_id"
                   onChange={handleOnChangeNI}
                   defaultValue={formPaciente.nivel_de_instruccion_id}
                   required
                 />
                 <Form.Select
-                  label='Tipo de sangre'
-                  placeholder='Tipo de sangre'
+                  label="Tipo de sangre"
+                  placeholder="Tipo de sangre"
                   options={tipoDeSangre}
                   width={6}
-                  name='tipo_de_sangre_id'
+                  name="tipo_de_sangre_id"
                   onChange={handleOnChangeTS}
                   defaultValue={formPaciente.tipo_de_sangre_id}
                   required
@@ -193,11 +204,11 @@ const Agregar = ({
               </Form.Group>
               <Form.Group>
                 <Form.Input
-                  label='Dirección domicilio'
-                  placeholder='Dirección domicilio'
+                  label="Dirección domicilio"
+                  placeholder="Dirección domicilio"
                   width={16}
                   onChange={handleChange}
-                  name='direccion'
+                  name="direccion"
                   value={formPaciente.direccion}
                   minLength={5}
                   required
@@ -205,26 +216,26 @@ const Agregar = ({
               </Form.Group>
               <Form.Group>
                 <Form.Input
-                  label='Correo electrónico'
-                  placeholder='Correo electrónico'
+                  label="Correo electrónico"
+                  placeholder="Correo electrónico"
                   width={10}
-                  type='email'
+                  type="email"
                   onChange={handleChange}
-                  name='email'
+                  name="email"
                   value={formPaciente.email}
                   required
                 />
                 <Form.Input
-                  label='Teléfono'
-                  placeholder='Teléfono'
+                  label="Teléfono"
+                  placeholder="Teléfono"
                   width={6}
                   required
                 >
                   <InputMask
-                    mask='999999999999999'
+                    mask="999999999999999"
                     onChange={handleChange}
                     maskChar={null}
-                    name='telefono'
+                    name="telefono"
                     value={formPaciente.telefono}
                     required
                   />
@@ -232,24 +243,24 @@ const Agregar = ({
               </Form.Group>
               <Form.Group>
                 <Form.Input
-                  label='Nombre contacto de emergencia'
-                  placeholder='Nombre contacto de emergencia'
+                  label="Nombre contacto de emergencia"
+                  placeholder="Nombre contacto de emergencia"
                   width={10}
                   onChange={handleChange}
-                  name='contacto_emergencia_nombre'
+                  name="contacto_emergencia_nombre"
                   value={letters(formPaciente.contacto_emergencia_nombre)}
                   minLength={5}
                 />
                 <Form.Input
-                  label='Teléfono contacto de emergencia'
-                  placeholder='Teléfono contacto de emergencia'
+                  label="Teléfono contacto de emergencia"
+                  placeholder="Teléfono contacto de emergencia"
                   width={6}
                 >
                   <InputMask
-                    mask='999999999999999'
+                    mask="999999999999999"
                     maskChar={null}
                     onChange={handleChange}
-                    name='contacto_emergencia_telefono'
+                    name="contacto_emergencia_telefono"
                     value={formPaciente.contacto_emergencia_telefono}
                   />
                 </Form.Input>

@@ -1,16 +1,14 @@
 import moment from 'moment';
 import React from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Media from 'react-media';
 import { useHistory } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css';
 import { Header, Icon, Segment } from 'semantic-ui-react';
-
 import { Global } from '../../global';
 import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils';
 import Navbar from './NavbarCitas';
-
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import 'semantic-ui-css/semantic.min.css';
 
 moment.locale('es', {
   months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split(
@@ -54,9 +52,9 @@ const Listado = ({
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Navbar verNav={false} citaId={0} />
-              <Header as='h1' textAlign='center'>
+              <Header as="h1" textAlign="center">
                 <Header.Content>
-                  <Icon name='calendar' />
+                  <Icon name="calendar" />
                   Citas médicas
                 </Header.Content>
               </Header>
@@ -66,8 +64,8 @@ const Listado = ({
                 selectable
                 localizer={localizer}
                 events={citas}
-                startAccessor='start'
-                endAccessor='end'
+                startAccessor="start"
+                endAccessor="end"
                 messages={messages}
                 step={15}
                 min={new Date(0, 0, 0, 8, 0, 0)}

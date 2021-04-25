@@ -1,14 +1,12 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Detalle from '../../components/HistoriaClinica/Detalle/Detalle';
 import Navbar from '../../components/HistoriaClinica/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Modal from '../../components/Modales/ModalNotExists';
-import { api_url } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { api_url, mapStateToProps } from '../../components/utils';
 
 class HCDetalle extends Component {
   constructor(props) {
@@ -99,7 +97,7 @@ class HCDetalle extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Navbar
             onClickDelete={this.onClickDelete}
             pacienteId={this.props.match.params.pacienteId}
@@ -112,7 +110,7 @@ class HCDetalle extends Component {
           {this.state.notExistHC && (
             <Modal
               notExistsHC={this.state.notExistHC}
-              header='Historia clínica'
+              header="Historia clínica"
               content={`${this.state.paciente.apellido} ${this.state.paciente.nombre}`}
               closeModal={this.closeModal}
               pacienteId={this.state.paciente.paciente_id}
@@ -129,9 +127,9 @@ class HCDetalle extends Component {
             deleteM={this.deleteData}
             open={this.state.open}
             closeModal={this.closeModal}
-            content='Se eliminarán consigo las evoluciones  
-            asociadas a la Historia Clínica.  ¿Desea continuar?'
-            headerC='Eliminar Historia Clínica'
+            content="Se eliminarán consigo las evoluciones  
+            asociadas a la Historia Clínica.  ¿Desea continuar?"
+            headerC="Eliminar Historia Clínica"
           />
         </Layout>
       </React.Fragment>

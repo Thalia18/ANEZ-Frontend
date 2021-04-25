@@ -1,13 +1,11 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import Detalle from '../../components/Evolucion/Detalle/Detalle';
 import Navbar from '../../components/Evolucion/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
-import { api_url } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
+import { api_url, mapStateToProps } from '../../components/utils';
 
 class PacienteDetalle extends Component {
   constructor(props) {
@@ -92,7 +90,7 @@ class PacienteDetalle extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP='2'>
+        <Layout activeKeyP="2">
           <Navbar
             onClickDelete={this.onClickDelete}
             historiaId={this.props.match.params.historiaId}
@@ -107,8 +105,8 @@ class PacienteDetalle extends Component {
             deleteM={this.deleteData}
             open={this.state.open}
             closeModal={this.closeModal}
-            content='¿Desea continuar?'
-            headerC='Eliminar Evolución'
+            content="¿Desea continuar?"
+            headerC="Eliminar Evolución"
           />
         </Layout>
       </React.Fragment>

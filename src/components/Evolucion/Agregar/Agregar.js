@@ -1,15 +1,7 @@
-import _ from 'lodash';
 import React from 'react';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Dropdown,
-  Form,
-  Header,
-  Icon,
-  Segment,
-} from 'semantic-ui-react';
-
+import 'semantic-ui-css/semantic.min.css';
+import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
@@ -21,8 +13,6 @@ import {
   mediumScroll,
 } from '../../utils';
 import Fotos from '../Fotos/Agregar';
-
-import 'semantic-ui-css/semantic.min.css';
 
 const Agregar = ({
   paciente,
@@ -47,7 +37,7 @@ const Agregar = ({
       {(matches) => (
         <Segment>
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as='h1' textAlign='center'>
+            <Header as="h1" textAlign="center">
               <Header.Content>
                 <Icon name={icon} />
                 {headerC}
@@ -64,34 +54,34 @@ const Agregar = ({
               >
                 <Form.Group>
                   <Form.TextArea
-                    label='Motivo consulta'
-                    placeholder='Motivo consulta'
+                    label="Motivo consulta"
+                    placeholder="Motivo consulta"
                     width={16}
                     onChange={handleChange}
-                    name='motivo_consulta'
+                    name="motivo_consulta"
                     value={formEvolucion.motivo_consulta}
                     required
                   />
                 </Form.Group>
                 <Form.Group>
                   <Form.Input
-                    label='Fecha última menstruación'
-                    placeholder='Fecha última menstruación'
+                    label="Fecha última menstruación"
+                    placeholder="Fecha última menstruación"
                     width={16}
-                    type='date'
+                    type="date"
                     onChange={handleChange}
-                    name='fecha_ultima_menstruacion'
+                    name="fecha_ultima_menstruacion"
                     value={formEvolucion.fecha_ultima_menstruacion}
                     max={fechaActual()}
                   />
                 </Form.Group>
                 <Form.Group>
                   <Form.TextArea
-                    label='Procedimiento'
-                    placeholder='Procedimiento'
+                    label="Procedimiento"
+                    placeholder="Procedimiento"
                     width={16}
                     onChange={handleChange}
-                    name='procedimiento'
+                    name="procedimiento"
                     value={formEvolucion.procedimiento}
                     required
                   />
@@ -99,11 +89,11 @@ const Agregar = ({
                 <Segment>
                   <Form.Group>
                     <Form.TextArea
-                      label='Diagnóstico'
-                      placeholder='Diagnóstico'
+                      label="Diagnóstico"
+                      placeholder="Diagnóstico"
                       width={16}
                       onChange={handleChange}
-                      name='diagnostico'
+                      name="diagnostico"
                       value={formEvolucion.diagnostico}
                       required
                     />
@@ -117,7 +107,7 @@ const Agregar = ({
                       selection
                       width={16}
                       options={cie10}
-                      placeholder='Seleccione código CIE 10'
+                      placeholder="Seleccione código CIE 10"
                       onChange={handleOnChangeCie10}
                       defaultValue={cie10List}
                     />
@@ -125,41 +115,41 @@ const Agregar = ({
                 </Segment>
                 <Form.Group>
                   <Form.TextArea
-                    label='Medicación'
-                    placeholder='Medicación'
+                    label="Medicación"
+                    placeholder="Medicación"
                     width={8}
                     onChange={handleChange}
-                    name='medicacion'
+                    name="medicacion"
                     value={formEvolucion.medicacion}
                     maxLength={1200}
                     rows={10}
                   />
                   <Form.TextArea
-                    label='Indicaciones'
-                    placeholder='Indicaciones'
+                    label="Indicaciones"
+                    placeholder="Indicaciones"
                     width={8}
                     onChange={handleChange}
-                    name='indicacion'
+                    name="indicacion"
                     value={formEvolucion.indicacion}
                     maxLength={1200}
                     rows={10}
                   />
                 </Form.Group>
                 <Form.Input
-                  label='Próximo control'
-                  placeholder='Próximo control'
+                  label="Próximo control"
+                  placeholder="Próximo control"
                   width={16}
-                  type='date'
+                  type="date"
                   onChange={handleChange}
-                  name='proximo_control'
+                  name="proximo_control"
                   value={formEvolucion.proximo_control}
                   min={fechaActual()}
                 />
                 <Form.Field>
                   <Checkbox
                     toggle
-                    label='Agregar fotos'
-                    name='checkboxRadioGroup'
+                    label="Agregar fotos"
+                    name="checkboxRadioGroup"
                     checked={value === false}
                     onChange={handleChangeCheck}
                   />
