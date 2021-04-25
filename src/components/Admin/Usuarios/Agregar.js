@@ -2,25 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
 
 import { DivScroll, Global } from '../../../global';
-import {
-  fechaActual,
-  GLOBAL_MEDIA_QUERIES,
-  letters,
-  masMediumHeight,
-  maxMediumScroll,
-  mediumHeight,
-  mediumScroll,
-} from '../../utils';
+import { fechaActual, GLOBAL_MEDIA_QUERIES, letters, masMediumHeight, maxMediumScroll, mediumHeight, mediumScroll } from '../../utils';
 
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';

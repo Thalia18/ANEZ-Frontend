@@ -6,18 +6,9 @@ import { connect } from 'react-redux';
 import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Layout from '../../../components/Layout/Layout';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
-import {
-  api_url,
-  consultorioDropdown,
-  especialidadesDropdownUsuarios,
-  mapStateToProps,
-  openNotification,
-  regexEmail,
-  rolesDropdown,
-  trimData,
-} from '../../../components/utils';
+import { api_url, consultorioDropdown, especialidadesDropdownUsuarios, mapStateToProps, openNotification, regexEmail, rolesDropdown, trimData } from '../../../components/utils/index';
 
-class UsuarioAgregar extends Component {
+class UsuarioEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,6 +52,7 @@ class UsuarioAgregar extends Component {
       const { data: medico } = await axios.get(
         `${api_url}/api/medicos_usuario_id/${this.props.match.params.usuarioId}`
       );
+      trimData(usuario.data);
       this.setState({
         roles: rolesDropdown(roles.data),
         especialidades: especialidadesDropdownUsuarios(especialidades.data),
@@ -69,8 +61,6 @@ class UsuarioAgregar extends Component {
         medico: medico.data !== null ? medico.data : {},
         loading: false,
       });
-      trimData(this.state.medico);
-      trimData(this.state.usuario);
     } catch (error) {
       this.setState({
         loading: false,
@@ -138,7 +128,7 @@ class UsuarioAgregar extends Component {
     }
     return opcion;
   };
-  //guardar cita
+  //guardar usuario
   onClickButtonSaveUsuario = async (e) => {
     e.preventDefault();
     this.setState({
@@ -192,7 +182,6 @@ class UsuarioAgregar extends Component {
       );
       this.props.history.push('/admin/usuarios');
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -203,9 +192,7 @@ class UsuarioAgregar extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
-    console.log(Object.values(this.state.medico));
-    console.log(this.state.medicoUpdate, 'update');
-    console.log(this.especialidadesSelect(this.state.medico.especialidad));
+
     return (
       <React.Fragment>
         <Layout activeKeyP='4'>
@@ -234,4 +221,4 @@ class UsuarioAgregar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(UsuarioAgregar);
+export default connect(mapStateToProps, null)(UsuarioEditar);

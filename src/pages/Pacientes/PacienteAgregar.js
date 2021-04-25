@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import Layout from '../../components/Layout/Layout';
 import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
-import { api_url, openNotification, trimData } from '../../components/utils';
-import { mapStateToProps } from '../../components/utils';
-import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, regexEmail, tipoDeSangreDropdown } from '../../components/utils';
+import { api_url, estadoCivilDropdown, etniasDropdown, mapStateToProps, nivelDeInstruccionDropdown, openNotification, regexEmail, tipoDeSangreDropdown, trimData } from '../../components/utils';
 
 class PacienteAgregar extends Component {
   constructor(props) {

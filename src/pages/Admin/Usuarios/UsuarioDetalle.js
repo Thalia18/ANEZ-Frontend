@@ -7,7 +7,7 @@ import Detalle from '../../../components/Admin/Usuarios/Detalle';
 import Navbar from '../../../components/Admin/Usuarios/NavbarDetalle';
 import Layout from '../../../components/Layout/Layout';
 import ModalEliminar from '../../../components/Modales/ModalEliminar';
-import { api_url, mapStateToProps, openNotification } from '../../../components/utils';
+import { api_url, mapStateToProps, openNotification, trimData } from '../../../components/utils';
 
 class UsuarioDetalle extends Component {
   constructor(props) {
@@ -73,6 +73,8 @@ class UsuarioDetalle extends Component {
   };
 
   recuperarPass = async () => {
+    trimData(this.state.usuarioPatch);
+
     try {
       await axios.patch(
         `${api_url}/api/usuario_pass/${this.props.match.params.usuarioId}/${this.state.usuario.email}`,
@@ -109,6 +111,7 @@ class UsuarioDetalle extends Component {
   render() {
     if (this.state.loading) return <div>loading</div>;
     if (this.state.error) return <div>error</div>;
+    console.log(this.state.usuario);
     return (
       <React.Fragment>
         <Layout activeKeyP='4'>

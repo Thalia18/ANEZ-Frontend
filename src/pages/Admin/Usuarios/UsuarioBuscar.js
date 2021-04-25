@@ -6,7 +6,7 @@ import Listado from '../../../components/Admin/Usuarios/Listado';
 import Layout from '../../../components/Layout/Layout';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
-class Usuarios extends Component {
+class UsuarioBuscar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +31,7 @@ class Usuarios extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/usuarios?page=${this.state.page}`
+        `${api_url}/api/usuarios_buscar/${this.props.match.params.buscar}?page=${this.state.page}`
       );
 
       this.setState({
@@ -64,6 +64,10 @@ class Usuarios extends Component {
             paginas={this.state.paginas}
             handleChangePage={this.handleChangePage}
             user={this.props.user}
+            busqueda={this.props.match.params.buscar}
+            buscar={
+              Object.values(this.state.usuarios).length > 0 ? false : true
+            }
           />
         </Layout>
       </React.Fragment>
@@ -71,4 +75,4 @@ class Usuarios extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(Usuarios);
+export default connect(mapStateToProps, null)(UsuarioBuscar);

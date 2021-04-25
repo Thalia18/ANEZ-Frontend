@@ -73,7 +73,9 @@ const NavbarPacientes = ({ usuarioId, ...props }) => {
                         onClick={() => {
                           value === ''
                             ? props.history.push('/admin/usuarios')
-                            : props.history.push(`/admin/usuario_buscar/1`);
+                            : props.history.push(
+                                `/admin/usuario_buscar/${value}`
+                              );
                           window.location.reload();
                         }}
                         style={

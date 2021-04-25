@@ -8,20 +8,12 @@ import Navbar from './Navbar';
 
 import 'semantic-ui-css/semantic.min.css';
 
-const Buscar = ({
-  paciente,
-  autoComplete,
-  pageInitial,
-  pageSecond,
-  reload,
-  optionNav,
-}) => {
+const Buscar = ({ paciente, pageInitial, pageSecond, reload, optionNav }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
           <Navbar
-            autoComplete={autoComplete}
             pacienteId={paciente.paciente_id}
             pageInitial={pageInitial}
             pageSecond={pageSecond}

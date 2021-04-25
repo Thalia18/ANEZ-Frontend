@@ -7,7 +7,13 @@ import Editar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import { api_url, openNotification, trimData } from '../../components/utils';
 import { mapStateToProps } from '../../components/utils';
-import { estadoCivilDropdown, etniasDropdown, nivelDeInstruccionDropdown, regexEmail, tipoDeSangreDropdown } from '../../components/utils';
+import {
+  estadoCivilDropdown,
+  etniasDropdown,
+  nivelDeInstruccionDropdown,
+  regexEmail,
+  tipoDeSangreDropdown,
+} from '../../components/utils';
 
 class PacienteEditar extends Component {
   constructor(props) {

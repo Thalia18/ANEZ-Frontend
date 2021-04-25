@@ -1,21 +1,9 @@
 import React from 'react';
 import Media from 'react-media';
-import {
-  Checkbox,
-  Header,
-  Icon,
-  Message,
-  Pagination,
-  Segment,
-  Table,
-} from 'semantic-ui-react';
+import { Checkbox, Header, Icon, Message, Pagination, Segment, Table } from 'semantic-ui-react';
 
 import { Global } from '../../../global';
-import {
-  GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  mediumHeight,
-} from '../../utils/';
+import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../../utils/';
 import Navbar from './Navbar';
 
 import 'semantic-ui-css/semantic.min.css';

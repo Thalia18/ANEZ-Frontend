@@ -3,6 +3,7 @@ import { IntlProvider } from 'rsuite';
 import es_ES from 'rsuite/lib/IntlProvider/locales/es_ES';
 
 import UsuarioAgregarPage from './pages/Admin/Usuarios/UsuarioAgregar';
+import UsuarioBuscarPage from './pages/Admin/Usuarios/UsuarioBuscar';
 import UsuarioDetallePage from './pages/Admin/Usuarios/UsuarioDetalle';
 import UsuarioEditarPage from './pages/Admin/Usuarios/UsuarioEditar';
 import UsuariosPage from './pages/Admin/Usuarios/Usuarios';
@@ -145,6 +146,11 @@ function App() {
             exact
             path='/admin/usuario_editar/:usuarioId'
             component={UsuarioEditarPage}
+          />
+          <Route
+            exact
+            path='/admin/usuario_buscar/:buscar'
+            component={UsuarioBuscarPage}
           />
         </IntlProvider>
       </Switch>

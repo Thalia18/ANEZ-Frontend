@@ -6,16 +6,7 @@ import { connect } from 'react-redux';
 import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Layout from '../../../components/Layout/Layout';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
-import {
-  api_url,
-  consultorioDropdown,
-  especialidadesDropdownUsuarios,
-  mapStateToProps,
-  openNotification,
-  regexEmail,
-  rolesDropdown,
-  trimData,
-} from '../../../components/utils';
+import { api_url, consultorioDropdown, especialidadesDropdownUsuarios, mapStateToProps, openNotification, regexEmail, rolesDropdown, trimData } from '../../../components/utils';
 
 class UsuarioAgregar extends Component {
   constructor(props) {
@@ -168,8 +159,7 @@ class UsuarioAgregar extends Component {
     });
 
     trimData(this.state.usuario);
-    trimData(this.state.medico);
-
+    // trimData(this.state.medico);
     try {
       const { data: usuario } = await axios.post(
         `${api_url}/api/usuario`,
