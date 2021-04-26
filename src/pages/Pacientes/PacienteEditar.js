@@ -145,7 +145,7 @@ class PacienteEditar extends Component {
     });
     trimData(this.state.paciente);
     try {
-      await axios.put(
+      const { data: paciente } = await axios.put(
         `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
         this.state.paciente
       );
@@ -153,24 +153,24 @@ class PacienteEditar extends Component {
         loading: false,
         success: true,
         error: null,
-        paciente: {},
       });
-      openNotification(
-        'success',
-        'Pacientes',
-        'Paciente editado exitosamente',
-        ''
-      );
-      this.props.history.push('/pacientes');
+      if (paciente.data.exist) {
+        openNotification(
+          'warning',
+          'Pacientes',
+          'Ya existe un paciente registrado con el número de cédula ',
+          `${this.state.paciente.cedula}`
+        );
+      } else {
+        openNotification(
+          'success',
+          'Pacientes',
+          'Paciente editado exitosamente',
+          ''
+        );
+        this.props.history.push('/pacientes');
+      }
     } catch (error) {
-      openNotification(
-        'warning',
-        'Pacientes',
-        'Ya existe un paciente registrado con el número de cédula ',
-        `${this.state.paciente.cedula}`
-      );
-      this.props.history.goBack();
-
       this.setState({
         loading: false,
         error: error,

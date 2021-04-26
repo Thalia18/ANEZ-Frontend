@@ -89,6 +89,7 @@ class UsuarioEditar extends Component {
         email: this.state.usuario.email,
         telefono: this.state.usuario.telefono,
         fecha_nacimiento: this.state.usuario.fecha_nacimiento,
+        updated_at: new Date(),
         [e.target.name]: e.target.value,
       },
     });
@@ -147,7 +148,7 @@ class UsuarioEditar extends Component {
     trimData(this.state.medico);
 
     try {
-      await axios.patch(
+      const { data: usuario } = await axios.patch(
         `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
         this.state.usuario
       );
@@ -180,14 +181,22 @@ class UsuarioEditar extends Component {
         success: true,
         error: null,
       });
-
-      openNotification(
-        'success',
-        'Usuarios',
-        'Usuario editado exitosamente',
-        ''
-      );
-      this.props.history.push('/admin/usuarios');
+      if (usuario.data.exist) {
+        openNotification(
+          'warning',
+          'Usuarios',
+          'Ya existe un usuario registrado con el número de cédula ',
+          `${this.state.usuario.cedula}`
+        );
+      } else {
+        openNotification(
+          'success',
+          'Usuarios',
+          'Usuario editado exitosamente',
+          ''
+        );
+        this.props.history.push('/admin/usuarios');
+      }
     } catch (error) {
       this.setState({
         loading: false,

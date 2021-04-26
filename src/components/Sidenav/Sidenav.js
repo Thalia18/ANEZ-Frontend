@@ -93,9 +93,9 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                   )}
                   {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                     <Nav.Item
-                      eventKey="6"
+                      eventKey="5"
                       componentClass={Link}
-                      to="/pacientes"
+                      to="/admin/consultorios"
                     >
                       <Icon icon="hospital-o" /> Consultorios
                     </Nav.Item>

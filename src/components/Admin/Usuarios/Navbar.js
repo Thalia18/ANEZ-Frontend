@@ -7,10 +7,25 @@ import 'semantic-ui-css/semantic.min.css';
 import { Button, Form } from 'semantic-ui-react';
 import { GLOBAL_MEDIA_QUERIES } from '../../utils/';
 
-const NavbarPacientes = ({ usuarioId, ...props }) => {
+const NavbarPacientes = ({ usuarioId, consultorioId, tipo, ...props }) => {
   let url =
     usuarioId === undefined ? `/admin/usuarios` : `/admin/usuario/${usuarioId}`;
+  let urlC =
+    consultorioId === undefined
+      ? `/admin/consultorios`
+      : `/admin/consultorio/${consultorioId}`;
 
+  let pushBuscar1 = (value) => {
+    let a = tipo === 'usuario' ? `/admin/usuarios` : `/admin/consultorios`;
+    return a;
+  };
+  let pushBuscar2 = (value) => {
+    let a =
+      tipo === 'usuario'
+        ? `/admin/usuarios_buscar/${value}`
+        : `/admin/consultorios_buscar/${value}`;
+    return a;
+  };
   let history = useHistory();
   let [value, setValue] = React.useState('');
   return (
@@ -28,25 +43,46 @@ const NavbarPacientes = ({ usuarioId, ...props }) => {
                 />
               )}
 
-              <React.Fragment>
-                <Nav.Item
-                  icon={<Icon icon="plus-circle" />}
-                  componentClass={Link}
-                  to={`/admin/usuario_agregar`}
-                  key={Math.random()}
-                >
-                  Crear Usuario
-                </Nav.Item>
-              </React.Fragment>
-
-              <Nav.Item
-                icon={<Icon icon="eye" />}
-                componentClass={Link}
-                key={usuarioId}
-                to={url}
-              >
-                Ver
-              </Nav.Item>
+              {tipo === 'usuario' && (
+                <React.Fragment>
+                  <Nav.Item
+                    icon={<Icon icon="plus-circle" />}
+                    componentClass={Link}
+                    to={`/admin/usuario_agregar`}
+                    key={Math.random()}
+                  >
+                    Crear Usuario
+                  </Nav.Item>
+                  <Nav.Item
+                    icon={<Icon icon="eye" />}
+                    componentClass={Link}
+                    key={usuarioId}
+                    to={url}
+                  >
+                    Ver
+                  </Nav.Item>
+                </React.Fragment>
+              )}
+              {tipo === 'consultorio' && (
+                <React.Fragment>
+                  <Nav.Item
+                    icon={<Icon icon="plus-circle" />}
+                    componentClass={Link}
+                    to={`/admin/consultorio_agregar`}
+                    key={Math.random()}
+                  >
+                    Crear Consultorio
+                  </Nav.Item>
+                  <Nav.Item
+                    icon={<Icon icon="eye" />}
+                    componentClass={Link}
+                    key={consultorioId}
+                    to={urlC}
+                  >
+                    Ver
+                  </Nav.Item>
+                </React.Fragment>
+              )}
             </Nav>
             <Nav pullRight>
               <Container
@@ -69,10 +105,8 @@ const NavbarPacientes = ({ usuarioId, ...props }) => {
                       <Button
                         onClick={() => {
                           value === ''
-                            ? props.history.push('/admin/usuarios')
-                            : props.history.push(
-                                `/admin/usuario_buscar/${value}`
-                              );
+                            ? props.history.push(pushBuscar1(value))
+                            : props.history.push(pushBuscar2(value));
                           window.location.reload();
                         }}
                         style={

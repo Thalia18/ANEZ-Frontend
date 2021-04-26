@@ -1,6 +1,11 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
 import es_ES from 'rsuite/lib/IntlProvider/locales/es_ES';
+import ConsultorioAgregarPage from './pages/Admin/Consultorios/ConsultorioAgregar';
+import ConsultorioBuscarPage from './pages/Admin/Consultorios/ConsultorioBuscar';
+import ConsultorioDetallePage from './pages/Admin/Consultorios/ConsultorioDetalle';
+import ConsultorioEditarPage from './pages/Admin/Consultorios/ConsultorioEditar';
+import ConsultoriosPage from './pages/Admin/Consultorios/Consultorios';
 import UsuarioAgregarPage from './pages/Admin/Usuarios/UsuarioAgregar';
 import UsuarioBuscarPage from './pages/Admin/Usuarios/UsuarioBuscar';
 import UsuarioDetallePage from './pages/Admin/Usuarios/UsuarioDetalle';
@@ -129,7 +134,7 @@ function App() {
             path="/cita_editar/:pacienteId/:citaId"
             component={CitasEditarPage}
           />
-          {/* //páginas de admin */}
+          {/* //páginas de admin usuarios*/}
           <Route exact path="/admin/usuarios" component={UsuariosPage} />
           <Route
             exact
@@ -148,8 +153,34 @@ function App() {
           />
           <Route
             exact
-            path="/admin/usuario_buscar/:buscar"
+            path="/admin/usuarios_buscar/:buscar"
             component={UsuarioBuscarPage}
+          />
+          {/* //páginas de admin consultorios*/}
+          <Route
+            exact
+            path="/admin/consultorios"
+            component={ConsultoriosPage}
+          />
+          <Route
+            exact
+            path="/admin/consultorio_agregar"
+            component={ConsultorioAgregarPage}
+          />
+          <Route
+            exact
+            path="/admin/consultorio/:consultorioId"
+            component={ConsultorioDetallePage}
+          />
+          <Route
+            exact
+            path="/admin/consultorio_editar/:consultorioId"
+            component={ConsultorioEditarPage}
+          />
+          <Route
+            exact
+            path="/admin/consultorios_buscar/:buscar"
+            component={ConsultorioBuscarPage}
           />
         </IntlProvider>
       </Switch>

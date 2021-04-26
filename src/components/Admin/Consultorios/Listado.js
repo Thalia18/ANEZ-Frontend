@@ -16,10 +16,10 @@ import {
   masMediumHeight,
   mediumHeight,
 } from '../../utils/';
-import Navbar from './Navbar';
+import Navbar from '../Usuarios/Navbar';
 
 const Listado = ({
-  usuarios,
+  consultorios,
   header,
   icon,
   buscar,
@@ -35,7 +35,7 @@ const Listado = ({
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar usuarioId={value} tipo="usuario" />
+          <Navbar consultorioId={value} tipo="consultorio" />
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as="h1" textAlign="center">
@@ -51,28 +51,30 @@ const Listado = ({
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell />
-                      <Table.HeaderCell>Apellidos</Table.HeaderCell>
-                      <Table.HeaderCell>Nombres</Table.HeaderCell>
-                      <Table.HeaderCell>Usuario</Table.HeaderCell>
+                      <Table.HeaderCell>Nombre</Table.HeaderCell>
+                      <Table.HeaderCell>RUC</Table.HeaderCell>
+                      <Table.HeaderCell>Dirección</Table.HeaderCell>
+                      <Table.HeaderCell>Teléfono</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
 
                   <Table.Body>
-                    {usuarios.map((usuario) => {
+                    {consultorios.map((consultorio) => {
                       return (
-                        <Table.Row key={usuario.usuario_id}>
+                        <Table.Row key={consultorio.consultorio_id}>
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle
                               name="checkboxRadioGroup"
-                              value={usuario.usuario_id}
-                              checked={value === usuario.usuario_id}
+                              value={consultorio.consultorio_id}
+                              checked={value === consultorio.consultorio_id}
                               onChange={handleChange}
                             />
                           </Table.Cell>
-                          <Table.Cell>{usuario.apellido}</Table.Cell>
-                          <Table.Cell>{usuario.nombre}</Table.Cell>
-                          <Table.Cell>{usuario.usuario}</Table.Cell>
+                          <Table.Cell>{consultorio.nombre}</Table.Cell>
+                          <Table.Cell>{consultorio.ruc}</Table.Cell>
+                          <Table.Cell>{consultorio.direccion}</Table.Cell>
+                          <Table.Cell>{consultorio.telefono}</Table.Cell>
                         </Table.Row>
                       );
                     })}
@@ -87,7 +89,7 @@ const Listado = ({
                     No se encontraron resultados
                   </Message.Header>
                   <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen usuarios
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen consultorios
                     registrados con el dato <b>{busqueda}</b>
                   </p>
                 </Message>

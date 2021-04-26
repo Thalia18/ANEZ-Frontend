@@ -6,8 +6,19 @@ import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
-const NavbarPacientes = ({ onClickDelete, usuarioId, onClickRecuperar }) => {
+const NavbarPacientes = ({
+  onClickDelete,
+  usuarioId,
+  onClickRecuperar,
+  tipo,
+  consultorioId,
+}) => {
   let history = useHistory();
+  let url =
+    tipo === 'usuario'
+      ? `/admin/usuario_editar/${usuarioId}`
+      : `/admin/consultorio_editar/${consultorioId}`;
+
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
@@ -23,18 +34,20 @@ const NavbarPacientes = ({ onClickDelete, usuarioId, onClickRecuperar }) => {
             </Nav>
 
             <Nav pullRight>
-              <Nav.Item
-                onClick={onClickRecuperar}
-                // componentClass='button'
-                icon={<Icon icon="key" />}
-              >
-                Recuperar contraseña
-              </Nav.Item>
+              {tipo === 'usuario' && (
+                <Nav.Item
+                  onClick={onClickRecuperar}
+                  // componentClass='button'
+                  icon={<Icon icon="key" />}
+                >
+                  Recuperar contraseña
+                </Nav.Item>
+              )}
               <Nav.Item
                 icon={<Icon icon="pencil" />}
                 componentClass={Link}
                 key={usuarioId}
-                to={`/admin/usuario_editar/${usuarioId}`}
+                to={url}
               >
                 Editar
               </Nav.Item>

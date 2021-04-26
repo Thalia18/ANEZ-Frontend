@@ -49,6 +49,7 @@ class UsuarioAgregar extends Component {
         email: '',
         telefono: '',
         fecha_nacimiento: '',
+        created_at: new Date(),
       },
     };
   }

@@ -1,17 +1,17 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Listado from '../../../components/Admin/Usuarios/Listado';
+import Listado from '../../../components/Admin/Consultorios/Listado';
 import Layout from '../../../components/Layout/Layout';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
-class UsuarioBuscar extends Component {
+class Consultorios extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       loading: true,
-      usuarios: {},
+      consultorio: {},
       paginas: {},
       page: 1,
     };
@@ -30,11 +30,11 @@ class UsuarioBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/usuarios_buscar/${this.props.match.params.buscar}?page=${this.state.page}`
+        `${api_url}/api/consultorios?page=${this.state.page}`
       );
 
       this.setState({
-        usuarios: data.data,
+        consultorios: data.data,
         paginas: data.info,
         loading: false,
       });
@@ -55,18 +55,13 @@ class UsuarioBuscar extends Component {
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
-        <Layout activeKeyP="4">
+        <Layout activeKeyP="5">
           <Listado
-            header="Resultados de la búsqueda"
-            icon="search"
-            usuarios={Object.values(this.state.usuarios)}
+            header="Consultorios"
+            icon="hospital outline"
+            consultorios={Object.values(this.state.consultorios)}
             paginas={this.state.paginas}
             handleChangePage={this.handleChangePage}
-            user={this.props.user}
-            busqueda={this.props.match.params.buscar}
-            buscar={
-              Object.values(this.state.usuarios).length > 0 ? false : true
-            }
           />
         </Layout>
       </React.Fragment>
@@ -74,4 +69,4 @@ class UsuarioBuscar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(UsuarioBuscar);
+export default connect(mapStateToProps, null)(Consultorios);
