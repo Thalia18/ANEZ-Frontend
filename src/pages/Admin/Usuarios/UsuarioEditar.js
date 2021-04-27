@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Layout from '../../../components/Layout/Layout';
+import Loader from '../../../components/Loader';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -206,7 +207,8 @@ class UsuarioEditar extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
+
     if (this.state.error) return <div>error</div>;
 
     return (

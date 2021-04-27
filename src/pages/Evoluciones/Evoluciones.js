@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Listado from '../../components/Evoluciones/Listado';
 import Layout from '../../components/Layout/Layout';
+import Loader from '../../components/Loader';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class Evoluciones extends Component {
@@ -62,7 +63,7 @@ class Evoluciones extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>

@@ -120,7 +120,15 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                     size="md"
                     style={{ marginRight: '2em' }}
                   >
-                    <Dropdown.Item onClick={logout}>Log out</Dropdown.Item>
+                    <Dropdown.Item onClick={logout}>
+                      <Icon icon="user-info" />
+                      Perfil
+                    </Dropdown.Item>
+
+                    <Dropdown.Item onClick={logout}>
+                      <Icon icon="sign-out" />
+                      Log out
+                    </Dropdown.Item>
                   </Dropdown>
                 </Nav>
               </Navbar.Body>

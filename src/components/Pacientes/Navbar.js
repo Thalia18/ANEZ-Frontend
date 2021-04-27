@@ -29,7 +29,6 @@ const NavbarPacientes = ({
 
   let history = useHistory();
   let [value, setValue] = React.useState('');
-
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (

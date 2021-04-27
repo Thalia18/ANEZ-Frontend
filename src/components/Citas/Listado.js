@@ -9,7 +9,6 @@ import { Header, Icon, Segment } from 'semantic-ui-react';
 import { Global } from '../../global';
 import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils';
 import Navbar from './NavbarCitas';
-
 moment.locale('es', {
   months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split(
     '_'

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Editar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
+import Loader from '../../components/Loader';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import {
   api_url,
@@ -173,7 +174,7 @@ class EvolucionEditar extends Component {
     this.state.cie10List = data.value;
   };
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>

@@ -1,0 +1,33 @@
+.indicator {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(10);
+}
+
+svg,
+polyline {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.back {
+  stroke: rgba(#00a1d5, 0.5);
+}
+
+.front {
+  stroke: #00a1d5;
+  stroke-dasharray: 20, 45;
+  stroke-dashoffset: 60;
+  animation: dash 3s linear infinite;
+}
+@keyframes dash {
+  70% {
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

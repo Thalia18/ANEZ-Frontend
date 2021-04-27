@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Detalle from '../../../components/Admin/Usuarios/Detalle';
 import Navbar from '../../../components/Admin/Usuarios/NavbarDetalle';
 import Layout from '../../../components/Layout/Layout';
+import Loader from '../../../components/Loader';
 import ModalEliminar from '../../../components/Modales/ModalEliminar';
 import {
   api_url,
@@ -113,7 +114,8 @@ class UsuarioDetalle extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
+
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>

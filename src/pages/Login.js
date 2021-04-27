@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { setCategorias, setConsultorio, setUser } from '../actions';
+import Loader from '../components/Loader/index';
 import Login from '../components/Login/Login';
 import { api_url } from '../components/utils/';
 
@@ -44,7 +45,7 @@ class LoginG extends Component {
     e.preventDefault();
 
     this.setState({
-      // loading: true,
+      loading: true,
       error: null,
     });
     try {
@@ -53,7 +54,6 @@ class LoginG extends Component {
       );
       this.setState({
         userConfirm: usuario.data,
-        loading: false,
         correctUser: false,
       });
       if (this.state.userConfirm) {
@@ -73,7 +73,9 @@ class LoginG extends Component {
         }
         this.props.setUser(this.state.userConfirm);
       }
-
+      this.setState({
+        loading: false,
+      });
       this.props.history.push('/main');
     } catch (error) {
       this.setState({
@@ -85,7 +87,7 @@ class LoginG extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>

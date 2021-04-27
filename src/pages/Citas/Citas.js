@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CitasCalendar from '../../components/Citas/Listado';
 import Layout from '../../components/Layout/Layout';
+import Loader from '../../components/Loader';
 import {
   api_url,
   citasList,
@@ -84,7 +85,7 @@ class Citas extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
     if (this.state.error) return <div>error</div>;
 
     return (

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Editar from '../../components/HistoriaClinica/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
+import Loader from '../../components/Loader';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import {
   api_url,
@@ -120,7 +121,7 @@ class HCEditar extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
     if (this.state.error) return <div>error</div>;
 
     return (

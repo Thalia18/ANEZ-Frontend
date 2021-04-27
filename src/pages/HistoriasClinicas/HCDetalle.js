@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Detalle from '../../components/HistoriaClinica/Detalle/Detalle';
 import Navbar from '../../components/HistoriaClinica/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
+import Loader from '../../components/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Modal from '../../components/Modales/ModalNotExists';
 import { api_url, mapStateToProps } from '../../components/utils';
@@ -93,7 +94,7 @@ class HCDetalle extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>

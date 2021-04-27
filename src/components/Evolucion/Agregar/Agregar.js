@@ -60,6 +60,7 @@ const Agregar = ({
                     onChange={handleChange}
                     name="motivo_consulta"
                     value={formEvolucion.motivo_consulta}
+                    rows={5}
                     required
                   />
                 </Form.Group>
@@ -82,6 +83,7 @@ const Agregar = ({
                     width={16}
                     onChange={handleChange}
                     name="procedimiento"
+                    rows={5}
                     value={formEvolucion.procedimiento}
                     required
                   />
@@ -95,6 +97,7 @@ const Agregar = ({
                       onChange={handleChange}
                       name="diagnostico"
                       value={formEvolucion.diagnostico}
+                      rows={5}
                       required
                     />
                   </Form.Group>

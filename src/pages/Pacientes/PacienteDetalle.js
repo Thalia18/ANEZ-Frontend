@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Layout from '../../components/Layout/Layout';
+import Loader from '../../components/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Detalle from '../../components/Paciente/Detalle/Detalle';
 import Navbar from '../../components/Paciente/Detalle/NavbarDetalle';
@@ -73,7 +74,7 @@ class PacienteDetalle extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Buscar from '../../components/Citas/Buscar';
 import Layout from '../../components/Layout/Layout';
+import Loader from '../../components/Loader';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class CitasBuscar extends Component {
@@ -53,7 +54,7 @@ class CitasBuscar extends Component {
   };
 
   render() {
-    if (this.state.loading) return <div>loading</div>;
+    if (this.state.loading) return <Loader />;
     if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
