@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Listado from '../../../components/Admin/Usuarios/Listado';
+import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
-import Loader from '../../../components/Loader';
+import Loader from '../../../components/Loader/Loader';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
 class UsuarioBuscar extends Component {
@@ -21,7 +22,7 @@ class UsuarioBuscar extends Component {
     if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -53,8 +54,8 @@ class UsuarioBuscar extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
+    if (this.state.error) return <Error />;
 
-    if (this.state.error) return <div>error</div>;
     return (
       <React.Fragment>
         <Layout activeKeyP="4">

@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Detalle from '../../../components/Admin/Consultorios/Detalle';
 import Navbar from '../../../components/Admin/Usuarios/NavbarDetalle';
+import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
-import Loader from '../../../components/Loader';
+import Loader from '../../../components/Loader/Loader';
 import ModalEliminar from '../../../components/Modales/ModalEliminar';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
@@ -19,10 +20,14 @@ class ConsultorioDetalle extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -77,8 +82,8 @@ class ConsultorioDetalle extends Component {
   render() {
     if (this.state.loading) return <Loader />;
 
-    if (this.state.error) return <div>error</div>;
-    console.log(this.state.usuario);
+    if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Layout activeKeyP="5">

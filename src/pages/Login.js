@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { setCategorias, setConsultorio, setUser } from '../actions';
-import Loader from '../components/Loader/index';
+import Error from '../components/Error/Error';
+import Loader from '../components/Loader/Loader';
 import Login from '../components/Login/Login';
 import { api_url } from '../components/utils/';
 
@@ -88,7 +89,8 @@ class LoginG extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    if (this.state.error) return <div>error</div>;
+    if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Login

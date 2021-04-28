@@ -16,6 +16,8 @@ import CitaBuscarPage from './pages/Citas/CitaBuscar';
 import CitaPage from './pages/Citas/CitaDetalle';
 import CitasPage from './pages/Citas/Citas';
 import CitasEditarPage from './pages/Citas/CitasEditar';
+import ErrorPage from './pages/Error';
+import ErrorAutorizacionPage from './pages/ErrorAutorizacion';
 import EvolucionAgregarPage from './pages/Evoluciones/EvolucionAgregar';
 import EvolucionBuscarPage from './pages/Evoluciones/EvolucionBuscar';
 import EvolucionPage from './pages/Evoluciones/EvolucionDetalle';
@@ -38,8 +40,8 @@ import PacientesPage from './pages/Pacientes/Pacientes';
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <IntlProvider locale={es_ES}>
+      <IntlProvider locale={es_ES}>
+        <Switch>
           {/* //pagina login */}
           <Route exact path="/" component={LoginPage} />
           {/* //pagina main */}
@@ -182,8 +184,12 @@ function App() {
             path="/admin/consultorios_buscar/:buscar"
             component={ConsultorioBuscarPage}
           />
-        </IntlProvider>
-      </Switch>
+          {/* Error Autorizacion */}
+          <Route exact path="/error_auth" component={ErrorAutorizacionPage} />
+          {/* Error page */}
+          <Route component={ErrorPage} />
+        </Switch>
+      </IntlProvider>
     </BrowserRouter>
   );
 }

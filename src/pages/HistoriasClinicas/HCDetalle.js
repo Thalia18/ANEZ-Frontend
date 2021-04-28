@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Error from '../../components/Error/Error';
 import Detalle from '../../components/HistoriaClinica/Detalle/Detalle';
 import Navbar from '../../components/HistoriaClinica/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
-import Loader from '../../components/Loader';
+import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Modal from '../../components/Modales/ModalNotExists';
 import { api_url, mapStateToProps } from '../../components/utils';
@@ -30,7 +31,7 @@ class HCDetalle extends Component {
     ) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -95,7 +96,8 @@ class HCDetalle extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    if (this.state.error) return <div>error</div>;
+    if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Layout activeKeyP="2">

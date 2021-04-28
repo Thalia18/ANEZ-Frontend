@@ -13,7 +13,6 @@ const Main = ({ user, ...props }) => {
         </Layout>
       </div>
     );
-  else return <>{props.history.push('/')}</>;
+  else return <>{props.history.push('/error_auth')}</>;
 };
-
 export default connect(mapStateToProps, null)(Main);

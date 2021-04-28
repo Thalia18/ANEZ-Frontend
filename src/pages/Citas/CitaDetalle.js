@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Detalle from '../../components/Cita/Detalle/Detalle';
 import Navbar from '../../components/Cita/Detalle/NavbarDetalle';
+import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
-import Loader from '../../components/Loader';
+import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import { api_url, mapStateToProps } from '../../components/utils';
 
@@ -23,7 +24,7 @@ class CitaDetalle extends Component {
     if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -81,7 +82,8 @@ class CitaDetalle extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    if (this.state.error) return <div>error</div>;
+    if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Layout activeKeyP="1">

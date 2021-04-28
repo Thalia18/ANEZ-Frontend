@@ -40,6 +40,13 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
     props.logoutUser([]);
     history.push('/');
   };
+
+  //pedir nuevamente el login
+  // setTimeout(() => {
+  //   window.location.href = `http://localhost:3000/`;
+  //   props.logoutUser([]);
+  // }, 21600000);
+
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (

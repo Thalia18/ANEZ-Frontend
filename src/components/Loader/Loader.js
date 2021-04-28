@@ -1,12 +1,11 @@
 import React from 'react';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
 import { Container, Segment } from 'semantic-ui-react';
 import { Global } from '../../global';
 import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils';
 import './style.css';
-const index = () => {
+const Loader = () => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
@@ -38,4 +37,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Loader;

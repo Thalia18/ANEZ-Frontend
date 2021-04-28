@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
+import Error from '../../components/Error/Error';
 import RecetaPDF from '../../components/Evolucion/Receta/PDFReceta';
 import Layout from '../../components/Layout/Layout';
-import Loader from '../../components/Loader';
+import Loader from '../../components/Loader/Loader';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class Receta extends Component {
@@ -26,7 +27,7 @@ class Receta extends Component {
     ) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -56,7 +57,8 @@ class Receta extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    if (this.state.error) return <div>error</div>;
+    if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Layout activeKeyP="2">

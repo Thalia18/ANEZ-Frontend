@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Agregar from '../../components/Cita/Agregar/Agregar';
+import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
-import Loader from '../../components/Loader';
+import Loader from '../../components/Loader/Loader';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -40,7 +41,7 @@ class CitasAgregar extends Component {
     if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -143,7 +144,8 @@ class CitasAgregar extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    if (this.state.error) return <div>error</div>;
+    if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Layout activeKeyP="1">

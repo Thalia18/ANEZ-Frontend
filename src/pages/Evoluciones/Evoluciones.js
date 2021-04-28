@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Error from '../../components/Error/Error';
 import Listado from '../../components/Evoluciones/Listado';
 import Layout from '../../components/Layout/Layout';
-import Loader from '../../components/Loader';
+import Loader from '../../components/Loader/Loader';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class Evoluciones extends Component {
@@ -27,7 +28,7 @@ class Evoluciones extends Component {
     ) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -64,7 +65,8 @@ class Evoluciones extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    if (this.state.error) return <div>error</div>;
+    if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Layout activeKeyP="2">

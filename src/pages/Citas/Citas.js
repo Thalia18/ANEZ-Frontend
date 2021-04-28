@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import CitasCalendar from '../../components/Citas/Listado';
+import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
-import Loader from '../../components/Loader';
+import Loader from '../../components/Loader/Loader';
 import {
   api_url,
   citasList,
@@ -29,7 +30,7 @@ class Citas extends Component {
     if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -59,7 +60,7 @@ class Citas extends Component {
       this.state.view = view;
 
       setTimeout(() => {
-        window.location.href = `https://master.d2lzzibjdd8mqc.amplifyapp.com/citas/${fechaCitas(
+        window.location.href = `http://localhost:3000/citas/${fechaCitas(
           e,
           'day'
         )}/day`;
@@ -70,7 +71,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `https://master.d2lzzibjdd8mqc.amplifyapp.com/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
         }, 10);
       }
       if (view === 'month') {
@@ -78,7 +79,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `https://master.d2lzzibjdd8mqc.amplifyapp.com/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
         }, 10);
       }
     }
@@ -86,7 +87,7 @@ class Citas extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-    if (this.state.error) return <div>error</div>;
+    if (this.state.error) return <Error />;
 
     return (
       <React.Fragment>

@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Listado from '../../../components/Admin/Consultorios/Listado';
+import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
-import Loader from '../../../components/Loader';
+import Loader from '../../../components/Loader/Loader';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
 class Consultorios extends Component {
@@ -18,10 +19,14 @@ class Consultorios extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
-      this.props.history.push('/');
+      this.props.history.push('/error_auth');
     }
   }
   fetchData = async () => {
@@ -54,7 +59,8 @@ class Consultorios extends Component {
   render() {
     if (this.state.loading) return <Loader />;
 
-    if (this.state.error) return <div>error</div>;
+    if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Layout activeKeyP="5">
