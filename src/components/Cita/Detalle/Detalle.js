@@ -55,6 +55,12 @@ const Detalle = ({ cita, medico }) => {
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell collapsing>
+                      <b>Teléfono</b>
+                    </Table.Cell>
+                    <Table.Cell>{cita.telefono_paciente}</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell collapsing>
                       <b>Motivo de cita</b>
                     </Table.Cell>
                     <Table.Cell>{cita.motivo_cita}</Table.Cell>

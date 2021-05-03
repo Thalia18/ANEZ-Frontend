@@ -31,11 +31,13 @@ const Agregar = ({
   handleOnChangeE,
   handleOnChangeTS,
   handleOnChangeNI,
+  handleOnChangeG,
   campos,
   emailCorrect,
   id,
   header,
   icon,
+  generos,
 }) => {
   const [value, setValue] = React.useState('Cédula');
   const handleChangeCheck = (e, { value }) => {
@@ -66,7 +68,7 @@ const Agregar = ({
             <Message
               hidden={!campos}
               warning
-              header="Seleccione Estado Civil, Etnia, Nivel de Instrucción y Tipo de Sangre"
+              header="Seleccione Género, Estado Civil, Etnia, Nivel de Instrucción y Tipo de Sangre"
             />
             <Message
               hidden={!emailCorrect}
@@ -160,6 +162,18 @@ const Agregar = ({
                 />
 
                 <Form.Select
+                  label="Género"
+                  placeholder="Género"
+                  options={generos}
+                  width={6}
+                  name="genero_id"
+                  defaultValue={formPaciente.genero_id}
+                  onChange={handleOnChangeG}
+                  required
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Select
                   label="Estado civil"
                   placeholder="Estado civil"
                   options={estadoCivil}
@@ -169,8 +183,6 @@ const Agregar = ({
                   onChange={handleOnChangeEC}
                   required
                 />
-              </Form.Group>
-              <Form.Group>
                 <Form.Select
                   label="Etnia"
                   placeholder="Etnia"

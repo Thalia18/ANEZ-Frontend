@@ -8,6 +8,7 @@ import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
 import ModalEliminar from '../../../components/Modales/ModalEliminar';
+import Sesion from '../../../components/Modales/ModalSesionExperida';
 import {
   api_url,
   mapStateToProps,
@@ -31,6 +32,7 @@ class UsuarioDetalle extends Component {
           })
           .toUpperCase(),
       },
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -51,12 +53,26 @@ class UsuarioDetalle extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`
+        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        usuario: data.data,
-        loading: false,
-      });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          usuario: data.data,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -67,13 +83,27 @@ class UsuarioDetalle extends Component {
 
   deleteData = async () => {
     try {
-      await axios.delete(
-        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`
+      const { data: usuario } = await axios.delete(
+        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-      });
-      this.props.history.push('/admin/usuarios');
+      if (usuario.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/admin/usuarios');
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -86,20 +116,34 @@ class UsuarioDetalle extends Component {
     trimData(this.state.usuarioPatch);
 
     try {
-      await axios.patch(
+      const { data: usuario } = await axios.patch(
         `${api_url}/api/usuario_pass/${this.props.match.params.usuarioId}/${this.state.usuario.email}`,
-        this.state.usuarioPatch
+        this.state.usuarioPatch,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-      });
-      openNotification(
-        'info',
-        'Usuario',
-        `La nueva contraseña se ha enviado al correo electrónico ${this.state.usuario.email}`,
-        ''
-      );
-      this.props.history.push(`/admin/usuarios`);
+      if (usuario.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+        });
+        openNotification(
+          'info',
+          'Usuario',
+          `La nueva contraseña se ha enviado al correo electrónico ${this.state.usuario.email}`,
+          ''
+        );
+        this.props.history.push(`/admin/usuarios`);
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -131,7 +175,7 @@ class UsuarioDetalle extends Component {
             onClickRecuperar={this.recuperarPass}
             tipo="usuario"
           />
-          <Detalle usuario={this.state.usuario} />
+          {!this.state.sesion && <Detalle usuario={this.state.usuario} />}
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}
@@ -139,6 +183,7 @@ class UsuarioDetalle extends Component {
             content="¿Desea continuar?"
             headerC="Eliminar Usuario"
           />
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

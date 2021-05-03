@@ -5,7 +5,7 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 const ModalCita = ({ existsHC, close }) => {
   let history = useHistory();
   return (
-    <Modal closeIcon open={existsHC} onClose={close}>
+    <Modal closeIcon open={existsHC} onClose={close} size="tiny">
       <Header icon="calendar alternate" content={'Agendar cita'} />
       <Modal.Content>
         <p>Para agendar una cita, se requiere seleccionar un paciente.</p>

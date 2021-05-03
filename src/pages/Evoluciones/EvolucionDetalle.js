@@ -7,6 +7,7 @@ import Navbar from '../../components/Evolucion/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class PacienteDetalle extends Component {
@@ -18,6 +19,7 @@ class PacienteDetalle extends Component {
       loading: true,
       paciente: {},
       evolucion: {},
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -39,17 +41,38 @@ class PacienteDetalle extends Component {
     });
     try {
       const { data: evolucion } = await axios.get(
-        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
-      );
-      const { data: paciente } = await axios.get(
-        `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
+        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
-      this.setState({
-        paciente: paciente.data.pacientes,
-        evolucion: evolucion.data,
-        loading: false,
-      });
+      if (evolucion.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        const { data: paciente } = await axios.get(
+          `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          paciente: paciente.data.pacientes,
+          evolucion: evolucion.data,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -60,15 +83,29 @@ class PacienteDetalle extends Component {
 
   deleteData = async () => {
     try {
-      await axios.delete(
-        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
+      const { data: evolucion } = await axios.delete(
+        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-      });
-      this.props.history.push(
-        `/evoluciones/${this.props.match.params.historiaId}`
-      );
+      if (evolucion.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push(
+          `/evoluciones/${this.props.match.params.historiaId}`
+        );
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -99,10 +136,12 @@ class PacienteDetalle extends Component {
             historiaId={this.props.match.params.historiaId}
             evolucionId={this.props.match.params.evolucionId}
           />
-          <Detalle
-            paciente={this.state.paciente}
-            evolucion={this.state.evolucion}
-          />
+          {!this.state.sesion && (
+            <Detalle
+              paciente={this.state.paciente}
+              evolucion={this.state.evolucion}
+            />
+          )}
 
           <ModalEliminar
             deleteM={this.deleteData}
@@ -111,6 +150,7 @@ class PacienteDetalle extends Component {
             content="¿Desea continuar?"
             headerC="Eliminar Evolución"
           />
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

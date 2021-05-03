@@ -6,6 +6,7 @@ import Error from '../../components/Error/Error';
 import RecetaPDF from '../../components/Evolucion/Receta/PDFReceta';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class Receta extends Component {
@@ -16,6 +17,7 @@ class Receta extends Component {
       loading: true,
       evolucion: {},
       paciente: {},
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -37,16 +39,38 @@ class Receta extends Component {
     });
     try {
       const { data: evolucion } = await axios.get(
-        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
+        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      const { data: paciente } = await axios.get(
-        `${api_url}/api/paciente_historia/${evolucion.data.historia_clinica_id}`
-      );
-      this.setState({
-        evolucion: evolucion.data,
-        paciente: paciente.data,
-        loading: false,
-      });
+
+      if (evolucion.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        const { data: paciente } = await axios.get(
+          `${api_url}/api/paciente_historia/${evolucion.data.historia_clinica_id}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          evolucion: evolucion.data,
+          paciente: paciente.data,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -62,18 +86,21 @@ class Receta extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="2">
-          <RecetaPDF
-            consultorio={this.props.consultorio}
-            evolucion={this.state.evolucion}
-            nombreMedico={this.props.user.nombre.trim()}
-            apellidoMedico={this.props.user.apellido.trim()}
-            paciente={
-              `Receta ANEZ ${this.state.evolucion.fecha} ` +
-              this.state.paciente.pacientes.nombre +
-              ' ' +
-              this.state.paciente.pacientes.apellido
-            }
-          />
+          {!this.state.sesion && (
+            <RecetaPDF
+              consultorio={this.props.consultorio}
+              evolucion={this.state.evolucion}
+              nombreMedico={this.props.user.nombre.trim()}
+              apellidoMedico={this.props.user.apellido.trim()}
+              paciente={
+                `Receta ANEZ ${this.state.evolucion.fecha} ` +
+                this.state.paciente.pacientes.nombre +
+                ' ' +
+                this.state.paciente.pacientes.apellido
+              }
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

@@ -5,6 +5,7 @@ import Error from '../../components/Error/Error';
 import Listado from '../../components/Evoluciones/Listado';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class Evoluciones extends Component {
@@ -17,6 +18,7 @@ class Evoluciones extends Component {
       paciente: {},
       paginas: {},
       page: 1,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -38,19 +40,40 @@ class Evoluciones extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}?page=${this.state.page}`
+        `${api_url}/api/evoluciones_historia/${this.props.match.params.historiaId}?page=${this.state.page}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
-      const { data: paciente } = await axios.get(
-        `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
-      );
-      this.setState({
-        evoluciones: data.data,
-        paciente: paciente.data.pacientes,
-        paginas: data.info,
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        const { data: paciente } = await axios.get(
+          `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          evoluciones: data.data,
+          paciente: paciente.data.pacientes,
+          paginas: data.info,
 
-        loading: false,
-      });
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -70,13 +93,16 @@ class Evoluciones extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="2">
-          <Listado
-            evoluciones={Object.values(this.state.evoluciones)}
-            paciente={this.state.paciente}
-            paginas={this.state.paginas}
-            handleChangePage={this.handleChangePage}
-            historiaId={this.props.match.params.historiaId}
-          />
+          {!this.state.sesion && (
+            <Listado
+              evoluciones={Object.values(this.state.evoluciones)}
+              paciente={this.state.paciente}
+              paginas={this.state.paginas}
+              handleChangePage={this.handleChangePage}
+              historiaId={this.props.match.params.historiaId}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

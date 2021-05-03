@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   user: null,
-  autocomplete: null,
+  jwt: null,
 };
 const applySetUserType = (state, action) => ({
   ...state,
@@ -18,6 +18,10 @@ const applySetCategorias = (state, action) => ({
   ...state,
   categorias: action.payload,
 });
+const applySetJWT = (state, action) => ({
+  ...state,
+  jwt: action.payload,
+});
 
 function authTypeReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -27,12 +31,16 @@ function authTypeReducer(state = INITIAL_STATE, action) {
     case 'LOGOUT_USER': {
       return logoutUser(state, action);
     }
+    case 'SET_JWT': {
+      return applySetJWT(state, action);
+    }
     case 'SET_CONSULTORIO': {
       return applySetConsultorio(state, action);
     }
     case 'SET_CATEGORIAS': {
       return applySetCategorias(state, action);
     }
+
     default:
       return state;
   }

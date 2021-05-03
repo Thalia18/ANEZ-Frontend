@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import Listado from '../../components/Pacientes/Listado';
 import { api_url, mapStateToProps } from '../../components/utils';
 
@@ -16,6 +17,7 @@ class Pacientes extends Component {
       pacientes: {},
       paginas: {},
       page: 1,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -32,14 +34,27 @@ class Pacientes extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/pacientes?page=${this.state.page}`
+        `${api_url}/api/pacientes?page=${this.state.page}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-
-      this.setState({
-        pacientes: data.data,
-        paginas: data.info,
-        loading: false,
-      });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          pacientes: data.data,
+          paginas: data.info,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -59,18 +74,21 @@ class Pacientes extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="3">
-          <Listado
-            header="Pacientes"
-            icon="users"
-            pacientes={Object.values(this.state.pacientes)}
-            pageInitial="/paciente"
-            pageSecond="/pacientes"
-            reload="/paciente_buscar"
-            optionNav="PC"
-            paginas={this.state.paginas}
-            handleChangePage={this.handleChangePage}
-            user={this.props.user}
-          />
+          {!this.state.sesion && (
+            <Listado
+              header="Pacientes"
+              icon="users"
+              pacientes={Object.values(this.state.pacientes)}
+              pageInitial="/paciente"
+              pageSecond="/pacientes"
+              reload="/paciente_buscar"
+              optionNav="PC"
+              paginas={this.state.paginas}
+              handleChangePage={this.handleChangePage}
+              user={this.props.user}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

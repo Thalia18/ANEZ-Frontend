@@ -5,6 +5,7 @@ import Error from '../../components/Error/Error';
 import Editar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import {
   api_url,
@@ -35,6 +36,7 @@ class EvolucionEditar extends Component {
       cie10: [],
       cie10List: [],
       cie10Exist: {},
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -56,21 +58,42 @@ class EvolucionEditar extends Component {
     });
     try {
       const { data: paciente } = await axios.get(
-        `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`
-      );
-      const { data: evolucion } = await axios.get(
-        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`
+        `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
-      this.setState({
-        paciente: paciente.data.pacientes,
-        evolucion: evolucion.data,
+      if (paciente.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        const { data: evolucion } = await axios.get(
+          `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          paciente: paciente.data.pacientes,
+          evolucion: evolucion.data,
 
-        fotoList: this.selectedFoto(evolucion.data.foto),
-        loading: false,
-      });
-      trimData(this.state.evolucion);
-      trimData(this.state.paciente);
+          fotoList: this.selectedFoto(evolucion.data.foto),
+          loading: false,
+        });
+        trimData(this.state.evolucion);
+        trimData(this.state.paciente);
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -141,27 +164,40 @@ class EvolucionEditar extends Component {
     );
     trimData(this.state.evolucion);
     try {
-      await axios.put(
+      const { data: evolucion } = await axios.put(
         `${api_url}/api/evolucion/${this.state.evolucion.evolucion_id}`,
-        this.state.evolucion
+        this.state.evolucion,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
+      if (evolucion.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+          success: true,
+          evolucionId: this.state.evolucion.evolucion_id,
+          error: null,
+        });
 
-      this.setState({
-        loading: false,
-        success: true,
-        evolucionId: this.state.evolucion.evolucion_id,
-        error: null,
-      });
-
-      openNotification(
-        'success',
-        'Evoluciones',
-        'Evolución guardada exitosamente',
-        ''
-      );
-      this.props.history.push(
-        `/evolucion/${this.props.match.params.evolucionId}/${this.props.match.params.historiaId}`
-      );
+        openNotification(
+          'success',
+          'Evoluciones',
+          'Evolución guardada exitosamente',
+          ''
+        );
+        this.props.history.push(
+          `/evolucion/${this.props.match.params.evolucionId}/${this.props.match.params.historiaId}`
+        );
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -183,21 +219,24 @@ class EvolucionEditar extends Component {
         <Layout activeKeyP="2">
           <Navbar />
 
-          <Editar
-            headerC="Editar Evolución"
-            icon="edit"
-            id="formEditar"
-            paciente={this.state.paciente}
-            cie10={cie10Dropdown(this.props.categorias)}
-            onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
-            handleOnChangeCie10={this.handleOnChangeCie10}
-            formEvolucion={this.state.evolucion}
-            handleChange={this.handleChange}
-            fotosList={this.state.fotoList}
-            cie10List={this.selectedCIe10(
-              this.state.evolucion.diagnostico_cie10
-            )}
-          />
+          {!this.state.sesion && (
+            <Editar
+              headerC="Editar Evolución"
+              icon="edit"
+              id="formEditar"
+              paciente={this.state.paciente}
+              cie10={cie10Dropdown(this.props.categorias)}
+              onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
+              handleOnChangeCie10={this.handleOnChangeCie10}
+              formEvolucion={this.state.evolucion}
+              handleChange={this.handleChange}
+              fotosList={this.state.fotoList}
+              cie10List={this.selectedCIe10(
+                this.state.evolucion.diagnostico_cie10
+              )}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

@@ -5,7 +5,12 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 const ModalExists = ({ existsHC, header, content, pacienteId }) => {
   let history = useHistory();
   return (
-    <Modal closeIcon open={existsHC} onClose={() => history.goBack()}>
+    <Modal
+      closeIcon
+      open={existsHC}
+      onClose={() => history.goBack()}
+      size="tiny"
+    >
       <Header icon="medkit" content={header} />
       <Modal.Content>
         <p>

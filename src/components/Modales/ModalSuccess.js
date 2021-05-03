@@ -3,7 +3,7 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
 const ModalSuccess = ({ success, header, content, closeModal }) => {
   return (
-    <Modal closeIcon open={success} onClose={closeModal}>
+    <Modal closeIcon open={success} onClose={closeModal} size="tiny">
       <Header icon="medkit" content={header} />
       <Modal.Content>
         <p>{content}</p>

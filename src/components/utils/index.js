@@ -17,6 +17,7 @@ export const mapStateToProps = (state) => {
     user: state.user,
     consultorio: state.consultorio,
     categorias: state.categorias,
+    jwt: state.jwt,
   };
 };
 
@@ -61,6 +62,17 @@ export const etniasDropdown = (etniasList) => {
       key: item.etnia_id,
       text: item.etnia.trim(),
       value: item.etnia_id,
+    });
+  });
+  return opcion;
+};
+export const generosDropdown = (generosList) => {
+  let opcion = [];
+  Object.values(generosList).map((item) => {
+    opcion.push({
+      key: item.genero_id,
+      text: item.genero.trim(),
+      value: item.genero_id,
     });
   });
   return opcion;
@@ -214,9 +226,11 @@ export const citasList = (citas) => {
 
 //fechas con formato
 export const fechaFormato = (fecha) => {
-  var options = { year: 'numeric', month: 'long', day: 'numeric' };
-  let a = new Date(fecha.replace(/-/g, '/'));
-  return a.toLocaleDateString('es-ES', options).toUpperCase();
+  if (fecha) {
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let a = new Date(fecha.replace(/-/g, '/'));
+    return a.toLocaleDateString('es-ES', options).toUpperCase();
+  }
 };
 
 //only letters
@@ -260,7 +274,7 @@ export const horasMinutos = (inicio, fin) => {
         text: hora,
         value: hora,
       });
-      j += 14;
+      j += 29;
     }
   }
   return opcion;
@@ -268,11 +282,13 @@ export const horasMinutos = (inicio, fin) => {
 
 //mostrar la hora
 export const horaShow = (hora) => {
-  var horaF = hora.split(':');
-  var minutes = horaF[1];
-  var hour = horaF[0];
+  if (hora) {
+    var horaF = hora.split(':');
+    var minutes = horaF[1];
+    var hour = horaF[0];
 
-  return hour + ':' + minutes;
+    return hour + ':' + minutes;
+  }
 };
 
 //validar correos

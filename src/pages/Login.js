@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { setCategorias, setConsultorio, setUser } from '../actions';
+import { setCategorias, setConsultorio, setJWT, setUser } from '../actions';
 import Error from '../components/Error/Error';
 import Loader from '../components/Loader/Loader';
 import Login from '../components/Login/Login';
@@ -22,6 +22,7 @@ class LoginG extends Component {
       userConfirm: {},
       consultorio: {},
       categorias: {},
+      jwt: { accessToken: '' },
     };
   }
   componentDidMount() {
@@ -50,38 +51,61 @@ class LoginG extends Component {
       error: null,
     });
     try {
-      const { data: usuario } = await axios.get(
-        `${api_url}/api/confirm_user/${this.state.user.usuario}/${this.state.user.contrasena}`
+      const { data: usuario } = await axios.post(
+        `${api_url}/api/confirm_user`,
+        this.state.user
       );
+
       this.setState({
         userConfirm: usuario.data,
+        jwt: { accessToken: usuario.accessToken },
         correctUser: false,
       });
+      this.props.setJWT(this.state.jwt);
+
       if (this.state.userConfirm) {
-        if (this.state.userConfirm.rol.trim() !== 'RECEPCIONISTA') {
-          const { data: cie10List } = await axios.get(
-            `${api_url}/api/categorias`
-          );
-          const { data: consultorio } = await axios.get(
-            `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`
-          );
+        const { data: cie10List } = await axios.get(
+          `${api_url}/api/categorias`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: usuario.accessToken,
+              auth: usuario.data.rol.trim(),
+            },
+          }
+        );
+        const { data: consultorio } = await axios.get(
+          `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: usuario.accessToken,
+              auth: usuario.data.rol.trim(),
+            },
+          }
+        );
+        this.setState({
+          loading: false,
+        });
+        if (consultorio.error) {
+          this.props.history.push('/');
+        } else {
           this.setState({
             categorias: cie10List.data,
             consultorio: consultorio.data,
           });
+
           this.props.setCategorias(this.state.categorias);
           this.props.setConsultorio(this.state.consultorio);
+          this.props.setUser(this.state.userConfirm);
+          this.props.history.push('/main');
         }
-        this.props.setUser(this.state.userConfirm);
       }
-      this.setState({
-        loading: false,
-      });
-      this.props.history.push('/main');
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
-        // error: error,
+        error: error,
         correctUser: true,
       });
     }
@@ -90,7 +114,6 @@ class LoginG extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
         <Login
@@ -107,6 +130,7 @@ class LoginG extends Component {
 const mapDispatchToProps = {
   setUser,
   setConsultorio,
+  setJWT,
   setCategorias,
 };
 export default withRouter(connect(null, mapDispatchToProps)(LoginG));

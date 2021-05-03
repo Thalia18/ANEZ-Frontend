@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
   estadoCivilDropdown,
   etniasDropdown,
+  generosDropdown,
   mapStateToProps,
   nivelDeInstruccionDropdown,
   openNotification,
@@ -39,21 +41,21 @@ class PacienteAgregar extends Component {
         direccion: '',
         telefono: '',
         email: '',
+        genero_id: '',
         contacto_emergencia_nombre: '',
         contacto_emergencia_telefono: '',
         created_at: new Date(),
       },
-      etnias: {},
-      tipoDeSangre: {},
-      estadoCivil: {},
-      nivelDeInstruccion: {},
-      optionEC: [],
-      optionTS: [],
-      optionNI: [],
-      optionE: [],
+      etnias: [],
+      tipoDeSangre: [],
+      estadoCivil: [],
+      nivelDeInstruccion: [],
+      genero: [],
+
       buttonDisable: true,
       emailCorrect: false,
       campos: true,
+      sesion: false,
       cedulaLength: false,
     };
   }
@@ -71,39 +73,74 @@ class PacienteAgregar extends Component {
       error: null,
     });
     try {
-      const { data: etnias } = await axios.get(`${api_url}/api/etnias`);
-      const { data: estadosCiviles } = await axios.get(
-        `${api_url}/api/estados_civiles`
-      );
-      const { data: tiposDeSangre } = await axios.get(
-        `${api_url}/api/tipos_de_sangre`
-      );
-      const { data: nivelesDeInstruccion } = await axios.get(
-        `${api_url}/api/niveles_de_instruccion`
-      );
-      this.setState({
-        etnias: etnias.data,
-        estadoCivil: estadosCiviles.data,
-        tipoDeSangre: tiposDeSangre.data,
-        nivelDeInstruccion: nivelesDeInstruccion.data,
-        loading: false,
+      const { data: etnias } = await axios.get(`${api_url}/api/etnias`, {
+        method: 'GET',
+        headers: {
+          Authorization: this.props.jwt.accessToken,
+          auth: this.props.user.rol,
+        },
       });
-      this.opcionesSelect();
+
+      if (etnias.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        const { data: generos } = await axios.get(`${api_url}/api/generos`, {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        });
+        const { data: estadosCiviles } = await axios.get(
+          `${api_url}/api/estados_civiles`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        const { data: tiposDeSangre } = await axios.get(
+          `${api_url}/api/tipos_de_sangre`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        const { data: nivelesDeInstruccion } = await axios.get(
+          `${api_url}/api/niveles_de_instruccion`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          etnias: etniasDropdown(etnias.data),
+          estadoCivil: estadoCivilDropdown(estadosCiviles.data),
+          tipoDeSangre: tipoDeSangreDropdown(tiposDeSangre.data),
+          nivelDeInstruccion: nivelDeInstruccionDropdown(
+            nivelesDeInstruccion.data
+          ),
+          genero: generosDropdown(generos.data),
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
         error: error,
       });
     }
-  };
-  //funcion para cargar los dropdown del componente agregar
-  opcionesSelect = () => {
-    this.setState({
-      optionEC: estadoCivilDropdown(this.state.estadoCivil),
-      optionE: etniasDropdown(this.state.etnias),
-      optionNI: nivelDeInstruccionDropdown(this.state.nivelDeInstruccion),
-      optionTS: tipoDeSangreDropdown(this.state.tipoDeSangre),
-    });
   };
 
   //setear los datos del formulario de paciente
@@ -115,6 +152,7 @@ class PacienteAgregar extends Component {
         etnia_id: this.state.paciente.etnia_id,
         nivel_de_instruccion_id: this.state.paciente.nivel_de_instruccion_id,
         estado_civil_id: this.state.paciente.estado_civil_id,
+        genero_id: this.state.paciente.genero_id,
         nombre: this.state.paciente.nombre,
         apellido: this.state.paciente.apellido,
         cedula: this.state.paciente.cedula,
@@ -136,7 +174,8 @@ class PacienteAgregar extends Component {
       this.state.paciente.etnia_id !== null &&
       this.state.paciente.nivel_de_instruccion_id !== null &&
       this.state.paciente.estado_civil_id !== null &&
-      this.state.paciente.tipo_de_sangre_id !== null
+      this.state.paciente.tipo_de_sangre_id !== null &&
+      this.state.paciente.genero_id !== null
     ) {
       this.setState({
         campos: false,
@@ -169,31 +208,46 @@ class PacienteAgregar extends Component {
     try {
       const result = await axios.post(
         `${api_url}/api/paciente`,
-        this.state.paciente
+        this.state.paciente,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-        success: true,
-        error: null,
-        result: result.data,
-      });
-      if (this.state.result.data.exist) {
-        openNotification(
-          'warning',
-          'Pacientes',
-          'Ya existe un paciente registrado con el número de cédula ',
-          `${this.state.paciente.cedula}`
-        );
+      if (result.data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
       } else {
-        openNotification(
-          'success',
-          'Pacientes',
-          'Paciente creado exitosamente',
-          ''
-        );
-        this.props.history.push('/pacientes');
+        this.setState({
+          loading: false,
+          success: true,
+          error: null,
+          result: result.data,
+        });
+        if (this.state.result.data.exist) {
+          openNotification(
+            'warning',
+            'Pacientes',
+            'Ya existe un paciente registrado con el número de cédula ',
+            `${this.state.paciente.cedula}`
+          );
+        } else {
+          openNotification(
+            'success',
+            'Pacientes',
+            'Paciente creado exitosamente',
+            ''
+          );
+          this.props.history.push('/pacientes');
+        }
       }
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -214,6 +268,9 @@ class PacienteAgregar extends Component {
   handleOnChangeE = (e, data) => {
     this.state.paciente.etnia_id = data.value;
   };
+  handleOnChangeG = (e, data) => {
+    this.state.paciente.genero_id = data.value;
+  };
 
   render() {
     if (this.state.loading) return <Loader />;
@@ -223,25 +280,30 @@ class PacienteAgregar extends Component {
       <React.Fragment>
         <Layout activeKeyP="3">
           <Navbar buttonDisable={this.state.buttonDisable} />
-          <Agregar
-            header="Nuevo Paciente"
-            icon="add circle"
-            id="formAgregar"
-            etnias={this.state.optionE}
-            nivelDeInstruccion={this.state.optionNI}
-            estadoCivil={this.state.optionEC}
-            onClickButtonSavePaciente={this.onClickButtonSavePaciente}
-            tipoDeSangre={this.state.optionTS}
-            handleChange={this.handleChange}
-            formPaciente={this.state.paciente}
-            handleOnChangeEC={this.handleOnChangeEC}
-            handleOnChangeTS={this.handleOnChangeTS}
-            handleOnChangeNI={this.handleOnChangeNI}
-            handleOnChangeE={this.handleOnChangeE}
-            campos={this.state.campos}
-            cedulaLength={this.state.cedulaLength}
-            emailCorrect={this.state.emailCorrect}
-          />
+          {!this.state.sesion && (
+            <Agregar
+              header="Nuevo Paciente"
+              icon="add circle"
+              id="formAgregar"
+              etnias={this.state.etnias}
+              generos={this.state.genero}
+              nivelDeInstruccion={this.state.nivelDeInstruccion}
+              estadoCivil={this.state.estadoCivil}
+              onClickButtonSavePaciente={this.onClickButtonSavePaciente}
+              tipoDeSangre={this.state.tipoDeSangre}
+              handleChange={this.handleChange}
+              formPaciente={this.state.paciente}
+              handleOnChangeEC={this.handleOnChangeEC}
+              handleOnChangeTS={this.handleOnChangeTS}
+              handleOnChangeNI={this.handleOnChangeNI}
+              handleOnChangeE={this.handleOnChangeE}
+              handleOnChangeG={this.handleOnChangeG}
+              campos={this.state.campos}
+              cedulaLength={this.state.cedulaLength}
+              emailCorrect={this.state.emailCorrect}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

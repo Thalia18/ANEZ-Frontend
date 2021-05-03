@@ -3,7 +3,7 @@ import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
 const ModalEliminar = ({ deleteM, open, closeModal, content, headerC }) => {
   return (
-    <Modal closeIcon open={open} onClose={closeModal}>
+    <Modal closeIcon open={open} onClose={closeModal} size="tiny">
       <Header icon="medkit" content={headerC} />
       <Modal.Content>
         <p>

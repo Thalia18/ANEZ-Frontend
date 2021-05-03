@@ -5,6 +5,7 @@ import Buscar from '../../components/Citas/Buscar';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class CitasBuscar extends Component {
@@ -18,6 +19,7 @@ class CitasBuscar extends Component {
       citaList: [],
       paginas: {},
       page: 1,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -34,14 +36,28 @@ class CitasBuscar extends Component {
     });
     try {
       const { data: citas } = await axios.get(
-        `${api_url}/api/citas_fecha/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}?page=${this.state.page}`
+        `${api_url}/api/citas_fecha/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}?page=${this.state.page}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
-      this.setState({
-        citas: citas.data,
-        paginas: citas.info,
-        loading: false,
-      });
+      if (citas.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          citas: citas.data,
+          paginas: citas.info,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -61,13 +77,16 @@ class CitasBuscar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="1">
-          <Buscar
-            citas={this.state.citas}
-            fecha1={this.props.match.params.fecha1}
-            fecha2={this.props.match.params.fecha2}
-            paginas={this.state.paginas}
-            handleChangePage={this.handleChangePage}
-          />
+          {!this.state.sesion && (
+            <Buscar
+              citas={this.state.citas}
+              fecha1={this.props.match.params.fecha1}
+              fecha2={this.props.match.params.fecha2}
+              paginas={this.state.paginas}
+              handleChangePage={this.handleChangePage}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

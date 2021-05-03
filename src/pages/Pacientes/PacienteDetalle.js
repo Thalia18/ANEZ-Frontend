@@ -5,6 +5,7 @@ import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import Detalle from '../../components/Paciente/Detalle/Detalle';
 import Navbar from '../../components/Paciente/Detalle/NavbarDetalle';
 import { api_url, mapStateToProps } from '../../components/utils';
@@ -16,6 +17,7 @@ class PacienteDetalle extends Component {
       open: false,
       error: null,
       loading: true,
+      sesion: false,
       paciente: {},
     };
   }
@@ -33,12 +35,26 @@ class PacienteDetalle extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        paciente: data.data,
-        loading: false,
-      });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          paciente: data.data,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -49,13 +65,27 @@ class PacienteDetalle extends Component {
 
   deleteData = async () => {
     try {
-      await axios.delete(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+      const { data: paciente } = await axios.delete(
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-      });
-      this.props.history.push('/pacientes');
+      if (paciente.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/pacientes');
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -86,7 +116,7 @@ class PacienteDetalle extends Component {
             pacienteId={this.props.match.params.pacienteId}
             user={this.props.user}
           />
-          <Detalle paciente={this.state.paciente} />
+          {!this.state.sesion && <Detalle paciente={this.state.paciente} />}
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}
@@ -95,6 +125,7 @@ class PacienteDetalle extends Component {
             asociadas al paciente.  ¿Desea continuar?"
             headerC="Eliminar Paciente"
           />
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

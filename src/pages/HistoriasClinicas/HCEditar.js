@@ -5,6 +5,7 @@ import Error from '../../components/Error/Error';
 import Editar from '../../components/HistoriaClinica/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import Navbar from '../../components/Paciente/Editar/NavbarEditar';
 import {
   api_url,
@@ -22,6 +23,7 @@ class HCEditar extends Component {
       loading: true,
       paciente: {},
       historiaClinica: {},
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -43,19 +45,40 @@ class HCEditar extends Component {
     });
     try {
       const { data: pacienteA } = await axios.get(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
-      );
-      const { data: historia } = await axios.get(
-        `${api_url}/api/historia_clinica/${this.props.match.params.historiaId}`
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
-      this.setState({
-        paciente: pacienteA.data,
-        historiaClinica: historia.data,
-        loading: false,
-      });
-      trimData(this.state.paciente);
-      trimData(this.state.historiaClinica);
+      if (pacienteA.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        const { data: historia } = await axios.get(
+          `${api_url}/api/historia_clinica/${this.props.match.params.historiaId}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          paciente: pacienteA.data,
+          historiaClinica: historia.data,
+          loading: false,
+        });
+        trimData(this.state.paciente);
+        trimData(this.state.historiaClinica);
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -95,24 +118,38 @@ class HCEditar extends Component {
     });
     trimData(this.state.historiaClinica);
     try {
-      await axios.put(
+      const { data: HC } = await axios.put(
         `${api_url}/api/historia_clinica/${this.props.match.params.historiaId}`,
-        this.state.historiaClinica
+        this.state.historiaClinica,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-        success: true,
-        error: null,
-      });
-      openNotification(
-        'success',
-        'Historias clínicas',
-        'Historia clínica editada exitosamente',
-        ''
-      );
-      this.props.history.push(
-        `/historia_clinica/${this.state.paciente.paciente_id}`
-      );
+      if (HC.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+          success: true,
+          error: null,
+        });
+        openNotification(
+          'success',
+          'Historias clínicas',
+          'Historia clínica editada exitosamente',
+          ''
+        );
+        this.props.history.push(
+          `/historia_clinica/${this.state.paciente.paciente_id}`
+        );
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -129,16 +166,19 @@ class HCEditar extends Component {
       <React.Fragment>
         <Layout activeKeyP="2">
           <Navbar success={this.state.success} />
-          <Editar
-            headerC="Editar Historia Clínica"
-            icon="edit"
-            id="formEditar"
-            existsHC={false}
-            onClickButtonSaveHC={this.onClickButtonSaveHC}
-            handleChange={this.handleChange}
-            formHC={this.state.historiaClinica}
-            paciente={this.state.paciente}
-          />
+          {!this.state.sesion && (
+            <Editar
+              headerC="Editar Historia Clínica"
+              icon="edit"
+              id="formEditar"
+              existsHC={false}
+              onClickButtonSaveHC={this.onClickButtonSaveHC}
+              handleChange={this.handleChange}
+              formHC={this.state.historiaClinica}
+              paciente={this.state.paciente}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

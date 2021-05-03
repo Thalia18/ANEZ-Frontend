@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import Listado from '../../components/Pacientes/Listado';
 import { api_url, mapStateToProps } from '../../components/utils';
 
@@ -17,6 +18,7 @@ class Pacientes extends Component {
       autocomplete: {},
       paginas: {},
       page: 1,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -37,14 +39,26 @@ class Pacientes extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(`${api_url}/api/pacientes`);
-
-      this.setState({
-        pacientes: data.data,
-        paginas: data.info,
-
-        loading: false,
+      const { data } = await axios.get(`${api_url}/api/pacientes`, {
+        method: 'GET',
+        headers: {
+          Authorization: this.props.jwt.accessToken,
+          auth: this.props.user.rol,
+        },
       });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          pacientes: data.data,
+          paginas: data.info,
+
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -64,18 +78,21 @@ class Pacientes extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="2">
-          <Listado
-            header="Historias clínicas"
-            icon="heartbeat"
-            pacientes={Object.values(this.state.pacientes)}
-            autoComplete={this.state.autocomplete}
-            pageInitial="/historia_clinica"
-            pageSecond="/historias_clinicas"
-            reload="/historia_clinica_buscar"
-            optionNav="HC"
-            paginas={this.state.paginas}
-            handleChangePage={this.handleChangePage}
-          />
+          {!this.state.sesion && (
+            <Listado
+              header="Historias clínicas"
+              icon="heartbeat"
+              pacientes={Object.values(this.state.pacientes)}
+              autoComplete={this.state.autocomplete}
+              pageInitial="/historia_clinica"
+              pageSecond="/historias_clinicas"
+              reload="/historia_clinica_buscar"
+              optionNav="HC"
+              paginas={this.state.paginas}
+              handleChangePage={this.handleChangePage}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

@@ -5,7 +5,9 @@ import Listado from '../../../components/Admin/Usuarios/Listado';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
+import Sesion from '../../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../../components/utils';
+
 class Usuarios extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,7 @@ class Usuarios extends Component {
       usuarios: {},
       paginas: {},
       page: 1,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -35,14 +38,28 @@ class Usuarios extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/usuarios?page=${this.state.page}`
+        `${api_url}/api/usuarios?page=${this.state.page}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
-      this.setState({
-        usuarios: data.data,
-        paginas: data.info,
-        loading: false,
-      });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          usuarios: data.data,
+          paginas: data.info,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -62,14 +79,17 @@ class Usuarios extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
-          <Listado
-            header="Usuarios"
-            icon="user circle outline"
-            usuarios={Object.values(this.state.usuarios)}
-            paginas={this.state.paginas}
-            handleChangePage={this.handleChangePage}
-            user={this.props.user}
-          />
+          {!this.state.sesion && (
+            <Listado
+              header="Usuarios"
+              icon="user circle outline"
+              usuarios={Object.values(this.state.usuarios)}
+              paginas={this.state.paginas}
+              handleChangePage={this.handleChangePage}
+              user={this.props.user}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

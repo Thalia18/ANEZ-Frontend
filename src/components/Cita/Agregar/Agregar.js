@@ -1,4 +1,5 @@
 import React from 'react';
+import InputMask from 'react-input-mask';
 import Media from 'react-media';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -82,7 +83,7 @@ const Agregar = ({
                   />
                   <Form.Select
                     label="Hora"
-                    width={2}
+                    width={4}
                     options={horas}
                     placeholder="Hora"
                     onChange={handleOnChangeHora}
@@ -90,6 +91,19 @@ const Agregar = ({
                     name="hora"
                     required
                   />
+                  <Form.Input
+                    label="Teléfono "
+                    placeholder="Teléfono  "
+                    width={4}
+                  >
+                    <InputMask
+                      mask="999999999999999"
+                      maskChar={null}
+                      onChange={handleChange}
+                      name="telefono_paciente"
+                      value={formCita.telefono_paciente}
+                    />
+                  </Form.Input>
                 </Form.Group>
 
                 <Form.Group>

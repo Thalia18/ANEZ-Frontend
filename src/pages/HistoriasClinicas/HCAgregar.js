@@ -5,6 +5,7 @@ import Error from '../../components/Error/Error';
 import Agregar from '../../components/HistoriaClinica/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -36,10 +37,7 @@ class HCAgregar extends Component {
         metodo_anticonceptivo: '',
         created_at: new Date(),
       },
-
-      //   buttonDisable: true,
-      //   fechaError: false,
-      //   campos: true,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -62,21 +60,43 @@ class HCAgregar extends Component {
     });
     try {
       const { data: paciente } = await axios.get(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      const { data: historia } = await axios.get(
-        `${api_url}/api/historia_paciente/${this.props.match.params.pacienteId}`
-      );
-      this.setState({
-        hCporId: historia.data,
-        paciente: paciente.data,
-        loading: false,
-      });
 
-      if (this.state.hCporId !== null) {
+      if (paciente.error) {
         this.setState({
-          existHC: true,
+          sesion: true,
+          loading: false,
         });
+      } else {
+        const { data: historia } = await axios.get(
+          `${api_url}/api/historia_paciente/${this.props.match.params.pacienteId}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          hCporId: historia.data,
+          paciente: paciente.data,
+          loading: false,
+        });
+
+        if (this.state.hCporId !== null) {
+          this.setState({
+            existHC: true,
+          });
+        }
       }
     } catch (error) {
       this.setState({
@@ -116,23 +136,37 @@ class HCAgregar extends Component {
     });
     trimData(this.state.historiaClinica);
     try {
-      await axios.post(
+      const { data: HC } = await axios.post(
         `${api_url}/api/historia_clinica`,
-        this.state.historiaClinica
+        this.state.historiaClinica,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-        success: true,
-        error: null,
-        historiaClinica: {},
-      });
-      openNotification(
-        'success',
-        'Historias clínicas',
-        'Historia clínica guardada exitosamente',
-        ''
-      );
-      this.props.history.push('/historias_clinicas');
+      if (HC.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+          success: true,
+          error: null,
+          historiaClinica: {},
+        });
+        openNotification(
+          'success',
+          'Historias clínicas',
+          'Historia clínica guardada exitosamente',
+          ''
+        );
+        this.props.history.push('/historias_clinicas');
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -149,19 +183,22 @@ class HCAgregar extends Component {
       <React.Fragment>
         <Layout activeKeyP="2">
           <Navbar buttonDisable={false} />
-          <Agregar
-            headerC="Nueva Historia Clínica"
-            icon="add circle"
-            id="formAgregar"
-            paciente={this.state.paciente}
-            onClickButtonSaveHC={this.onClickButtonSaveHC}
-            formHC={this.state.historiaClinica}
-            handleChange={this.handleChange}
-            existsHC={this.state.existHC}
-            header="Historia clínica"
-            content={`${this.state.paciente.apellido} ${this.state.paciente.nombre}`}
-            pacienteId={this.state.paciente.paciente_id}
-          />
+          {!this.state.sesion && (
+            <Agregar
+              headerC="Nueva Historia Clínica"
+              icon="add circle"
+              id="formAgregar"
+              paciente={this.state.paciente}
+              onClickButtonSaveHC={this.onClickButtonSaveHC}
+              formHC={this.state.historiaClinica}
+              handleChange={this.handleChange}
+              existsHC={this.state.existHC}
+              header="Historia clínica"
+              content={`${this.state.paciente.apellido} ${this.state.paciente.nombre}`}
+              pacienteId={this.state.paciente.paciente_id}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

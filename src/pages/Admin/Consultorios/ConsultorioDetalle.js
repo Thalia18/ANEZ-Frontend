@@ -7,6 +7,7 @@ import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
 import ModalEliminar from '../../../components/Modales/ModalEliminar';
+import Sesion from '../../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
 class ConsultorioDetalle extends Component {
@@ -17,6 +18,7 @@ class ConsultorioDetalle extends Component {
       error: null,
       loading: true,
       consultorio: {},
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -37,12 +39,26 @@ class ConsultorioDetalle extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/consultorio/${this.props.match.params.consultorioId}`
+        `${api_url}/api/consultorio/${this.props.match.params.consultorioId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        consultorio: data.data,
-        loading: false,
-      });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          consultorio: data.data,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -53,13 +69,27 @@ class ConsultorioDetalle extends Component {
 
   deleteData = async () => {
     try {
-      await axios.delete(
-        `${api_url}/api/consultorio/${this.props.match.params.consultorioId}`
+      const { data: consultorio } = await axios.delete(
+        `${api_url}/api/consultorio/${this.props.match.params.consultorioId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-      });
-      this.props.history.push('/admin/consultorios');
+      if (consultorio.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/admin/consultorios');
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -81,7 +111,6 @@ class ConsultorioDetalle extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-
     if (this.state.error) return <Error />;
 
     return (
@@ -92,7 +121,10 @@ class ConsultorioDetalle extends Component {
             consultorioId={this.props.match.params.consultorioId}
             tipo="consultorio"
           />
-          <Detalle consultorio={this.state.consultorio} />
+          {!this.state.sesion && (
+            <Detalle consultorio={this.state.consultorio} />
+          )}
+
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}
@@ -100,6 +132,7 @@ class ConsultorioDetalle extends Component {
             content="¿Desea continuar?"
             headerC="Eliminar Consultorio"
           />
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

@@ -14,3 +14,7 @@ export const setCategorias = (payload) => ({
   type: 'SET_CATEGORIAS',
   payload,
 });
+export const setJWT = (payload) => ({
+  type: 'SET_JWT',
+  payload,
+});

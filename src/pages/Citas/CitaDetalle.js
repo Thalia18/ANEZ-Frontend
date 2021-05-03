@@ -7,6 +7,7 @@ import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class CitaDetalle extends Component {
@@ -18,6 +19,7 @@ class CitaDetalle extends Component {
       loading: true,
       cita: {},
       medico: {},
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -34,18 +36,39 @@ class CitaDetalle extends Component {
     });
     try {
       const { data: cita } = await axios.get(
-        `${api_url}/api/cita/${this.props.match.params.citaId}`
+        `${api_url}/api/cita/${this.props.match.params.citaId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      const { data: medico } = await axios.get(
-        `${api_url}/api/medicos_usuario/${cita.data.medico_id}`
-      );
-
-      this.setState({
-        cita: cita.data,
-        medico: medico.data[0],
-        loading: false,
-      });
+      if (cita.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        const { data: medico } = await axios.get(
+          `${api_url}/api/medicos_usuario/${cita.data.medico_id}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          cita: cita.data,
+          medico: medico.data[0],
+          loading: false,
+        });
+      }
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -55,13 +78,27 @@ class CitaDetalle extends Component {
 
   deleteData = async () => {
     try {
-      await axios.delete(
-        `${api_url}/api/cita/${this.props.match.params.citaId}`
+      const { data: cita } = await axios.delete(
+        `${api_url}/api/cita/${this.props.match.params.citaId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-      });
-      this.props.history.push(`/citas`);
+      if (cita.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push(`/citas`);
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -92,7 +129,9 @@ class CitaDetalle extends Component {
             pacienteId={this.state.cita.paciente_id}
             citaId={this.props.match.params.citaId}
           />
-          <Detalle cita={this.state.cita} medico={this.state.medico} />
+          {!this.state.sesion && (
+            <Detalle cita={this.state.cita} medico={this.state.medico} />
+          )}
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}
@@ -100,6 +139,7 @@ class CitaDetalle extends Component {
             content="¿Desea continuar?"
             headerC="Eliminar Cita"
           />
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

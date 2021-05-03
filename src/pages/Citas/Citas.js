@@ -5,6 +5,7 @@ import CitasCalendar from '../../components/Citas/Listado';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import {
   api_url,
   citasList,
@@ -24,6 +25,7 @@ class Citas extends Component {
       fecha: '',
       fechaBuscar: '',
       view: 'month',
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -40,12 +42,26 @@ class Citas extends Component {
     });
     try {
       const { data: citas } = await axios.get(
-        `${api_url}/api/citas_fecha/${this.props.match.params.fecha}`
+        `${api_url}/api/citas_fecha/${this.props.match.params.fecha}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        citaList: citasList(citas.data),
-        loading: false,
-      });
+      if (citas.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          citaList: citasList(citas.data),
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -92,12 +108,15 @@ class Citas extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="1">
-          <CitasCalendar
-            citas={this.state.citaList}
-            changeMonth={this.changeMonth}
-            fechaUltima={new Date(this.props.match.params.fecha)}
-            view={this.props.match.params.view}
-          />
+          {!this.state.sesion && (
+            <CitasCalendar
+              citas={this.state.citaList}
+              changeMonth={this.changeMonth}
+              fechaUltima={new Date(this.props.match.params.fecha)}
+              view={this.props.match.params.view}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

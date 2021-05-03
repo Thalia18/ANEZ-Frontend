@@ -5,6 +5,7 @@ import Listado from '../../../components/Admin/Consultorios/Listado';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
+import Sesion from '../../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
 class UsuarioBuscar extends Component {
@@ -16,6 +17,7 @@ class UsuarioBuscar extends Component {
       consultorios: {},
       paginas: {},
       page: 1,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -36,14 +38,27 @@ class UsuarioBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/consultorios_buscar/${this.props.match.params.buscar}?page=${this.state.page}`
+        `${api_url}/api/consultorios_buscar/${this.props.match.params.buscar}?page=${this.state.page}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-
-      this.setState({
-        consultorios: data.data,
-        paginas: data.info,
-        loading: false,
-      });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          consultorios: data.data,
+          paginas: data.info,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -58,23 +73,26 @@ class UsuarioBuscar extends Component {
 
   render() {
     if (this.state.loading) return <Loader />;
-
     if (this.state.error) return <Error />;
 
     return (
       <React.Fragment>
         <Layout activeKeyP="5">
-          <Listado
-            header="Resultados de la búsqueda"
-            icon="search"
-            consultorios={Object.values(this.state.consultorios)}
-            paginas={this.state.paginas}
-            handleChangePage={this.handleChangePage}
-            busqueda={this.props.match.params.buscar}
-            buscar={
-              Object.values(this.state.consultorios).length > 0 ? false : true
-            }
-          />
+          {!this.state.sesion && (
+            <Listado
+              header="Resultados de la búsqueda"
+              icon="search"
+              consultorios={Object.values(this.state.consultorios)}
+              paginas={this.state.paginas}
+              handleChangePage={this.handleChangePage}
+              busqueda={this.props.match.params.buscar}
+              buscar={
+                Object.values(this.state.consultorios).length > 0 ? false : true
+              }
+            />
+          )}
+
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

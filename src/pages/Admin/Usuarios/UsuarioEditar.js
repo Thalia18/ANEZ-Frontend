@@ -5,6 +5,7 @@ import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
+import Sesion from '../../../components/Modales/ModalSesionExperida';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -33,6 +34,7 @@ class UsuarioEditar extends Component {
       medico: {},
       medicoUpdate: {},
       usuario: {},
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -52,29 +54,72 @@ class UsuarioEditar extends Component {
       error: null,
     });
     try {
-      const { data: roles } = await axios.get(`${api_url}/api/roles`);
+      const { data: roles } = await axios.get(`${api_url}/api/roles`, {
+        method: 'GET',
+        headers: {
+          Authorization: this.props.jwt.accessToken,
+          auth: this.props.user.rol,
+        },
+      });
       const { data: especialidades } = await axios.get(
-        `${api_url}/api/especialidades`
+        `${api_url}/api/especialidades`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
       const { data: consultorios } = await axios.get(
-        `${api_url}/api/consultorios`
+        `${api_url}/api/consultorios`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
       const { data: usuario } = await axios.get(
-        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`
+        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
       const { data: medico } = await axios.get(
-        `${api_url}/api/medicos_usuario_id/${this.props.match.params.usuarioId}`
+        `${api_url}/api/medicos_usuario_id/${this.props.match.params.usuarioId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      trimData(usuario.data);
-      this.setState({
-        roles: rolesDropdown(roles.data),
-        especialidades: especialidadesDropdownUsuarios(especialidades.data),
-        consultorios: consultorioDropdown(consultorios.data),
-        usuario: usuario.data,
-        medico: medico.data !== null ? medico.data : {},
-        loading: false,
-      });
+      if (roles.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        trimData(usuario.data);
+        this.setState({
+          roles: rolesDropdown(roles.data),
+          especialidades: especialidadesDropdownUsuarios(especialidades.data),
+          consultorios: consultorioDropdown(consultorios.data),
+          usuario: usuario.data,
+          medico: medico.data !== null ? medico.data : {},
+          loading: false,
+        });
+      }
     } catch (error) {
+      console.log(error);
+
       this.setState({
         loading: false,
         error: error,
@@ -156,54 +201,91 @@ class UsuarioEditar extends Component {
     try {
       const { data: usuario } = await axios.patch(
         `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
-        this.state.usuario
-      );
-      if (this.state.usuario.rol_id === 2) {
-        this.setState({
-          medicoUpdate: {
-            ...this.state.medicoUpdate,
-            usuario_id: this.state.usuario.usuario_id,
-            especialidad: this.state.medicoUpdate.especialidad,
+        this.state.usuario,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
           },
+        }
+      );
+
+      if (usuario.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
         });
-        if (Object.values(this.state.medico).length > 0) {
-          await axios.put(
-            `${api_url}/api/medico/${this.state.medico.medico_id}`,
-            this.state.medicoUpdate
+      } else {
+        if (this.state.usuario.rol_id === 2) {
+          this.setState({
+            medicoUpdate: {
+              ...this.state.medicoUpdate,
+              usuario_id: this.state.usuario.usuario_id,
+              especialidad: this.state.medicoUpdate.especialidad,
+            },
+          });
+          if (Object.values(this.state.medico).length > 0) {
+            await axios.put(
+              `${api_url}/api/medico/${this.state.medico.medico_id}`,
+              this.state.medicoUpdate,
+              {
+                method: 'PUT',
+                headers: {
+                  Authorization: this.props.jwt.accessToken,
+                  auth: this.props.user.rol,
+                },
+              }
+            );
+          } else {
+            await axios.post(`${api_url}/api/medico`, this.state.medicoUpdate, {
+              method: 'POST',
+              headers: {
+                Authorization: this.props.jwt.accessToken,
+                auth: this.props.user.rol,
+              },
+            });
+          }
+        } else {
+          if (Object.values(this.state.medico).length > 0) {
+            await axios.delete(
+              `${api_url}/api/medico/${this.state.medico.medico_id}`,
+              {
+                method: 'DELETE',
+                headers: {
+                  Authorization: this.props.jwt.accessToken,
+                  auth: this.props.user.rol,
+                },
+              }
+            );
+          }
+        }
+
+        this.setState({
+          loading: false,
+          success: true,
+          error: null,
+        });
+        if (usuario.data.exist) {
+          openNotification(
+            'warning',
+            'Usuarios',
+            'Ya existe un usuario registrado con el número de cédula ',
+            `${this.state.usuario.cedula}`
           );
         } else {
-          await axios.post(`${api_url}/api/medico`, this.state.medicoUpdate);
-        }
-      } else {
-        if (Object.values(this.state.medico).length > 0) {
-          await axios.delete(
-            `${api_url}/api/medico/${this.state.medico.medico_id}`
+          openNotification(
+            'success',
+            'Usuarios',
+            'Usuario editado exitosamente',
+            ''
           );
+          this.props.history.push('/admin/usuarios');
         }
-      }
-
-      this.setState({
-        loading: false,
-        success: true,
-        error: null,
-      });
-      if (usuario.data.exist) {
-        openNotification(
-          'warning',
-          'Usuarios',
-          'Ya existe un usuario registrado con el número de cédula ',
-          `${this.state.usuario.cedula}`
-        );
-      } else {
-        openNotification(
-          'success',
-          'Usuarios',
-          'Usuario editado exitosamente',
-          ''
-        );
-        this.props.history.push('/admin/usuarios');
       }
     } catch (error) {
+      console.log(error);
+
       this.setState({
         loading: false,
         error: error,
@@ -214,29 +296,32 @@ class UsuarioEditar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
+    console.log(this.state.medico.especialidad);
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
           <Navbar buttonDisable={this.state.buttonDisable} />
 
-          <Agregar
-            id="formAgregar"
-            usuariopass={false}
-            onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
-            formUsuario={this.state.usuario}
-            handleChange={this.handleChange}
-            especialidades={this.state.especialidades}
-            roles={this.state.roles}
-            consultorios={this.state.consultorios}
-            handleOnChangeConsultorio={this.handleOnChangeConsultorio}
-            handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
-            emailCorrect={this.state.emailCorrect}
-            especialidadesSelect={this.especialidadesSelect(
-              this.state.medico.especialidad
-            )}
-            rol_id={this.state.usuario.rol_id}
-          />
+          {this.state.sesion && (
+            <Agregar
+              id="formAgregar"
+              usuariopass={false}
+              onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
+              formUsuario={this.state.usuario}
+              handleChange={this.handleChange}
+              especialidades={this.state.especialidades}
+              roles={this.state.roles}
+              consultorios={this.state.consultorios}
+              handleOnChangeConsultorio={this.handleOnChangeConsultorio}
+              handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
+              emailCorrect={this.state.emailCorrect}
+              especialidadesSelect={this.especialidadesSelect(
+                this.state.medico.especialidad
+              )}
+              rol_id={this.state.usuario.rol_id}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

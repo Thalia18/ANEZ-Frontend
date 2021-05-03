@@ -5,6 +5,7 @@ import Listado from '../../../components/Admin/Usuarios/Listado';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
+import Sesion from '../../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
 class UsuarioBuscar extends Component {
@@ -16,6 +17,7 @@ class UsuarioBuscar extends Component {
       usuarios: {},
       paginas: {},
       page: 1,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -32,14 +34,28 @@ class UsuarioBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/usuarios_buscar/${this.props.match.params.buscar}?page=${this.state.page}`
+        `${api_url}/api/usuarios_buscar/${this.props.match.params.buscar}?page=${this.state.page}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
-      this.setState({
-        usuarios: data.data,
-        paginas: data.info,
-        loading: false,
-      });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          usuarios: data.data,
+          paginas: data.info,
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -59,18 +75,21 @@ class UsuarioBuscar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
-          <Listado
-            header="Resultados de la búsqueda"
-            icon="search"
-            usuarios={Object.values(this.state.usuarios)}
-            paginas={this.state.paginas}
-            handleChangePage={this.handleChangePage}
-            user={this.props.user}
-            busqueda={this.props.match.params.buscar}
-            buscar={
-              Object.values(this.state.usuarios).length > 0 ? false : true
-            }
-          />
+          {this.state.sesion && (
+            <Listado
+              header="Resultados de la búsqueda"
+              icon="search"
+              usuarios={Object.values(this.state.usuarios)}
+              paginas={this.state.paginas}
+              handleChangePage={this.handleChangePage}
+              user={this.props.user}
+              busqueda={this.props.match.params.buscar}
+              buscar={
+                Object.values(this.state.usuarios).length > 0 ? false : true
+              }
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

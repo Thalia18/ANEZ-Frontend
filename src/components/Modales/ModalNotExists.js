@@ -11,7 +11,7 @@ const ModalNotExists = ({
 }) => {
   let history = useHistory();
   return (
-    <Modal closeIcon open={notExistsHC} onClose={closeModal}>
+    <Modal closeIcon open={notExistsHC} onClose={closeModal} size="tiny">
       <Header icon="medkit" content={header} />
       <Modal.Content>
         <p>

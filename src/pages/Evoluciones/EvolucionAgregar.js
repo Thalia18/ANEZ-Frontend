@@ -5,6 +5,7 @@ import Error from '../../components/Error/Error';
 import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -43,6 +44,7 @@ class EvolucionAgregar extends Component {
       buttonDisable: false,
       cie10List: [],
       cie10: [],
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -64,15 +66,29 @@ class EvolucionAgregar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
       // const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
-      this.setState({
-        paciente: data.data,
-        // cie10: cie10Dropdown(cie10List.data),
-        loading: false,
-      });
+      if (data.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          paciente: data.data,
+          // cie10: cie10Dropdown(cie10List.data),
+          loading: false,
+        });
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -125,24 +141,38 @@ class EvolucionAgregar extends Component {
     try {
       const evolucion = await axios.post(
         `${api_url}/api/evolucion`,
-        this.state.evolucion
+        this.state.evolucion,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
 
-      this.setState({
-        loading: false,
-        success: true,
-        evolucionId: evolucion.data.data.evolucion_id,
-        error: null,
-      });
-      openNotification(
-        'success',
-        'Evoluciones',
-        'Evolución guardada exitosamente',
-        ''
-      );
-      this.props.history.push(
-        `/evoluciones/${this.props.match.params.historiaId}`
-      );
+      if (evolucion.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+          success: true,
+          evolucionId: evolucion.data.data.evolucion_id,
+          error: null,
+        });
+        openNotification(
+          'success',
+          'Evoluciones',
+          'Evolución guardada exitosamente',
+          ''
+        );
+        this.props.history.push(
+          `/evoluciones/${this.props.match.params.historiaId}`
+        );
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -164,21 +194,24 @@ class EvolucionAgregar extends Component {
         <Layout activeKeyP="2">
           <Navbar buttonDisable={this.state.buttonDisable} />
 
-          <Agregar
-            headerC="Nueva Evolución"
-            icon="add circle"
-            id="formAgregar"
-            paciente={this.state.paciente}
-            // cie10={this.state.cie10}
-            cie10={cie10Dropdown(this.props.categorias)}
-            onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
-            handleOnChangeCie10={this.handleOnChangeCie10}
-            formEvolucion={this.state.evolucion}
-            handleChange={this.handleChange}
-            handleAddClick={this.addFoto}
-            handleRemoveClick={this.removeFoto}
-            fotosList={this.state.fotoList}
-          />
+          {!this.state.sesion && (
+            <Agregar
+              headerC="Nueva Evolución"
+              icon="add circle"
+              id="formAgregar"
+              paciente={this.state.paciente}
+              // cie10={this.state.cie10}
+              cie10={cie10Dropdown(this.props.categorias)}
+              onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
+              handleOnChangeCie10={this.handleOnChangeCie10}
+              formEvolucion={this.state.evolucion}
+              handleChange={this.handleChange}
+              handleAddClick={this.addFoto}
+              handleRemoveClick={this.removeFoto}
+              fotosList={this.state.fotoList}
+            />
+          )}
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );

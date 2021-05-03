@@ -8,6 +8,7 @@ import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Modal from '../../components/Modales/ModalNotExists';
+import Sesion from '../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class HCDetalle extends Component {
@@ -20,6 +21,7 @@ class HCDetalle extends Component {
       paciente: {},
       historiaClinica: {},
       notExistHC: true,
+      sesion: false,
     };
   }
   componentDidMount() {
@@ -41,21 +43,43 @@ class HCDetalle extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`
+        `${api_url}/api/paciente/${this.props.match.params.pacienteId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      const { data: historiaClinica } = await axios.get(
-        `${api_url}/api/historia_paciente/${this.props.match.params.pacienteId}`
-      );
-      this.setState({
-        paciente: data.data,
-        historiaClinica: historiaClinica.data,
-        loading: false,
-      });
 
-      if (this.state.historiaClinica !== null) {
+      if (data.error) {
         this.setState({
-          notExistHC: false,
+          sesion: true,
+          loading: false,
         });
+      } else {
+        const { data: historiaClinica } = await axios.get(
+          `${api_url}/api/historia_paciente/${this.props.match.params.pacienteId}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: this.props.jwt.accessToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+        this.setState({
+          paciente: data.data,
+          historiaClinica: historiaClinica.data,
+          loading: false,
+        });
+
+        if (this.state.historiaClinica !== null) {
+          this.setState({
+            notExistHC: false,
+          });
+        }
       }
     } catch (error) {
       this.setState({
@@ -67,13 +91,27 @@ class HCDetalle extends Component {
 
   deleteData = async () => {
     try {
-      await axios.delete(
-        `${api_url}/api/historia_clinica/${this.state.historiaClinica.historia_clinica_id}`
+      const { data: HC } = await axios.delete(
+        `${api_url}/api/historia_clinica/${this.state.historiaClinica.historia_clinica_id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
       );
-      this.setState({
-        loading: false,
-      });
-      this.props.history.push('/historias_clinicas');
+      if (HC.error) {
+        this.setState({
+          sesion: true,
+          loading: false,
+        });
+      } else {
+        this.setState({
+          loading: false,
+        });
+        this.props.history.push('/historias_clinicas');
+      }
     } catch (error) {
       this.setState({
         loading: false,
@@ -134,6 +172,7 @@ class HCDetalle extends Component {
             asociadas a la Historia Clínica.  ¿Desea continuar?"
             headerC="Eliminar Historia Clínica"
           />
+          <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
     );
