@@ -43,8 +43,7 @@ class EvolucionEditar extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
-        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
+      this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
     ) {
       this.fetchData();
     } else {

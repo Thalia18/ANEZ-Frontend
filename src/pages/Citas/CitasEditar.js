@@ -26,13 +26,22 @@ class CitasEditar extends Component {
       error: null,
       loading: true,
       paciente: {},
-      cita: {},
+      cita: {
+        medico_id: null,
+      },
       medico: {},
       sesion: false,
+      campos: true,
+      buttonDisable: false,
+      changeEspecialidad: false,
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -119,6 +128,7 @@ class CitasEditar extends Component {
         medico_id: this.state.cita.medico_id,
         paciente_id: this.props.match.params.pacienteId,
         telefono_paciente: this.state.cita.telefono_paciente,
+        hora: this.state.cita.hora,
         [e.target.name]: e.target.value,
         updated_at: new Date(),
       },
@@ -161,7 +171,8 @@ class CitasEditar extends Component {
           openNotification(
             'info',
             'Citas',
-            `El ${this.state.cita.fecha} a las ${this.state.cita.hora} ya existe una cita agendada para el paciente ${cita.data.pacientes.apellido} ${cita.data.pacientes.nombre}`,
+            `El ${this.state.cita.fecha} a las ${this.state.cita.hora} ya existe una cita agendada para el paciente ${cita.data.pacientes.apellido} ${cita.data.pacientes.nombre} 
+            con un especialista de ${cita.data.medicos.especialidad[0].value}`,
             ''
           );
         } else {
@@ -215,15 +226,40 @@ class CitasEditar extends Component {
   };
   handleOnChangeMedico = (e, data) => {
     this.state.cita.medico_id = data.value;
+    console.log(this.state.cita.medico_id);
+    if (this.state.changeEspecialidad) {
+      if (
+        this.state.cita.medico_id === null ||
+        this.state.cita.medico_id === 0
+      ) {
+        console.log('noooos');
+        this.setState({
+          buttonDisable: true,
+          campos: false,
+        });
+      } else {
+        this.setState({
+          campos: true,
+          buttonDisable: false,
+        });
+      }
+    }
+
+    console.log(this.state.changeEspecialidad, 'espe3');
+  };
+  handleChangeEspecialidad = (e, data) => {
+    this.state.changeEspecialidad = data;
   };
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
+    console.log(this.state.changeEspecialidad, 'espe');
+    console.log(this.state.campos, 'campos');
 
     return (
       <React.Fragment>
         <Layout activeKeyP="1">
-          <Navbar buttonDisable={false} />
+          <Navbar buttonDisable={this.state.buttonDisable} />
 
           {!this.state.sesion && (
             <Agregar
@@ -240,6 +276,8 @@ class CitasEditar extends Component {
               medicos={this.state.medicos}
               handleOnChangeMedico={this.handleOnChangeMedico}
               medico={this.state.medico}
+              handleChangeEspecialidad={this.handleChangeEspecialidad}
+              campos={this.state.campos}
             />
           )}
           <Sesion open={this.state.sesion} />

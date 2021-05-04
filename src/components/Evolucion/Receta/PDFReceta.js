@@ -13,8 +13,8 @@ const Datos = ({ paciente, fecha }) => {
     <React.Fragment>
       <p align="center">{fechaFormato(fecha)}</p>
       <p>
-        {/* <b>PACIENTE:</b> */}
-        {/* {paciente.substring(22, paciente.length)} */}
+        <b>PACIENTE:</b>
+        {paciente.substring(22, paciente.length)}
       </p>
       <br />
     </React.Fragment>

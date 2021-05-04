@@ -23,7 +23,11 @@ class CitasBuscar extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -35,16 +39,17 @@ class CitasBuscar extends Component {
       error: null,
     });
     try {
-      const { data: citas } = await axios.get(
-        `${api_url}/api/citas_fecha/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}?page=${this.state.page}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: this.props.jwt.accessToken,
-            auth: this.props.user.rol,
-          },
-        }
-      );
+      const url =
+        this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
+          ? `${api_url}/api/citas_fechas_med/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}/${this.props.user.medico_id}?page=${this.state.page}`
+          : `${api_url}/api/citas_fechas/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}?page=${this.state.page}`;
+      const { data: citas } = await axios.get(url, {
+        method: 'GET',
+        headers: {
+          Authorization: this.props.jwt.accessToken,
+          auth: this.props.user.rol,
+        },
+      });
 
       if (citas.error) {
         this.setState({

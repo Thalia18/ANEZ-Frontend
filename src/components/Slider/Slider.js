@@ -16,19 +16,19 @@ const Slider = () => {
           <Global
             style={matches.medium ? { height: '35em' } : { height: '55em' }}
           >
-            <SliderContainer>
+            <SliderContainer style={{ margin: 'auto' }}>
               <Carousel
                 autoplay
                 className="custom-slider"
                 style={
                   matches.medium
-                    ? { width: '100%', height: '85%' }
-                    : { width: '90%', height: '90%', margin: 'auto' }
+                    ? { width: '85%', height: '85%' }
+                    : { width: '75%', height: '90%', margin: 'auto' }
                 }
               >
-                <img src="https://i.ibb.co/hLjvrdL/logoANEZ.png" />
-                <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=2" />
-                <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=3" />
+                <img src="https://i.ibb.co/KGsD719/Screen-Shot-2021-05-03-at-19-30-35.png" />
+                <img src="https://i.ibb.co/S0bdwk7/4.jpg" />
+                <img src="https://i.ibb.co/DzHnc2G/6.jpg" />
                 <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=4" />
                 <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=5" />
               </Carousel>

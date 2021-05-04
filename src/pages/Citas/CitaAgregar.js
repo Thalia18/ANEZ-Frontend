@@ -31,17 +31,23 @@ class CitasAgregar extends Component {
         hora: '',
         motivo_cita: '',
         created_at: new Date(),
-        medico_id: '',
+        medico_id: null,
         paciente_id: '',
         telefono_paciente: '',
       },
       especialidades: [],
       medicos: [],
       sesion: false,
+      campos: true,
+      buttonDisable: true,
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -104,9 +110,19 @@ class CitasAgregar extends Component {
         medico_id: this.state.cita.medico_id,
         paciente_id: this.props.match.params.pacienteId,
         telefono_paciente: this.state.cita.telefono_paciente,
+        hora: this.state.cita.hora,
         [e.target.name]: e.target.value,
       },
     });
+    if (this.state.cita.medico_id !== null && this.state.cita.hora !== '') {
+      this.setState({
+        campos: false,
+      });
+    } else {
+      this.setState({
+        buttonDisable: false,
+      });
+    }
   };
 
   //guardar cita
@@ -145,7 +161,8 @@ class CitasAgregar extends Component {
           openNotification(
             'info',
             'Citas',
-            `El ${this.state.cita.fecha} a las ${this.state.cita.hora} ya existe una cita agendada para el paciente ${cita.data.pacientes.apellido} ${cita.data.pacientes.nombre}`,
+            `El ${this.state.cita.fecha} a las ${this.state.cita.hora} ya existe una cita agendada para el paciente ${cita.data.pacientes.apellido} 
+            ${cita.data.pacientes.nombre} con un especialista de ${cita.data.medicos.especialidad[0].value}`,
             ''
           );
         } else {
@@ -159,6 +176,7 @@ class CitasAgregar extends Component {
         }
       }
     } catch (error) {
+      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -192,7 +210,6 @@ class CitasAgregar extends Component {
         });
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         error: error,
       });
@@ -205,11 +222,11 @@ class CitasAgregar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
+    console.log(this.state.cita);
     return (
       <React.Fragment>
         <Layout activeKeyP="1">
-          <Navbar buttonDisable={false} />
+          <Navbar buttonDisable={this.state.buttonDisable} />
 
           {!this.state.sesion && (
             <Agregar
@@ -224,6 +241,7 @@ class CitasAgregar extends Component {
               handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
               medicos={this.state.medicos}
               handleOnChangeMedico={this.handleOnChangeMedico}
+              campos={this.state.campos}
             />
           )}
           <Sesion open={this.state.sesion} />

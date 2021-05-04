@@ -14,7 +14,6 @@ import { HeaderCell, HeaderSubCell } from './DetalleStyles';
 
 const Detalle = ({ paciente }) => {
   const edad = calculaEdad(paciente.fecha_nacimiento);
-
   const styled = { fontWeight: 'bold' };
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
@@ -57,32 +56,21 @@ const Detalle = ({ paciente }) => {
                   </Table.Cell>
                   <Table.Cell collapsing style={styled}>
                     Fecha de nacimiento
-                    <br />
-                    <hr />
-                    Edad
                   </Table.Cell>
                   <Table.Cell colSpan="3">
                     {fechaFormato(paciente.fecha_nacimiento)}
-                    <br />
-                    <hr />
-                    {edad}
                   </Table.Cell>
                 </Table.Row>
+
                 <Table.Row>
                   <Table.Cell collapsing style={styled}>
-                    Dirección domicilio
+                    Edad
                   </Table.Cell>
-                  <Table.Cell colSpan="6">{paciente.direccion}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
+                  <Table.Cell colSpan="3">{edad}</Table.Cell>
                   <Table.Cell collapsing style={styled}>
-                    Correo electrónico
+                    Género
                   </Table.Cell>
-                  <Table.Cell colSpan="4">{paciente.email}</Table.Cell>
-                  <Table.Cell collapsing style={styled}>
-                    Teléfono
-                  </Table.Cell>
-                  <Table.Cell colSpan="2">{paciente.telefono}</Table.Cell>
+                  <Table.Cell colSpan="3">{paciente.generos.genero}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell collapsing style={styled} colSpan="2">
@@ -111,6 +99,22 @@ const Detalle = ({ paciente }) => {
                   <Table.Cell colSpan="2">
                     {paciente.niveldeinstruccion.nivel_de_instruccion.toUpperCase()}
                   </Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell collapsing style={styled}>
+                    Dirección domicilio
+                  </Table.Cell>
+                  <Table.Cell colSpan="6">{paciente.direccion}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell collapsing style={styled}>
+                    Correo electrónico
+                  </Table.Cell>
+                  <Table.Cell colSpan="4">{paciente.email}</Table.Cell>
+                  <Table.Cell collapsing style={styled}>
+                    Teléfono
+                  </Table.Cell>
+                  <Table.Cell colSpan="2">{paciente.telefono}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell collapsing style={styled} colSpan="2">

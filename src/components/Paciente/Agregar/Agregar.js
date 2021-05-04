@@ -68,7 +68,7 @@ const Agregar = ({
             <Message
               hidden={!campos}
               warning
-              header="Seleccione Género, Estado Civil, Etnia, Nivel de Instrucción y Tipo de Sangre"
+              header="Seleccione género, estado civil, etnia, nivel de instrucción y tipo de sangre"
             />
             <Message
               hidden={!emailCorrect}

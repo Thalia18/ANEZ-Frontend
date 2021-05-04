@@ -18,6 +18,10 @@ const NavbarPacientes = ({ evolucionId, paciente, ...props }) => {
     evolucionId === undefined
       ? `/evoluciones/${props.match.params.historiaId}`
       : `/receta/${evolucionId}`;
+  let urlCertificado =
+    evolucionId === undefined
+      ? `/evoluciones/${props.match.params.historiaId}`
+      : `/certificado/${evolucionId}`;
 
   const [value, setValue] = React.useState([]);
   const fecha = (date) => {
@@ -48,6 +52,14 @@ const NavbarPacientes = ({ evolucionId, paciente, ...props }) => {
                 to={urlReceta}
               >
                 Generar receta
+              </Nav.Item>
+              <Nav.Item
+                icon={<Icon icon="certificate" />}
+                componentClass={Link}
+                key={evolucionId}
+                to={urlCertificado}
+              >
+                Generar certificado
               </Nav.Item>
               <Nav.Item
                 icon={<Icon icon="eye" />}

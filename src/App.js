@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
 import es_ES from 'rsuite/lib/IntlProvider/locales/es_ES';
+import AboutPage from './pages/About';
 import ConsultorioAgregarPage from './pages/Admin/Consultorios/ConsultorioAgregar';
 import ConsultorioBuscarPage from './pages/Admin/Consultorios/ConsultorioBuscar';
 import ConsultorioDetallePage from './pages/Admin/Consultorios/ConsultorioDetalle';
@@ -18,6 +19,7 @@ import CitasPage from './pages/Citas/Citas';
 import CitasEditarPage from './pages/Citas/CitasEditar';
 import ErrorPage from './pages/Error';
 import ErrorAutorizacionPage from './pages/ErrorAutorizacion';
+import CertificadoPage from './pages/Evoluciones/Certificado';
 import EvolucionAgregarPage from './pages/Evoluciones/EvolucionAgregar';
 import EvolucionBuscarPage from './pages/Evoluciones/EvolucionBuscar';
 import EvolucionPage from './pages/Evoluciones/EvolucionDetalle';
@@ -46,6 +48,7 @@ function App() {
           <Route exact path="/" component={LoginPage} />
           {/* //pagina main */}
           <Route exact path="/main" component={MainPage} />
+          <Route exact path="/about" component={AboutPage} />
           {/* //paginas de pacientes */}
           <Route exact path="/pacientes" component={PacientesPage} />
           <Route
@@ -118,6 +121,12 @@ function App() {
           />
           {/* //pagina de receta */}
           <Route exact path="/receta/:evolucionId" component={RecetaPage} />
+          {/* pagina de Certificado */}
+          <Route
+            exact
+            path="/certificado/:evolucionId"
+            component={CertificadoPage}
+          />
           {/* //paginas de citas */}
           <Route exact path="/citas/:fecha/:view" component={CitasPage} />
           <Route

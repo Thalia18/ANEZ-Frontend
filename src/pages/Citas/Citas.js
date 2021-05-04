@@ -29,7 +29,11 @@ class Citas extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -41,16 +45,18 @@ class Citas extends Component {
       error: null,
     });
     try {
-      const { data: citas } = await axios.get(
-        `${api_url}/api/citas_fecha/${this.props.match.params.fecha}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: this.props.jwt.accessToken,
-            auth: this.props.user.rol,
-          },
-        }
-      );
+      const url =
+        this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
+          ? `${api_url}/api/citas_fecha_med/${this.props.match.params.fecha}/${this.props.user.medico_id}`
+          : `${api_url}/api/citas_fecha/${this.props.match.params.fecha}`;
+
+      const { data: citas } = await axios.get(url, {
+        method: 'GET',
+        headers: {
+          Authorization: this.props.jwt.accessToken,
+          auth: this.props.user.rol,
+        },
+      });
       if (citas.error) {
         this.setState({
           sesion: true,
@@ -104,7 +110,7 @@ class Citas extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
+    console.log(this.state.citaList);
     return (
       <React.Fragment>
         <Layout activeKeyP="1">

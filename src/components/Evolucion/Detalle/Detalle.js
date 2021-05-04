@@ -52,16 +52,18 @@ const Detalle = ({ paciente, evolucion }) => {
                       {evolucion.motivo_consulta}
                     </Table.Cell>
                   </Table.Row>
-                  <Table.Row>
-                    <Table.Cell>
-                      <b>Fecha última menstruación</b>
-                    </Table.Cell>
-                    <Table.Cell>
-                      {evolucion.fecha_ultima_menstruacion
-                        ? fechaFormato(evolucion.fecha_ultima_menstruacion)
-                        : ''}
-                    </Table.Cell>
-                  </Table.Row>
+                  {paciente.genero_id === 1 && (
+                    <Table.Row>
+                      <Table.Cell>
+                        <b>Fecha última menstruación</b>
+                      </Table.Cell>
+                      <Table.Cell>
+                        {evolucion.fecha_ultima_menstruacion
+                          ? fechaFormato(evolucion.fecha_ultima_menstruacion)
+                          : ''}
+                      </Table.Cell>
+                    </Table.Row>
+                  )}
                   <Table.Row>
                     <Table.Cell>
                       <b>Procedimiento</b>

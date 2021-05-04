@@ -41,7 +41,7 @@ class PacienteAgregar extends Component {
         direccion: '',
         telefono: '',
         email: '',
-        genero_id: '',
+        genero_id: null,
         contacto_emergencia_nombre: '',
         contacto_emergencia_telefono: '',
         created_at: new Date(),
@@ -60,7 +60,11 @@ class PacienteAgregar extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -247,7 +251,6 @@ class PacienteAgregar extends Component {
         }
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,

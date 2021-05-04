@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
-import Loader from '../../../components/Loader/Loader';
 import Sesion from '../../../components/Modales/ModalSesionExperida';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
 import {
@@ -262,6 +261,8 @@ class UsuarioAgregar extends Component {
         }
       }
     } catch (error) {
+      import Loader from '../../components/Loader';
+      error;
       this.setState({
         loading: false,
         error: error,
@@ -272,6 +273,8 @@ class UsuarioAgregar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
+    import Loader from '../../components/Loader';
+    this.state.medico;
     return (
       <React.Fragment>
         <Layout activeKeyP="4">

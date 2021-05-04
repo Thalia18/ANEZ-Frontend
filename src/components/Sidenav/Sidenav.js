@@ -19,7 +19,8 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
   const [widthColumnB, setWidthColumB] = React.useState(13);
 
   let history = useHistory();
-
+  let date = new Date();
+  let year = date.getFullYear();
   const handleClick = () => {
     expanded ? setExpanded(false) : setExpanded(true);
 
@@ -41,12 +42,6 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
     history.push('/');
   };
 
-  //pedir nuevamente el login
-  // setTimeout(() => {
-  //   window.location.href = `http://localhost:3000/`;
-  //   props.logoutUser([]);
-  // }, 21600000);
-
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -56,7 +51,7 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
               expanded={expanded}
               activeKey={activeKey}
               onSelect={handleSelect}
-              style={{ height: '100%' }}
+              style={{ height: '102%' }}
             >
               <Sidenav.Body>
                 <Nav>
@@ -69,15 +64,17 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                   >
                     <Logo src={consultorio.logo} />
                   </Nav.Item>
-                  <Nav.Item
-                    eventKey="1"
-                    componentClass={Link}
-                    to={`/citas/${fechaCitas(new Date())}/month`}
-                  >
-                    <Icon icon="calendar" /> Citas
-                  </Nav.Item>
+                  {user.rol.trim().toUpperCase() !== 'ADMINISTRADOR' && (
+                    <Nav.Item
+                      eventKey="1"
+                      componentClass={Link}
+                      to={`/citas/${fechaCitas(new Date())}/month`}
+                    >
+                      <Icon icon="calendar" /> Citas
+                    </Nav.Item>
+                  )}
 
-                  {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
+                  {user.rol.trim().toUpperCase() === 'MÉDICO' && (
                     <Nav.Item
                       eventKey="2"
                       componentClass={Link}
@@ -86,9 +83,15 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                       <Icon icon="heartbeat" /> Historias clínicas
                     </Nav.Item>
                   )}
-                  <Nav.Item eventKey="3" componentClass={Link} to="/pacientes">
-                    <Icon icon="people-group" /> Pacientes
-                  </Nav.Item>
+                  {user.rol.trim().toUpperCase() !== 'ADMINISTRADOR' && (
+                    <Nav.Item
+                      eventKey="3"
+                      componentClass={Link}
+                      to="/pacientes"
+                    >
+                      <Icon icon="people-group" /> Pacientes
+                    </Nav.Item>
+                  )}
                   {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                     <Nav.Item
                       eventKey="4"
@@ -119,7 +122,12 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                     icon={<Icon icon="th" size="lg" />}
                     onClick={handleClick}
                   />
+                  <Nav.Item
+                    icon={<Icon icon="info-circle" size="lg" />}
+                    onClick={() => history.push('/about')}
+                  />
                 </Nav>
+
                 <Nav pullRight>
                   <Dropdown
                     icon={<Icon icon="user-circle-o" size="lg" />}
@@ -144,6 +152,12 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
               style={matches.medium ? { height: '92%' } : { height: '94%' }}
             >
               {props.children}
+              <div style={{ marginBottom: '-1.5em', fontSize: '0.8em' }}>
+                <b>
+                  <Icon icon="copyright" /> &nbsp; {year}, ANEZ | Todos los
+                  derechos reservados.
+                </b>
+              </div>
             </Segment>
           </Grid.Column>
         </Grid>

@@ -1,20 +1,21 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import 'semantic-ui-css/semantic.min.css';
 import Error from '../../components/Error/Error';
-import Listado from '../../components/Evoluciones/Buscar';
+import CertificadoPDF from '../../components/Evolucion/Certificado/Certificado';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import Sesion from '../../components/Modales/ModalSesionExperida';
 import { api_url, mapStateToProps } from '../../components/utils';
 
-class Evoluciones extends Component {
+class Receta extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       loading: true,
-      buscarList: {},
+      evolucion: {},
       paciente: {},
       sesion: false,
     };
@@ -36,8 +37,8 @@ class Evoluciones extends Component {
       error: null,
     });
     try {
-      const { data: buscarList } = await axios.get(
-        `${api_url}/api/evoluciones_fecha/${this.props.match.params.historiaId}/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}`,
+      const { data: evolucion } = await axios.get(
+        `${api_url}/api/evolucion/${this.props.match.params.evolucionId}`,
         {
           method: 'GET',
           headers: {
@@ -47,14 +48,14 @@ class Evoluciones extends Component {
         }
       );
 
-      if (buscarList.error) {
+      if (evolucion.error) {
         this.setState({
           sesion: true,
           loading: false,
         });
       } else {
         const { data: paciente } = await axios.get(
-          `${api_url}/api/paciente_historia/${this.props.match.params.historiaId}`,
+          `${api_url}/api/paciente_historia/${evolucion.data.historia_clinica_id}`,
           {
             method: 'GET',
             headers: {
@@ -64,8 +65,8 @@ class Evoluciones extends Component {
           }
         );
         this.setState({
-          buscarList: buscarList.data,
-          paciente: paciente.data.pacientes,
+          evolucion: evolucion.data,
+          paciente: paciente.data,
           loading: false,
         });
       }
@@ -80,16 +81,30 @@ class Evoluciones extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
+    console.log(this.state.evolucion);
+    console.log(this.state.paciente);
 
     return (
       <React.Fragment>
         <Layout activeKeyP="2">
           {!this.state.sesion && (
-            <Listado
-              evoluciones={Object.values(this.state.buscarList)}
-              paciente={this.state.paciente}
-              fecha1={this.props.match.params.fecha1}
-              fecha2={this.props.match.params.fecha2}
+            <CertificadoPDF
+              consultorio={this.props.consultorio}
+              evolucion={this.state.evolucion}
+              nombreMedico={this.props.user.nombre.trim()}
+              apellidoMedico={this.props.user.apellido.trim()}
+              nombreArchivo={
+                `Certificado ANEZ ${this.state.evolucion.fecha} ` +
+                this.state.paciente.pacientes.nombre +
+                ' ' +
+                this.state.paciente.pacientes.apellido
+              }
+              paciente={
+                this.state.paciente.pacientes.nombre +
+                ' ' +
+                this.state.paciente.pacientes.apellido
+              }
+              cedula={this.state.paciente.pacientes.cedula}
             />
           )}
           <Sesion open={this.state.sesion} />
@@ -99,4 +114,4 @@ class Evoluciones extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(Evoluciones);
+export default connect(mapStateToProps, null)(Receta);

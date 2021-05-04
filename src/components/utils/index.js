@@ -119,7 +119,9 @@ export const calculaEdad = (fecha_nacimiento) => {
 };
 
 //color usado para navbar y fondo de app
-export const colorBackground = { background: 'rgba(0,161,213, 0.1)' };
+export const colorBackground = {
+  background: 'rgba(0,161,213, 0.1)',
+};
 
 //notificacion de success
 export const openNotification = (funcName, header, content, span) => {

@@ -8,7 +8,7 @@ import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Sesion from '../../components/Modales/ModalSesionExperida';
-import { api_url, mapStateToProps } from '../../components/utils';
+import { api_url, fechaCitas, mapStateToProps } from '../../components/utils';
 
 class CitaDetalle extends Component {
   constructor(props) {
@@ -23,7 +23,11 @@ class CitaDetalle extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -68,7 +72,6 @@ class CitaDetalle extends Component {
         });
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -97,7 +100,7 @@ class CitaDetalle extends Component {
         this.setState({
           loading: false,
         });
-        this.props.history.push(`/citas`);
+        this.props.history.push(`/citas/${fechaCitas(new Date())}/month`);
       }
     } catch (error) {
       this.setState({

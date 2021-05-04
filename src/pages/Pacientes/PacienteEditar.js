@@ -42,7 +42,11 @@ class PacienteEditar extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.user != null && this.props.user.isLoggedIn) {
+    if (
+      this.props.user != null &&
+      this.props.user.isLoggedIn &&
+      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
+    ) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -123,6 +127,7 @@ class PacienteEditar extends Component {
             nivelesDeInstruccion.data
           ),
           genero: generosDropdown(generos.data),
+          paciente: pacienteA.data,
           loading: false,
         });
         trimData(this.state.paciente);

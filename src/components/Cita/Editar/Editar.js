@@ -3,7 +3,14 @@ import InputMask from 'react-input-mask';
 import Media from 'react-media';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
-import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
+import {
+  Checkbox,
+  Form,
+  Header,
+  Icon,
+  Message,
+  Segment,
+} from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
@@ -28,12 +35,12 @@ const Agregar = ({
   medicos,
   handleOnChangeMedico,
   medico,
+  handleChangeEspecialidad,
+  campos,
 }) => {
   var a = formCita.hora.split(':');
   const [value, setValue] = React.useState(true);
-  const handleChangeCheck = (e) => {
-    setValue(!value);
-  };
+
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
@@ -46,6 +53,7 @@ const Agregar = ({
             </Header>
             <hr />
             <HCHeader paciente={paciente} />
+            <Message hidden={campos} warning header="Seleccione médico" />
 
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Form
@@ -60,6 +68,7 @@ const Agregar = ({
                     ' ' +
                     medico.apellido.trim().toUpperCase()}{' '}
                 </Segment>
+
                 <Segment basic>
                   <Form.Field>
                     <Checkbox
@@ -67,7 +76,10 @@ const Agregar = ({
                       label="Cambiar especialidad"
                       name="checkboxRadioGroup"
                       checked={value === false}
-                      onChange={handleChangeCheck}
+                      onChange={(e) => {
+                        handleChangeEspecialidad(e, value);
+                        setValue(!value);
+                      }}
                     />
                   </Form.Field>
                 </Segment>

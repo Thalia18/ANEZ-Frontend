@@ -55,25 +55,16 @@ class LoginG extends Component {
         `${api_url}/api/confirm_user`,
         this.state.user
       );
-
       this.setState({
+        correctUser: false,
         userConfirm: usuario.data,
         jwt: { accessToken: usuario.accessToken },
-        correctUser: false,
       });
-      this.props.setJWT(this.state.jwt);
 
       if (this.state.userConfirm) {
-        const { data: cie10List } = await axios.get(
-          `${api_url}/api/categorias`,
-          {
-            method: 'GET',
-            headers: {
-              Authorization: usuario.accessToken,
-              auth: usuario.data.rol.trim(),
-            },
-          }
-        );
+        this.setState({
+          loading: true,
+        });
         const { data: consultorio } = await axios.get(
           `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`,
           {
@@ -84,28 +75,38 @@ class LoginG extends Component {
             },
           }
         );
+
+        if (this.state.userConfirm.rol.trim() === 'MÉDICO') {
+          const { data: cie10List } = await axios.get(
+            `${api_url}/api/categorias`,
+            {
+              method: 'GET',
+              headers: {
+                Authorization: usuario.accessToken,
+                auth: usuario.data.rol.trim(),
+              },
+            }
+          );
+          this.setState({
+            categorias: cie10List.data,
+          });
+        }
+        this.setState({
+          consultorio: consultorio.data,
+        });
+        this.props.setJWT(this.state.jwt);
+        this.props.setCategorias(this.state.categorias);
+        this.props.setConsultorio(this.state.consultorio);
+        this.props.setUser(this.state.userConfirm);
         this.setState({
           loading: false,
         });
-        if (consultorio.error) {
-          this.props.history.push('/');
-        } else {
-          this.setState({
-            categorias: cie10List.data,
-            consultorio: consultorio.data,
-          });
-
-          this.props.setCategorias(this.state.categorias);
-          this.props.setConsultorio(this.state.consultorio);
-          this.props.setUser(this.state.userConfirm);
-          this.props.history.push('/main');
-        }
+        this.props.history.push('/main');
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
-        error: error,
+        // error: error,
         correctUser: true,
       });
     }

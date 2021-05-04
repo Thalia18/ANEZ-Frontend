@@ -64,18 +64,20 @@ const Agregar = ({
                     required
                   />
                 </Form.Group>
-                <Form.Group>
-                  <Form.Input
-                    label="Fecha última menstruación"
-                    placeholder="Fecha última menstruación"
-                    width={16}
-                    type="date"
-                    onChange={handleChange}
-                    name="fecha_ultima_menstruacion"
-                    value={formEvolucion.fecha_ultima_menstruacion}
-                    max={fechaActual()}
-                  />
-                </Form.Group>
+                {paciente.genero_id === 1 && (
+                  <Form.Group>
+                    <Form.Input
+                      label="Fecha última menstruación"
+                      placeholder="Fecha última menstruación"
+                      width={16}
+                      type="date"
+                      onChange={handleChange}
+                      name="fecha_ultima_menstruacion"
+                      value={formEvolucion.fecha_ultima_menstruacion}
+                      max={fechaActual()}
+                    />
+                  </Form.Group>
+                )}
                 <Form.Group>
                   <Form.TextArea
                     label="Procedimiento"

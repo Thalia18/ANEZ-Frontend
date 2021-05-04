@@ -118,8 +118,6 @@ class UsuarioEditar extends Component {
         });
       }
     } catch (error) {
-      console.log(error);
-
       this.setState({
         loading: false,
         error: error,
@@ -284,8 +282,6 @@ class UsuarioEditar extends Component {
         }
       }
     } catch (error) {
-      console.log(error);
-
       this.setState({
         loading: false,
         error: error,
@@ -296,13 +292,12 @@ class UsuarioEditar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.medico.especialidad);
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
           <Navbar buttonDisable={this.state.buttonDisable} />
 
-          {this.state.sesion && (
+          {!this.state.sesion && (
             <Agregar
               id="formAgregar"
               usuariopass={false}

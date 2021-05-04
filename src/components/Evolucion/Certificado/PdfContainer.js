@@ -3,7 +3,7 @@ import Media from 'react-media';
 import { Segment } from 'semantic-ui-react';
 import { Global } from '../../../global';
 import { GLOBAL_MEDIA_QUERIES, masMediumHeight } from '../../utils';
-import Navbar from './NavbarReceta';
+import Navbar from '../Receta/NavbarReceta';
 
 export default (props) => {
   const bodyRef = React.createRef();

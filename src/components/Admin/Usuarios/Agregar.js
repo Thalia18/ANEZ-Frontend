@@ -3,14 +3,7 @@ import InputMask from 'react-input-mask';
 import Media from 'react-media';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import {
   fechaActual,
@@ -36,23 +29,9 @@ const Agregar = ({
   especialidadesSelect,
   rol_id,
 }) => {
-  const [value, setValue] = React.useState('Cédula');
   const [rol, setRol] = React.useState(rol_id);
 
   // var a = formCita.hora.split(':');
-  const handleChangeCheck = (e, { value }) => {
-    setValue(value);
-    if (value === 'RUC') {
-      setMask('9999999999-001');
-      setPattern('.{14}');
-    }
-    if (value === 'Cédula') {
-      setMask('9999999999');
-      setPattern('.{10}');
-    }
-  };
-  const [mask, setMask] = React.useState('9999999999');
-  const [pattern, setPattern] = React.useState('.{10}');
 
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -102,36 +81,19 @@ const Agregar = ({
                       minLength={2}
                       required
                     />
-                    <Form.Field>
-                      <Checkbox
-                        radio
-                        label="Cédula"
-                        name="checkboxRadioGroup"
-                        value="Cédula"
-                        checked={value === 'Cédula'}
-                        onChange={handleChangeCheck}
-                      />
-                      <Checkbox
-                        radio
-                        label="RUC"
-                        name="checkboxRadioGroup"
-                        value="RUC"
-                        checked={value === 'RUC'}
-                        onChange={handleChangeCheck}
-                      />
-                    </Form.Field>
+
                     <Form.Input
-                      label={value}
-                      placeholder={value}
+                      label="Cédula"
+                      placeholder="Cédula"
                       width={5}
                       required
                     >
                       <InputMask
-                        mask={mask}
+                        mask="9999999999"
                         onChange={handleChange}
                         name="cedula"
                         value={formUsuario.cedula}
-                        pattern={pattern}
+                        pattern=".{10}"
                         maskChar={null}
                         required
                       />
@@ -260,6 +222,7 @@ const Agregar = ({
                       label="Contraseña"
                       placeholder="Contraseña"
                       width={8}
+                      type="password"
                       onChange={handleChange}
                       name="contrasena"
                       value={formUsuario.contrasena}
