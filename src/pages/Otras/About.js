@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Layout from '../components/Layout/Layout';
-import AboutComponent from '../components/Sidenav/About';
-import { mapStateToProps } from '../components/utils';
+import Layout from '../../components/Layout/Layout';
+import AboutComponent from '../../components/Sidenav/About';
+import { mapStateToProps } from '../../components/utils';
 
 const About = ({ user, ...props }) => {
   if (user != null && user.isLoggedIn)

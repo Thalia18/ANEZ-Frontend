@@ -1,4 +1,5 @@
 import { Notification } from 'rsuite';
+var writtenNumber = require('written-number');
 
 //utilizar globalmente para la conexion con la api
 export const api_url = 'http://localhost:3300' || process.env.API_URL;
@@ -235,6 +236,22 @@ export const fechaFormato = (fecha) => {
   }
 };
 
+//fechas con formato para certificado
+export const fechaFormatoCertificado = (fecha) => {
+  if (fecha) {
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let a = new Date(fecha.replace(/-/g, '/'));
+    let fechaFor = a.toLocaleDateString('es-ES', options).toUpperCase();
+
+    let numero = fechaFor.substr(0, fechaFor.indexOf(' '));
+    let final = fechaFor.substr(fechaFor.indexOf(' ') + 1);
+    const dias = writtenNumber(numero, {
+      lang: 'es',
+    });
+    return '(' + numero + ') ' + dias.toUpperCase() + ' ' + final;
+  }
+};
+
 //only letters
 export const letters = (value) => {
   if (value !== undefined) {
@@ -278,6 +295,19 @@ export const horasMinutos = (inicio, fin) => {
       });
       j += 29;
     }
+  }
+  return opcion;
+};
+
+//para llenar tiempo de reposo
+export const tiempoReposo = () => {
+  let opcion = [];
+  for (let i = 1; i <= 180; i++) {
+    opcion.push({
+      key: i,
+      text: i,
+      value: i,
+    });
   }
   return opcion;
 };

@@ -2,11 +2,11 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { setCategorias, setConsultorio, setJWT, setUser } from '../actions';
-import Error from '../components/Error/Error';
-import Loader from '../components/Loader/Loader';
-import Login from '../components/Login/Login';
-import { api_url } from '../components/utils/';
+import { setCategorias, setConsultorio, setJWT, setUser } from '../../actions';
+import Error from '../../components/Error/Error';
+import Loader from '../../components/Loader/Loader';
+import Login from '../../components/Login/Login';
+import { api_url } from '../../components/utils/';
 
 class LoginG extends Component {
   constructor(props) {
@@ -60,6 +60,12 @@ class LoginG extends Component {
         userConfirm: usuario.data,
         jwt: { accessToken: usuario.accessToken },
       });
+      if (usuario.error) {
+        this.setState({
+          loading: false,
+          correctUser: true,
+        });
+      }
 
       if (this.state.userConfirm) {
         this.setState({
@@ -106,8 +112,8 @@ class LoginG extends Component {
     } catch (error) {
       this.setState({
         loading: false,
-        // error: error,
-        correctUser: true,
+        error: error,
+        // correctUser: true,
       });
     }
   };

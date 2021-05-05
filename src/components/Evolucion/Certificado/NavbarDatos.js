@@ -1,12 +1,12 @@
 import React from 'react';
 import Media from 'react-media';
 import { useHistory } from 'react-router-dom';
-import { Button, Icon, Nav, Navbar } from 'rsuite';
+import { Icon, Nav, Navbar } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
-const NavbarRecetas = ({ createPdf, cert }) => {
+const NavbarRecetas = ({ createPdf }) => {
   let history = useHistory();
 
   return (
@@ -22,24 +22,6 @@ const NavbarRecetas = ({ createPdf, cert }) => {
                 }}
               />
             </Nav>
-            {!cert && (
-              <Nav pullRight>
-                <Nav.Item>
-                  <Button
-                    onClick={createPdf}
-                    style={{
-                      width: '8em',
-                      height: '3em',
-                      marginTop: '-0.7em',
-                      paddingRight: '0.5em',
-                      background: 'rgba(0,161,213, 0.01)',
-                    }}
-                  >
-                    <Icon icon="download" /> Descargar
-                  </Button>
-                </Nav.Item>
-              </Nav>
-            )}
           </Navbar.Body>
         </Navbar>
       )}

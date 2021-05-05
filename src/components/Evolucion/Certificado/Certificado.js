@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Container, Image, Segment } from 'semantic-ui-react';
-import { eliminarTildes, fechaFormato } from '../../utils';
+import {
+  eliminarTildes,
+  fechaFormato,
+  fechaFormatoCertificado,
+} from '../../utils';
 import Doc from './DocService';
 import PdfContainer from './PdfContainer';
+var writtenNumber = require('written-number');
 
 class App extends Component {
   constructor(props) {
@@ -11,11 +16,13 @@ class App extends Component {
   }
 
   createPdf = (html) => Doc.createPdf(html, this.props.nombreArchivo);
-
   render() {
+    const dias = writtenNumber(this.props.datos.dias_reposo, {
+      lang: 'es',
+    });
     return (
       <React.Fragment>
-        <PdfContainer createPdf={this.createPdf}>
+        <PdfContainer createPdf={this.createPdf} datos={this.props.datos}>
           <React.Fragment>
             <Container
               style={{
@@ -25,16 +32,15 @@ class App extends Component {
             >
               <Image
                 src={this.props.consultorio.logo}
-                size="small"
+                size="tiny"
                 style={{ margin: 'auto' }}
               />
-              <b>
+              <b style={{ fontSize: '0.8em' }}>
                 {eliminarTildes(this.props.consultorio.nombre.toUpperCase())}
               </b>
               <br />
-              <br />
 
-              <p style={{ fontSize: '0.7em' }}>
+              <p style={{ fontSize: '0.5em' }}>
                 {eliminarTildes(this.props.consultorio.direccion)}
                 <br />
                 Telf: {this.props.consultorio.telefono}
@@ -44,11 +50,10 @@ class App extends Component {
                 style={{
                   textAlign: 'right',
                   marginRight: '2%',
-                  fontSize: '0.8em',
+                  fontSize: '0.7em',
                 }}
               >
-                Quito, DM,{' '}
-                {fechaFormato(this.props.evolucion.fecha).toLowerCase()}
+                Quito, DM, {fechaFormato(new Date().toString()).toLowerCase()}
               </p>
               <br />
             </Container>
@@ -63,7 +68,7 @@ class App extends Component {
                 </h5>
                 <div
                   style={{
-                    fontSize: '0.8em',
+                    fontSize: '0.7em',
                     margin: '2em',
                   }}
                 >
@@ -78,10 +83,70 @@ class App extends Component {
                     let value = item.value.split('➜');
                     return (
                       <p key={item.id}>
-                        {value[1]} (CIE-10 {value[0]})
+                        {value[1].trim()} (CIE-10 {value[0].trim()})
                       </p>
                     );
                   })}
+                  Fecha de ingreso:{' '}
+                  {this.props.datos.fecha_ingreso
+                    ? eliminarTildes(
+                        fechaFormatoCertificado(this.props.datos.fecha_ingreso)
+                      )
+                    : ''}
+                  <br />
+                  Fecha de egreso:{' '}
+                  {this.props.datos.fecha_egreso
+                    ? eliminarTildes(
+                        fechaFormatoCertificado(this.props.datos.fecha_egreso)
+                      )
+                    : ''}
+                  <br />
+                  Por lo tanto se ordena: {this.props.datos.dias_reposo} {''}
+                  {dias.toUpperCase() ? eliminarTildes(dias.toUpperCase()) : ''}
+                  {''} DIA(S) de reposo.
+                  <br />A partir del:{' '}
+                  {this.props.datos.fecha_inicio
+                    ? eliminarTildes(
+                        fechaFormatoCertificado(this.props.datos.fecha_inicio)
+                      )
+                    : ''}
+                  <br />
+                  hasta el:{' '}
+                  {this.props.datos.fecha_fin
+                    ? eliminarTildes(
+                        fechaFormatoCertificado(this.props.datos.fecha_fin)
+                      )
+                    : ''}
+                  <br />
+                  Observaciones:{' '}
+                  {this.props.datos.observaciones
+                    ? eliminarTildes(
+                        this.props.datos.observaciones.toUpperCase()
+                      )
+                    : ''}
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <br />
+                  <Container
+                    style={{
+                      fontSize: '0.9em',
+                      borderTop: 'solid black',
+                      width: '50%',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Firma / Sello del Medico <br />
+                    DR(A). {''}
+                    {eliminarTildes(this.props.user.nombre)}
+                    {''}
+                    {eliminarTildes(this.props.user.apellido)}
+                  </Container>
                 </div>
               </Segment>
             </Container>

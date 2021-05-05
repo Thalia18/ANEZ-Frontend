@@ -8,6 +8,7 @@ import Navbar from '../Receta/NavbarReceta';
 export default (props) => {
   const bodyRef = React.createRef();
   const createPdf = () => props.createPdf(bodyRef.current);
+
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (

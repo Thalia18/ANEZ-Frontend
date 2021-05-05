@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorC from '../components/Error/ErrorAutorizacion';
+import ErrorC from '../../components/Error/ErrorAutorizacion';
 
 const Error = () => {
   return (

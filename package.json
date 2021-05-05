@@ -28,7 +28,8 @@
     "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "2.0.3",
     "styled-components": "5.2.1",
-    "web-vitals": "1.0.1"
+    "web-vitals": "1.0.1",
+    "written-number": "0.9.1"
   },
   "scripts": {
     "start": "react-scripts start",

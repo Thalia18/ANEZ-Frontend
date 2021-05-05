@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { IntlProvider } from 'rsuite';
 import es_ES from 'rsuite/lib/IntlProvider/locales/es_ES';
-import AboutPage from './pages/About';
 import ConsultorioAgregarPage from './pages/Admin/Consultorios/ConsultorioAgregar';
 import ConsultorioBuscarPage from './pages/Admin/Consultorios/ConsultorioBuscar';
 import ConsultorioDetallePage from './pages/Admin/Consultorios/ConsultorioDetalle';
@@ -17,8 +16,6 @@ import CitaBuscarPage from './pages/Citas/CitaBuscar';
 import CitaPage from './pages/Citas/CitaDetalle';
 import CitasPage from './pages/Citas/Citas';
 import CitasEditarPage from './pages/Citas/CitasEditar';
-import ErrorPage from './pages/Error';
-import ErrorAutorizacionPage from './pages/ErrorAutorizacion';
 import CertificadoPage from './pages/Evoluciones/Certificado';
 import EvolucionAgregarPage from './pages/Evoluciones/EvolucionAgregar';
 import EvolucionBuscarPage from './pages/Evoluciones/EvolucionBuscar';
@@ -31,8 +28,12 @@ import HCAgregarPage from './pages/HistoriasClinicas/HCAgregar';
 import HCBuscarPage from './pages/HistoriasClinicas/HCBuscar';
 import HCDetallePage from './pages/HistoriasClinicas/HCDetalle';
 import HCEditarPage from './pages/HistoriasClinicas/HCEditar';
-import LoginPage from './pages/Login';
-import MainPage from './pages/Main';
+import AboutPage from './pages/Otras/About';
+import ErrorPage from './pages/Otras/Error';
+import ErrorAutorizacionPage from './pages/Otras/ErrorAutorizacion';
+import LoginPage from './pages/Otras/Login';
+import MainPage from './pages/Otras/Main';
+import RecuperarPass from './pages/Otras/RecuperarPass';
 import PacienteAgregarPage from './pages/Pacientes/PacienteAgregar';
 import PacienteBuscarPage from './pages/Pacientes/PacienteBuscar';
 import PacienteDetallePage from './pages/Pacientes/PacienteDetalle';
@@ -46,8 +47,11 @@ function App() {
         <Switch>
           {/* //pagina login */}
           <Route exact path="/" component={LoginPage} />
+          {/* pagina para recuperar contraseña */}
+          <Route exact path="/recuperar_pass" component={RecuperarPass} />
           {/* //pagina main */}
           <Route exact path="/main" component={MainPage} />
+          {/* pagina de about */}
           <Route exact path="/about" component={AboutPage} />
           {/* //paginas de pacientes */}
           <Route exact path="/pacientes" component={PacientesPage} />

@@ -29,8 +29,8 @@ const Slider = () => {
                 <img src="https://i.ibb.co/KGsD719/Screen-Shot-2021-05-03-at-19-30-35.png" />
                 <img src="https://i.ibb.co/S0bdwk7/4.jpg" />
                 <img src="https://i.ibb.co/DzHnc2G/6.jpg" />
-                <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=4" />
-                <img src="https://via.placeholder.com/600x250/8f8e94/FFFFFF?text=5" />
+                <img src="https://i.ibb.co/5hSVnvg/74d46863-a45e-436f-b5f0-4a5175ecd052.jpg" />
+                <img src="https://i.ibb.co/BsbNPZ6/7.jpg" />
               </Carousel>
             </SliderContainer>
           </Global>

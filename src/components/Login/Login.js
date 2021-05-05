@@ -1,6 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
-import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Button, Form, Grid, Icon, Message, Segment } from 'semantic-ui-react';
 import { GLOBAL_MEDIA_QUERIES } from '../utils';
 
 const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
@@ -68,7 +69,20 @@ const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
                     autoComplete="on"
                     required
                   />
+                  <Link
+                    to={'/recuperar_pass'}
+                    style={{
+                      // textDecoration: 'none',
+                      fontSize: '0.8em',
+                      color: 'gray',
+                    }}
+                  >
+                    <Icon name="key" />
+                    ¿Olvidó su contraseña?
+                  </Link>
                   <br />
+                  <br />
+
                   <Button content="Login" primary size="big" />
                 </Form>
               </Grid.Column>
