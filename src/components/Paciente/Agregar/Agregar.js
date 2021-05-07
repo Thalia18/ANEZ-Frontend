@@ -2,14 +2,7 @@ import React from 'react';
 import InputMask from 'react-input-mask';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { Global } from '../../../global';
 import {
   fechaActual,
@@ -32,9 +25,6 @@ const Agregar = ({
   handleOnChangeTS,
   handleOnChangeNI,
   handleOnChangeG,
-  campos,
-  emailCorrect,
-  id,
   header,
   icon,
   generos,
@@ -65,20 +55,11 @@ const Agregar = ({
               </Header.Content>
             </Header>
             <hr />
-            <Message
-              hidden={!campos}
-              warning
-              header="Seleccione género, estado civil, etnia, nivel de instrucción y tipo de sangre"
-            />
-            <Message
-              hidden={!emailCorrect}
-              error
-              header="Correo electrónico no válido"
-            />
+
             <Form
               size={matches.medium ? 'tiny' : null}
               onSubmit={onClickButtonSavePaciente}
-              id={id}
+              id="formAgregar"
             >
               <Form.Group>
                 <Form.Input

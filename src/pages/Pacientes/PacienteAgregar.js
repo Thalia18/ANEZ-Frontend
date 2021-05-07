@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import Agregar from '../../components/Paciente/Agregar/Agregar';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
@@ -44,7 +44,7 @@ class PacienteAgregar extends Component {
         genero_id: null,
         contacto_emergencia_nombre: '',
         contacto_emergencia_telefono: '',
-        created_at: new Date(),
+        createdAt: new Date(),
       },
       etnias: [],
       tipoDeSangre: [],
@@ -52,19 +52,11 @@ class PacienteAgregar extends Component {
       nivelDeInstruccion: [],
       genero: [],
 
-      buttonDisable: true,
-      emailCorrect: false,
-      campos: true,
       sesion: false,
-      cedulaLength: false,
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -172,42 +164,9 @@ class PacienteAgregar extends Component {
         [e.target.name]: e.target.value,
       },
     });
-
-    //setea variables para mensajes de error y alerta
-    if (
-      this.state.paciente.etnia_id !== null &&
-      this.state.paciente.nivel_de_instruccion_id !== null &&
-      this.state.paciente.estado_civil_id !== null &&
-      this.state.paciente.tipo_de_sangre_id !== null &&
-      this.state.paciente.genero_id !== null
-    ) {
-      this.setState({
-        campos: false,
-      });
-
-      if (this.state.paciente.email !== '') {
-        if (this.state.paciente.email.match(regexEmail)) {
-          this.setState({
-            buttonDisable: false,
-            emailCorrect: false,
-          });
-        } else {
-          this.setState({
-            emailCorrect: true,
-            buttonDisable: true,
-          });
-        }
-      }
-    }
   };
 
-  //guardar paciente
-  onClickButtonSavePaciente = async (e) => {
-    e.preventDefault();
-    this.setState({
-      loading: true,
-      error: null,
-    });
+  saveData = async () => {
     trimData(this.state.paciente);
     try {
       const result = await axios.post(
@@ -258,6 +217,47 @@ class PacienteAgregar extends Component {
     }
   };
 
+  //guardar paciente
+  onClickButtonSavePaciente = async (e) => {
+    e.preventDefault();
+    this.setState({
+      loading: true,
+      error: null,
+    });
+    if (!this.state.paciente.email.match(regexEmail)) {
+      this.setState({
+        loading: false,
+      });
+      openNotification(
+        'error',
+        'Pacientes',
+        'Correo electrónico no válido',
+        ''
+      );
+    } else if (
+      this.state.paciente.etnia_id === null ||
+      this.state.paciente.nivel_de_instruccion_id === null ||
+      this.state.paciente.estado_civil_id === null ||
+      this.state.paciente.tipo_de_sangre_id === null ||
+      this.state.paciente.genero_id === null
+    ) {
+      this.setState({
+        loading: false,
+      });
+      openNotification(
+        'error',
+        'Pacientes',
+        'Seleccione género, estado civil, etnia, nivel de instrucción y tipo de sangre',
+        ''
+      );
+    } else {
+      this.setState({
+        loading: false,
+      });
+      this.saveData();
+    }
+  };
+
   //obtener datos de dropdown
   handleOnChangeEC = (e, data) => {
     this.state.paciente.estado_civil_id = data.value;
@@ -282,12 +282,11 @@ class PacienteAgregar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="3">
-          <Navbar buttonDisable={this.state.buttonDisable} />
+          <Navbar />
           {!this.state.sesion && (
             <Agregar
               header="Nuevo Paciente"
               icon="add circle"
-              id="formAgregar"
               etnias={this.state.etnias}
               generos={this.state.genero}
               nivelDeInstruccion={this.state.nivelDeInstruccion}
@@ -301,9 +300,6 @@ class PacienteAgregar extends Component {
               handleOnChangeNI={this.handleOnChangeNI}
               handleOnChangeE={this.handleOnChangeE}
               handleOnChangeG={this.handleOnChangeG}
-              campos={this.state.campos}
-              cedulaLength={this.state.cedulaLength}
-              emailCorrect={this.state.emailCorrect}
             />
           )}
           <Sesion open={this.state.sesion} />

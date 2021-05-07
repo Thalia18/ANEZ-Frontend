@@ -5,7 +5,7 @@ import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
-import Sesion from '../../../components/Modales/ModalSesionExperida';
+import Sesion from '../../../components/Modales/ModalSesionExpirada';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -25,8 +25,7 @@ class UsuarioEditar extends Component {
       open: false,
       error: null,
       loading: true,
-      buttonDisable: false,
-      emailCorrect: false,
+
       roles: [],
       consultorios: [],
       especialidades: [],
@@ -125,74 +124,7 @@ class UsuarioEditar extends Component {
     }
   };
 
-  //setear los datos del formulario de evolucion
-  handleChange = (e) => {
-    this.setState({
-      usuario: {
-        ...this.state.usuario,
-        rol_id: this.state.usuario.rol_id,
-        consultorio_id: this.state.usuario.consultorio_id,
-        cedula: this.state.usuario.cedula,
-        nombre: this.state.usuario.nombre,
-        apellido: this.state.usuario.apellido,
-        email: this.state.usuario.email,
-        telefono: this.state.usuario.telefono,
-        fecha_nacimiento: this.state.usuario.fecha_nacimiento,
-        updated_at: new Date(),
-        [e.target.name]: e.target.value,
-      },
-    });
-
-    if (this.state.usuario.email !== '') {
-      if (this.state.usuario.email.match(regexEmail)) {
-        this.setState({
-          buttonDisable: false,
-          emailCorrect: false,
-        });
-      } else {
-        this.setState({
-          emailCorrect: true,
-          buttonDisable: true,
-        });
-      }
-    }
-  };
-
-  handleOnChangeConsultorio = (e, data) => {
-    this.state.usuario.consultorio_id = data.value;
-  };
-  handleOnChangeEspecialidad = (e, data) => {
-    this.state.medicoUpdate.especialidad = this.saveEspecialidad(data.value);
-  };
-
-  //guardar especialidades
-  saveEspecialidad = (arr) => {
-    var option = [];
-    arr.forEach((element) => {
-      var i = element.split('$');
-      option.push({ id: parseInt(i[0]), value: i[1] });
-    });
-    return option;
-  };
-
-  //traer especialidades selccionadas
-  especialidadesSelect = (lista) => {
-    let opcion = [];
-    if (lista) {
-      lista.map((item) => {
-        opcion.push(item.id + '$' + item.value);
-      });
-    }
-    return opcion;
-  };
-  //guardar usuario
-  onClickButtonSaveUsuario = async (e) => {
-    e.preventDefault();
-    this.setState({
-      loading: true,
-      error: null,
-    });
-
+  saveData = async () => {
     trimData(this.state.usuario);
     trimData(this.state.medico);
 
@@ -289,17 +221,83 @@ class UsuarioEditar extends Component {
     }
   };
 
+  onClickButtonSaveUsuario = async (e) => {
+    e.preventDefault();
+    this.setState({
+      loading: true,
+      error: null,
+    });
+
+    if (!this.state.usuario.email.match(regexEmail)) {
+      this.setState({
+        loading: false,
+      });
+      openNotification('error', 'Usuarios', 'Correo electrónico no válido', '');
+    } else {
+      this.setState({
+        loading: false,
+      });
+      this.saveData();
+    }
+  };
+
+  //setear los datos del formulario de usuario
+  handleChange = (e) => {
+    this.setState({
+      usuario: {
+        ...this.state.usuario,
+        rol_id: this.state.usuario.rol_id,
+        consultorio_id: this.state.usuario.consultorio_id,
+        cedula: this.state.usuario.cedula,
+        nombre: this.state.usuario.nombre,
+        apellido: this.state.usuario.apellido,
+        email: this.state.usuario.email,
+        telefono: this.state.usuario.telefono,
+        fecha_nacimiento: this.state.usuario.fecha_nacimiento,
+        updatedAt: new Date(),
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
+  handleOnChangeConsultorio = (e, data) => {
+    this.state.usuario.consultorio_id = data.value;
+  };
+  handleOnChangeEspecialidad = (e, data) => {
+    this.state.medicoUpdate.especialidad = this.saveEspecialidad(data.value);
+  };
+
+  //guardar especialidades
+  saveEspecialidad = (arr) => {
+    var option = [];
+    arr.forEach((element) => {
+      var i = element.split('$');
+      option.push({ id: parseInt(i[0]), value: i[1] });
+    });
+    return option;
+  };
+
+  //traer especialidades selccionadas
+  especialidadesSelect = (lista) => {
+    let opcion = [];
+    if (lista) {
+      lista.map((item) => {
+        opcion.push(item.id + '$' + item.value);
+      });
+    }
+    return opcion;
+  };
+
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
-          <Navbar buttonDisable={this.state.buttonDisable} />
+          <Navbar />
 
           {!this.state.sesion && (
             <Agregar
-              id="formAgregar"
               usuariopass={false}
               onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
               formUsuario={this.state.usuario}
@@ -309,7 +307,6 @@ class UsuarioEditar extends Component {
               consultorios={this.state.consultorios}
               handleOnChangeConsultorio={this.handleOnChangeConsultorio}
               handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
-              emailCorrect={this.state.emailCorrect}
               especialidadesSelect={this.especialidadesSelect(
                 this.state.medico.especialidad
               )}

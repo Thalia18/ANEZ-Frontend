@@ -5,7 +5,7 @@ import CitasCalendar from '../../components/Citas/Listado';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import {
   api_url,
   citasList,
@@ -29,11 +29,7 @@ class Citas extends Component {
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -110,7 +106,6 @@ class Citas extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.citaList);
     return (
       <React.Fragment>
         <Layout activeKeyP="1">
@@ -120,6 +115,7 @@ class Citas extends Component {
               changeMonth={this.changeMonth}
               fechaUltima={new Date(this.props.match.params.fecha)}
               view={this.props.match.params.view}
+              user={this.props.user}
             />
           )}
           <Sesion open={this.state.sesion} />

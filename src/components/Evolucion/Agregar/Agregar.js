@@ -50,7 +50,7 @@ const Agregar = ({
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveEvolucion}
-                id={id}
+                id="formAgregar"
               >
                 <Form.Group>
                   <Form.TextArea

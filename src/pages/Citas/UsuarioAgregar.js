@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
-import Sesion from '../../../components/Modales/ModalSesionExperida';
+import Sesion from '../../../components/Modales/ModalSesionExpirada';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -13,7 +13,6 @@ import {
   especialidadesDropdownUsuarios,
   mapStateToProps,
   openNotification,
-  regexEmail,
   rolesDropdown,
   trimData,
 } from '../../../components/utils';
@@ -25,7 +24,7 @@ class UsuarioAgregar extends Component {
       open: false,
       error: null,
       loading: true,
-      buttonDisable: false,
+
       emailCorrect: false,
       roles: [],
       consultorios: [],
@@ -51,7 +50,7 @@ class UsuarioAgregar extends Component {
         email: '',
         telefono: '',
         fecha_nacimiento: '',
-        created_at: new Date(),
+        createdAt: new Date(),
       },
       sesion: false,
     };
@@ -141,20 +140,6 @@ class UsuarioAgregar extends Component {
       },
     });
     this.usuarioGenerator();
-
-    if (this.state.usuario.email !== '') {
-      if (this.state.usuario.email.match(regexEmail)) {
-        this.setState({
-          buttonDisable: false,
-          emailCorrect: false,
-        });
-      } else {
-        this.setState({
-          emailCorrect: true,
-          buttonDisable: true,
-        });
-      }
-    }
   };
 
   handleOnChangeConsultorio = (e, data) => {
@@ -278,7 +263,7 @@ class UsuarioAgregar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
-          <Navbar buttonDisable={this.state.buttonDisable} />
+          <Navbar />
 
           {!this.state.sesion && (
             <Agregar

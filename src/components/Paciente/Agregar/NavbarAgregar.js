@@ -6,7 +6,7 @@ import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
-const NavbarPacientes = ({ buttonDisable }) => {
+const NavbarPacientes = () => {
   let history = useHistory();
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -22,25 +22,20 @@ const NavbarPacientes = ({ buttonDisable }) => {
               />
             </Nav>
             <Nav pullRight>
-              {buttonDisable && (
-                <Nav.Item icon={<Icon icon="save" />}>Guardar</Nav.Item>
-              )}
-              {!buttonDisable && (
-                <Nav.Item>
-                  <Button
-                    form="formAgregar"
-                    type="submit"
-                    style={{
-                      width: '6em',
-                      height: '3em',
-                      marginTop: '-0.7em',
-                      background: 'rgba(0,161,213, 0.01)',
-                    }}
-                  >
-                    <Icon icon="save" /> Guardar
-                  </Button>
-                </Nav.Item>
-              )}
+              <Nav.Item>
+                <Button
+                  form="formAgregar"
+                  type="submit"
+                  style={{
+                    width: '6em',
+                    height: '3em',
+                    marginTop: '-0.7em',
+                    background: 'rgba(0,161,213, 0.01)',
+                  }}
+                >
+                  <Icon icon="save" /> Guardar
+                </Button>
+              </Nav.Item>
             </Nav>
           </Navbar.Body>
         </Navbar>

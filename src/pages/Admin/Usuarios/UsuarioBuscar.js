@@ -5,7 +5,7 @@ import Listado from '../../../components/Admin/Usuarios/Listado';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
-import Sesion from '../../../components/Modales/ModalSesionExperida';
+import Sesion from '../../../components/Modales/ModalSesionExpirada';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
 class UsuarioBuscar extends Component {

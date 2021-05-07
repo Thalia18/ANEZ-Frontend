@@ -36,7 +36,7 @@ const Agregar = ({
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveUsuario}
-                id={id}
+                id="formAgregar"
               >
                 <Form.Group>
                   <Form.Input

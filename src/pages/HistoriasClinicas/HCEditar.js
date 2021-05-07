@@ -5,8 +5,8 @@ import Error from '../../components/Error/Error';
 import Editar from '../../components/HistoriaClinica/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
-import Navbar from '../../components/Paciente/Editar/NavbarEditar';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
+import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
   mapStateToProps,
@@ -30,7 +30,8 @@ class HCEditar extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
+      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
+        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
     ) {
       this.fetchData();
     } else {
@@ -103,7 +104,7 @@ class HCEditar extends Component {
         aborto: this.state.historiaClinica.aborto,
         metodo_anticonceptivo: this.state.historiaClinica.metodo_anticonceptivo,
         [e.target.name]: e.target.value,
-        updated_at: new Date(),
+        updatedAt: new Date(),
       },
     });
   };
@@ -169,7 +170,6 @@ class HCEditar extends Component {
             <Editar
               headerC="Editar Historia Clínica"
               icon="edit"
-              id="formEditar"
               existsHC={false}
               onClickButtonSaveHC={this.onClickButtonSaveHC}
               handleChange={this.handleChange}

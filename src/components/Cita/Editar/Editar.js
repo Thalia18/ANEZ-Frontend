@@ -3,14 +3,7 @@ import InputMask from 'react-input-mask';
 import Media from 'react-media';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
-import {
-  Checkbox,
-  Form,
-  Header,
-  Icon,
-  Message,
-  Segment,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
@@ -29,14 +22,12 @@ const Agregar = ({
   handleChange,
   horas,
   handleOnChangeHora,
-  id,
   especialidades,
   handleOnChangeEspecialidad,
   medicos,
   handleOnChangeMedico,
   medico,
   handleChangeEspecialidad,
-  campos,
 }) => {
   var a = formCita.hora.split(':');
   const [value, setValue] = React.useState(true);
@@ -53,13 +44,12 @@ const Agregar = ({
             </Header>
             <hr />
             <HCHeader paciente={paciente} />
-            <Message hidden={campos} warning header="Seleccione médico" />
 
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveCita}
-                id={id}
+                id="formAgregar"
               >
                 <Segment basic hidden={!value}>
                   <b>Médico:</b>

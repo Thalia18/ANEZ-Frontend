@@ -5,7 +5,7 @@ import Error from '../../components/Error/Error';
 import Listado from '../../components/Evoluciones/Listado';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class Evoluciones extends Component {
@@ -25,7 +25,8 @@ class Evoluciones extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
+      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
+        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
     ) {
       this.fetchData();
     } else {

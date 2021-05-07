@@ -5,7 +5,7 @@ import Buscar from '../../components/Citas/Buscar';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class CitasBuscar extends Component {
@@ -23,11 +23,7 @@ class CitasBuscar extends Component {
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -89,6 +85,7 @@ class CitasBuscar extends Component {
               fecha2={this.props.match.params.fecha2}
               paginas={this.state.paginas}
               handleChangePage={this.handleChangePage}
+              user={this.props.user}
             />
           )}
           <Sesion open={this.state.sesion} />

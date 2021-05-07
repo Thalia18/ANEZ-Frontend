@@ -64,17 +64,15 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                   >
                     <Logo src={consultorio.logo} />
                   </Nav.Item>
-                  {user.rol.trim().toUpperCase() !== 'ADMINISTRADOR' && (
-                    <Nav.Item
-                      eventKey="1"
-                      componentClass={Link}
-                      to={`/citas/${fechaCitas(new Date())}/month`}
-                    >
-                      <Icon icon="calendar" /> Citas
-                    </Nav.Item>
-                  )}
+                  <Nav.Item
+                    eventKey="1"
+                    componentClass={Link}
+                    to={`/citas/${fechaCitas(new Date())}/month`}
+                  >
+                    <Icon icon="calendar" /> Citas
+                  </Nav.Item>
 
-                  {user.rol.trim().toUpperCase() === 'MÉDICO' && (
+                  {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
                     <Nav.Item
                       eventKey="2"
                       componentClass={Link}
@@ -83,15 +81,9 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                       <Icon icon="heartbeat" /> Historias clínicas
                     </Nav.Item>
                   )}
-                  {user.rol.trim().toUpperCase() !== 'ADMINISTRADOR' && (
-                    <Nav.Item
-                      eventKey="3"
-                      componentClass={Link}
-                      to="/pacientes"
-                    >
-                      <Icon icon="people-group" /> Pacientes
-                    </Nav.Item>
-                  )}
+                  <Nav.Item eventKey="3" componentClass={Link} to="/pacientes">
+                    <Icon icon="people-group" /> Pacientes
+                  </Nav.Item>
                   {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                     <Nav.Item
                       eventKey="4"
@@ -135,7 +127,9 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                     size="md"
                     style={{ marginRight: '2em' }}
                   >
-                    <Dropdown.Item onClick={logout}>
+                    <Dropdown.Item
+                      onClick={() => history.push(`/perfil/${user.usuario}`)}
+                    >
                       <Icon icon="user-info" />
                       Perfil
                     </Dropdown.Item>

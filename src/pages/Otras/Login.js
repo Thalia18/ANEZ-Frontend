@@ -82,7 +82,10 @@ class LoginG extends Component {
           }
         );
 
-        if (this.state.userConfirm.rol.trim() === 'MÉDICO') {
+        if (
+          this.state.userConfirm.rol.trim() === 'MÉDICO' ||
+          this.state.userConfirm.rol.trim() === 'ADMINISTRADOR'
+        ) {
           const { data: cie10List } = await axios.get(
             `${api_url}/api/categorias`,
             {

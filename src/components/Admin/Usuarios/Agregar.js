@@ -3,7 +3,7 @@ import InputMask from 'react-input-mask';
 import Media from 'react-media';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
-import { Form, Header, Icon, Message, Segment } from 'semantic-ui-react';
+import { Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import {
   fechaActual,
@@ -17,7 +17,6 @@ import {
 
 const Agregar = ({
   handleChange,
-  id,
   roles,
   consultorios,
   especialidades,
@@ -25,7 +24,6 @@ const Agregar = ({
   handleOnChangeEspecialidad,
   usuariopass,
   onClickButtonSaveUsuario,
-  emailCorrect,
   especialidadesSelect,
   rol_id,
 }) => {
@@ -45,16 +43,11 @@ const Agregar = ({
             </Header>
             <hr />
 
-            <Message
-              hidden={!emailCorrect}
-              error
-              header="Correo electrónico no válido"
-            />
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveUsuario}
-                id={id}
+                id="formAgregar"
               >
                 <Segment basic>
                   <Icon name="id card" />

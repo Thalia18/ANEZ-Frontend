@@ -5,7 +5,7 @@ import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import Detalle from '../../components/Paciente/Detalle/Detalle';
 import Navbar from '../../components/Paciente/Detalle/NavbarDetalle';
 import { api_url, mapStateToProps } from '../../components/utils';
@@ -22,11 +22,7 @@ class PacienteDetalle extends Component {
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');

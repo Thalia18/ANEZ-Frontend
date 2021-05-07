@@ -5,29 +5,26 @@ import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import Sesion from '../../components/Modales/ModalSesionExpirada';
-import Listado from '../../components/Pacientes/Listado';
+import Actualizar from '../../components/Perfil/Actualizar';
+import Navbar from '../../components/Perfil/NavbarAgregar';
 import { api_url, mapStateToProps } from '../../components/utils';
 
-class Pacientes extends Component {
+class Perfil extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       loading: true,
-      pacientes: {},
-      autocomplete: {},
-      paginas: {},
-      page: 1,
+      usuario: {
+        // email: '',
+        // telefono: '',
+      },
       sesion: false,
+      emailCorrect: false,
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
-        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -39,13 +36,16 @@ class Pacientes extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(`${api_url}/api/pacientes`, {
-        method: 'GET',
-        headers: {
-          Authorization: this.props.jwt.accessToken,
-          auth: this.props.user.rol,
-        },
-      });
+      const { data } = await axios.get(
+        `${api_url}/api/usuario_username/${this.props.match.params.user}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
       if (data.error) {
         this.setState({
           sesion: true,
@@ -53,8 +53,7 @@ class Pacientes extends Component {
         });
       } else {
         this.setState({
-          pacientes: data.data,
-          paginas: data.info,
+          usuario: data.data,
           loading: false,
         });
       }
@@ -65,30 +64,32 @@ class Pacientes extends Component {
       });
     }
   };
-  handleChangePage = (e, value) => {
-    this.state.page = value.activePage;
-    this.fetchData();
+
+  handleChange = (e) => {
+    this.setState({
+      usuario: {
+        ...this.state.usuario,
+        telefono: this.state.usuario.telefono,
+        email: this.state.usuario.email,
+        [e.target.name]: e.target.value,
+      },
+    });
   };
+  //   usuario_update
 
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
-        <Layout activeKeyP="2">
+        <Layout activeKeyP="0">
+          <Navbar usuario={this.state.usuario.usuario} opcion="datos" />
+
           {!this.state.sesion && (
-            <Listado
-              header="Historias clínicas"
-              icon="heartbeat"
-              pacientes={Object.values(this.state.pacientes)}
-              autoComplete={this.state.autocomplete}
-              pageInitial="/historia_clinica"
-              pageSecond="/historias_clinicas"
-              reload="/historia_clinica_buscar"
-              optionNav="HC"
-              paginas={this.state.paginas}
-              handleChangePage={this.handleChangePage}
+            <Actualizar
+              usuario={this.state.usuario}
+              emailCorrect={this.state.emailCorrect}
+              handleChange={this.handleChange}
             />
           )}
           <Sesion open={this.state.sesion} />
@@ -97,5 +98,4 @@ class Pacientes extends Component {
     );
   }
 }
-
-export default connect(mapStateToProps, null)(Pacientes);
+export default connect(mapStateToProps, null)(Perfil);

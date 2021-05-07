@@ -14,18 +14,20 @@ const Header = ({ user, consultorio }) => {
         <Container style={{ marginTop: '1em' }}>
           <Container>{eliminarTildes(consultorio.nombre)}</Container>
 
-          <Container
-            style={{
-              fontStyle: 'italic',
-              fontSize: '1.3em',
-              fontWeight: 'bold',
-              fontFamily: 'Bookman, URW Bookman L, serif',
-            }}
-          >
-            DR(A).&nbsp; {eliminarTildes(user.nombre)}
-            &nbsp;
-            {eliminarTildes(user.apellido)}
-          </Container>
+          {user.rol === 'MÉDICO' && (
+            <Container
+              style={{
+                fontStyle: 'italic',
+                fontSize: '1.3em',
+                fontWeight: 'bold',
+                fontFamily: 'Bookman, URW Bookman L, serif',
+              }}
+            >
+              DR(A).&nbsp; {eliminarTildes(user.nombre)}
+              &nbsp;
+              {eliminarTildes(user.apellido)}
+            </Container>
+          )}
           <Container
             style={{
               fontSize: '0.9em',

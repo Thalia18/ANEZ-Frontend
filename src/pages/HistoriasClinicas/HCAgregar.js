@@ -5,7 +5,7 @@ import Error from '../../components/Error/Error';
 import Agregar from '../../components/HistoriaClinica/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -35,7 +35,7 @@ class HCAgregar extends Component {
         cesarea: '',
         aborto: '',
         metodo_anticonceptivo: '',
-        created_at: new Date(),
+        createdAt: new Date(),
       },
       sesion: false,
     };
@@ -44,7 +44,8 @@ class HCAgregar extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
+      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
+        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
     ) {
       this.fetchData();
     } else {
@@ -181,12 +182,11 @@ class HCAgregar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="2">
-          <Navbar buttonDisable={false} />
+          <Navbar />
           {!this.state.sesion && (
             <Agregar
               headerC="Nueva Historia Clínica"
               icon="add circle"
-              id="formAgregar"
               paciente={this.state.paciente}
               onClickButtonSaveHC={this.onClickButtonSaveHC}
               formHC={this.state.historiaClinica}

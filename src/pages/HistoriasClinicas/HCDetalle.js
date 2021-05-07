@@ -8,7 +8,7 @@ import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Modal from '../../components/Modales/ModalNotExists';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class HCDetalle extends Component {
@@ -28,7 +28,8 @@ class HCDetalle extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
+      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
+        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
     ) {
       this.fetchData();
     } else {

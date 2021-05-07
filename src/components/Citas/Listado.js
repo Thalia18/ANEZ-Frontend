@@ -39,6 +39,7 @@ const Listado = ({
   fechaUltima,
   // changeView,
   view,
+  user,
   ...props
 }) => {
   const history = useHistory();
@@ -50,7 +51,7 @@ const Listado = ({
         <React.Fragment>
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Navbar verNav={false} citaId={0} />
+              <Navbar verNav={false} citaId={0} user={user} />
               <Header as="h1" textAlign="center">
                 <Header.Content>
                   <Icon name="calendar" />

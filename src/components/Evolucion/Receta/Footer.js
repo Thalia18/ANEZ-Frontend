@@ -7,19 +7,21 @@ import { eliminarTildes, mapStateToProps } from '../../utils';
 const Footer = ({ user, telefono, direccion }) => {
   return (
     <React.Fragment>
-      <Container
-        style={{
-          fontSize: '0.9em',
-          borderTop: 'solid black',
-          width: '50%',
-          textAlign: 'center',
-        }}
-      >
-        DR(A). {''}
-        {eliminarTildes(user.nombre)}
-        {''}
-        {eliminarTildes(user.apellido)}
-      </Container>
+      {user.rol === 'MÉDICO' && (
+        <Container
+          style={{
+            fontSize: '0.9em',
+            borderTop: 'solid black',
+            width: '50%',
+            textAlign: 'center',
+          }}
+        >
+          DR(A). {''}
+          {eliminarTildes(user.nombre)}
+          {''}
+          {eliminarTildes(user.apellido)}
+        </Container>
+      )}
       <br />
       <br />
 

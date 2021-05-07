@@ -1,14 +1,13 @@
 import React from 'react';
 import Media from 'react-media';
-import { Link, useHistory, withRouter } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import { Container, DateRangePicker, Icon, Nav, Navbar } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Button, Form } from 'semantic-ui-react';
-import Modal from '../Modales/ModalCita';
-import { fechaCitas, GLOBAL_MEDIA_QUERIES } from '../utils';
+import { GLOBAL_MEDIA_QUERIES } from '../utils';
 
-const NavbarCitas = ({ verNav, citaId, user, ...props }) => {
+const NavbarCitas = ({ onClickSend, verNav, citaId, ...props }) => {
   let history = useHistory();
   let url =
     citaId === undefined
@@ -41,36 +40,10 @@ const NavbarCitas = ({ verNav, citaId, user, ...props }) => {
                   }}
                 />
               )}
-              <Nav.Item
-                icon={<Icon icon="calendar" />}
-                onClick={() => {
-                  setModal(true);
-                }}
-              >
-                Agendar cita
+
+              <Nav.Item icon={<Icon icon="send" />} onClick={onClickSend}>
+                Enviar notificaciones
               </Nav.Item>
-              {user.rol.trim() !== 'MÉDICO' && (
-                <Nav.Item
-                  icon={<Icon icon="bell" />}
-                  onClick={() =>
-                    history.push(
-                      `/citas_notificacion/${fechaCitas(new Date())}`
-                    )
-                  }
-                >
-                  Recordatorios de citas
-                </Nav.Item>
-              )}
-              {verNav && (
-                <Nav.Item
-                  icon={<Icon icon="eye" />}
-                  componentClass={Link}
-                  // key={evolucionId}
-                  to={url}
-                >
-                  Ver
-                </Nav.Item>
-              )}
             </Nav>
             <Nav pullRight style={{ marginTop: '0.8em', marginRight: '1em' }}>
               <Container style={{ marginTop: '-0.1em' }}>
@@ -89,9 +62,9 @@ const NavbarCitas = ({ verNav, citaId, user, ...props }) => {
                       value.length === 0
                         ? window.location.reload()
                         : props.history.push(
-                            `/citas_buscar/${fecha(value[0])}/${fecha(
-                              value[1]
-                            )}`
+                            `/citas__buscar_notificacion/${fecha(
+                              value[0]
+                            )}/${fecha(value[1])}`
                           );
                       window.location.reload();
                     }}
@@ -102,7 +75,6 @@ const NavbarCitas = ({ verNav, citaId, user, ...props }) => {
               </Container>
             </Nav>
           </Navbar.Body>
-          <Modal existsHC={modal} close={closeModal} />
         </Navbar>
       )}
     </Media>

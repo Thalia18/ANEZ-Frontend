@@ -22,7 +22,6 @@ const Agregar = ({
   header,
   content,
   pacienteId,
-  id,
   headerC,
   icon,
 }) => {
@@ -30,7 +29,6 @@ const Agregar = ({
   const handleChangeCheck = (e) => {
     setValue(!value);
   };
-  console.log(paciente);
 
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -49,7 +47,7 @@ const Agregar = ({
               <Form
                 size={matches.medium ? 'tiny' : null}
                 onSubmit={onClickButtonSaveHC}
-                id={id}
+                id="formAgregar"
               >
                 <Form.Group>
                   <Form.TextArea

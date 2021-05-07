@@ -5,7 +5,7 @@ import Agregar from '../../components/Cita/Agregar/Agregar';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -30,7 +30,7 @@ class CitasAgregar extends Component {
         fecha: '',
         hora: '',
         motivo_cita: '',
-        created_at: new Date(),
+        createdAt: new Date(),
         medico_id: null,
         paciente_id: '',
         telefono_paciente: '',
@@ -38,16 +38,10 @@ class CitasAgregar extends Component {
       especialidades: [],
       medicos: [],
       sesion: false,
-      campos: true,
-      buttonDisable: true,
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -114,24 +108,9 @@ class CitasAgregar extends Component {
         [e.target.name]: e.target.value,
       },
     });
-    if (this.state.cita.medico_id !== null && this.state.cita.hora !== '') {
-      this.setState({
-        campos: false,
-      });
-    } else {
-      this.setState({
-        buttonDisable: false,
-      });
-    }
   };
 
-  //guardar cita
-  onClickButtonSaveCita = async (e) => {
-    e.preventDefault();
-    this.setState({
-      loading: true,
-      error: null,
-    });
+  saveData = async () => {
     trimData(this.state.cita);
     try {
       const { data: cita } = await axios.post(
@@ -176,11 +155,35 @@ class CitasAgregar extends Component {
         }
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
       });
+    }
+  };
+
+  //guardar cita
+  onClickButtonSaveCita = async (e) => {
+    e.preventDefault();
+    this.setState({
+      loading: true,
+      error: null,
+    });
+    if (this.state.cita.medico_id === null) {
+      this.setState({
+        loading: false,
+      });
+      openNotification('error', 'Citas', 'Seleccione un médico', '');
+    } else if (this.state.cita.hora === '') {
+      this.setState({
+        loading: false,
+      });
+      openNotification('error', 'Citas', 'Seleccione hora de la cita', '');
+    } else {
+      this.setState({
+        loading: false,
+      });
+      this.saveData();
     }
   };
 
@@ -222,11 +225,10 @@ class CitasAgregar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.cita);
     return (
       <React.Fragment>
         <Layout activeKeyP="1">
-          <Navbar buttonDisable={this.state.buttonDisable} />
+          <Navbar />
 
           {!this.state.sesion && (
             <Agregar
@@ -241,7 +243,6 @@ class CitasAgregar extends Component {
               handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
               medicos={this.state.medicos}
               handleOnChangeMedico={this.handleOnChangeMedico}
-              campos={this.state.campos}
             />
           )}
           <Sesion open={this.state.sesion} />

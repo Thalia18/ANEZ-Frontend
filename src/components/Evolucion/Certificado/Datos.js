@@ -32,10 +32,13 @@ export default ({
                 <Segment>
                   <Icon name="calendar alternate" />
                   Fecha de ingreso y egreso
+                  <br />
+                  <br />
                   <Form size={matches.medium ? 'tiny' : null}>
                     <Form.Group>
                       <Form.Input
                         placeholder="Fecha de ingreso"
+                        label="Fecha de ingreso"
                         width={4}
                         type="date"
                         onChange={handleChange}
@@ -45,6 +48,7 @@ export default ({
                       />
                       <Form.Input
                         placeholder="Fecha de egreso"
+                        label="Fecha de egreso"
                         width={4}
                         type="date"
                         onChange={handleChange}

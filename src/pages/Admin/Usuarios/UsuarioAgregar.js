@@ -6,7 +6,7 @@ import Agregar from '../../../components/Admin/Usuarios/Agregar';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
-import Sesion from '../../../components/Modales/ModalSesionExperida';
+import Sesion from '../../../components/Modales/ModalSesionExpirada';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -26,8 +26,6 @@ class UsuarioAgregar extends Component {
       open: false,
       error: null,
       loading: true,
-      buttonDisable: false,
-      emailCorrect: false,
       roles: [],
       consultorios: [],
       especialidades: [],
@@ -52,7 +50,7 @@ class UsuarioAgregar extends Component {
         email: '',
         telefono: '',
         fecha_nacimiento: '',
-        created_at: new Date(),
+        createdAt: new Date(),
       },
       sesion: false,
     };
@@ -142,20 +140,6 @@ class UsuarioAgregar extends Component {
       },
     });
     this.usuarioGenerator();
-
-    if (this.state.usuario.email !== '') {
-      if (this.state.usuario.email.match(regexEmail)) {
-        this.setState({
-          buttonDisable: false,
-          emailCorrect: false,
-        });
-      } else {
-        this.setState({
-          emailCorrect: true,
-          buttonDisable: true,
-        });
-      }
-    }
   };
 
   handleOnChangeConsultorio = (e, data) => {
@@ -194,14 +178,7 @@ class UsuarioAgregar extends Component {
     }
   };
 
-  //guardar cita
-  onClickButtonSaveUsuario = async (e) => {
-    e.preventDefault();
-    this.setState({
-      loading: true,
-      error: null,
-    });
-
+  saveData = async () => {
     trimData(this.state.usuario);
     // trimData(this.state.medico);
     try {
@@ -269,13 +246,34 @@ class UsuarioAgregar extends Component {
     }
   };
 
+  //guardar cita
+  onClickButtonSaveUsuario = async (e) => {
+    e.preventDefault();
+    this.setState({
+      loading: true,
+      error: null,
+    });
+
+    if (!this.state.usuario.email.match(regexEmail)) {
+      this.setState({
+        loading: false,
+      });
+      openNotification('error', 'Usuarios', 'Correo electrónico no válido', '');
+    } else {
+      this.setState({
+        loading: false,
+      });
+      this.saveData();
+    }
+  };
+
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
-          <Navbar buttonDisable={this.state.buttonDisable} />
+          <Navbar />
 
           {!this.state.sesion && (
             <Agregar

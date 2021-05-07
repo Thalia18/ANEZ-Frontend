@@ -5,7 +5,7 @@ import Agregar from '../../../components/Admin/Consultorios/Agregar';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
-import Sesion from '../../../components/Modales/ModalSesionExperida';
+import Sesion from '../../../components/Modales/ModalSesionExpirada';
 import Navbar from '../../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -29,7 +29,7 @@ class UsuarioAgregar extends Component {
         direccion: '',
         telefono: '',
         logo: '',
-        updated_at: new Date(),
+        updatedAt: new Date(),
       },
       sesion: false,
     };

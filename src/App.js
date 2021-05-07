@@ -15,7 +15,9 @@ import CitasAgregarPage from './pages/Citas/CitaAgregar';
 import CitaBuscarPage from './pages/Citas/CitaBuscar';
 import CitaPage from './pages/Citas/CitaDetalle';
 import CitasPage from './pages/Citas/Citas';
+import CitasBuscarNotificacion from './pages/Citas/CitasBuscarNotif';
 import CitasEditarPage from './pages/Citas/CitasEditar';
+import CitasNotificacionPage from './pages/Citas/CitasNotificacion';
 import CertificadoPage from './pages/Evoluciones/Certificado';
 import EvolucionAgregarPage from './pages/Evoluciones/EvolucionAgregar';
 import EvolucionBuscarPage from './pages/Evoluciones/EvolucionBuscar';
@@ -39,6 +41,9 @@ import PacienteBuscarPage from './pages/Pacientes/PacienteBuscar';
 import PacienteDetallePage from './pages/Pacientes/PacienteDetalle';
 import PacienteEditarPage from './pages/Pacientes/PacienteEditar';
 import PacientesPage from './pages/Pacientes/Pacientes';
+import PerfilActualizaPage from './pages/Perfil/ActualizarDatos';
+import PerfilPassPage from './pages/Perfil/CambiarPass';
+import PerfilPage from './pages/Perfil/Perfil';
 
 function App() {
   return (
@@ -53,6 +58,15 @@ function App() {
           <Route exact path="/main" component={MainPage} />
           {/* pagina de about */}
           <Route exact path="/about" component={AboutPage} />
+          {/* paginas de perfil */}
+          <Route exact path="/perfil/:user" component={PerfilPage} />
+          <Route
+            exact
+            path="/perfil_actualizar/:user"
+            component={PerfilActualizaPage}
+          />
+          <Route exact path="/perfil_pass/:user" component={PerfilPassPage} />
+
           {/* //paginas de pacientes */}
           <Route exact path="/pacientes" component={PacientesPage} />
           <Route
@@ -137,6 +151,16 @@ function App() {
             exact
             path="/citas_buscar/:fecha1/:fecha2"
             component={CitaBuscarPage}
+          />
+          <Route
+            exact
+            path="/citas_notificacion/:fecha"
+            component={CitasNotificacionPage}
+          />
+          <Route
+            exact
+            path="/citas__buscar_notificacion/:fecha1/:fecha2"
+            component={CitasBuscarNotificacion}
           />
           <Route exact path="/cita_detalle/:citaId" component={CitaPage} />
           <Route

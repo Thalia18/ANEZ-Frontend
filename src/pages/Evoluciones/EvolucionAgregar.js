@@ -5,7 +5,7 @@ import Error from '../../components/Error/Error';
 import Agregar from '../../components/Evolucion/Agregar/Agregar';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
@@ -37,11 +37,11 @@ class EvolucionAgregar extends Component {
         proximo_control: undefined,
         foto: '',
         diagnostico_cie10: '',
-        created_at: new Date(),
+        createdAt: new Date(),
       },
       evolucionId: null,
       fotoList: [{ foto_url: '' }],
-      buttonDisable: false,
+
       cie10List: [],
       cie10: [],
       sesion: false,
@@ -51,7 +51,8 @@ class EvolucionAgregar extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
+      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
+        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
     ) {
       this.fetchData();
     } else {
@@ -191,7 +192,7 @@ class EvolucionAgregar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="2">
-          <Navbar buttonDisable={this.state.buttonDisable} />
+          <Navbar />
 
           {!this.state.sesion && (
             <Agregar

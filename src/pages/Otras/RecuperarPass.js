@@ -65,7 +65,6 @@ class RecuperarPass extends Component {
         loading: false,
       });
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,
@@ -76,7 +75,6 @@ class RecuperarPass extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.user);
     return (
       <React.Fragment>
         <Recuperar

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import Editar from '../../components/Paciente/Agregar/Agregar';
-import Navbar from '../../components/Paciente/Editar/NavbarEditar';
+import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
   estadoCivilDropdown,
@@ -33,20 +33,13 @@ class PacienteEditar extends Component {
       estadoCivil: [],
       nivelDeInstruccion: [],
       genero: [],
-      buttonDisable: false,
 
-      emailCorrect: undefined,
-      cedulaLength: undefined,
       sesion: false,
       pacienteOriginal: {},
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() !== 'ADMINISTRADOR'
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -119,6 +112,7 @@ class PacienteEditar extends Component {
             },
           }
         );
+        trimData(pacienteA.data);
         this.setState({
           etnias: etniasDropdown(etnias.data),
           estadoCivil: estadoCivilDropdown(estadosCiviles.data),
@@ -130,7 +124,6 @@ class PacienteEditar extends Component {
           paciente: pacienteA.data,
           loading: false,
         });
-        trimData(this.state.paciente);
       }
     } catch (error) {
       this.setState({
@@ -163,33 +156,12 @@ class PacienteEditar extends Component {
         contacto_emergencia_telefono: this.state.paciente
           .contacto_emergencia_telefono,
         [e.target.name]: e.target.value,
-        updated_at: new Date(),
+        updatedAt: new Date(),
       },
     });
-
-    //verificar correo valido
-    if (this.state.paciente.email !== '') {
-      if (this.state.paciente.email.match(regexEmail)) {
-        this.setState({
-          buttonDisable: false,
-          emailCorrect: false,
-        });
-      } else {
-        this.setState({
-          emailCorrect: true,
-          buttonDisable: true,
-        });
-      }
-    }
   };
 
-  //guardar paciente
-  onClickButtonSavePaciente = async (e) => {
-    e.preventDefault();
-    this.setState({
-      loading: true,
-      error: null,
-    });
+  saveData = async () => {
     trimData(this.state.paciente);
     try {
       const { data: paciente } = await axios.put(
@@ -240,30 +212,43 @@ class PacienteEditar extends Component {
     }
   };
 
+  //guardar paciente
+  onClickButtonSavePaciente = async (e) => {
+    e.preventDefault();
+    this.setState({
+      loading: true,
+      error: null,
+    });
+    if (!this.state.paciente.email.match(regexEmail)) {
+      this.setState({
+        loading: false,
+      });
+      openNotification(
+        'error',
+        'Pacientes',
+        'Correo electrónico no válido',
+        ''
+      );
+    } else {
+      this.setState({
+        loading: false,
+      });
+      this.saveData();
+    }
+  };
+
   //obtener datos de dropdown
   handleOnChangeEC = (e, data) => {
     this.state.paciente.estado_civil_id = data.value;
-    this.setState({
-      buttonDisable: false,
-    });
   };
   handleOnChangeTS = (e, data) => {
     this.state.paciente.tipo_de_sangre_id = data.value;
-    this.setState({
-      buttonDisable: false,
-    });
   };
   handleOnChangeNI = (e, data) => {
     this.state.paciente.nivel_de_instruccion_id = data.value;
-    this.setState({
-      buttonDisable: false,
-    });
   };
   handleOnChangeE = (e, data) => {
     this.state.paciente.etnia_id = data.value;
-    this.setState({
-      buttonDisable: false,
-    });
   };
 
   handleOnChangeG = (e, data) => {
@@ -284,15 +269,11 @@ class PacienteEditar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="3">
-          <Navbar
-            success={this.state.success}
-            buttonDisable={this.state.buttonDisable}
-          />
+          <Navbar success={this.state.success} />
           {!this.state.sesion && (
             <Editar
               header="Editar Paciente"
               icon="edit"
-              id="formEditar"
               etnias={this.state.etnias}
               nivelDeInstruccion={this.state.nivelDeInstruccion}
               estadoCivil={this.state.estadoCivil}
@@ -308,8 +289,6 @@ class PacienteEditar extends Component {
               handleOnChangeG={this.handleOnChangeG}
               success={this.state.success}
               closeModal={this.closeModal}
-              emailCorrect={this.state.emailCorrect}
-              cedulaLength={this.state.cedulaLength}
             />
           )}
           <Sesion open={this.state.sesion} />

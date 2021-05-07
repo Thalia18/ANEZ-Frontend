@@ -4,9 +4,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { Icon, Nav, Navbar } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
-import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../utils';
 
-const NavbarDetalleEvolucion = ({ onClickDelete, evolucionId, historiaId }) => {
+const NavbarPerfil = ({ usuario }) => {
   let history = useHistory();
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
@@ -17,21 +17,24 @@ const NavbarDetalleEvolucion = ({ onClickDelete, evolucionId, historiaId }) => {
               <Nav.Item
                 icon={<Icon icon="angle-left" />}
                 onClick={() => {
-                  history.go(-2);
+                  history.goBack();
                 }}
               />
-            </Nav>
-            <Nav pullRight>
               <Nav.Item
-                icon={<Icon icon="pencil" />}
+                icon={<Icon icon="edit" />}
                 componentClass={Link}
-                key={evolucionId}
-                to={`/evolucion_editar/${evolucionId}/${historiaId}`}
+                key={usuario}
+                to={`/perfil_actualizar/${usuario}`}
               >
-                Editar
+                Actualizar datos
               </Nav.Item>
-              <Nav.Item onClick={onClickDelete} icon={<Icon icon="trash" />}>
-                Eliminar
+              <Nav.Item
+                icon={<Icon icon="key" />}
+                componentClass={Link}
+                key={usuario}
+                to={`/perfil_pass/${usuario}`}
+              >
+                Cambiar contraseña
               </Nav.Item>
             </Nav>
           </Navbar.Body>
@@ -41,4 +44,4 @@ const NavbarDetalleEvolucion = ({ onClickDelete, evolucionId, historiaId }) => {
   );
 };
 
-export default NavbarDetalleEvolucion;
+export default NavbarPerfil;

@@ -6,7 +6,7 @@ const ModalSesionExpirada = ({ open }) => {
   let history = useHistory();
   return (
     <Modal open={open} dimmer="blurring" size="tiny">
-      <Header icon=" hourglass start " content="Su sesión ha expirado" />
+      <Header icon="hourglass start" content="Su sesión ha expirado" />
       <Modal.Content>
         <p>
           <b>

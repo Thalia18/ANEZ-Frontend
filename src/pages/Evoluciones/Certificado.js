@@ -8,7 +8,7 @@ import CertificadoPDF from '../../components/Evolucion/Certificado/Certificado';
 import Datos from '../../components/Evolucion/Certificado/Datos';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
-import Sesion from '../../components/Modales/ModalSesionExperida';
+import Sesion from '../../components/Modales/ModalSesionExpirada';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class Receta extends Component {
@@ -34,7 +34,8 @@ class Receta extends Component {
     if (
       this.props.user != null &&
       this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
+      (this.props.user.rol.trim().toUpperCase() === 'MÉDICO' ||
+        this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR')
     ) {
       this.fetchData();
     } else {
@@ -107,7 +108,6 @@ class Receta extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.props.user);
 
     const panes = [
       {

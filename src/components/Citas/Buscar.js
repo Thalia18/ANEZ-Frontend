@@ -19,14 +19,14 @@ import {
 } from '../utils';
 import Navbar from './NavbarCitas';
 
-const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage }) => {
+const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage, user }) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar verNav={true} citaId={value} />
+          <Navbar verNav={true} citaId={value} user={user} />
           <Segment>
             <Global style={matches.medium ? mediumHeight : masMediumHeight}>
               <Header as="h1" textAlign="center">

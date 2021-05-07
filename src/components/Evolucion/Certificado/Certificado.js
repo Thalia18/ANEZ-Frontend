@@ -133,20 +133,22 @@ class App extends Component {
                   <br />
                   <br />
                   <br />
-                  <Container
-                    style={{
-                      fontSize: '0.9em',
-                      borderTop: 'solid black',
-                      width: '50%',
-                      textAlign: 'center',
-                    }}
-                  >
-                    Firma / Sello del Medico <br />
-                    DR(A). {''}
-                    {eliminarTildes(this.props.user.nombre)}
-                    {''}
-                    {eliminarTildes(this.props.user.apellido)}
-                  </Container>
+                  {this.props.user.rol === 'MÉDICO' && (
+                    <Container
+                      style={{
+                        fontSize: '0.9em',
+                        borderTop: 'solid black',
+                        width: '50%',
+                        textAlign: 'center',
+                      }}
+                    >
+                      Firma / Sello del Medico <br />
+                      DR(A). {''}
+                      {eliminarTildes(this.props.user.nombre)}
+                      {''}
+                      {eliminarTildes(this.props.user.apellido)}
+                    </Container>
+                  )}
                 </div>
               </Segment>
             </Container>
