@@ -77,7 +77,7 @@ class ActualizarDatos extends Component {
     }
   };
 
-  handleChange = (e, equal) => {
+  handleChange = (e) => {
     this.setState({
       usuario: {
         ...this.state.usuario,
@@ -88,17 +88,20 @@ class ActualizarDatos extends Component {
       },
     });
     this.checkSecurity(this.state.usuario.passNew);
-  };
-
-  //   usuario_update
-  saveData = async () => {
     this.setState({
       userF: {
         contrasena: this.state.usuario.passNew.trim(),
       },
     });
-    // trimData(this.state.userF);
+  };
+
+  //   usuario_update
+  saveData = async () => {
     try {
+      this.setState({
+        loading: true,
+        error: null,
+      });
       const result = await axios.patch(
         `${api_url}/api/usuario_update_pass/${this.state.user.usuario_id}/${this.state.usuario.passActual}`,
         this.state.userF,
@@ -110,33 +113,43 @@ class ActualizarDatos extends Component {
           },
         }
       );
+      this.setState({
+        loading: false,
+      });
+      console.log(result, 'res');
       if (result.error) {
         this.setState({
           sesion: true,
           loading: false,
         });
-      } else if (result.data.pass) {
-        this.setState({
-          loading: false,
-          error: null,
-        });
-        openNotification('error', 'Perfil', 'Contraseña actual incorrecta', '');
       } else {
-        this.setState({
-          loading: false,
-          error: null,
-        });
-        openNotification(
-          'success',
-          'Perfil',
-          'Contraseña cambiada exitosamente',
-          ''
-        );
-        setTimeout(() => {
-          this.props.history.push('/');
-
-          this.props.logoutUser([]);
-        }, 2000);
+        if (!result.data.success) {
+          this.setState({
+            loading: false,
+            error: null,
+          });
+          openNotification(
+            'error',
+            'Perfil',
+            'Contraseña actual incorrecta',
+            ''
+          );
+        } else {
+          this.setState({
+            loading: false,
+            error: null,
+          });
+          openNotification(
+            'success',
+            'Perfil',
+            'Contraseña cambiada exitosamente',
+            ''
+          );
+          setTimeout(() => {
+            this.props.history.push('/');
+            this.props.logoutUser([]);
+          }, 1500);
+        }
       }
     } catch (error) {
       this.setState({
@@ -146,16 +159,10 @@ class ActualizarDatos extends Component {
     }
   };
   //guardar paciente
-  onClickButtonSaveDatos = async (e) => {
-    // e.preventDefault();
-    this.setState({
-      loading: true,
-      error: null,
-    });
+  onClickButtonSaveDatos = (e) => {
+    e.preventDefault();
+
     if (this.state.percent < 75) {
-      this.setState({
-        loading: false,
-      });
       openNotification(
         'error',
         'Perfil',
@@ -165,14 +172,8 @@ class ActualizarDatos extends Component {
     } else if (
       this.state.usuario.passNew !== this.state.usuario.passNewConfirm
     ) {
-      this.setState({
-        loading: false,
-      });
       openNotification('error', 'Perfil', 'Las contraseñas no coinciden. ', '');
     } else {
-      this.setState({
-        loading: false,
-      });
       this.saveData();
     }
   };
@@ -205,8 +206,6 @@ class ActualizarDatos extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.usuario);
-
     return (
       <React.Fragment>
         <Layout activeKeyP="0">

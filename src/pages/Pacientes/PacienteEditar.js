@@ -211,7 +211,7 @@ class PacienteEditar extends Component {
   };
 
   //guardar paciente
-  onClickButtonSavePaciente = async (e) => {
+  onClickButtonSavePaciente = (e) => {
     e.preventDefault();
     this.setState({
       loading: true,

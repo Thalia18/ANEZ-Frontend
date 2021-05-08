@@ -162,7 +162,7 @@ class CitasAgregar extends Component {
   };
 
   //guardar cita
-  onClickButtonSaveCita = async (e) => {
+  onClickButtonSaveCita = (e) => {
     e.preventDefault();
     this.setState({
       loading: true,

@@ -6,6 +6,7 @@ import { GLOBAL_MEDIA_QUERIES } from '../utils';
 
 const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
   const color = 'rgba(0,161,213, 0.1)';
+  const [passActual, setPassActual] = React.useState('password');
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
@@ -47,28 +48,50 @@ const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
                   </Message.Header>
                 </Message>
                 <Form size="large" onSubmit={validateUser}>
-                  <Form.Input
-                    icon="user"
-                    iconPosition="left"
-                    label="Usuario"
-                    placeholder="Usuario"
-                    onChange={handleChange}
-                    name="usuario"
-                    value={formUser.usuario}
-                    required
-                  />
-                  <Form.Input
-                    icon="lock"
-                    iconPosition="left"
-                    label="Contraseña"
-                    placeholder="Contraseña"
-                    type="password"
-                    onChange={handleChange}
-                    name="contrasena"
-                    value={formUser.contrasena}
-                    autoComplete="on"
-                    required
-                  />
+                  <Form.Group
+                    style={{ width: matches.medium ? '88%' : '91.5%' }}
+                  >
+                    <Form.Input
+                      icon="user"
+                      iconPosition="left"
+                      label="Usuario"
+                      placeholder="Usuario"
+                      onChange={handleChange}
+                      name="usuario"
+                      value={formUser.usuario}
+                      width={16}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Input
+                      width={16}
+                      icon="lock"
+                      iconPosition="left"
+                      label="Contraseña"
+                      placeholder="Contraseña"
+                      type={passActual}
+                      onChange={handleChange}
+                      name="contrasena"
+                      value={formUser.contrasena}
+                      autoComplete="on"
+                      required
+                    />
+                    <Segment
+                      style={{ cursor: 'pointer', marginLeft: '-1em' }}
+                      basic
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (passActual === 'text') {
+                          setPassActual('password');
+                        } else {
+                          setPassActual('text');
+                        }
+                      }}
+                    >
+                      <Icon name="eye" size="large" />
+                    </Segment>
+                  </Form.Group>
                   <Link
                     to={'/recuperar_pass'}
                     style={{

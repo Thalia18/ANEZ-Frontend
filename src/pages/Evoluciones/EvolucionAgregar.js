@@ -76,7 +76,6 @@ class EvolucionAgregar extends Component {
         }
       );
 
-      // const { data: cie10List } = await axios.get(`${api_url}/api/categorias`);
       if (data.error) {
         this.setState({
           sesion: true,
@@ -85,7 +84,6 @@ class EvolucionAgregar extends Component {
       } else {
         this.setState({
           paciente: data.data,
-          // cie10: cie10Dropdown(cie10List.data),
           loading: false,
         });
       }
@@ -181,13 +179,15 @@ class EvolucionAgregar extends Component {
   };
   //obtener datos de dropdown
   handleOnChangeCie10 = (e, data) => {
+    console.log(e);
+    console.log(data);
     this.state.cie10List = data.value;
   };
 
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
+    console.log(this.state.cie10Sub);
     return (
       <React.Fragment>
         <Layout activeKeyP="2">

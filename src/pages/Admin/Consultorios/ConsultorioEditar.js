@@ -15,7 +15,7 @@ import {
   trimData,
 } from '../../../components/utils';
 
-class UsuarioAgregar extends Component {
+class ConsultorioEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -159,7 +159,7 @@ class UsuarioAgregar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="5">
-          <Navbar buttonDisable={this.state.buttonDisable} />
+          <Navbar />
 
           {!this.state.sesion && (
             <Agregar
@@ -176,4 +176,4 @@ class UsuarioAgregar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(UsuarioAgregar);
+export default connect(mapStateToProps, null)(ConsultorioEditar);

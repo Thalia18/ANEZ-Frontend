@@ -120,7 +120,7 @@ class ActualizarDatos extends Component {
     }
   };
   //guardar paciente
-  onClickButtonSaveDatos = async (e) => {
+  onClickButtonSaveDatos = (e) => {
     e.preventDefault();
     this.setState({
       loading: true,

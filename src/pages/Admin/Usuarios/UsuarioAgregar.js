@@ -246,7 +246,7 @@ class UsuarioAgregar extends Component {
   };
 
   //guardar cita
-  onClickButtonSaveUsuario = async (e) => {
+  onClickButtonSaveUsuario = (e) => {
     e.preventDefault();
     this.setState({
       loading: true,

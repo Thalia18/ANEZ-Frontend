@@ -220,7 +220,7 @@ class UsuarioEditar extends Component {
     }
   };
 
-  onClickButtonSaveUsuario = async (e) => {
+  onClickButtonSaveUsuario = (e) => {
     e.preventDefault();
     this.setState({
       loading: true,
