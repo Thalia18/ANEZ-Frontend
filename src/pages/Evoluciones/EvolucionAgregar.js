@@ -159,7 +159,6 @@ class EvolucionAgregar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
           evolucionId: evolucion.data.data.evolucion_id,
           error: null,
         });

@@ -18,7 +18,6 @@ class HCAgregar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      success: false,
       error: null,
       loading: true,
       activePage: '',
@@ -155,7 +154,6 @@ class HCAgregar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
           error: null,
           historiaClinica: {},
         });

@@ -18,7 +18,6 @@ class HCEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      success: false,
       error: null,
       loading: true,
       paciente: {},
@@ -137,7 +136,7 @@ class HCEditar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
+
           error: null,
         });
         openNotification(
@@ -165,7 +164,7 @@ class HCEditar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="2">
-          <Navbar success={this.state.success} />
+          <Navbar />
           {!this.state.sesion && (
             <Editar
               headerC="Editar Historia Clínica"

@@ -15,9 +15,9 @@ import {
 
 const Actualizar = ({
   handleChange,
-  id,
-  onClickButtonSaveUsuario,
-  emailCorrect,
+
+  onClickButtonSaveDatos,
+
   usuario,
 }) => {
   return (
@@ -27,7 +27,7 @@ const Actualizar = ({
           <Global style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as="h1" textAlign="center">
               <Header.Content>
-                <Icon name="add circle" /> Actualizar datos
+                <Icon name="edit" /> Actualizar datos
               </Header.Content>
             </Header>
             <hr />
@@ -35,7 +35,7 @@ const Actualizar = ({
             <DivScroll style={matches.medium ? mediumScroll : maxMediumScroll}>
               <Form
                 size={matches.medium ? 'tiny' : null}
-                onSubmit={onClickButtonSaveUsuario}
+                onSubmit={onClickButtonSaveDatos}
                 id="formAgregar"
               >
                 <Form.Group>

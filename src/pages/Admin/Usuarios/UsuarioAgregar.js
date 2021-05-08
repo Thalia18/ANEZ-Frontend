@@ -218,7 +218,6 @@ class UsuarioAgregar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
           error: null,
         });
         if (usuario.info.exist) {

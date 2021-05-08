@@ -45,116 +45,130 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
-        <Grid columns={2}>
-          <Grid.Column width={matches.medium ? widthColumnA + 1 : widthColumnA}>
-            <Sidenav
-              expanded={expanded}
-              activeKey={activeKey}
-              onSelect={handleSelect}
-              style={{ height: '102%' }}
-            >
-              <Sidenav.Body>
-                <Nav>
-                  <Nav.Item
-                    style={{
-                      justifyContent: 'center',
-                    }}
-                    componentClass={Link}
-                    to="/main"
-                  >
-                    <Logo src={consultorio.logo} />
-                  </Nav.Item>
-                  <Nav.Item
-                    eventKey="1"
-                    componentClass={Link}
-                    to={`/citas/${fechaCitas(new Date())}/month`}
-                  >
-                    <Icon icon="calendar" /> Citas
-                  </Nav.Item>
+        <>
+          {user && (
+            <Grid columns={2}>
+              <Grid.Column
+                width={matches.medium ? widthColumnA + 1 : widthColumnA}
+              >
+                <Sidenav
+                  expanded={expanded}
+                  activeKey={activeKey}
+                  onSelect={handleSelect}
+                  style={{ height: '102%' }}
+                >
+                  <Sidenav.Body>
+                    <Nav>
+                      <Nav.Item
+                        style={{
+                          justifyContent: 'center',
+                        }}
+                        componentClass={Link}
+                        to="/main"
+                      >
+                        <Logo src={consultorio.logo} />
+                      </Nav.Item>
+                      <Nav.Item
+                        eventKey="1"
+                        componentClass={Link}
+                        to={`/citas/${fechaCitas(new Date())}/month`}
+                      >
+                        <Icon icon="calendar" /> Citas
+                      </Nav.Item>
 
-                  {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
-                    <Nav.Item
-                      eventKey="2"
-                      componentClass={Link}
-                      to="/historias_clinicas"
-                    >
-                      <Icon icon="heartbeat" /> Historias clínicas
-                    </Nav.Item>
-                  )}
-                  <Nav.Item eventKey="3" componentClass={Link} to="/pacientes">
-                    <Icon icon="people-group" /> Pacientes
-                  </Nav.Item>
-                  {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
-                    <Nav.Item
-                      eventKey="4"
-                      componentClass={Link}
-                      to="/admin/usuarios"
-                    >
-                      <Icon icon="user-circle" /> Usuarios
-                    </Nav.Item>
-                  )}
-                  {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
-                    <Nav.Item
-                      eventKey="5"
-                      componentClass={Link}
-                      to="/admin/consultorios"
-                    >
-                      <Icon icon="hospital-o" /> Consultorios
-                    </Nav.Item>
-                  )}
-                </Nav>
-              </Sidenav.Body>
-            </Sidenav>
-          </Grid.Column>
-          <Grid.Column width={matches.medium ? widthColumnB - 1 : widthColumnB}>
-            <Navbar>
-              <Navbar.Body>
-                <Nav>
-                  <Nav.Item
-                    icon={<Icon icon="th" size="lg" />}
-                    onClick={handleClick}
-                  />
-                  <Nav.Item
-                    icon={<Icon icon="info-circle" size="lg" />}
-                    onClick={() => history.push('/about')}
-                  />
-                </Nav>
+                      {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
+                        <Nav.Item
+                          eventKey="2"
+                          componentClass={Link}
+                          to="/historias_clinicas"
+                        >
+                          <Icon icon="heartbeat" /> Historias clínicas
+                        </Nav.Item>
+                      )}
+                      <Nav.Item
+                        eventKey="3"
+                        componentClass={Link}
+                        to="/pacientes"
+                      >
+                        <Icon icon="people-group" /> Pacientes
+                      </Nav.Item>
+                      {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
+                        <Nav.Item
+                          eventKey="4"
+                          componentClass={Link}
+                          to="/admin/usuarios"
+                        >
+                          <Icon icon="user-circle" /> Usuarios
+                        </Nav.Item>
+                      )}
+                      {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
+                        <Nav.Item
+                          eventKey="5"
+                          componentClass={Link}
+                          to="/admin/consultorios"
+                        >
+                          <Icon icon="hospital-o" /> Consultorios
+                        </Nav.Item>
+                      )}
+                    </Nav>
+                  </Sidenav.Body>
+                </Sidenav>
+              </Grid.Column>
+              <Grid.Column
+                width={matches.medium ? widthColumnB - 1 : widthColumnB}
+              >
+                <Navbar>
+                  <Navbar.Body>
+                    <Nav>
+                      <Nav.Item
+                        icon={<Icon icon="th" size="lg" />}
+                        onClick={handleClick}
+                      />
+                      <Nav.Item
+                        icon={<Icon icon="info-circle" size="lg" />}
+                        onClick={() => history.push('/about')}
+                      />
+                    </Nav>
 
-                <Nav pullRight>
-                  <Dropdown
-                    icon={<Icon icon="user-circle-o" size="lg" />}
-                    title={user.usuario}
-                    size="md"
-                    style={{ marginRight: '2em' }}
-                  >
-                    <Dropdown.Item
-                      onClick={() => history.push(`/perfil/${user.usuario}`)}
-                    >
-                      <Icon icon="user-info" />
-                      Perfil
-                    </Dropdown.Item>
+                    <Nav pullRight>
+                      <Dropdown
+                        icon={<Icon icon="user-circle-o" size="lg" />}
+                        title={user.usuario}
+                        size="md"
+                        style={{ marginRight: '2em' }}
+                      >
+                        <Dropdown.Item
+                          onClick={() =>
+                            history.push(`/perfil/${user.usuario}`)
+                          }
+                        >
+                          <Icon icon="user-info" />
+                          Perfil
+                        </Dropdown.Item>
 
-                    <Dropdown.Item onClick={logout}>
-                      <Icon icon="sign-out" />
-                      Log out
-                    </Dropdown.Item>
-                  </Dropdown>
-                </Nav>
-              </Navbar.Body>
-            </Navbar>
-            <Segment
-              style={matches.medium ? { height: '92%' } : { height: '94%' }}
-            >
-              {props.children}
-              <div style={{ marginBottom: '-1.5em', fontSize: '0.8em' }}>
-                <b>
-                  <Icon icon="copyright" /> &nbsp; {year}, ANEZ | Todos los
-                  derechos reservados.
-                </b>
-              </div>
-            </Segment>
-          </Grid.Column>
-        </Grid>
+                        <Dropdown.Item onClick={logout}>
+                          <Icon icon="sign-out" />
+                          Log out
+                        </Dropdown.Item>
+                      </Dropdown>
+                    </Nav>
+                  </Navbar.Body>
+                </Navbar>
+                <Segment
+                  style={matches.medium ? { height: '92%' } : { height: '94%' }}
+                >
+                  {props.children}
+                  <div style={{ marginBottom: '-1.5em', fontSize: '0.8em' }}>
+                    <b>
+                      <Icon icon="copyright" /> &nbsp; {year}, ANEZ | Todos los
+                      derechos reservados.
+                    </b>
+                  </div>
+                </Segment>
+              </Grid.Column>
+            </Grid>
+          )}
+        </>
       )}
     </Media>
   );

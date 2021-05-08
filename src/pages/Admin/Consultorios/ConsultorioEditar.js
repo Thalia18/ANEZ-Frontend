@@ -125,7 +125,6 @@ class UsuarioAgregar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
           error: null,
         });
         if (consultorio.data.exist) {

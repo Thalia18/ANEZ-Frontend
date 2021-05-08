@@ -183,7 +183,6 @@ class EvolucionEditar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
           evolucionId: this.state.evolucion.evolucion_id,
           error: null,
         });

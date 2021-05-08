@@ -24,7 +24,6 @@ class PacienteEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      success: false,
       error: null,
       loading: true,
       paciente: {},
@@ -183,7 +182,6 @@ class PacienteEditar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
           error: null,
         });
       }
@@ -255,13 +253,6 @@ class PacienteEditar extends Component {
     this.state.paciente.genero_id = data.value;
   };
 
-  closeModal = () => {
-    this.setState({
-      success: false,
-    });
-    this.props.history.push('/pacientes');
-  };
-
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
@@ -269,7 +260,7 @@ class PacienteEditar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="3">
-          <Navbar success={this.state.success} />
+          <Navbar />
           {!this.state.sesion && (
             <Editar
               header="Editar Paciente"
@@ -287,8 +278,6 @@ class PacienteEditar extends Component {
               handleOnChangeNI={this.handleOnChangeNI}
               handleOnChangeE={this.handleOnChangeE}
               handleOnChangeG={this.handleOnChangeG}
-              success={this.state.success}
-              closeModal={this.closeModal}
             />
           )}
           <Sesion open={this.state.sesion} />

@@ -193,7 +193,6 @@ class UsuarioEditar extends Component {
 
         this.setState({
           loading: false,
-          success: true,
           error: null,
         });
         if (usuario.data.exist) {

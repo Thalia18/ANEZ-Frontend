@@ -188,7 +188,6 @@ class PacienteAgregar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
           error: null,
           result: result.data,
         });

@@ -133,7 +133,6 @@ class CitasAgregar extends Component {
       } else {
         this.setState({
           loading: false,
-          success: true,
           error: null,
         });
         if (cita.data) {
