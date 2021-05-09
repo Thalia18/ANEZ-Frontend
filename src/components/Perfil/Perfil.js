@@ -14,7 +14,6 @@ import {
 import Navbar from './NavbarPerfil';
 
 const Perfil = ({ usuario }) => {
-  console.log(usuario);
   const edad = calculaEdad(usuario.fecha_nacimiento);
   const styled = { fontWeight: 'bold' };
   return (

@@ -9,7 +9,7 @@ import Sesion from '../../components/Modales/ModalSesionExpirada';
 import Navbar from '../../components/Paciente/Agregar/NavbarAgregar';
 import {
   api_url,
-  cie10Dropdown,
+  cie10DropdownSub,
   mapStateToProps,
   openNotification,
   saveCIE10,
@@ -26,7 +26,7 @@ class EvolucionEditar extends Component {
       loading: true,
       paciente: {},
       evolucion: {},
-
+      loadingDrop: false,
       evolucionId: null,
       fotoList: [{ foto_url: '' }],
 
@@ -35,6 +35,7 @@ class EvolucionEditar extends Component {
       categoriaEvolucion: {},
       cie10: [],
       cie10List: [],
+
       cie10Exist: {},
       sesion: false,
     };
@@ -87,8 +88,8 @@ class EvolucionEditar extends Component {
         this.setState({
           paciente: paciente.data.pacientes,
           evolucion: evolucion.data,
-
           fotoList: this.selectedFoto(evolucion.data.foto),
+          cie10List: this.selectedCIe10(evolucion.data.diagnostico_cie10),
           loading: false,
         });
         trimData(this.state.evolucion);
@@ -207,12 +208,63 @@ class EvolucionEditar extends Component {
 
   //obtener datos de dropdown
   handleOnChangeCie10 = (e, data) => {
-    this.state.cie10List = data.value;
+    this.setState({
+      cie10List: data.value,
+    });
+  };
+
+  handleChangeCodigo = async (e) => {
+    this.setState({
+      codigo: e.target.value,
+      loadingDrop: true,
+    });
+    let a = e.target.value === '' ? 'A' : e.target.value;
+    try {
+      const { data: cie10Sub } = await axios.get(
+        `${api_url}/api/cie10_sub/${a}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.accessToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
+      if (cie10Sub.error) {
+        this.setState({
+          sesion: true,
+        });
+      } else {
+        this.setState({
+          allCie10: cie10DropdownSub(cie10Sub.data),
+          loadingDrop: false,
+        });
+      }
+    } catch (error) {
+      this.setState({
+        loading: false,
+        error: error,
+      });
+    }
+  };
+
+  //eliminar de codigos seleccionados
+  checkSelected = (e, value) => {
+    if (this.state.cie10List) {
+      let val = this.state.cie10List.findIndex(() => value);
+      if (val > -1) {
+        this.state.cie10List.splice(val, 1);
+        this.setState({
+          cie10List: this.state.cie10List,
+          allCie10: [],
+          codigo: '',
+        });
+      }
+    }
   };
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
         <Layout activeKeyP="2">
@@ -223,15 +275,17 @@ class EvolucionEditar extends Component {
               headerC="Editar Evolución"
               icon="edit"
               paciente={this.state.paciente}
-              cie10={cie10Dropdown(this.props.categorias)}
+              cie10={this.state.allCie10}
               onClickButtonSaveEvolucion={this.onClickButtonSaveEvolucion}
               handleOnChangeCie10={this.handleOnChangeCie10}
               formEvolucion={this.state.evolucion}
               handleChange={this.handleChange}
               fotosList={this.state.fotoList}
-              cie10List={this.selectedCIe10(
-                this.state.evolucion.diagnostico_cie10
-              )}
+              cie10List={this.state.cie10List}
+              handleChangeCodigo={this.handleChangeCodigo}
+              checkSelected={this.checkSelected}
+              codigo={this.state.codigo}
+              loadingDrop={this.state.loadingDrop}
             />
           )}
           <Sesion open={this.state.sesion} />

@@ -249,7 +249,6 @@ class CitasEditar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.cita);
 
     return (
       <React.Fragment>

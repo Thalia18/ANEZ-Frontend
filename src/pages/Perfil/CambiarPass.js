@@ -116,7 +116,6 @@ class ActualizarDatos extends Component {
       this.setState({
         loading: false,
       });
-      console.log(result, 'res');
       if (result.error) {
         this.setState({
           sesion: true,

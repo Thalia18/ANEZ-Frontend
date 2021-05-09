@@ -63,7 +63,6 @@ class Perfil extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.usuario);
     return (
       <React.Fragment>
         <Layout activeKeyP="0">

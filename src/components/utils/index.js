@@ -465,3 +465,25 @@ export const especialidadesDropdownUsuarios = (especialidadesList) => {
   });
   return opcion;
 };
+
+//cie 10 subcategorias
+export const cie10DropdownSub = (subcategorias) => {
+  let opcion = [];
+  if (subcategorias) {
+    subcategorias.map((item) => {
+      opcion.push({
+        key: item.subcategoria_id,
+        text:
+          item.codigo.trim() + ' ➜ ' + item.descripcion.trim().toUpperCase(),
+        value: (
+          item.subcategoria_id +
+          '$' +
+          item.codigo.trim() +
+          ' ➜ ' +
+          item.descripcion.trim().toUpperCase()
+        ).toString(),
+      });
+    });
+  }
+  return opcion;
+};

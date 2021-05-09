@@ -82,29 +82,29 @@ class LoginG extends Component {
           }
         );
 
-        if (
-          this.state.userConfirm.rol.trim() === 'MÉDICO' ||
-          this.state.userConfirm.rol.trim() === 'ADMINISTRADOR'
-        ) {
-          const { data: cie10List } = await axios.get(
-            `${api_url}/api/categorias`,
-            {
-              method: 'GET',
-              headers: {
-                Authorization: usuario.accessToken,
-                auth: usuario.data.rol.trim(),
-              },
-            }
-          );
-          this.setState({
-            categorias: cie10List.data,
-          });
-        }
+        // if (
+        //   this.state.userConfirm.rol.trim() === 'MÉDICO' ||
+        //   this.state.userConfirm.rol.trim() === 'ADMINISTRADOR'
+        // ) {
+        //   const { data: cie10List } = await axios.get(
+        //     `${api_url}/api/categorias`,
+        //     {
+        //       method: 'GET',
+        //       headers: {
+        //         Authorization: usuario.accessToken,
+        //         auth: usuario.data.rol.trim(),
+        //       },
+        //     }
+        //   );
+        //   this.setState({
+        //     categorias: cie10List.data,
+        //   });
+        // }
         this.setState({
           consultorio: consultorio.data,
         });
         this.props.setJWT(this.state.jwt);
-        this.props.setCategorias(this.state.categorias);
+        // this.props.setCategorias(this.state.categorias);
         this.props.setConsultorio(this.state.consultorio);
         this.props.setUser(this.state.userConfirm);
         this.setState({

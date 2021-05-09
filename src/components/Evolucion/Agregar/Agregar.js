@@ -1,7 +1,14 @@
 import React from 'react';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
-import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
+import {
+  Checkbox,
+  Form,
+  Header,
+  Icon,
+  Label,
+  Segment,
+} from 'semantic-ui-react';
 import { DivScroll, Global } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import {
@@ -22,16 +29,18 @@ const Agregar = ({
   fotosList,
   cie10,
   handleOnChangeCie10,
-  id,
   headerC,
   icon,
   cie10List,
+  handleChangeCodigo,
+  checkSelected,
+  codigo,
+  loadingDrop,
 }) => {
   const [value, setValue] = React.useState(true);
   const handleChangeCheck = (e) => {
     setValue(!value);
   };
-
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
@@ -100,11 +109,19 @@ const Agregar = ({
                       name="diagnostico"
                       value={formEvolucion.diagnostico}
                       rows={5}
-                      required
                     />
                   </Form.Group>
                   <Form.Group>
+                    <Form.Input
+                      label="Diagnóstico Cie 10"
+                      placeholder="Código o descripción"
+                      width={6}
+                      onChange={handleChangeCodigo}
+                      value={codigo}
+                      name="codigo"
+                    />
                     <Form.Select
+                      label="Seleccione"
                       clearable
                       fluid
                       multiple
@@ -115,8 +132,31 @@ const Agregar = ({
                       placeholder="Seleccione código CIE 10"
                       onChange={handleOnChangeCie10}
                       defaultValue={cie10List}
+                      loading={loadingDrop}
                     />
                   </Form.Group>
+                  {cie10List && (
+                    <Segment basic>
+                      <b>Códigos seleccionados</b>
+                      <br />
+                      <br />
+
+                      {cie10List.map((item) => {
+                        let a = item.split('$');
+                        return (
+                          <Label
+                            onClick={(e) => {
+                              checkSelected(e, item);
+                            }}
+                            key={item}
+                            style={{ margin: '0.2%' }}
+                          >
+                            {a[1]} <Icon name="delete" />
+                          </Label>
+                        );
+                      })}
+                    </Segment>
+                  )}
                 </Segment>
                 <Form.Group>
                   <Form.TextArea
