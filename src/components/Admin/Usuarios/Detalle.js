@@ -35,11 +35,7 @@ const Detalle = ({ usuario }) => {
           <DivScroll
             style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
           >
-            <Table
-              fixed={matches.medium ? true : null}
-              celled
-              size={matches.medium ? 'small' : 'large'}
-            >
+            <Table celled size={matches.medium ? 'small' : 'large'}>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell colSpan="8">

@@ -18,7 +18,7 @@ import {
   masMediumHeight,
   maxMediumScrollHC,
   mediumHeight,
-  mediumScrollExtra,
+  mediumScrollHC,
   saltos,
 } from '../../utils';
 
@@ -37,7 +37,7 @@ const Detalle = ({ paciente, evolucion }) => {
           <HCHeader paciente={paciente} />
 
           <DivScroll
-            style={matches.medium ? mediumScrollExtra : maxMediumScrollHC}
+            style={matches.medium ? mediumScrollHC : maxMediumScrollHC}
           >
             <Segment basic textAlign="center">
               <Icon name="calendar alternate" />

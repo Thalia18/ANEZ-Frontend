@@ -1,115 +1,74 @@
 import React from 'react';
 import Media from 'react-media';
-import { Form, Icon, Segment } from 'semantic-ui-react';
+import { Segment, Tab } from 'semantic-ui-react';
+import { DivScroll } from '../../../global';
 import {
-  fechaActual,
   GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
   mediumHeight,
-  tiempoReposo,
+  mediumHeightScroll,
 } from '../../utils';
 import Navbar from '../Receta/NavbarReceta';
+import CertificadoPDF from './Certificado';
+import Datos from './Datos';
 
 export default ({
   datos,
   handleOnChangeDias,
   handleChange,
   user,
-  ...props
+
+  consultorio,
+  evolucion,
+  nombreMedico,
+  apellidoMedico,
+  nombreArchivo,
+  paciente,
+  cedula,
 }) => {
+  const panes = [
+    {
+      menuItem: 'Días de reposo y fechas',
+      render: () => (
+        <Tab.Pane attached={false} basic>
+          <Navbar cert={true} />
+          <DivScroll style={mediumHeightScroll}>
+            <Datos
+              datos={datos}
+              handleOnChangeDias={handleOnChangeDias}
+              handleChange={handleChange}
+            />
+          </DivScroll>
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'Previsualizar certificado',
+      render: () => (
+        <Tab.Pane attached={false} basic>
+          <DivScroll style={mediumHeightScroll}>
+            <CertificadoPDF
+              user={user}
+              datos={datos}
+              consultorio={consultorio}
+              evolucion={evolucion}
+              nombreMedico={nombreMedico}
+              apellidoMedico={apellidoMedico}
+              nombreArchivo={nombreArchivo}
+              paciente={paciente}
+              cedula={cedula}
+            />
+          </DivScroll>
+        </Tab.Pane>
+      ),
+    },
+  ];
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar cert={true} />
-
-          <Segment basic>
-            <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
-              <b>Seleccione:</b>
-              <br />
-              <Segment>
-                <Icon name="calendar alternate" />
-                Fecha de ingreso y egreso
-                <br />
-                <br />
-                <Form size={matches.medium ? 'tiny' : null}>
-                  <Form.Group>
-                    <Form.Input
-                      placeholder="Fecha de ingreso"
-                      label="Fecha de ingreso"
-                      width={4}
-                      type="date"
-                      onChange={handleChange}
-                      name="fecha_ingreso"
-                      value={datos.fecha_ingreso}
-                      min={fechaActual()}
-                    />
-                    <Form.Input
-                      placeholder="Fecha de egreso"
-                      label="Fecha de egreso"
-                      width={4}
-                      type="date"
-                      onChange={handleChange}
-                      name="fecha_egreso"
-                      value={datos.fecha_egreso}
-                      min={fechaActual()}
-                    />
-                  </Form.Group>
-                </Form>
-              </Segment>
-              <Segment>
-                <Icon name="bed" />
-                Reposo <br /> <br />
-                <Form size={matches.medium ? 'tiny' : null}>
-                  <Form.Group>
-                    <Form.Select
-                      label="Número de días"
-                      placeholder="Número de días"
-                      options={tiempoReposo()}
-                      onChange={handleOnChangeDias}
-                      defaultValue={datos.dias_reposo}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.Input
-                      placeholder="Reposo desde"
-                      label="Reposo desde"
-                      width={4}
-                      type="date"
-                      onChange={handleChange}
-                      name="fecha_inicio"
-                      value={datos.fecha_inicio}
-                      min={fechaActual()}
-                      required
-                    />
-                    <Form.Input
-                      placeholder="Reposo hasta"
-                      label="Reposo hasta"
-                      width={4}
-                      type="date"
-                      onChange={handleChange}
-                      name="fecha_fin"
-                      value={datos.fecha_fin}
-                      min={fechaActual()}
-                      required
-                    />
-                  </Form.Group>
-                  <Form.Group>
-                    <Form.TextArea
-                      label="Observaciones"
-                      placeholder="Observaciones"
-                      width={16}
-                      rows={4}
-                      onChange={handleChange}
-                      name="observaciones"
-                      value={datos.observaciones}
-                      minLength={3}
-                    />
-                  </Form.Group>
-                </Form>
-              </Segment>
-            </Segment>
+          <Segment basic style={mediumHeight}>
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+            <br />
           </Segment>
         </React.Fragment>
       )}

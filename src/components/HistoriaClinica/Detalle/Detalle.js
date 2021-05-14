@@ -9,7 +9,7 @@ import {
   masMediumHeight,
   maxMediumScrollHC,
   mediumHeight,
-  mediumScrollExtra,
+  mediumScrollHC,
 } from '../../utils';
 
 const Detalle = ({ paciente, historia_clinica }) => {
@@ -26,7 +26,7 @@ const Detalle = ({ paciente, historia_clinica }) => {
           <HCHeader paciente={paciente} />
 
           <DivScroll
-            style={matches.medium ? mediumScrollExtra : maxMediumScrollHC}
+            style={matches.medium ? mediumScrollHC : maxMediumScrollHC}
           >
             <Segment basic>
               <Icon name="syringe" />

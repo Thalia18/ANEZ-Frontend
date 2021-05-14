@@ -67,7 +67,12 @@ const Listado = ({
                               key={evolucion.evolucion_id + 'Check'}
                             />
                           </Table.Cell>
-                          <Table.Cell style={{ overflowWrap: 'anywhere' }}>
+                          <Table.Cell
+                            style={{
+                              overflowWrap: 'anywhere',
+                              textAlign: 'justify',
+                            }}
+                          >
                             <b>Fecha:</b> {evolucion.fecha}
                             <br />
                             <b>Motivo consulta:</b>{' '}

@@ -147,7 +147,7 @@ export const mediumScroll = {
 
 //const para medium scroll
 export const mediumScrollExtra = {
-  height: '34em',
+  height: '40em',
   overflowY: 'auto ::-webkit-scrollbar {display:none;}',
   overflowX: 'hidden',
 };
@@ -157,9 +157,15 @@ export const mediumScrollEvolu = {
   overflowY: 'auto ::-webkit-scrollbar {display:none;}',
   overflowX: 'hidden',
 };
+
+export const mediumScrollHC = {
+  height: '35em',
+  overflowY: 'auto ::-webkit-scrollbar {display:none;}',
+  overflowX: 'hidden',
+};
 //const para mas de medium scroll
 export const maxMediumScroll = {
-  height: '47em',
+  height: '54em',
   overflowY: 'auto',
   overflowX: 'hidden',
 };

@@ -10,8 +10,8 @@ import {
   GLOBAL_MEDIA_QUERIES,
   letters,
   masMediumHeight,
-  maxMediumScrollRecord,
   mediumHeight,
+  mediumScrollExtra,
 } from '../../utils';
 
 const Agregar = ({
@@ -43,7 +43,7 @@ const Agregar = ({
           </Header>
           <hr />
 
-          <DivScroll style={maxMediumScrollRecord}>
+          <DivScroll style={mediumScrollExtra}>
             <Form
               size={matches.medium ? 'tiny' : null}
               onSubmit={onClickButtonSaveUsuario}

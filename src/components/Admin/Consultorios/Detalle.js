@@ -1,7 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
-import { Grid, Header, Icon, Image, Segment, Table } from 'semantic-ui-react';
+import { Header, Icon, Image, Segment, Table } from 'semantic-ui-react';
 import { DivScroll } from '../../../global';
 import {
   GLOBAL_MEDIA_QUERIES,
@@ -12,7 +12,7 @@ import {
 } from '../../utils/index';
 
 const Detalle = ({ consultorio }) => {
-  const styled = { fontWeight: 'bold' };
+  const styled = { fontWeight: 'bold', background: '	#F5F5F5' };
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -27,56 +27,34 @@ const Detalle = ({ consultorio }) => {
           <DivScroll
             style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
           >
-            <Grid>
-              <Grid.Column width={4} align="center">
-                <Image
-                  src={consultorio.logo}
-                  // size="medium"
-                  rounded
-                  height="200"
-                  width="250"
-                />
-              </Grid.Column>
-              <Grid.Column width={12}>
-                <br />
-                <br />
-                <br />
+            <Image
+              src={consultorio.logo}
+              rounded
+              height={matches.medium ? '130' : '230'}
+              width={matches.medium ? '150' : '250'}
+              style={{ margin: 'auto' }}
+            />
 
-                <Table
-                  fixed={matches.medium ? true : null}
-                  celled
-                  size={matches.medium ? 'small' : 'large'}
-                >
-                  <Table.Body>
-                    <Table.Row>
-                      <Table.Cell collapsing style={styled}>
-                        Nombre
-                      </Table.Cell>
-                      <Table.Cell colSpan="4">{consultorio.nombre}</Table.Cell>
-                      <Table.Cell collapsing style={styled}>
-                        RUC
-                      </Table.Cell>
-                      <Table.Cell colSpan="2">{consultorio.ruc}</Table.Cell>
-                    </Table.Row>
+            <br />
+            <br />
 
-                    <Table.Row>
-                      <Table.Cell collapsing style={styled}>
-                        Dirección
-                      </Table.Cell>
-                      <Table.Cell colSpan="4">
-                        {consultorio.direccion}
-                      </Table.Cell>
-                      <Table.Cell collapsing style={styled}>
-                        Teléfono
-                      </Table.Cell>
-                      <Table.Cell colSpan="2">
-                        {consultorio.telefono}
-                      </Table.Cell>
-                    </Table.Row>
-                  </Table.Body>
-                </Table>
-              </Grid.Column>
-            </Grid>
+            <Table celled size={matches.medium ? 'small' : 'large'}>
+              <Table.Body>
+                <Table.Row>
+                  <Table.Cell style={styled}>Nombre</Table.Cell>
+                  <Table.Cell colSpan="4">{consultorio.nombre}</Table.Cell>
+                  <Table.Cell style={styled}>RUC</Table.Cell>
+                  <Table.Cell colSpan="2">{consultorio.ruc}</Table.Cell>
+                </Table.Row>
+
+                <Table.Row>
+                  <Table.Cell style={styled}>Dirección</Table.Cell>
+                  <Table.Cell colSpan="4">{consultorio.direccion}</Table.Cell>
+                  <Table.Cell style={styled}>Teléfono</Table.Cell>
+                  <Table.Cell colSpan="2">{consultorio.telefono}</Table.Cell>
+                </Table.Row>
+              </Table.Body>
+            </Table>
           </DivScroll>
         </Segment>
       )}

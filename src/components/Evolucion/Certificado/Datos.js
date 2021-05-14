@@ -8,7 +8,6 @@ import {
   mediumHeight,
   tiempoReposo,
 } from '../../utils';
-import Navbar from '../Receta/NavbarReceta';
 
 export default ({
   datos,
@@ -21,10 +20,11 @@ export default ({
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar cert={true} />
-
-          <Segment basic>
-            <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
+          <Segment
+            basic
+            style={matches.medium ? mediumHeight : masMediumHeight}
+          >
+            <Segment>
               <b>Seleccione:</b>
               <br />
               <Segment>

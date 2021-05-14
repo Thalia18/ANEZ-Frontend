@@ -10,7 +10,7 @@ import {
   masMediumHeight,
   maxMediumScrollHC,
   mediumHeight,
-  mediumScrollExtra,
+  mediumScrollHC,
 } from '../../utils';
 
 const Agregar = ({
@@ -43,7 +43,7 @@ const Agregar = ({
           <HCHeader paciente={paciente} />
 
           <DivScroll
-            style={matches.medium ? mediumScrollExtra : maxMediumScrollHC}
+            style={matches.medium ? mediumScrollHC : maxMediumScrollHC}
           >
             <Form
               size={matches.medium ? 'tiny' : null}

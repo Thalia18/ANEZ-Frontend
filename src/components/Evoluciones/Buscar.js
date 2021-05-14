@@ -65,7 +65,12 @@ const Listado = ({
                               onChange={handleChange}
                             />
                           </Table.Cell>
-                          <Table.Cell>
+                          <Table.Cell
+                            style={{
+                              overflowWrap: 'anywhere',
+                              textAlign: 'justify',
+                            }}
+                          >
                             <b>Fecha:</b> {evolucion.fecha}
                             <br />
                             <b>Motivo consulta:</b>{' '}
