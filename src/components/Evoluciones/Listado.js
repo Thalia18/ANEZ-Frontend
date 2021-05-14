@@ -12,9 +12,15 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
-import { Global } from '../../global';
+import { DivScroll } from '../../global';
 import HCHeader from '../HistoriasClinicas/HCHeader';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight, mediumHeight } from '../utils/';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  maxMediumScrollEvolu,
+  mediumHeight,
+  mediumScrollEvolu,
+} from '../utils/';
 import Navbar from './NavbarEvolucion';
 
 const Listado = ({
@@ -32,16 +38,18 @@ const Listado = ({
       {(matches) => (
         <React.Fragment>
           <Navbar evolucionId={value} paciente={paciente} pagina="evolucion" />
-          <Segment>
-            <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Header as="h1" textAlign="center">
-                <Header.Content>
-                  <Icon name="dna" />
-                  Evoluciones
-                </Header.Content>
-              </Header>
-              <hr />
-              <HCHeader paciente={paciente} />
+          <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
+            <Header as="h1" textAlign="center">
+              <Header.Content>
+                <Icon name="dna" />
+                Evoluciones
+              </Header.Content>
+            </Header>
+            <hr />
+            <HCHeader paciente={paciente} />
+            <DivScroll
+              style={matches.medium ? mediumScrollEvolu : maxMediumScrollEvolu}
+            >
               <br />
               {evoluciones.length > 0 && (
                 <Table compact celled definition>
@@ -59,7 +67,7 @@ const Listado = ({
                               key={evolucion.evolucion_id + 'Check'}
                             />
                           </Table.Cell>
-                          <Table.Cell>
+                          <Table.Cell style={{ overflowWrap: 'anywhere' }}>
                             <b>Fecha:</b> {evolucion.fecha}
                             <br />
                             <b>Motivo consulta:</b>{' '}
@@ -93,7 +101,7 @@ const Listado = ({
                   </Button>
                 </Message>
               )}
-            </Global>
+            </DivScroll>
             <Segment basic align="center">
               <Pagination
                 onPageChange={handleChangePage}

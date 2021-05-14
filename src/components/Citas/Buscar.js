@@ -10,12 +10,14 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
-import { Global } from '../../global';
+import { DivScroll } from '../../global';
 import {
   fechaFormato,
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
+  maxMediumScrollRecord,
   mediumHeight,
+  mediumScrollExtra,
 } from '../utils';
 import Navbar from './NavbarCitas';
 
@@ -27,16 +29,18 @@ const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage, user }) => {
       {(matches) => (
         <React.Fragment>
           <Navbar verNav={true} citaId={value} user={user} />
-          <Segment>
-            <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Header as="h1" textAlign="center">
-                <Header.Content>
-                  <Icon name="search" />
-                  Resultados de la búsqueda
-                </Header.Content>
-              </Header>
-              <hr />
-              <br />
+          <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
+            <Header as="h1" textAlign="center">
+              <Header.Content>
+                <Icon name="search" />
+                Resultados de la búsqueda
+              </Header.Content>
+            </Header>
+            <hr />
+            <br />
+            <DivScroll
+              style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
+            >
               {citas.length > 0 && (
                 <Table compact celled definition>
                   <Table.Body>
@@ -87,7 +91,7 @@ const Buscar = ({ citas, fecha1, fecha2, paginas, handleChangePage, user }) => {
                   </p>
                 </Message>
               )}
-            </Global>
+            </DivScroll>
             <Segment basic align="center">
               <Pagination
                 onPageChange={handleChangePage}

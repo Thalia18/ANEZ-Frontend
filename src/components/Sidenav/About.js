@@ -2,23 +2,34 @@ import React from 'react';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
 import { Container, Image, Segment } from 'semantic-ui-react';
-import { Global } from '../../global';
-import { GLOBAL_MEDIA_QUERIES } from '../utils/';
+import { DivScroll } from '../../global';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  maxMediumScrollRecord,
+  mediumHeight,
+} from '../utils/';
 const About = () => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
-        <Segment basic>
-          <Global
-            style={matches.medium ? { height: '35em' } : { height: '55em' }}
-          >
+        <Segment style={mediumHeight} basic>
+          <DivScroll style={maxMediumScrollRecord}>
             <Container
-              style={{ textAlign: 'center', display: 'flex', marginTop: '12%' }}
+              style={{
+                textAlign: 'center',
+                display: 'flex',
+                marginTop: matches.medium ? '-5%' : '12%',
+              }}
             >
               <Image
-                style={{ padding: '3em' }}
+                style={{
+                  padding: matches.medium ? '1em' : '3em',
+                  marginTop: matches.medium ? '8em' : '-1em',
+                  width: matches.medium ? '40%' : '30%',
+                  height: matches.medium ? '30%' : '20%',
+                }}
                 src="https://i.ibb.co/ygcHZFY/circle-cropped-1.png"
-                size="medium"
+                // size={matches.medium ? 'small' : 'medium'}
               />
               <Segment
                 basic
@@ -46,7 +57,7 @@ const About = () => {
             <Container style={{ textAlign: 'center', fontSize: '1.1em' }}>
               <b>Diseñado y desarrollado por Thalía Zapata - PUCE.</b>
             </Container>
-          </Global>
+          </DivScroll>
         </Segment>
       )}
     </Media>

@@ -2,13 +2,15 @@ import React from 'react';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
 import { Header, Icon, Segment, Table } from 'semantic-ui-react';
-import { Global } from '../../../global';
+import { DivScroll } from '../../../global';
 import {
   calculaEdad,
   fechaFormato,
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
+  maxMediumScrollRecord,
   mediumHeight,
+  mediumScrollExtra,
 } from '../../utils';
 import { HeaderCell, HeaderSubCell } from './DetalleStyles';
 
@@ -18,15 +20,17 @@ const Detalle = ({ paciente }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
-        <Segment>
-          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as="h1" textAlign="center">
-              <Header.Content>
-                <Icon name="dna" /> Datos Paciente
-              </Header.Content>
-            </Header>
-            <hr />
-            <br />
+        <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
+          <Header as="h1" textAlign="center">
+            <Header.Content>
+              <Icon name="dna" /> Datos Paciente
+            </Header.Content>
+          </Header>
+          <hr />
+          <br />
+          <DivScroll
+            style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
+          >
             <Table
               fixed={matches.medium ? true : null}
               celled
@@ -132,7 +136,7 @@ const Detalle = ({ paciente }) => {
                 </Table.Row>
               </Table.Body>
             </Table>
-          </Global>
+          </DivScroll>
         </Segment>
       )}
     </Media>

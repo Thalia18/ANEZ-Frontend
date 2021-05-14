@@ -190,6 +190,7 @@ class CitasAgregar extends Component {
     this.state.cita.hora = data.value;
   };
   handleOnChangeEspecialidad = async (e, data) => {
+    console.log(data.value);
     try {
       const { data: medicos } = await axios.get(
         `${api_url}/api/medicos_especialidades/${data.value}`,
@@ -228,7 +229,6 @@ class CitasAgregar extends Component {
       <React.Fragment>
         <Layout activeKeyP="1">
           <Navbar />
-
           {!this.state.sesion && (
             <Agregar
               id="formAgregar"

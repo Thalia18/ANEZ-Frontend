@@ -17,6 +17,8 @@ class Evoluciones extends Component {
       buscarList: {},
       paciente: {},
       sesion: false,
+      paginas: {},
+      page: 1,
     };
   }
   componentDidMount() {
@@ -38,7 +40,7 @@ class Evoluciones extends Component {
     });
     try {
       const { data: buscarList } = await axios.get(
-        `${api_url}/api/evoluciones_fecha/${this.props.match.params.historiaId}/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}`,
+        `${api_url}/api/evoluciones_fecha/${this.props.match.params.historiaId}/${this.props.match.params.fecha1}/${this.props.match.params.fecha2}?page=${this.state.page}`,
         {
           method: 'GET',
           headers: {
@@ -67,6 +69,7 @@ class Evoluciones extends Component {
         this.setState({
           buscarList: buscarList.data,
           paciente: paciente.data.pacientes,
+          paginas: buscarList.info,
           loading: false,
         });
       }
@@ -76,6 +79,11 @@ class Evoluciones extends Component {
         error: error,
       });
     }
+  };
+
+  handleChangePage = (e, value) => {
+    this.state.page = value.activePage;
+    this.fetchData();
   };
 
   render() {
@@ -91,6 +99,8 @@ class Evoluciones extends Component {
               paciente={this.state.paciente}
               fecha1={this.props.match.params.fecha1}
               fecha2={this.props.match.params.fecha2}
+              paginas={this.state.paginas}
+              handleChangePage={this.handleChangePage}
             />
           )}
           <Sesion open={this.state.sesion} />

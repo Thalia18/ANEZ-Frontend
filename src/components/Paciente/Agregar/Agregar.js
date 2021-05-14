@@ -3,13 +3,15 @@ import InputMask from 'react-input-mask';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
 import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
-import { Global } from '../../../global';
+import { DivScroll } from '../../../global';
 import {
   fechaActual,
   GLOBAL_MEDIA_QUERIES,
   letters,
   masMediumHeight,
+  maxMediumScrollRecord,
   mediumHeight,
+  mediumScrollExtra,
 } from '../../utils';
 
 const Agregar = ({
@@ -47,15 +49,16 @@ const Agregar = ({
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
-        <Segment>
-          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as="h1" textAlign="center">
-              <Header.Content>
-                <Icon name={icon} /> {header}
-              </Header.Content>
-            </Header>
-            <hr />
-
+        <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
+          <Header as="h1" textAlign="center">
+            <Header.Content>
+              <Icon name={icon} /> {header}
+            </Header.Content>
+          </Header>
+          <hr />
+          <DivScroll
+            style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
+          >
             <Form
               size={matches.medium ? 'tiny' : null}
               onSubmit={onClickButtonSavePaciente}
@@ -153,48 +156,98 @@ const Agregar = ({
                   required
                 />
               </Form.Group>
-              <Form.Group>
-                <Form.Select
-                  label="Estado civil"
-                  placeholder="Estado civil"
-                  options={estadoCivil}
-                  width={6}
-                  name="estado_civil_id"
-                  defaultValue={formPaciente.estado_civil_id}
-                  onChange={handleOnChangeEC}
-                  required
-                />
-                <Form.Select
-                  label="Etnia"
-                  placeholder="Etnia"
-                  options={etnias}
-                  width={6}
-                  name="etnia_id"
-                  onChange={handleOnChangeE}
-                  defaultValue={formPaciente.etnia_id}
-                  required
-                />
-                <Form.Select
-                  label="Nivel de instrucción"
-                  placeholder="Nivel de instrucción"
-                  options={nivelDeInstruccion}
-                  width={6}
-                  name="nivel_de_instruccion_id"
-                  onChange={handleOnChangeNI}
-                  defaultValue={formPaciente.nivel_de_instruccion_id}
-                  required
-                />
-                <Form.Select
-                  label="Tipo de sangre"
-                  placeholder="Tipo de sangre"
-                  options={tipoDeSangre}
-                  width={6}
-                  name="tipo_de_sangre_id"
-                  onChange={handleOnChangeTS}
-                  defaultValue={formPaciente.tipo_de_sangre_id}
-                  required
-                />
-              </Form.Group>
+              {matches.medium && (
+                <>
+                  <Form.Group>
+                    <Form.Select
+                      label="Estado civil"
+                      placeholder="Estado civil"
+                      options={estadoCivil}
+                      width={8}
+                      name="estado_civil_id"
+                      defaultValue={formPaciente.estado_civil_id}
+                      onChange={handleOnChangeEC}
+                      required
+                    />
+                    <Form.Select
+                      label="Etnia"
+                      placeholder="Etnia"
+                      options={etnias}
+                      width={8}
+                      name="etnia_id"
+                      onChange={handleOnChangeE}
+                      defaultValue={formPaciente.etnia_id}
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Select
+                      label="Nivel de instrucción"
+                      placeholder="Nivel de instrucción"
+                      options={nivelDeInstruccion}
+                      width={8}
+                      name="nivel_de_instruccion_id"
+                      onChange={handleOnChangeNI}
+                      defaultValue={formPaciente.nivel_de_instruccion_id}
+                      required
+                    />
+                    <Form.Select
+                      label="Tipo de sangre"
+                      placeholder="Tipo de sangre"
+                      options={tipoDeSangre}
+                      width={8}
+                      name="tipo_de_sangre_id"
+                      onChange={handleOnChangeTS}
+                      defaultValue={formPaciente.tipo_de_sangre_id}
+                      required
+                    />
+                  </Form.Group>
+                </>
+              )}
+              {!matches.medium && (
+                <Form.Group>
+                  <Form.Select
+                    label="Estado civil"
+                    placeholder="Estado civil"
+                    options={estadoCivil}
+                    width={6}
+                    name="estado_civil_id"
+                    defaultValue={formPaciente.estado_civil_id}
+                    onChange={handleOnChangeEC}
+                    required
+                  />
+                  <Form.Select
+                    label="Etnia"
+                    placeholder="Etnia"
+                    options={etnias}
+                    width={6}
+                    name="etnia_id"
+                    onChange={handleOnChangeE}
+                    defaultValue={formPaciente.etnia_id}
+                    required
+                  />
+                  <Form.Select
+                    label="Nivel de instrucción"
+                    placeholder="Nivel de instrucción"
+                    options={nivelDeInstruccion}
+                    width={6}
+                    name="nivel_de_instruccion_id"
+                    onChange={handleOnChangeNI}
+                    defaultValue={formPaciente.nivel_de_instruccion_id}
+                    required
+                  />
+                  <Form.Select
+                    label="Tipo de sangre"
+                    placeholder="Tipo de sangre"
+                    options={tipoDeSangre}
+                    width={6}
+                    name="tipo_de_sangre_id"
+                    onChange={handleOnChangeTS}
+                    defaultValue={formPaciente.tipo_de_sangre_id}
+                    required
+                  />
+                </Form.Group>
+              )}
               <Form.Group>
                 <Form.Input
                   label="Dirección domicilio"
@@ -259,7 +312,7 @@ const Agregar = ({
                 </Form.Input>
               </Form.Group>
             </Form>
-          </Global>
+          </DivScroll>
         </Segment>
       )}
     </Media>

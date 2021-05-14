@@ -297,6 +297,8 @@ class UsuarioEditar extends Component {
 
           {!this.state.sesion && (
             <Agregar
+              headerC="Editar Usuario"
+              icon="edit"
               usuariopass={false}
               onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
               formUsuario={this.state.usuario}

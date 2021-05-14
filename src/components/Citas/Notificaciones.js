@@ -10,12 +10,12 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
-import { Global } from '../../global';
+import { DivScroll } from '../../global';
 import {
   fechaFormato,
   GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
-  mediumHeight,
+  maxMediumScrollRecord,
+  mediumScrollExtra,
 } from '../utils';
 import Navbar from './NavbarCitasNot';
 
@@ -53,16 +53,18 @@ const Notificaciones = ({
       {(matches) => (
         <React.Fragment>
           <Navbar onClickSend={onClickSend} />
-          <Segment>
-            <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Header as="h1" textAlign="center">
-                <Header.Content>
-                  <Icon name={icon} />
-                  {header}
-                </Header.Content>
-              </Header>
-              <hr />
 
+          <Segment>
+            <Header as="h1" textAlign="center">
+              <Header.Content>
+                <Icon name={icon} />
+                {header}
+              </Header.Content>
+            </Header>
+            <hr />
+            <DivScroll
+              style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
+            >
               {citas.length > 0 && (
                 <>
                   <Segment basic>
@@ -74,6 +76,7 @@ const Notificaciones = ({
                       onChange={handleChangeAll}
                     />
                   </Segment>
+
                   <Table compact celled definition>
                     <Table.Body>
                       {citas.map((cita) => {
@@ -138,7 +141,8 @@ const Notificaciones = ({
                   </p>
                 </Message>
               )}
-            </Global>
+            </DivScroll>
+
             <Segment basic align="center">
               <Pagination
                 onPageChange={handleChangePage}

@@ -2,14 +2,15 @@ import React from 'react';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
 import { Header, Icon, Segment, Table } from 'semantic-ui-react';
-import { Global } from '../../global';
+import { DivScroll } from '../../global';
 import { HeaderCell, HeaderSubCell } from '../Paciente/Detalle/DetalleStyles';
 import {
   calculaEdad,
   fechaFormato,
   GLOBAL_MEDIA_QUERIES,
-  masMediumHeight,
+  maxMediumScrollRecord,
   mediumHeight,
+  mediumScrollExtra,
 } from '../utils';
 import Navbar from './NavbarPerfil';
 
@@ -19,16 +20,18 @@ const Perfil = ({ usuario }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
-        <Segment>
-          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Navbar usuario={usuario.usuario} />
-            <Header as="h1" textAlign="center">
-              <Header.Content>
-                <Icon name="dna" /> Datos Usuario
-              </Header.Content>
-            </Header>
-            <hr />
-            <br />
+        <Segment style={mediumHeight}>
+          <Navbar usuario={usuario.usuario} />
+          <Header as="h1" textAlign="center">
+            <Header.Content>
+              <Icon name="dna" /> Datos Usuario
+            </Header.Content>
+          </Header>
+          <hr />
+          <br />
+          <DivScroll
+            style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
+          >
             <Table
               fixed={matches.medium ? true : null}
               celled
@@ -78,7 +81,7 @@ const Perfil = ({ usuario }) => {
                 </Table.Row>
               </Table.Body>
             </Table>
-          </Global>
+          </DivScroll>
         </Segment>
       )}
     </Media>

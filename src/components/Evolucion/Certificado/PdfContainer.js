@@ -2,7 +2,11 @@ import React from 'react';
 import Media from 'react-media';
 import { Segment } from 'semantic-ui-react';
 import { Global } from '../../../global';
-import { GLOBAL_MEDIA_QUERIES, masMediumHeight } from '../../utils';
+import {
+  GLOBAL_MEDIA_QUERIES,
+  masMediumHeight,
+  mediumHeight,
+} from '../../utils';
 import Navbar from '../Receta/NavbarReceta';
 
 export default (props) => {
@@ -15,7 +19,7 @@ export default (props) => {
         <React.Fragment>
           <Navbar createPdf={createPdf} />
 
-          <Segment>
+          <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
             <Global
               style={matches.medium ? { height: '45em' } : masMediumHeight}
             >

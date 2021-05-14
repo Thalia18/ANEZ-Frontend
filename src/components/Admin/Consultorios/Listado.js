@@ -10,11 +10,13 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
-import { Global } from '../../../global';
+import { DivScroll } from '../../../global';
 import {
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
+  maxMediumScrollRecord,
   mediumHeight,
+  mediumScrollExtra,
 } from '../../utils/';
 import Navbar from '../Usuarios/Navbar';
 
@@ -36,16 +38,18 @@ const Listado = ({
       {(matches) => (
         <React.Fragment>
           <Navbar consultorioId={value} tipo="consultorio" />
-          <Segment>
-            <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Header as="h1" textAlign="center">
-                <Header.Content>
-                  <Icon name={icon} />
-                  {header}
-                </Header.Content>
-              </Header>
-              <hr />
-              <br />
+          <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
+            <Header as="h1" textAlign="center">
+              <Header.Content>
+                <Icon name={icon} />
+                {header}
+              </Header.Content>
+            </Header>
+            <hr />
+            <br />
+            <DivScroll
+              style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
+            >
               {!buscar && (
                 <Table compact celled definition>
                   <Table.Header>
@@ -94,7 +98,7 @@ const Listado = ({
                   </p>
                 </Message>
               )}
-            </Global>
+            </DivScroll>
             <Segment basic align="center">
               <Pagination
                 onPageChange={handleChangePage}

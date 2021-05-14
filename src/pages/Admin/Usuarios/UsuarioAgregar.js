@@ -276,7 +276,8 @@ class UsuarioAgregar extends Component {
 
           {!this.state.sesion && (
             <Agregar
-              id="formAgregar"
+              headerC="Nuevo Usuario"
+              icon="add circle"
               usuariopass={true}
               onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
               formUsuario={this.state.usuario}

@@ -159,7 +159,6 @@ class Receta extends Component {
       <React.Fragment>
         <Layout activeKeyP="2">
           <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
-
           <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>

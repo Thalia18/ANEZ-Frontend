@@ -49,13 +49,13 @@ const RecuperarPass = ({ formUser, handleChange, onClickValidateUser }) => {
                   />
                   <br />
                   <Container style={{ textAlign: 'center' }}>
-                    <Button>
-                      <Icon name="redo" />
-                      Restaurar contraseña
-                    </Button>
                     <Button onClick={() => history.push('/')}>
                       <Icon name="angle left" />
                       Regresar
+                    </Button>
+                    <Button>
+                      <Icon name="redo" />
+                      Restaurar contraseña
                     </Button>
                   </Container>
                 </Form>

@@ -2,11 +2,13 @@ import React from 'react';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
 import { Grid, Header, Icon, Image, Segment, Table } from 'semantic-ui-react';
-import { Global } from '../../../global';
+import { DivScroll } from '../../../global';
 import {
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
+  maxMediumScrollRecord,
   mediumHeight,
+  mediumScrollExtra,
 } from '../../utils/index';
 
 const Detalle = ({ consultorio }) => {
@@ -14,15 +16,17 @@ const Detalle = ({ consultorio }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
-        <Segment>
-          <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as="h1" textAlign="center">
-              <Header.Content>
-                <Icon name="dna" /> Datos Consultorio
-              </Header.Content>
-            </Header>
-            <hr />
-            <br />
+        <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
+          <Header as="h1" textAlign="center">
+            <Header.Content>
+              <Icon name="dna" /> Datos Consultorio
+            </Header.Content>
+          </Header>
+          <hr />
+          <br />
+          <DivScroll
+            style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
+          >
             <Grid>
               <Grid.Column width={4} align="center">
                 <Image
@@ -73,7 +77,7 @@ const Detalle = ({ consultorio }) => {
                 </Table>
               </Grid.Column>
             </Grid>
-          </Global>
+          </DivScroll>
         </Segment>
       )}
     </Media>

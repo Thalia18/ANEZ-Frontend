@@ -55,7 +55,7 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                   expanded={expanded}
                   activeKey={activeKey}
                   onSelect={handleSelect}
-                  style={{ height: '102%' }}
+                  style={{ height: '103%' }}
                 >
                   <Sidenav.Body>
                     <Nav>
@@ -154,9 +154,7 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                     </Nav>
                   </Navbar.Body>
                 </Navbar>
-                <Segment
-                  style={matches.medium ? { height: '92%' } : { height: '94%' }}
-                >
+                <Segment style={{ height: '95%' }}>
                   {props.children}
                   <div style={{ marginBottom: '-1.5em', fontSize: '0.8em' }}>
                     <b>

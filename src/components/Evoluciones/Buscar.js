@@ -6,20 +6,30 @@ import {
   Header,
   Icon,
   Message,
+  Pagination,
   Segment,
   Table,
 } from 'semantic-ui-react';
-import { Global } from '../../global';
+import { DivScroll } from '../../global';
 import HCHeader from '../HistoriasClinicas/HCHeader';
 import {
   fechaFormato,
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
+  maxMediumScrollEvolu,
   mediumHeight,
+  mediumScrollEvolu,
 } from '../utils';
 import Navbar from './NavbarEvolucion';
 
-const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
+const Listado = ({
+  evoluciones,
+  paciente,
+  fecha1,
+  fecha2,
+  paginas,
+  handleChangePage,
+}) => {
   const [value, setValue] = React.useState();
   const handleChange = (e, { value }) => setValue(value);
   return (
@@ -27,19 +37,21 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
       {(matches) => (
         <React.Fragment>
           <Navbar evolucionId={value} paciente={paciente} pagina="evolucion" />
-          <Segment>
-            <Global style={matches.medium ? mediumHeight : masMediumHeight}>
-              <Header as="h1" textAlign="center">
-                <Header.Content>
-                  <Icon name="search" />
-                  Resultados de la búsqueda
-                </Header.Content>
-              </Header>
-              <hr />
-              <HCHeader paciente={paciente} />
-              <br />
+          <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
+            <Header as="h1" textAlign="center">
+              <Header.Content>
+                <Icon name="search" />
+                Resultados de la búsqueda
+              </Header.Content>
+            </Header>
+            <hr />
+            <HCHeader paciente={paciente} />
+            <br />
+            <DivScroll
+              style={matches.medium ? mediumScrollEvolu : maxMediumScrollEvolu}
+            >
               {evoluciones.length > 0 && (
-                <Table compact celled definition>
+                <Table compact celled definition compact>
                   <Table.Body>
                     {evoluciones.map((evolucion) => {
                       return (
@@ -80,7 +92,17 @@ const Listado = ({ evoluciones, paciente, fecha1, fecha2 }) => {
                   </p>
                 </Message>
               )}
-            </Global>
+            </DivScroll>
+
+            <Segment basic align="center">
+              <Pagination
+                onPageChange={handleChangePage}
+                pointing
+                secondary
+                activePage={paginas.page}
+                totalPages={paginas.totalPages}
+              />
+            </Segment>
           </Segment>
         </React.Fragment>
       )}

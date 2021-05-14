@@ -37,14 +37,13 @@ const NavbarPacientes = ({ evolucionId, paciente, ...props }) => {
         <Navbar style={{ background: 'rgba(0,161,213, 0.1)' }}>
           <Navbar.Body>
             <Nav>
-              {!matches.medium && (
-                <Nav.Item
-                  icon={<Icon icon="angle-left" />}
-                  onClick={() => {
-                    history.goBack();
-                  }}
-                />
-              )}
+              <Nav.Item
+                icon={<Icon icon="angle-left" />}
+                onClick={() => {
+                  history.goBack();
+                }}
+              />
+
               <Nav.Item
                 icon={<Icon icon="file-text" />}
                 componentClass={Link}

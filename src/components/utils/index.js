@@ -145,18 +145,47 @@ export const mediumScroll = {
   overflowX: 'hidden',
 };
 
+//const para medium scroll
+export const mediumScrollExtra = {
+  height: '34em',
+  overflowY: 'auto ::-webkit-scrollbar {display:none;}',
+  overflowX: 'hidden',
+};
+
+export const mediumScrollEvolu = {
+  height: '30em',
+  overflowY: 'auto ::-webkit-scrollbar {display:none;}',
+  overflowX: 'hidden',
+};
 //const para mas de medium scroll
 export const maxMediumScroll = {
-  height: '45em',
+  height: '47em',
   overflowY: 'auto',
   overflowX: 'hidden',
 };
 
+export const maxMediumScrollHC = {
+  height: '32em',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+};
+
+export const maxMediumScrollRecord = {
+  height: '37em',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+};
+
+export const maxMediumScrollEvolu = {
+  height: '25em',
+  overflowY: 'auto',
+  overflowX: 'hidden',
+};
 //const para medium height
-export const mediumHeight = { height: '40em' };
+export const mediumHeight = { height: '55em' };
 
 //const para mas de medium height
-export const masMediumHeight = { height: '60em' };
+export const masMediumHeight = { height: '50em' };
 
 //const para medium scroll
 export const mediumHeightScroll = {

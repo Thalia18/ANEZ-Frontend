@@ -52,7 +52,7 @@ class Citas extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/citas_notificacion/${this.props.match.params.fecha}?page=${this.state.page}`,
+        `${api_url} id='formAgregar'_notificacion/${this.props.match.params.fecha}?page=${this.state.page}`,
         {
           method: 'GET',
           headers: {
@@ -122,7 +122,6 @@ class Citas extends Component {
       direccion: this.props.consultorio.direccion,
       telefono: this.props.consultorio.telefono,
     };
-    console.log(data);
     try {
       const { data: cita } = await axios.post(
         `${api_url}/api/notificaciones`,

@@ -167,6 +167,8 @@ class ConsultorioEditar extends Component {
               onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
               formConsultorio={this.state.consultorio}
               handleChange={this.handleChange}
+              headerC="Editar Consultorio"
+              icon="edit"
             />
           )}
           <Sesion open={this.state.sesion} />
