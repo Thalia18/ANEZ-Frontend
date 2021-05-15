@@ -17,7 +17,7 @@ const Agregar = ({
   handleChange,
   id,
   formConsultorio,
-  onClickButtonSaveUsuario,
+  onClickButtonSaveConsultorio,
   foto,
   headerC,
   icon,
@@ -38,7 +38,7 @@ const Agregar = ({
           >
             <Form
               size={matches.medium ? 'tiny' : null}
-              onSubmit={onClickButtonSaveUsuario}
+              onSubmit={onClickButtonSaveConsultorio}
               id="formAgregar"
             >
               <Form.Group>

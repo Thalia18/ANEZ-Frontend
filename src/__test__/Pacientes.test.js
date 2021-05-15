@@ -101,6 +101,6 @@ describe('Pacientes', () => {
       </ProviderMock>
     );
 
-    expect(screen.getByText(/Nombres/i)).toBeInTheDocument();
+    expect(screen.getByText(/Nombre/i)).toBeInTheDocument();
   });
 });

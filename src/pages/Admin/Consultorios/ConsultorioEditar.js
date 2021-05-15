@@ -96,7 +96,7 @@ class ConsultorioEditar extends Component {
   };
 
   //guardar cita
-  onClickButtonSaveUsuario = async (e) => {
+  onClickButtonSaveConsultorio = async (e) => {
     e.preventDefault();
     this.setState({
       loading: true,
@@ -164,7 +164,7 @@ class ConsultorioEditar extends Component {
           {!this.state.sesion && (
             <Agregar
               id="formAgregar"
-              onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
+              onClickButtonSaveConsultorio={this.onClickButtonSaveConsultorio}
               formConsultorio={this.state.consultorio}
               handleChange={this.handleChange}
               headerC="Editar Consultorio"

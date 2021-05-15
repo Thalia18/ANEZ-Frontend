@@ -14,7 +14,7 @@ import {
   trimData,
 } from '../../../components/utils';
 
-class UsuarioAgregar extends Component {
+class ConsultorioAgregar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,7 +65,7 @@ class UsuarioAgregar extends Component {
   };
 
   //guardar cita
-  onClickButtonSaveUsuario = async (e) => {
+  onClickButtonSaveConsultorio = async (e) => {
     e.preventDefault();
     this.setState({
       loading: true,
@@ -135,7 +135,7 @@ class UsuarioAgregar extends Component {
               headerC="Nuevo Consultorio"
               icon="add circle"
               id="formAgregar"
-              onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
+              onClickButtonSaveConsultorio={this.onClickButtonSaveConsultorio}
               formConsultorio={this.state.consultorio}
               handleChange={this.handleChange}
             />
@@ -147,4 +147,4 @@ class UsuarioAgregar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(UsuarioAgregar);
+export default connect(mapStateToProps, null)(ConsultorioAgregar);

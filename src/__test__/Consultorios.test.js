@@ -2,27 +2,30 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
-import Detalle from '../components/HistoriaClinica//Detalle/Detalle';
-import Agregar from '../components/HistoriaClinica/Agregar/Agregar';
-import HistoriasC from '../components/HistoriasClinicas/Listado';
+import Agregar from '../components/Admin/Consultorios/Agregar';
+import Detalle from '../components/Admin/Consultorios/Detalle';
+import Consultorios from '../components/Admin/Consultorios/Listado';
 import ModalEliminar from '../components/Modales/ModalEliminar';
-import { HistoriaMock, HistoriasMock } from '../__mocks__/HCMock';
-import { PacienteMocks, PaginasMock } from '../__mocks__/PacienteMock';
+import {
+  ConsultorioMock,
+  ConsultoriosMock,
+} from '../__mocks__/ConsultoriosMock';
+import { PaginasMock } from '../__mocks__/PacienteMock';
 import ProviderMock from '../__mocks__/ProviderMock';
 
-describe('Historias clínicas', () => {
+describe('Consultorios', () => {
   afterEach(cleanup);
 
-  test('Render del componente Listado de historias clínicas - Buscar', () => {
+  test('Render del componente Listado de consultorios - Buscar', () => {
     const product = shallow(
       <ProviderMock>
-        <HistoriasC />
+        <Consultorios />
       </ProviderMock>
     );
     expect(product.length).toEqual(1);
   });
 
-  test('Render del componente Detalle de historia clínica por id', () => {
+  test('Render del componente Detalle de consultorio por id', () => {
     const product = shallow(
       <ProviderMock>
         <Detalle />
@@ -40,37 +43,35 @@ describe('Historias clínicas', () => {
     expect(product.length).toEqual(1);
   });
 
-  test('Comprobar el botón de crear nueva historia clínica', () => {
-    const onClickButtonSaveHC = jest.fn();
+  test('Comprobar el botón de crear nuevo consultorio', () => {
+    const onClickButtonSaveConsultorio = jest.fn();
     const wrapper = mount(
       <ProviderMock>
         <Agregar
-          paciente={PacienteMocks}
-          formHC={HistoriaMock}
-          onClickButtonSaveHC={onClickButtonSaveHC}
+          formConsultorio={ConsultorioMock}
+          onClickButtonSaveConsultorio={onClickButtonSaveConsultorio}
         />
       </ProviderMock>
     );
     wrapper.find('Form').simulate('submit');
-    expect(onClickButtonSaveHC).toHaveBeenCalledTimes(1);
+    expect(onClickButtonSaveConsultorio).toHaveBeenCalledTimes(1);
   });
 
-  test('Comprobar el botón de editar historia clínica', () => {
-    const onClickButtonSaveHC = jest.fn();
+  test('Comprobar el botón de editar consultorio', () => {
+    const onClickButtonSaveConsultorio = jest.fn();
     const wrapper = mount(
       <ProviderMock>
         <Agregar
-          paciente={PacienteMocks}
-          formHC={HistoriaMock}
-          onClickButtonSaveHC={onClickButtonSaveHC}
+          formConsultorio={ConsultorioMock}
+          onClickButtonSaveConsultorio={onClickButtonSaveConsultorio}
         />
       </ProviderMock>
     );
     wrapper.find('Form').simulate('submit');
-    expect(onClickButtonSaveHC).toHaveBeenCalledTimes(1);
+    expect(onClickButtonSaveConsultorio).toHaveBeenCalledTimes(1);
   });
 
-  test('Comprobar el botón de eliminar historia clínica', () => {
+  test('Comprobar el botón de eliminar consultorio', () => {
     const deleteM = jest.fn();
     const wrapper = mount(
       <ProviderMock>
@@ -81,19 +82,19 @@ describe('Historias clínicas', () => {
     expect(deleteM).toHaveBeenCalledTimes(1);
   });
 
-  test('Comprobar el botón de buscar historia clínica', () => {
+  test('Comprobar el botón de buscar consultorio', () => {
     const history = createMemoryHistory();
-    history.push('/historia_clinica_buscar/a');
+    history.push('/consultorio_buscar/a');
     render(
       <ProviderMock>
-        <HistoriasC
+        <Consultorios
           history={history}
-          HC={HistoriasMock}
+          consultorios={ConsultoriosMock}
           paginas={PaginasMock}
         />
       </ProviderMock>
     );
 
-    expect(screen.getByText(/Paciente/i)).toBeInTheDocument();
+    expect(screen.getByText(/Dirección/i)).toBeInTheDocument();
   });
 });

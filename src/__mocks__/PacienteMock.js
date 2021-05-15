@@ -14,6 +14,9 @@ export const PacienteMocks = {
   telefono: '2524360',
   contacto_emergencia_nombre: 'Susana',
   contacto_emergencia_telefono: '0998364403',
+  generos: {
+    genero: 'FEMENINO',
+  },
 };
 export const PacientesMock = [
   {

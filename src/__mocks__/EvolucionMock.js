@@ -1,0 +1,35 @@
+export const EvolucionMock = {
+  evolucion_id: 3,
+  historia_clinica_id: 8,
+  fecha: '2020-05-02',
+  motivo_consulta: 'dolor adbominal',
+  fecha_ultima_menstruacion: '2020-04-20',
+  procedimiento: 'ninguno',
+  diagnostico: 'apendicitis',
+  diagnostico_cie10: '{}',
+  medicacion: 'ninguna',
+  indicacion: '',
+  foto: '{}',
+  proximo_control: '2020-05-01',
+  created_at: '2021-04-02T02:49:40.266Z',
+  updated_at: '2021-04-02T02:49:40.266Z',
+};
+
+export const EvolucionesMock = [
+  {
+    evolucion_id: 3,
+    historia_clinica_id: 8,
+    fecha: '2020-05-02',
+    motivo_consulta: 'dolor adbominal',
+    fecha_ultima_menstruacion: '2020-04-20',
+    procedimiento: 'ninguno',
+    diagnostico: 'apendicitis',
+    diagnostico_cie10: '{}',
+    medicacion: 'ninguna',
+    indicacion: '',
+    foto: '{}',
+    proximo_control: '2020-05-01',
+    created_at: '2021-04-02T02:49:40.266Z',
+    updated_at: '2021-04-02T02:49:40.266Z',
+  },
+];
