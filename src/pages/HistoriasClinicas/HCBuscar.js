@@ -2,10 +2,10 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Error from '../../components/Error/Error';
+import Listado from '../../components/HistoriasClinicas/Listado';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import Sesion from '../../components/Modales/ModalSesionExpirada';
-import Listado from '../../components/Pacientes/Listado';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class HCBuscar extends Component {
@@ -14,7 +14,7 @@ class HCBuscar extends Component {
     this.state = {
       error: null,
       loading: true,
-      pacientes: {},
+      HC: {},
       paginas: {},
       page: 1,
       sesion: false,
@@ -39,7 +39,7 @@ class HCBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/pacientes_buscar/${this.props.match.params.buscar}`,
+        `${api_url}/api/hc_buscar/${this.props.match.params.buscar}`,
         {
           method: 'GET',
           headers: {
@@ -55,7 +55,7 @@ class HCBuscar extends Component {
         });
       } else {
         this.setState({
-          pacientes: data.data,
+          HC: data.data,
           paginas: data.info,
           loading: false,
         });
@@ -82,14 +82,12 @@ class HCBuscar extends Component {
             <Listado
               header="Resultado de la búsqueda"
               icon="search"
-              pacientes={Object.values(this.state.pacientes)}
+              HC={Object.values(this.state.HC)}
               pageInitial="/historia_clinica"
               pageSecond="/historias_clinicas"
               reload="/historia_clinica_buscar"
               optionNav="HC"
-              buscar={
-                Object.values(this.state.pacientes).length > 0 ? false : true
-              }
+              buscar={Object.values(this.state.HC).length > 0 ? false : true}
               busqueda={this.props.match.params.buscar}
               paginas={this.state.paginas}
               handleChangePage={this.handleChangePage}

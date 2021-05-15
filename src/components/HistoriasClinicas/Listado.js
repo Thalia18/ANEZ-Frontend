@@ -10,37 +10,43 @@ import {
   Segment,
   Table,
 } from 'semantic-ui-react';
-import { DivScroll } from '../../../global';
+import { DivScroll } from '../../global';
+import Navbar from '../Pacientes/Navbar';
 import {
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
   maxMediumScrollRecord,
   mediumHeight,
   mediumScrollExtra,
-} from '../../utils/';
-import Navbar from './Navbar';
+} from '../utils/';
 
 const Listado = ({
-  usuarios,
+  HC,
+  pageInitial,
+  pageSecond,
+  reload,
+  optionNav,
   header,
   icon,
   buscar,
   busqueda,
   paginas,
   handleChangePage,
+  user,
 }) => {
   const [value, setValue] = React.useState();
-  const handleChange = (e, { value }) => {
-    setValue(value);
-  };
+  const handleChange = (e, { value }) => setValue(value);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
           <Navbar
-            usuarioId={value}
-            tipo="usuario"
-            popHeader={'Ingrese Nombre, Apellido o Usuario'}
+            pacienteId={value}
+            pageInitial={pageInitial}
+            pageSecond={pageSecond}
+            reload={reload}
+            optionNav={optionNav}
+            user={user}
           />
           <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as="h1" textAlign="center">
@@ -55,32 +61,35 @@ const Listado = ({
               style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
             >
               {!buscar && (
-                <Table compact celled definition>
+                <Table compact celled definition data-testid="componentTest">
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell />
-                      <Table.HeaderCell>Apellidos</Table.HeaderCell>
-                      <Table.HeaderCell>Nombres</Table.HeaderCell>
-                      <Table.HeaderCell>Usuario</Table.HeaderCell>
+                      <Table.HeaderCell>No. Historia clínica</Table.HeaderCell>
+
+                      <Table.HeaderCell>Paciente</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
 
                   <Table.Body>
-                    {usuarios.map((usuario) => {
+                    {HC.map((historia) => {
                       return (
-                        <Table.Row key={usuario.usuario_id}>
+                        <Table.Row key={historia.paciente_id}>
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle
                               name="checkboxRadioGroup"
-                              value={usuario.usuario_id}
-                              checked={value === usuario.usuario_id}
+                              value={historia.paciente_id}
+                              checked={value === historia.paciente_id}
                               onChange={handleChange}
                             />
                           </Table.Cell>
-                          <Table.Cell>{usuario.apellido}</Table.Cell>
-                          <Table.Cell>{usuario.nombre}</Table.Cell>
-                          <Table.Cell>{usuario.usuario}</Table.Cell>
+                          <Table.Cell width={3}>
+                            {historia.historia_clinica_id}
+                          </Table.Cell>
+                          <Table.Cell width={13}>
+                            {historia.apellido} {historia.nombre}
+                          </Table.Cell>
                         </Table.Row>
                       );
                     })}
@@ -95,13 +104,14 @@ const Listado = ({
                     No se encontraron resultados
                   </Message.Header>
                   <p>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen usuarios
-                    registrados con el Nombre, Apellido o Usuario{' '}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen pacientes
+                    registrados con el Nombre, Apellido o Cédula{' '}
                     <b>{busqueda}</b>
                   </p>
                 </Message>
               )}
             </DivScroll>
+
             <Segment basic align="center">
               <Pagination
                 onPageChange={handleChangePage}

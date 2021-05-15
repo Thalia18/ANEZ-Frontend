@@ -37,11 +37,7 @@ const Listado = ({
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar
-            usuarioId={value}
-            tipo="usuario"
-            popHeader={'Ingrese Nombre, Apellido o Usuario'}
-          />
+          <Navbar usuarioId={value} tipo="usuario" />
           <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as="h1" textAlign="center">
               <Header.Content>

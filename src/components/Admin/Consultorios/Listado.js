@@ -37,7 +37,11 @@ const Listado = ({
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
         <React.Fragment>
-          <Navbar consultorioId={value} tipo="consultorio" />
+          <Navbar
+            consultorioId={value}
+            tipo="consultorio"
+            popHeader={'Ingrese Nombre del consultorio o RUC'}
+          />
           <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as="h1" textAlign="center">
               <Header.Content>
@@ -94,7 +98,7 @@ const Listado = ({
                   </Message.Header>
                   <p>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No existen consultorios
-                    registrados con el dato <b>{busqueda}</b>
+                    registrados con el Nombre o Ruc <b>{busqueda}</b>
                   </p>
                 </Message>
               )}

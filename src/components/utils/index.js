@@ -522,3 +522,9 @@ export const cie10DropdownSub = (subcategorias) => {
   }
   return opcion;
 };
+
+export const stylePop = {
+  borderRadius: 1,
+  opacity: 0.7,
+  padding: '0.5em',
+};

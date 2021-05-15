@@ -1,21 +1,26 @@
+import { cleanup, render, screen } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
+import { createMemoryHistory } from 'history';
 import React from 'react';
-import Agregar from '../../components/Cita/Agregar/Agregar';
-import Detalle from '../../components/Cita/Detalle/Detalle';
-import Editar from '../../components/Cita/Editar/Editar';
-import Buscar from '../../components/Citas/Buscar';
-import Citas from '../../components/Citas/Listado';
-import NavbarNotificacion from '../../components/Citas/NavbarCitasNot';
-import Notificaciones from '../../components/Citas/Notificaciones';
-import ModalEliminar from '../../components/Modales/ModalEliminar';
-import { horasMinutos } from '../../components/utils/index';
-import CitaMock from '../../__mocks__/CitaMock';
-import EspecialidadesMock from '../../__mocks__/EspecialidadesMock';
-import { medico, MedicosMock } from '../../__mocks__/MedicosMock';
-import PacienteMock from '../../__mocks__/PacienteMock';
-import ProviderMock from '../../__mocks__/ProviderMock';
+import Agregar from '../components/Cita/Agregar/Agregar';
+import Detalle from '../components/Cita/Detalle/Detalle';
+import Editar from '../components/Cita/Editar/Editar';
+import Buscar from '../components/Citas/Buscar';
+import Citas from '../components/Citas/Listado';
+import NavbarNotificacion from '../components/Citas/NavbarCitasNot';
+import Notificaciones from '../components/Citas/Notificaciones';
+import ModalEliminar from '../components/Modales/ModalEliminar';
+import { horasMinutos } from '../components/utils/index';
+import { CitaMock, CitasMock } from '../__mocks__/CitaMock';
+import { userMock } from '../__mocks__/DatosMock';
+import EspecialidadesMock from '../__mocks__/EspecialidadesMock';
+import { medico, MedicosMock } from '../__mocks__/MedicosMock';
+import { PacienteMocks, PaginasMock } from '../__mocks__/PacienteMock';
+import ProviderMock from '../__mocks__/ProviderMock';
 
 describe('Citas', () => {
+  afterEach(cleanup);
+
   test('Render del componente Calendario de citas', () => {
     const product = shallow(
       <ProviderMock>
@@ -77,7 +82,7 @@ describe('Citas', () => {
         <Agregar
           formCita={CitaMock}
           onClickButtonSaveCita={onClickButtonSaveCita}
-          paciente={PacienteMock}
+          paciente={PacienteMocks}
           horas={horasMinutos(8, 20)}
           especialidades={EspecialidadesMock}
           medicos={MedicosMock}
@@ -95,7 +100,7 @@ describe('Citas', () => {
         <Editar
           formCita={CitaMock}
           onClickButtonSaveCita={onClickButtonSaveCita}
-          paciente={PacienteMock}
+          paciente={PacienteMocks}
           horas={horasMinutos(8, 20)}
           especialidades={EspecialidadesMock}
           medicos={MedicosMock}
@@ -125,7 +130,25 @@ describe('Citas', () => {
         <NavbarNotificacion onClickSend={onClickSend} />
       </ProviderMock>
     );
-    wrapper.find('Nav').at(0).find('Button').simulate('click');
-    expect(onClickSend).toHaveBeenCalledTimes(1);
+    let nav = wrapper.find('Nav').at(0).find('Nav.Item').at(1);
+    expect(nav).toBeTruthy();
+    // expect(onClickSend).toHaveBeenCalledTimes(1);
+  });
+
+  test('Comprobar el botón de buscar cita', () => {
+    const history = createMemoryHistory();
+    history.push('/cita_buscar/a');
+    render(
+      <ProviderMock>
+        <Buscar
+          history={history}
+          paginas={PaginasMock}
+          citas={CitasMock}
+          user={userMock}
+        />
+      </ProviderMock>
+    );
+
+    expect(screen.getByText(/Paciente/i)).toBeInTheDocument();
   });
 });

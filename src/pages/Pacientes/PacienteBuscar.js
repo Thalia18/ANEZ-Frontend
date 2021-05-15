@@ -66,7 +66,6 @@ class PacientesBuscar extends Component {
     this.state.page = value.activePage;
     this.fetchData();
   };
-
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;

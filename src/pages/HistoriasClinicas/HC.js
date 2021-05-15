@@ -2,10 +2,10 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Error from '../../components/Error/Error';
+import Listado from '../../components/HistoriasClinicas/Listado';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import Sesion from '../../components/Modales/ModalSesionExpirada';
-import Listado from '../../components/Pacientes/Listado';
 import { api_url, mapStateToProps } from '../../components/utils';
 
 class Pacientes extends Component {
@@ -14,7 +14,7 @@ class Pacientes extends Component {
     this.state = {
       error: null,
       loading: true,
-      pacientes: {},
+      HC: {},
       autocomplete: {},
       paginas: {},
       page: 1,
@@ -39,7 +39,7 @@ class Pacientes extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(`${api_url}/api/pacientes`, {
+      const { data } = await axios.get(`${api_url}/api/historias`, {
         method: 'GET',
         headers: {
           Authorization: this.props.jwt.accessToken,
@@ -53,7 +53,7 @@ class Pacientes extends Component {
         });
       } else {
         this.setState({
-          pacientes: data.data,
+          HC: data.data,
           paginas: data.info,
           loading: false,
         });
@@ -81,7 +81,7 @@ class Pacientes extends Component {
             <Listado
               header="Historias clínicas"
               icon="heartbeat"
-              pacientes={Object.values(this.state.pacientes)}
+              HC={Object.values(this.state.HC)}
               autoComplete={this.state.autocomplete}
               pageInitial="/historia_clinica"
               pageSecond="/historias_clinicas"

@@ -4,10 +4,16 @@ import { Link, useHistory, withRouter } from 'react-router-dom';
 import { Container, Icon, InputGroup, Nav, Navbar } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
-import { Button, Form } from 'semantic-ui-react';
-import { GLOBAL_MEDIA_QUERIES } from '../../utils/';
+import { Button, Form, Popup } from 'semantic-ui-react';
+import { GLOBAL_MEDIA_QUERIES, stylePop } from '../../utils/';
 
-const NavbarPacientes = ({ usuarioId, consultorioId, tipo, ...props }) => {
+const NavbarPacientes = ({
+  usuarioId,
+  consultorioId,
+  tipo,
+  popHeader,
+  ...props
+}) => {
   let url =
     usuarioId === undefined ? `/admin/usuarios` : `/admin/usuario/${usuarioId}`;
   let urlC =
@@ -95,11 +101,18 @@ const NavbarPacientes = ({ usuarioId, consultorioId, tipo, ...props }) => {
                 <InputGroup inside>
                   <Form>
                     <Form.Group inline>
-                      <Form.Input
-                        placeholder="Buscar"
-                        onChange={(e) => {
-                          setValue(e.target.value);
-                        }}
+                      <Popup
+                        style={stylePop}
+                        inverted
+                        content={popHeader}
+                        trigger={
+                          <Form.Input
+                            placeholder="Buscar"
+                            onChange={(e) => {
+                              setValue(e.target.value);
+                            }}
+                          />
+                        }
                       />
 
                       <Button

@@ -7,7 +7,6 @@ import Navbar from '../../components/HistoriaClinica/Detalle/NavbarDetalle';
 import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
-import Modal from '../../components/Modales/ModalNotExists';
 import Sesion from '../../components/Modales/ModalSesionExpirada';
 import { api_url, mapStateToProps } from '../../components/utils';
 
@@ -142,28 +141,14 @@ class HCDetalle extends Component {
           <Navbar
             onClickDelete={this.onClickDelete}
             pacienteId={this.props.match.params.pacienteId}
-            historiaId={
-              !this.state.notExistHC
-                ? this.state.historiaClinica.historia_clinica_id
-                : null
-            }
+            historiaId={this.state.historiaClinica.historia_clinica_id}
           />
-          {this.state.notExistHC && (
-            <Modal
-              notExistsHC={this.state.notExistHC}
-              header="Historia clínica"
-              content={`${this.state.paciente.apellido} ${this.state.paciente.nombre}`}
-              closeModal={this.closeModal}
-              pacienteId={this.state.paciente.paciente_id}
-            />
-          )}
-          {!this.state.notExistHC && (
+          {!this.state.sesion && (
             <Detalle
               paciente={this.state.paciente}
               historia_clinica={this.state.historiaClinica}
             />
           )}
-
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}

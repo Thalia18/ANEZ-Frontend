@@ -4,8 +4,9 @@ import { Link, useHistory, withRouter } from 'react-router-dom';
 import { Container, Icon, InputGroup, Nav, Navbar } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
-import { Button, Form } from 'semantic-ui-react';
-import { GLOBAL_MEDIA_QUERIES } from '../utils/';
+import { Button, Form, Popup } from 'semantic-ui-react';
+import Modal from '../Modales/ModalHC';
+import { GLOBAL_MEDIA_QUERIES, stylePop } from '../utils/';
 
 const NavbarPacientes = ({
   pacienteId,
@@ -29,6 +30,11 @@ const NavbarPacientes = ({
 
   let history = useHistory();
   let [value, setValue] = React.useState('');
+  const [modal, setModal] = React.useState(false);
+
+  const closeModal = () => {
+    setModal(false);
+  };
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -46,9 +52,10 @@ const NavbarPacientes = ({
               {optionNav === 'HC' && (
                 <Nav.Item
                   icon={<Icon icon="heartbeat" />}
-                  componentClass={Link}
                   key={pacienteId}
-                  to={urlHC}
+                  onClick={() => {
+                    setModal(true);
+                  }}
                   key={Math.random()}
                 >
                   Crear Historia clínica
@@ -108,14 +115,21 @@ const NavbarPacientes = ({
                 <InputGroup inside>
                   <Form>
                     <Form.Group inline>
-                      <Form.Input
-                        placeholder="Buscar"
-                        onChange={(e) => {
-                          setValue(e.target.value);
-                        }}
+                      <Popup
+                        style={stylePop}
+                        inverted
+                        content="Ingrese Nombre, Apellido o Cédula del paciente"
+                        trigger={
+                          <Form.Input
+                            placeholder="Buscar"
+                            onChange={(e) => {
+                              setValue(e.target.value);
+                            }}
+                          />
+                        }
                       />
-
                       <Button
+                        data-testid="btnSearch"
                         onClick={() => {
                           value === ''
                             ? props.history.push({ pageSecond })
@@ -139,6 +153,7 @@ const NavbarPacientes = ({
               </Container>
             </Nav>
           </Navbar.Body>
+          <Modal existsHC={modal} close={closeModal} />
         </Navbar>
       )}
     </Media>

@@ -61,13 +61,12 @@ const Listado = ({
               style={matches.medium ? mediumScrollExtra : maxMediumScrollRecord}
             >
               {!buscar && (
-                <Table compact celled definition>
+                <Table compact celled definition data-testid="componentTest">
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell />
-                      <Table.HeaderCell>Apellidos</Table.HeaderCell>
+                      <Table.HeaderCell>Nombre completo</Table.HeaderCell>
 
-                      <Table.HeaderCell>Nombres</Table.HeaderCell>
                       <Table.HeaderCell>Cédula</Table.HeaderCell>
                       <Table.HeaderCell>Teléfono</Table.HeaderCell>
                     </Table.Row>
@@ -86,8 +85,9 @@ const Listado = ({
                               onChange={handleChange}
                             />
                           </Table.Cell>
-                          <Table.Cell>{paciente.apellido}</Table.Cell>
-                          <Table.Cell>{paciente.nombre}</Table.Cell>
+                          <Table.Cell>
+                            {paciente.apellido} {paciente.nombre}
+                          </Table.Cell>
                           <Table.Cell>{paciente.cedula}</Table.Cell>
                           <Table.Cell>{paciente.telefono}</Table.Cell>
                         </Table.Row>
