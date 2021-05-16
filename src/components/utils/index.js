@@ -2,8 +2,8 @@ import { Notification } from 'rsuite';
 var writtenNumber = require('written-number');
 
 //utilizar globalmente para la conexion con la api
-export const api_url = 'http://localhost:3300' || process.env.API_URL;
-// export const api_url = 'https://06073006ab0b.ngrok.io' || process.env.API_URL;
+// export const api_url = 'http://localhost:3300' || process.env.API_URL;
+export const api_url = 'https://06073006ab0b.ngrok.io' || process.env.API_URL;
 
 //para el componenete Media - responsive design
 export const GLOBAL_MEDIA_QUERIES = {
