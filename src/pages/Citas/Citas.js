@@ -10,7 +10,7 @@ import {
   api_url,
   citasList,
   fechaCitas,
-  mapStateToProps,
+  mapStateToProps
 } from '../../components/utils';
 
 class Citas extends Component {
@@ -26,6 +26,7 @@ class Citas extends Component {
       fechaBuscar: '',
       view: 'month',
       sesion: false,
+      reload ='http://localhost:3000'
     };
   }
   componentDidMount() {
@@ -78,7 +79,7 @@ class Citas extends Component {
       this.state.view = view;
 
       setTimeout(() => {
-        window.location.href = `http://localhost:3000/citas/${fechaCitas(
+        window.location.href = `${this.state.reload}/citas/${fechaCitas(
           e,
           'day'
         )}/day`;
@@ -89,7 +90,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `${this.state.reload}/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
         }, 10);
       }
       if (view === 'month') {
@@ -97,7 +98,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `http://localhost:3000/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `${this.state.reload}/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
         }, 10);
       }
     }
