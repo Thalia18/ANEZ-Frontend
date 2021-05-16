@@ -29,7 +29,6 @@ const Agregar = ({
   handleOnChangeMedico,
   campos,
 }) => {
-  const [value, setValue] = React.useState(new Date());
   var a = formCita.hora.split(':');
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>

@@ -33,7 +33,11 @@ const Login = ({ validateUser, formUser, handleChange, correctUser }) => {
                   background: 'rgba(26,25,25, 0.1)',
                 }}
               >
-                <img src="https://i.ibb.co/hLjvrdL/logoANEZ.png" width="100%" />
+                <img
+                  src="https://i.ibb.co/hLjvrdL/logoANEZ.png"
+                  width="100%"
+                  alt="logo"
+                />
               </Grid.Column>
 
               <Grid.Column

@@ -51,7 +51,7 @@ const Listado = ({
               style={matches.medium ? mediumScrollEvolu : maxMediumScrollEvolu}
             >
               {evoluciones.length > 0 && (
-                <Table compact celled definition compact>
+                <Table compact celled definition>
                   <Table.Body>
                     {evoluciones.map((evolucion) => {
                       return (

@@ -9,12 +9,8 @@ import { GLOBAL_MEDIA_QUERIES } from '../utils';
 
 const NavbarCitas = ({ onClickSend, verNav, citaId, ...props }) => {
   let history = useHistory();
-  let url =
-    citaId === undefined
-      ? `/citas_buscar/${props.match.params.fecha1}/${props.match.params.fecha2}`
-      : `/cita_detalle/${citaId}`;
+
   const [value, setValue] = React.useState([]);
-  const [modal, setModal] = React.useState(false);
 
   const fecha = (date) => {
     let dia = date.getDate();
@@ -23,9 +19,6 @@ const NavbarCitas = ({ onClickSend, verNav, citaId, ...props }) => {
     return año + '-' + mes + '-' + dia;
   };
 
-  const closeModal = () => {
-    setModal(false);
-  };
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
