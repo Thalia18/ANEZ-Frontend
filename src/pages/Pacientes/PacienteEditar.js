@@ -200,7 +200,7 @@ class PacienteEditar extends Component {
           'Paciente editado exitosamente',
           ''
         );
-        this.props.history.push('/pacientes');
+        this.props.history.push(`/paciente/${this.state.paciente.paciente_id}`);
       }
     } catch (error) {
       this.setState({

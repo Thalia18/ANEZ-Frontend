@@ -174,6 +174,7 @@ class UsuarioDetalle extends Component {
             usuarioId={this.props.match.params.usuarioId}
             onClickRecuperar={this.recuperarPass}
             tipo="usuario"
+            regresar="/admin/usuarios"
           />
           {!this.state.sesion && <Detalle usuario={this.state.usuario} />}
           <ModalEliminar

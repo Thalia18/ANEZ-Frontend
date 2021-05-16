@@ -209,7 +209,9 @@ class UsuarioEditar extends Component {
             'Usuario editado exitosamente',
             ''
           );
-          this.props.history.push('/admin/usuarios');
+          this.props.history.push(
+            `/admin/usuario/${this.props.match.params.usuarioId}`
+          );
         }
       }
     } catch (error) {

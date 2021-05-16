@@ -12,6 +12,7 @@ const NavbarPacientes = ({
   onClickRecuperar,
   tipo,
   consultorioId,
+  regresar,
 }) => {
   let history = useHistory();
   let url =
@@ -28,7 +29,7 @@ const NavbarPacientes = ({
               <Nav.Item
                 icon={<Icon icon="angle-left" />}
                 onClick={() => {
-                  history.goBack();
+                  history.push(regresar);
                 }}
               />
             </Nav>

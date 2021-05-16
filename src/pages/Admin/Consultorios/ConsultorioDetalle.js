@@ -120,6 +120,7 @@ class ConsultorioDetalle extends Component {
             onClickDelete={this.onClickDelete}
             consultorioId={this.props.match.params.consultorioId}
             tipo="consultorio"
+            regresar="/admin/consultorios"
           />
           {!this.state.sesion && (
             <Detalle consultorio={this.state.consultorio} />

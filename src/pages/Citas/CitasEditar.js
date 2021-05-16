@@ -11,7 +11,6 @@ import {
   api_url,
   especialidadesDoctoresDropdown,
   especialidadesDropdown,
-  fechaCitas,
   horasMinutos,
   mapStateToProps,
   openNotification,
@@ -171,7 +170,9 @@ class CitasEditar extends Component {
             'Cita agendada exitosamente',
             ''
           );
-          this.props.history.push(`/citas/${fechaCitas(new Date())}/month`);
+          this.props.history.push(
+            `/cita_detalle/${this.props.match.params.citaId}`
+          );
         }
       }
     } catch (error) {

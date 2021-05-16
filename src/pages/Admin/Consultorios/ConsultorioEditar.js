@@ -141,7 +141,9 @@ class ConsultorioEditar extends Component {
             'Consultorio creado exitosamente',
             ''
           );
-          this.props.history.push('/admin/consultorios');
+          this.props.history.push(
+            `/admin/consultorio/${this.props.match.params.consultorioId}`
+          );
         }
       }
     } catch (error) {
