@@ -72,7 +72,7 @@ class PacienteAgregar extends Component {
       const { data: etnias } = await axios.get(`${api_url}/api/etnias`, {
         method: 'GET',
         headers: {
-          Authorization: this.props.jwt.accessToken,
+          Authorization: this.props.jwt.refreshToken,
           auth: this.props.user.rol,
         },
       });
@@ -86,7 +86,7 @@ class PacienteAgregar extends Component {
         const { data: generos } = await axios.get(`${api_url}/api/generos`, {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         });
@@ -95,7 +95,7 @@ class PacienteAgregar extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -105,7 +105,7 @@ class PacienteAgregar extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -115,7 +115,7 @@ class PacienteAgregar extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -157,10 +157,10 @@ class PacienteAgregar extends Component {
         direccion: this.state.paciente.direccion,
         telefono: this.state.paciente.telefono,
         email: this.state.paciente.email,
-        contacto_emergencia_nombre: this.state.paciente
-          .contacto_emergencia_nombre,
-        contacto_emergencia_telefono: this.state.paciente
-          .contacto_emergencia_telefono,
+        contacto_emergencia_nombre:
+          this.state.paciente.contacto_emergencia_nombre,
+        contacto_emergencia_telefono:
+          this.state.paciente.contacto_emergencia_telefono,
         [e.target.name]: e.target.value,
       },
     });
@@ -175,7 +175,7 @@ class PacienteAgregar extends Component {
         {
           method: 'POST',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }

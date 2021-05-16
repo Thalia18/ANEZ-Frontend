@@ -63,7 +63,7 @@ class HCAgregar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -80,7 +80,7 @@ class HCAgregar extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -111,10 +111,10 @@ class HCAgregar extends Component {
       historiaClinica: {
         ...this.state.historiaClinica,
         paciente_id: this.props.match.params.pacienteId,
-        antecedente_patologico_personal: this.state.historiaClinica
-          .antecedente_patologico_personal,
-        antecedente_quirurgico: this.state.historiaClinica
-          .antecedente_quirurgico,
+        antecedente_patologico_personal:
+          this.state.historiaClinica.antecedente_patologico_personal,
+        antecedente_quirurgico:
+          this.state.historiaClinica.antecedente_quirurgico,
         alergia: this.state.historiaClinica.alergia,
         gesta: this.state.historiaClinica.gesta,
         parto: this.state.historiaClinica.parto,
@@ -141,7 +141,7 @@ class HCAgregar extends Component {
         {
           method: 'POST',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }

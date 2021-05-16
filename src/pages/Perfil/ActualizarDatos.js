@@ -44,7 +44,7 @@ class ActualizarDatos extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -89,7 +89,7 @@ class ActualizarDatos extends Component {
         {
           method: 'PATCH',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }

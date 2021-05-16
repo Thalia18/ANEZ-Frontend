@@ -81,7 +81,7 @@ class ConsultorioAgregar extends Component {
         {
           method: 'POST',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }

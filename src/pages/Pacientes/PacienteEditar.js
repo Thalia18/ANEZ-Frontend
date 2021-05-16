@@ -55,7 +55,7 @@ class PacienteEditar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -70,14 +70,14 @@ class PacienteEditar extends Component {
         const { data: generos } = await axios.get(`${api_url}/api/generos`, {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         });
         const { data: etnias } = await axios.get(`${api_url}/api/etnias`, {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         });
@@ -86,7 +86,7 @@ class PacienteEditar extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -96,7 +96,7 @@ class PacienteEditar extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -106,7 +106,7 @@ class PacienteEditar extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -150,10 +150,10 @@ class PacienteEditar extends Component {
         direccion: this.state.paciente.direccion,
         telefono: this.state.paciente.telefono,
         email: this.state.paciente.email,
-        contacto_emergencia_nombre: this.state.paciente
-          .contacto_emergencia_nombre,
-        contacto_emergencia_telefono: this.state.paciente
-          .contacto_emergencia_telefono,
+        contacto_emergencia_nombre:
+          this.state.paciente.contacto_emergencia_nombre,
+        contacto_emergencia_telefono:
+          this.state.paciente.contacto_emergencia_telefono,
         [e.target.name]: e.target.value,
         updatedAt: new Date(),
       },
@@ -169,7 +169,7 @@ class PacienteEditar extends Component {
         {
           method: 'PUT',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }

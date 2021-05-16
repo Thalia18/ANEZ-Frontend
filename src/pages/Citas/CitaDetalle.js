@@ -40,7 +40,7 @@ class CitaDetalle extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -56,7 +56,7 @@ class CitaDetalle extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -82,7 +82,7 @@ class CitaDetalle extends Component {
         {
           method: 'DELETE',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }

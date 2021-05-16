@@ -56,7 +56,7 @@ class UsuarioEditar extends Component {
       const { data: roles } = await axios.get(`${api_url}/api/roles`, {
         method: 'GET',
         headers: {
-          Authorization: this.props.jwt.accessToken,
+          Authorization: this.props.jwt.refreshToken,
           auth: this.props.user.rol,
         },
       });
@@ -65,7 +65,7 @@ class UsuarioEditar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -75,7 +75,7 @@ class UsuarioEditar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -85,7 +85,7 @@ class UsuarioEditar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -95,7 +95,7 @@ class UsuarioEditar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -135,7 +135,7 @@ class UsuarioEditar extends Component {
         {
           method: 'PATCH',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -162,7 +162,7 @@ class UsuarioEditar extends Component {
               {
                 method: 'PUT',
                 headers: {
-                  Authorization: this.props.jwt.accessToken,
+                  Authorization: this.props.jwt.refreshToken,
                   auth: this.props.user.rol,
                 },
               }
@@ -171,7 +171,7 @@ class UsuarioEditar extends Component {
             await axios.post(`${api_url}/api/medico`, this.state.medicoUpdate, {
               method: 'POST',
               headers: {
-                Authorization: this.props.jwt.accessToken,
+                Authorization: this.props.jwt.refreshToken,
                 auth: this.props.user.rol,
               },
             });
@@ -183,7 +183,7 @@ class UsuarioEditar extends Component {
               {
                 method: 'DELETE',
                 headers: {
-                  Authorization: this.props.jwt.accessToken,
+                  Authorization: this.props.jwt.refreshToken,
                   auth: this.props.user.rol,
                 },
               }

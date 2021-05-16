@@ -22,7 +22,7 @@ class LoginG extends Component {
       userConfirm: {},
       consultorio: {},
       categorias: {},
-      jwt: { accessToken: '' },
+      jwt: { refreshToken: '' },
     };
   }
   componentDidMount() {
@@ -58,7 +58,6 @@ class LoginG extends Component {
       this.setState({
         correctUser: false,
         userConfirm: usuario.data,
-        jwt: { accessToken: usuario.accessToken },
       });
       if (usuario.error) {
         this.setState({
@@ -71,18 +70,29 @@ class LoginG extends Component {
         this.setState({
           loading: true,
         });
-        const { data: consultorio } = await axios.get(
-          `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`,
+        const { data: refresh } = await axios.post(
+          `${api_url}/api/refresh_token`,
           {
-            method: 'GET',
+            method: 'POST',
             headers: {
               Authorization: usuario.accessToken,
               auth: usuario.data.rol.trim(),
             },
           }
         );
+        const { data: consultorio } = await axios.get(
+          `${api_url}/api/consultorio/${this.state.userConfirm.consultorio_id}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: refresh.refreshToken,
+              auth: usuario.data.rol.trim(),
+            },
+          }
+        );
         this.setState({
           consultorio: consultorio.data,
+          jwt: { refreshToken: refresh.refreshToken },
         });
         this.props.setJWT(this.state.jwt);
         this.props.setConsultorio(this.state.consultorio);

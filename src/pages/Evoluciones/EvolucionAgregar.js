@@ -76,7 +76,7 @@ class EvolucionAgregar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -107,8 +107,8 @@ class EvolucionAgregar extends Component {
         ...this.state.evolucion,
         historia_clinica_id: this.props.match.params.historiaId,
         motivo_consulta: this.state.evolucion.motivo_consulta,
-        fecha_ultima_menstruacion: this.state.evolucion
-          .fecha_ultima_menstruacion,
+        fecha_ultima_menstruacion:
+          this.state.evolucion.fecha_ultima_menstruacion,
         procedimiento: this.state.evolucion.procedimiento,
         diagnostico: this.state.evolucion.diagnostico,
         medicacion: this.state.evolucion.medicacion,
@@ -148,7 +148,7 @@ class EvolucionAgregar extends Component {
         {
           method: 'POST',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -202,7 +202,7 @@ class EvolucionAgregar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }

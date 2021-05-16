@@ -63,7 +63,7 @@ class EvolucionEditar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -80,7 +80,7 @@ class EvolucionEditar extends Component {
           {
             method: 'GET',
             headers: {
-              Authorization: this.props.jwt.accessToken,
+              Authorization: this.props.jwt.refreshToken,
               auth: this.props.user.rol,
             },
           }
@@ -130,8 +130,8 @@ class EvolucionEditar extends Component {
         ...this.state.evolucion,
         historia_clinica_id: this.props.match.params.historiaId,
         motivo_consulta: this.state.evolucion.motivo_consulta,
-        fecha_ultima_menstruacion: this.state.evolucion
-          .fecha_ultima_menstruacion,
+        fecha_ultima_menstruacion:
+          this.state.evolucion.fecha_ultima_menstruacion,
         procedimiento: this.state.evolucion.procedimiento,
         diagnostico: this.state.evolucion.diagnostico,
         medicacion: this.state.evolucion.medicacion,
@@ -171,7 +171,7 @@ class EvolucionEditar extends Component {
         {
           method: 'PUT',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }
@@ -225,7 +225,7 @@ class EvolucionEditar extends Component {
         {
           method: 'GET',
           headers: {
-            Authorization: this.props.jwt.accessToken,
+            Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
         }

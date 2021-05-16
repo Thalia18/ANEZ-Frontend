@@ -42,7 +42,7 @@ class CitasBuscar extends Component {
       const { data: citas } = await axios.get(url, {
         method: 'GET',
         headers: {
-          Authorization: this.props.jwt.accessToken,
+          Authorization: this.props.jwt.refreshToken,
           auth: this.props.user.rol,
         },
       });
