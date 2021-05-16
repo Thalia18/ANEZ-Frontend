@@ -26,7 +26,7 @@ class Citas extends Component {
       fechaBuscar: '',
       view: 'month',
       sesion: false,
-      reload: 'http://anez-salud',
+      reload: 'anez-salud.com',
     };
   }
   componentDidMount() {
