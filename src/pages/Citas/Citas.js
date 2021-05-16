@@ -10,7 +10,7 @@ import {
   api_url,
   citasList,
   fechaCitas,
-  mapStateToProps
+  mapStateToProps,
 } from '../../components/utils';
 
 class Citas extends Component {
@@ -26,7 +26,7 @@ class Citas extends Component {
       fechaBuscar: '',
       view: 'month',
       sesion: false,
-      reload ='http://localhost:3000'
+      reload: 'http://anez-salud',
     };
   }
   componentDidMount() {
