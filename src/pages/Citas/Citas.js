@@ -26,7 +26,6 @@ class Citas extends Component {
       fechaBuscar: '',
       view: 'month',
       sesion: false,
-      reload: 'http://anez-salud',
     };
   }
   componentDidMount() {
@@ -79,10 +78,7 @@ class Citas extends Component {
       this.state.view = view;
 
       setTimeout(() => {
-        window.location.href = `${this.state.reload}/citas/${fechaCitas(
-          e,
-          'day'
-        )}/day`;
+        window.location.href = `/citas/${fechaCitas(e, 'day')}/day`;
       }, 10);
     } else {
       if (view === 'day') {
@@ -90,7 +86,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `${this.state.reload}/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
         }, 10);
       }
       if (view === 'month') {
@@ -98,7 +94,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `${this.state.reload}/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
         }, 10);
       }
     }

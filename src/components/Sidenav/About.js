@@ -29,6 +29,7 @@ const About = () => {
                   height: matches.medium ? '30%' : '20%',
                 }}
                 src="https://i.ibb.co/ygcHZFY/circle-cropped-1.png"
+                alt="logo ANEZ"
                 // size={matches.medium ? 'small' : 'medium'}
               />
               <Segment
