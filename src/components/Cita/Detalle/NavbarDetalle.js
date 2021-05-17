@@ -17,7 +17,7 @@ const NavbarPacientes = ({ onClickDelete, pacienteId, citaId }) => {
               <Nav.Item
                 icon={<Icon icon="angle-left" />}
                 onClick={() => {
-                  history.push(`/citas/${fechaCitas(new Date())}/month`);
+                  history.push(`/citas/${new Date()}/month`);
                 }}
               />
             </Nav>
