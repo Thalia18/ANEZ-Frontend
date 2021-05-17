@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Icon, Nav, Navbar } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
-import { colorBackground, fechaCitas, GLOBAL_MEDIA_QUERIES } from '../../utils';
+import { colorBackground, GLOBAL_MEDIA_QUERIES } from '../../utils';
 
 const NavbarPacientes = ({ onClickDelete, pacienteId, citaId }) => {
   let history = useHistory();
