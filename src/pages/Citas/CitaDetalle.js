@@ -8,7 +8,7 @@ import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Sesion from '../../components/Modales/ModalSesionExpirada';
-import { api_url, fechaCitas, mapStateToProps } from '../../components/utils';
+import { api_url, mapStateToProps } from '../../components/utils';
 
 class CitaDetalle extends Component {
   constructor(props) {
@@ -96,7 +96,7 @@ class CitaDetalle extends Component {
         this.setState({
           loading: false,
         });
-        this.props.history.push(`/citas/${fechaCitas(new Date())}/month`);
+        this.props.history.push(`/citas/${new Date()}/month`);
       }
     } catch (error) {
       this.setState({
