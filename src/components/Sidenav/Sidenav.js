@@ -8,7 +8,7 @@ import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Grid, Segment } from 'semantic-ui-react';
 import { logoutUser } from '../../actions';
-import { fechaCitas, GLOBAL_MEDIA_QUERIES, mapStateToProps } from '../utils';
+import { GLOBAL_MEDIA_QUERIES, mapStateToProps } from '../utils';
 import { Logo } from './SidenavStyles';
 
 const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
@@ -71,7 +71,7 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                       <Nav.Item
                         eventKey="1"
                         componentClass={Link}
-                        to={`/citas/${fechaCitas(new Date())}/month`}
+                        to={`/citas/${new Date()}/month`}
                       >
                         <Icon icon="calendar" /> Citas
                       </Nav.Item>

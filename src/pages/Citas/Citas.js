@@ -26,6 +26,7 @@ class Citas extends Component {
       fechaBuscar: '',
       view: 'month',
       sesion: false,
+      fechaUltima: '',
     };
   }
   componentDidMount() {
@@ -40,11 +41,17 @@ class Citas extends Component {
       loading: true,
       error: null,
     });
+
+    this.state.fechaUltima = new Date(this.props.match.params.fecha);
     try {
       const url =
         this.props.user.rol.trim().toUpperCase() === 'MÉDICO'
-          ? `${api_url}/api/citas_fecha_med/${this.props.match.params.fecha}/${this.props.user.medico_id}`
-          : `${api_url}/api/citas_fecha/${this.props.match.params.fecha}`;
+          ? `${api_url}/api/citas_fecha_med/${fechaCitas(
+              new Date(this.props.match.params.fecha)
+            )}/${this.props.user.medico_id}`
+          : `${api_url}/api/citas_fecha/${fechaCitas(
+              new Date(this.props.match.params.fecha)
+            )}`;
 
       const { data: citas } = await axios.get(url, {
         method: 'GET',
@@ -73,8 +80,8 @@ class Citas extends Component {
   };
 
   changeMonth = (e, view, action) => {
+    this.state.fechaUltima = e;
     if (action === 'DATE') {
-      // this.props.history.push(`/citas/${fechaCitas(e, 'day')}/day`);
       this.state.view = view;
 
       setTimeout(() => {
@@ -86,7 +93,7 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
+          window.location.href = `/citas/${e}/${this.props.match.params.view}`;
         }, 10);
       }
       if (view === 'month') {
@@ -94,8 +101,8 @@ class Citas extends Component {
         this.state.view = view;
 
         setTimeout(() => {
-          window.location.href = `/citas/${this.props.match.params.fecha}/${this.props.match.params.view}`;
-        }, 10);
+          window.location.href = `/citas/${e}/${this.props.match.params.view}`;
+        }, 30);
       }
     }
   };
@@ -110,7 +117,7 @@ class Citas extends Component {
             <CitasCalendar
               citas={this.state.citaList}
               changeMonth={this.changeMonth}
-              fechaUltima={new Date(this.props.match.params.fecha)}
+              fechaUltima={this.state.fechaUltima}
               view={this.props.match.params.view}
               user={this.props.user}
             />
