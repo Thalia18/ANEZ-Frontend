@@ -96,7 +96,7 @@ class CitaDetalle extends Component {
         this.setState({
           loading: false,
         });
-        this.props.history.push(`/citas/${fechaCitas(new Date())}/month`);
+        this.props.history.push(`/citas/${new Date()}/month`);
       }
     } catch (error) {
       this.setState({
