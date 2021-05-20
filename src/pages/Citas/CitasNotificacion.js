@@ -105,62 +105,67 @@ class Citas extends Component {
     this.fetchData();
   };
   onClickSend = async (e) => {
+    e.preventDefault();
+
     let citas = [];
     citas =
       this.state.opcion.length > 0
         ? this.state.opcion
         : this.state.opcionAll[0];
-    e.preventDefault();
-    this.setState({
-      loading: true,
-      error: null,
-      opcion: [],
-      opcionAll: [],
-    });
-    let data = {
-      citas: citas,
-      direccion: this.props.consultorio.direccion,
-      telefono: this.props.consultorio.telefono,
-    };
-    try {
-      const { data: cita } = await axios.post(
-        `${api_url}/api/notificaciones`,
-        data,
-
-        {
-          method: 'POST',
-          headers: {
-            Authorization: this.props.jwt.refreshToken,
-            auth: this.props.user.rol,
-          },
-        }
-      );
-
-      if (cita.error) {
-        this.setState({
-          sesion: true,
-          loading: false,
-        });
-      } else {
-        this.setState({
-          loading: false,
-          success: true,
-          error: null,
-        });
-        if (cita.data) {
-          openNotification(
-            'success',
-            'Citas',
-            `Recordatorios enviados satisfactoriamente`,
-            ''
-          );
-        }
-      }
-    } catch (error) {
+    if (!citas) {
+      openNotification('error', 'Citas', `Seleccione una o varias citas`, '');
+    } else {
       this.setState({
-        loading: false,
-        error: error,
+        loading: true,
+        error: null,
+        opcion: [],
+        opcionAll: [],
       });
+      let data = {
+        citas: citas,
+        direccion: this.props.consultorio.direccion,
+        telefono: this.props.consultorio.telefono,
+      };
+      try {
+        const { data: cita } = await axios.post(
+          `${api_url}/api/notificaciones`,
+          data,
+
+          {
+            method: 'POST',
+            headers: {
+              Authorization: this.props.jwt.refreshToken,
+              auth: this.props.user.rol,
+            },
+          }
+        );
+
+        if (cita.error) {
+          this.setState({
+            sesion: true,
+            loading: false,
+          });
+        } else {
+          this.setState({
+            loading: false,
+            success: true,
+            error: null,
+          });
+          if (cita.data) {
+            openNotification(
+              'success',
+              'Citas',
+              `Recordatorios enviados satisfactoriamente`,
+              ''
+            );
+          }
+        }
+      } catch (error) {
+        this.setState({
+          loading: false,
+          error: error,
+        });
+      }
     }
   };
   render() {
