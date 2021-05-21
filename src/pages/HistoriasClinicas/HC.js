@@ -39,7 +39,7 @@ class Pacientes extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(`${api_url}/api/historias`, {
+      const { data } = await axios.get(`${api_url}/api/historias_clinicas`, {
         method: 'GET',
         headers: {
           Authorization: this.props.jwt.refreshToken,
@@ -73,7 +73,6 @@ class Pacientes extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
         <Layout activeKeyP="2">

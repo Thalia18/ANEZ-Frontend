@@ -88,7 +88,8 @@ const Listado = ({
                             {historia.historia_clinica_id}
                           </Table.Cell>
                           <Table.Cell width={13}>
-                            {historia.apellido} {historia.nombre}
+                            {historia.pacientes.apellido}{' '}
+                            {historia.pacientes.nombre}
                           </Table.Cell>
                         </Table.Row>
                       );
