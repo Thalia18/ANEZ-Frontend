@@ -164,12 +164,7 @@ class CitasEditar extends Component {
             ''
           );
         } else {
-          openNotification(
-            'success',
-            'Citas',
-            'Cita agendada exitosamente',
-            ''
-          );
+          openNotification('success', 'Citas', 'Cita editada exitosamente', '');
           this.props.history.push(
             `/cita_detalle/${this.props.match.params.citaId}`
           );

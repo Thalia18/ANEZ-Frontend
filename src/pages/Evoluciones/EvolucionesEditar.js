@@ -191,7 +191,7 @@ class EvolucionEditar extends Component {
         openNotification(
           'success',
           'Evoluciones',
-          'Evolución guardada exitosamente',
+          'Evolución editada exitosamente',
           ''
         );
         this.props.history.push(

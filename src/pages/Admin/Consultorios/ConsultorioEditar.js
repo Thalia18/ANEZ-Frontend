@@ -138,7 +138,7 @@ class ConsultorioEditar extends Component {
           openNotification(
             'success',
             'Consultorio',
-            'Consultorio creado exitosamente',
+            'Consultorio editado exitosamente',
             ''
           );
           this.props.history.push(
