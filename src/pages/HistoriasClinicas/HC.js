@@ -39,7 +39,7 @@ class Pacientes extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(`${api_url}/api/historias_clinicas`, {
+      const { data } = await axios.get(`${api_url}/api/historias`, {
         method: 'GET',
         headers: {
           Authorization: this.props.jwt.refreshToken,
