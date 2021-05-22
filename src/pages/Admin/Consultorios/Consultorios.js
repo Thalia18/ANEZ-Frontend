@@ -78,7 +78,7 @@ class Consultorios extends Component {
 
     return (
       <React.Fragment>
-        <Layout activeKeyP="5">
+        <Layout activeKeyP="6">
           {!this.state.sesion && (
             <Listado
               header="Consultorios"

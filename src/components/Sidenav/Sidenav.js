@@ -105,6 +105,15 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                         <Nav.Item
                           eventKey="5"
                           componentClass={Link}
+                          to="/admin/medicos"
+                        >
+                          <Icon icon="user-md" /> Médicos
+                        </Nav.Item>
+                      )}
+                      {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
+                        <Nav.Item
+                          eventKey="6"
+                          componentClass={Link}
                           to="/admin/consultorios"
                         >
                           <Icon icon="hospital-o" /> Consultorios

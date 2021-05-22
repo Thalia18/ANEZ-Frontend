@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Agregar from '../../../components/Admin/Usuarios/Agregar';
+import Editar from '../../../components/Admin/Medicos/Agregar';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
@@ -14,11 +14,10 @@ import {
   mapStateToProps,
   openNotification,
   regexEmail,
-  rolesDropdown,
   trimData,
 } from '../../../components/utils/index';
 
-class UsuarioEditar extends Component {
+class MedicoEditar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +25,6 @@ class UsuarioEditar extends Component {
       error: null,
       loading: true,
 
-      roles: [],
       consultorios: [],
       especialidades: [],
 
@@ -53,13 +51,6 @@ class UsuarioEditar extends Component {
       error: null,
     });
     try {
-      const { data: roles } = await axios.get(`${api_url}/api/roles`, {
-        method: 'GET',
-        headers: {
-          Authorization: this.props.jwt.refreshToken,
-          auth: this.props.user.rol,
-        },
-      });
       const { data: especialidades } = await axios.get(
         `${api_url}/api/especialidades`,
         {
@@ -80,18 +71,9 @@ class UsuarioEditar extends Component {
           },
         }
       );
-      const { data: usuario } = await axios.get(
-        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: this.props.jwt.refreshToken,
-            auth: this.props.user.rol,
-          },
-        }
-      );
+
       const { data: medico } = await axios.get(
-        `${api_url}/api/medicos_usuario_id/${this.props.match.params.usuarioId}`,
+        `${api_url}/api/medico/${this.props.match.params.medicoId}`,
         {
           method: 'GET',
           headers: {
@@ -100,7 +82,17 @@ class UsuarioEditar extends Component {
           },
         }
       );
-      if (roles.error) {
+      const { data: usuario } = await axios.get(
+        `${api_url}/api/usuario/${medico.data.usuario_id}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.refreshToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
+      if (especialidades.error) {
         this.setState({
           sesion: true,
           loading: false,
@@ -108,11 +100,10 @@ class UsuarioEditar extends Component {
       } else {
         trimData(usuario.data);
         this.setState({
-          roles: rolesDropdown(roles.data),
           especialidades: especialidadesDropdownUsuarios(especialidades.data),
           consultorios: consultorioDropdown(consultorios.data),
           usuario: usuario.data,
-          medico: medico.data !== null ? medico.data : {},
+          medico: medico.data,
           loading: false,
         });
       }
@@ -129,11 +120,30 @@ class UsuarioEditar extends Component {
     trimData(this.state.medico);
 
     try {
+      this.setState({
+        medicoUpdate: {
+          ...this.state.medicoUpdate,
+          usuario_id: this.state.usuario.usuario_id,
+          especialidad: this.state.medicoUpdate.especialidad,
+        },
+      });
+
       const { data: usuario } = await axios.patch(
-        `${api_url}/api/usuario/${this.props.match.params.usuarioId}`,
+        `${api_url}/api/usuario/${this.state.medico.usuario_id}`,
         this.state.usuario,
         {
           method: 'PATCH',
+          headers: {
+            Authorization: this.props.jwt.refreshToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
+      await axios.put(
+        `${api_url}/api/medico/${this.state.medico.medico_id}`,
+        this.state.medicoUpdate,
+        {
+          method: 'PUT',
           headers: {
             Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
@@ -146,73 +156,23 @@ class UsuarioEditar extends Component {
           sesion: true,
           loading: false,
         });
-      } else {
-        if (this.state.usuario.rol_id === 2) {
-          this.setState({
-            medicoUpdate: {
-              ...this.state.medicoUpdate,
-              usuario_id: this.state.usuario.usuario_id,
-              especialidad: this.state.medicoUpdate.especialidad,
-            },
-          });
-          if (Object.values(this.state.medico).length > 0) {
-            await axios.put(
-              `${api_url}/api/medico/${this.state.medico.medico_id}`,
-              this.state.medicoUpdate,
-              {
-                method: 'PUT',
-                headers: {
-                  Authorization: this.props.jwt.refreshToken,
-                  auth: this.props.user.rol,
-                },
-              }
-            );
-          } else {
-            await axios.post(`${api_url}/api/medico`, this.state.medicoUpdate, {
-              method: 'POST',
-              headers: {
-                Authorization: this.props.jwt.refreshToken,
-                auth: this.props.user.rol,
-              },
-            });
-          }
-        } else {
-          if (Object.values(this.state.medico).length > 0) {
-            await axios.delete(
-              `${api_url}/api/medico/${this.state.medico.medico_id}`,
-              {
-                method: 'DELETE',
-                headers: {
-                  Authorization: this.props.jwt.refreshToken,
-                  auth: this.props.user.rol,
-                },
-              }
-            );
-          }
-        }
+      }
 
-        this.setState({
-          loading: false,
-          error: null,
-        });
-        if (usuario.data.exist) {
-          openNotification(
-            'warning',
-            'Usuarios',
-            'Ya existe un usuario registrado con el número de cédula ',
-            `${this.state.usuario.cedula}`
-          );
-        } else {
-          openNotification(
-            'success',
-            'Usuarios',
-            'Usuario editado exitosamente',
-            ''
-          );
-          this.props.history.push(
-            `/admin/usuario/${this.props.match.params.usuarioId}`
-          );
-        }
+      if (usuario.data.exist) {
+        openNotification(
+          'warning',
+          'Médicos',
+          'Ya existe un médico registrado con el número de cédula ',
+          `${this.state.usuario.cedula}`
+        );
+      } else {
+        openNotification(
+          'success',
+          'Médicos',
+          'Médico editado exitosamente',
+          ''
+        );
+        this.props.history.push(`/admin/medico/${this.state.medico.medico_id}`);
       }
     } catch (error) {
       this.setState({
@@ -222,7 +182,7 @@ class UsuarioEditar extends Component {
     }
   };
 
-  onClickButtonSaveUsuario = (e) => {
+  onClickButtonSaveMedico = (e) => {
     e.preventDefault();
     this.setState({
       loading: true,
@@ -236,13 +196,12 @@ class UsuarioEditar extends Component {
     } else if (this.state.usuario.rol_id === 2)
       if (
         (this.state.medicoUpdate.especialidad === undefined &&
-          this.state.medico.especialidad !== undefined &&
           this.state.medico.especialidad.length > 0) ||
         (this.state.medicoUpdate.especialidad !== undefined &&
-          this.state.medico.especialidad !== undefined &&
           this.state.medico.especialidad.length === 0 &&
           this.state.medicoUpdate.especialidad.length > 0) ||
         (this.state.medicoUpdate.especialidad !== undefined &&
+          this.state.medico.especialidad.length > 0 &&
           this.state.medicoUpdate.especialidad.length > 0)
       ) {
         this.setState({
@@ -255,7 +214,7 @@ class UsuarioEditar extends Component {
         });
         openNotification(
           'error',
-          'Usuarios',
+          'Médicos',
           'Seleccione una o varias especialidades',
           ''
         );
@@ -320,26 +279,23 @@ class UsuarioEditar extends Component {
     if (this.state.error) return <Error />;
     return (
       <React.Fragment>
-        <Layout activeKeyP="4">
+        <Layout activeKeyP="5">
           <Navbar />
 
           {!this.state.sesion && (
-            <Agregar
-              headerC="Editar Usuario"
+            <Editar
+              headerC="Editar Médico"
               icon="edit"
-              usuariopass={false}
-              onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
+              onClickButtonSaveMedico={this.onClickButtonSaveMedico}
               formUsuario={this.state.usuario}
               handleChange={this.handleChange}
               especialidades={this.state.especialidades}
-              roles={this.state.roles}
               consultorios={this.state.consultorios}
               handleOnChangeConsultorio={this.handleOnChangeConsultorio}
               handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
               especialidadesSelect={this.especialidadesSelect(
                 this.state.medico.especialidad
               )}
-              rol_id={this.state.usuario.rol_id}
             />
           )}
           <Sesion open={this.state.sesion} />
@@ -349,4 +305,4 @@ class UsuarioEditar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(UsuarioEditar);
+export default connect(mapStateToProps, null)(MedicoEditar);

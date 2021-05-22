@@ -187,7 +187,6 @@ class UsuarioDetalle extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.medico);
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
@@ -201,7 +200,10 @@ class UsuarioDetalle extends Component {
           {!this.state.sesion && (
             <Detalle
               usuario={this.state.usuario}
-              medico={Object.values(this.state.medico)}
+              medico={this.state.medico}
+              medShow={
+                Object.values(this.state.medico).length > 0 ? true : false
+              }
             />
           )}
           <ModalEliminar

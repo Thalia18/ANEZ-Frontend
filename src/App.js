@@ -6,6 +6,11 @@ import ConsultorioBuscarPage from './pages/Admin/Consultorios/ConsultorioBuscar'
 import ConsultorioDetallePage from './pages/Admin/Consultorios/ConsultorioDetalle';
 import ConsultorioEditarPage from './pages/Admin/Consultorios/ConsultorioEditar';
 import ConsultoriosPage from './pages/Admin/Consultorios/Consultorios';
+import MedicoAgregarPage from './pages/Admin/Medicos/MedicoAgregar';
+import MedicoBuscarPage from './pages/Admin/Medicos/MedicoBuscar';
+import MedicoDetallePage from './pages/Admin/Medicos/MedicoDetalle';
+import MedicoEditarPage from './pages/Admin/Medicos/MedicoEditar';
+import MedicosPage from './pages/Admin/Medicos/Medicos';
 import UsuarioAgregarPage from './pages/Admin/Usuarios/UsuarioAgregar';
 import UsuarioBuscarPage from './pages/Admin/Usuarios/UsuarioBuscar';
 import UsuarioDetallePage from './pages/Admin/Usuarios/UsuarioDetalle';
@@ -220,6 +225,30 @@ function App() {
             exact
             path="/admin/consultorios_buscar/:buscar"
             component={ConsultorioBuscarPage}
+          />
+          {/* paginas de admin medicos */}
+
+          <Route
+            exact
+            path="/admin/medico_agregar"
+            component={MedicoAgregarPage}
+          />
+          <Route exact path="/admin/medicos" component={MedicosPage} />
+
+          <Route
+            exact
+            path="/admin/medico/:medicoId"
+            component={MedicoDetallePage}
+          />
+          <Route
+            exact
+            path="/admin/medico_editar/:medicoId"
+            component={MedicoEditarPage}
+          />
+          <Route
+            exact
+            path="/admin/medico_buscar/:buscar"
+            component={MedicoBuscarPage}
           />
           {/* Error Autorizacion */}
           <Route exact path="/error_auth" component={ErrorAutorizacionPage} />

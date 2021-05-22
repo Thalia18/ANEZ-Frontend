@@ -2,7 +2,7 @@ import axios from 'axios';
 import generator from 'generate-password';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Agregar from '../../../components/Admin/Usuarios/Agregar';
+import Agregar from '../../../components/Admin/Medicos/Agregar';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
@@ -15,18 +15,16 @@ import {
   mapStateToProps,
   openNotification,
   regexEmail,
-  rolesDropdown,
   trimData,
 } from '../../../components/utils';
 
-class UsuarioAgregar extends Component {
+class MedicoAgregar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
       error: null,
       loading: true,
-      roles: [],
       consultorios: [],
       especialidades: [],
       usuarioNombre: '',
@@ -35,7 +33,7 @@ class UsuarioAgregar extends Component {
         especialidad: '',
       },
       usuario: {
-        rol_id: 1,
+        rol_id: 2,
         consultorio_id: 1,
         usuario: '',
         contrasena: generator
@@ -72,42 +70,34 @@ class UsuarioAgregar extends Component {
       error: null,
     });
     try {
-      const { data: roles } = await axios.get(`${api_url}/api/roles`, {
-        method: 'GET',
-        headers: {
-          Authorization: this.props.jwt.refreshToken,
-          auth: this.props.user.rol,
-        },
-      });
+      const { data: especialidades } = await axios.get(
+        `${api_url}/api/especialidades`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.refreshToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
+      const { data: consultorios } = await axios.get(
+        `${api_url}/api/consultorios`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.refreshToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
 
-      if (roles.error) {
+      if (especialidades.error) {
         this.setState({
           sesion: true,
           loading: false,
         });
       } else {
-        const { data: especialidades } = await axios.get(
-          `${api_url}/api/especialidades`,
-          {
-            method: 'GET',
-            headers: {
-              Authorization: this.props.jwt.refreshToken,
-              auth: this.props.user.rol,
-            },
-          }
-        );
-        const { data: consultorios } = await axios.get(
-          `${api_url}/api/consultorios`,
-          {
-            method: 'GET',
-            headers: {
-              Authorization: this.props.jwt.refreshToken,
-              auth: this.props.user.rol,
-            },
-          }
-        );
         this.setState({
-          roles: rolesDropdown(roles.data),
           especialidades: especialidadesDropdownUsuarios(especialidades.data),
           consultorios: consultorioDropdown(consultorios.data),
           loading: false,
@@ -193,22 +183,25 @@ class UsuarioAgregar extends Component {
           },
         }
       );
-      if (this.state.usuario.rol_id === 2) {
-        this.setState({
-          medico: {
-            ...this.state.medico,
-            usuario_id: usuario.info.usuario_id,
-            especialidad: this.state.medico.especialidad,
-          },
-        });
-        await axios.post(`${api_url}/api/medico`, this.state.medico, {
+
+      this.setState({
+        medico: {
+          ...this.state.medico,
+          usuario_id: usuario.info.usuario_id,
+          especialidad: this.state.medico.especialidad,
+        },
+      });
+      const medico = await axios.post(
+        `${api_url}/api/medico`,
+        this.state.medico,
+        {
           method: 'POST',
           headers: {
             Authorization: this.props.jwt.refreshToken,
             auth: this.props.user.rol,
           },
-        });
-      }
+        }
+      );
 
       if (usuario.error) {
         this.setState({
@@ -223,19 +216,19 @@ class UsuarioAgregar extends Component {
         if (usuario.info.exist) {
           openNotification(
             'warning',
-            'Usuarios',
+            'Médicos',
             'Ya existe un usuario registrado con el número de cédula ',
             `${this.state.usuario.cedula}`
           );
         } else {
           openNotification(
             'success',
-            'Usuarios',
-            'Usuario creado exitosamente',
+            'Médicos',
+            'Médico creado exitosamente',
             ''
           );
           this.props.history.push(
-            `/admin/usuario/${this.state.usuario.usuario_id}`
+            `/admin/medico/${medico.data.data.medico_id}`
           );
         }
       }
@@ -248,7 +241,7 @@ class UsuarioAgregar extends Component {
   };
 
   //guardar cita
-  onClickButtonSaveUsuario = (e) => {
+  onClickButtonSaveMedico = (e) => {
     e.preventDefault();
     this.setState({
       loading: true,
@@ -258,7 +251,7 @@ class UsuarioAgregar extends Component {
       this.setState({
         loading: false,
       });
-      openNotification('error', 'Usuarios', 'Correo electrónico no válido', '');
+      openNotification('error', 'Médicos', 'Correo electrónico no válido', '');
     } else if (
       this.state.usuario.rol_id === 2 &&
       this.state.medico.especialidad === ''
@@ -268,7 +261,7 @@ class UsuarioAgregar extends Component {
       });
       openNotification(
         'error',
-        'Usuarios',
+        'Médicos',
         'Seleccione una o varias especialidades',
         ''
       );
@@ -285,15 +278,14 @@ class UsuarioAgregar extends Component {
     if (this.state.error) return <Error />;
     return (
       <React.Fragment>
-        <Layout activeKeyP="4">
+        <Layout activeKeyP="5">
           <Navbar />
 
           {!this.state.sesion && (
             <Agregar
-              headerC="Nuevo Usuario"
+              headerC="Nuevo Médico"
               icon="add circle"
-              usuariopass={true}
-              onClickButtonSaveUsuario={this.onClickButtonSaveUsuario}
+              onClickButtonSaveMedico={this.onClickButtonSaveMedico}
               formUsuario={this.state.usuario}
               handleChange={this.handleChange}
               especialidades={this.state.especialidades}
@@ -302,7 +294,6 @@ class UsuarioAgregar extends Component {
               handleOnChangeConsultorio={this.handleOnChangeConsultorio}
               handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
               emailCorrect={this.state.emailCorrect}
-              rol_id={1}
             />
           )}
           <Sesion open={this.state.sesion} />
@@ -312,4 +303,4 @@ class UsuarioAgregar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(UsuarioAgregar);
+export default connect(mapStateToProps, null)(MedicoAgregar);

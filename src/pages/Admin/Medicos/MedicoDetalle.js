@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Detalle from '../../../components/Admin/Consultorios/Detalle';
-import Navbar from '../../../components/Admin/Usuarios/NavbarDetalle';
+import Detalle from '../../../components/Admin/Medicos/Detalle';
+import Navbar from '../../../components/Admin/Medicos/NavbarDetalle';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
@@ -14,14 +14,15 @@ import {
   openNotification,
 } from '../../../components/utils';
 
-class ConsultorioDetalle extends Component {
+class UsuarioDetalle extends Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
       error: null,
       loading: true,
-      consultorio: {},
+      medico: {},
+
       sesion: false,
     };
   }
@@ -43,7 +44,7 @@ class ConsultorioDetalle extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/consultorio/${this.props.match.params.consultorioId}`,
+        `${api_url}/api/medico/${this.props.match.params.medicoId}`,
         {
           method: 'GET',
           headers: {
@@ -59,7 +60,7 @@ class ConsultorioDetalle extends Component {
         });
       } else {
         this.setState({
-          consultorio: data.data,
+          medico: data.data,
           loading: false,
         });
       }
@@ -73,8 +74,8 @@ class ConsultorioDetalle extends Component {
 
   deleteData = async () => {
     try {
-      const { data: consultorio } = await axios.delete(
-        `${api_url}/api/consultorio/${this.props.match.params.consultorioId}`,
+      const { data: usuario } = await axios.delete(
+        `${api_url}/api/usuario/${this.state.medico.usuario_id}`,
         {
           method: 'DELETE',
           headers: {
@@ -83,7 +84,7 @@ class ConsultorioDetalle extends Component {
           },
         }
       );
-      if (consultorio.error) {
+      if (usuario.error) {
         this.setState({
           sesion: true,
           loading: false,
@@ -94,11 +95,11 @@ class ConsultorioDetalle extends Component {
         });
         openNotification(
           'success',
-          'Consultorios',
-          `Consultorio eliminado exitosamente`,
+          'Médicos',
+          `Médico eliminado exitosamente`,
           ''
         );
-        this.props.history.push('/admin/consultorios');
+        this.props.history.push('/admin/medicos');
       }
     } catch (error) {
       this.setState({
@@ -122,26 +123,21 @@ class ConsultorioDetalle extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
-        <Layout activeKeyP="6">
+        <Layout activeKeyP="5">
           <Navbar
             onClickDelete={this.onClickDelete}
-            consultorioId={this.props.match.params.consultorioId}
-            tipo="consultorio"
-            regresar="/admin/consultorios"
+            regresar="/admin/medicos"
+            medicoId={this.state.medico.medico_id}
           />
-          {!this.state.sesion && (
-            <Detalle consultorio={this.state.consultorio} />
-          )}
-
+          {!this.state.sesion && <Detalle medico={this.state.medico} />}
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}
             closeModal={this.closeModal}
             content="¿Desea continuar?"
-            headerC="Eliminar Consultorio"
+            headerC="Eliminar Médico"
           />
           <Sesion open={this.state.sesion} />
         </Layout>
@@ -150,4 +146,4 @@ class ConsultorioDetalle extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(ConsultorioDetalle);
+export default connect(mapStateToProps, null)(UsuarioDetalle);

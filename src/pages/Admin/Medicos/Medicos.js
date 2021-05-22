@@ -1,20 +1,20 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Listado from '../../../components/Admin/Consultorios/Listado';
+import Listado from '../../../components/Admin/Medicos/Listado';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
 import Sesion from '../../../components/Modales/ModalSesionExpirada';
 import { api_url, mapStateToProps } from '../../../components/utils';
 
-class UsuarioBuscar extends Component {
+class Usuarios extends Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       loading: true,
-      consultorios: {},
+      medicos: {},
       paginas: {},
       page: 1,
       sesion: false,
@@ -38,7 +38,7 @@ class UsuarioBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/consultorios_buscar/${this.props.match.params.buscar}?page=${this.state.page}`,
+        `${api_url}/api/medicos?page=${this.state.page}`,
         {
           method: 'GET',
           headers: {
@@ -47,6 +47,7 @@ class UsuarioBuscar extends Component {
           },
         }
       );
+
       if (data.error) {
         this.setState({
           sesion: true,
@@ -54,7 +55,7 @@ class UsuarioBuscar extends Component {
         });
       } else {
         this.setState({
-          consultorios: data.data,
+          medicos: data.data,
           paginas: data.info,
           loading: false,
         });
@@ -74,24 +75,19 @@ class UsuarioBuscar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
-        <Layout activeKeyP="6">
+        <Layout activeKeyP="5">
           {!this.state.sesion && (
             <Listado
-              header="Resultados de la búsqueda"
-              icon="search"
-              consultorios={Object.values(this.state.consultorios)}
+              header="Médicos"
+              icon="doctor"
+              medicos={Object.values(this.state.medicos)}
               paginas={this.state.paginas}
               handleChangePage={this.handleChangePage}
-              busqueda={this.props.match.params.buscar}
-              buscar={
-                Object.values(this.state.consultorios).length > 0 ? false : true
-              }
+              user={this.props.user}
             />
           )}
-
           <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>
@@ -99,4 +95,4 @@ class UsuarioBuscar extends Component {
   }
 }
 
-export default connect(mapStateToProps, null)(UsuarioBuscar);
+export default connect(mapStateToProps, null)(Usuarios);

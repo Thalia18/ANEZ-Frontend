@@ -160,7 +160,7 @@ class ConsultorioEditar extends Component {
 
     return (
       <React.Fragment>
-        <Layout activeKeyP="5">
+        <Layout activeKeyP="6">
           <Navbar />
 
           {!this.state.sesion && (

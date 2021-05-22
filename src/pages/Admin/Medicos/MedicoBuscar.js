@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Listado from '../../../components/Admin/Consultorios/Listado';
+import Listado from '../../../components/Admin/Medicos/Listado';
 import Error from '../../../components/Error/Error';
 import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
@@ -14,18 +14,14 @@ class UsuarioBuscar extends Component {
     this.state = {
       error: null,
       loading: true,
-      consultorios: {},
+      medicos: {},
       paginas: {},
       page: 1,
       sesion: false,
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() === 'ADMINISTRADOR'
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');
@@ -38,7 +34,7 @@ class UsuarioBuscar extends Component {
     });
     try {
       const { data } = await axios.get(
-        `${api_url}/api/consultorios_buscar/${this.props.match.params.buscar}?page=${this.state.page}`,
+        `${api_url}/api/medicos_buscar/${this.props.match.params.buscar}?page=${this.state.page}`,
         {
           method: 'GET',
           headers: {
@@ -47,6 +43,7 @@ class UsuarioBuscar extends Component {
           },
         }
       );
+
       if (data.error) {
         this.setState({
           sesion: true,
@@ -54,7 +51,7 @@ class UsuarioBuscar extends Component {
         });
       } else {
         this.setState({
-          consultorios: data.data,
+          medicos: data.data,
           paginas: data.info,
           loading: false,
         });
@@ -74,24 +71,23 @@ class UsuarioBuscar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
-        <Layout activeKeyP="6">
+        <Layout activeKeyP="4">
           {!this.state.sesion && (
             <Listado
               header="Resultados de la búsqueda"
               icon="search"
-              consultorios={Object.values(this.state.consultorios)}
+              medicos={Object.values(this.state.medicos)}
               paginas={this.state.paginas}
               handleChangePage={this.handleChangePage}
+              user={this.props.user}
               busqueda={this.props.match.params.buscar}
               buscar={
-                Object.values(this.state.consultorios).length > 0 ? false : true
+                Object.values(this.state.medicos).length > 0 ? false : true
               }
             />
           )}
-
           <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>

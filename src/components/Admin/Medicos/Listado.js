@@ -21,7 +21,7 @@ import {
 import Navbar from './Navbar';
 
 const Listado = ({
-  usuarios,
+  medicos,
   header,
   icon,
   buscar,
@@ -38,9 +38,8 @@ const Listado = ({
       {(matches) => (
         <React.Fragment>
           <Navbar
-            usuarioId={value}
-            tipo="usuario"
-            popHeader={'Ingrese Nombre, Apellido o Usuario'}
+            medicoId={value}
+            popHeader={'Ingrese Nombre, Apellido o Cédula del médico'}
           />
           <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
             <Header as="h1" textAlign="center">
@@ -60,27 +59,30 @@ const Listado = ({
                     <Table.Row>
                       <Table.HeaderCell />
                       <Table.HeaderCell>Nombre completo</Table.HeaderCell>
-                      <Table.HeaderCell>Usuario</Table.HeaderCell>
+                      <Table.HeaderCell>Teléfono</Table.HeaderCell>
                     </Table.Row>
                   </Table.Header>
 
                   <Table.Body>
-                    {usuarios.map((usuario) => {
+                    {medicos.map((medico) => {
                       return (
-                        <Table.Row key={usuario.usuario_id}>
+                        <Table.Row key={medico.medico_id}>
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle
                               name="checkboxRadioGroup"
-                              value={usuario.usuario_id}
-                              checked={value === usuario.usuario_id}
+                              value={medico.medico_id}
+                              checked={value === medico.medico_id}
                               onChange={handleChange}
                             />
                           </Table.Cell>
                           <Table.Cell>
-                            {usuario.apellido} {usuario.nombre}
+                            {medico.usuario.apellido || medico.apellido}{' '}
+                            {medico.usuario.nombre || medico.nombre}
                           </Table.Cell>
-                          <Table.Cell>{usuario.usuario}</Table.Cell>
+                          <Table.Cell>
+                            {medico.usuario.telefono || medico.telefono}
+                          </Table.Cell>
                         </Table.Row>
                       );
                     })}
