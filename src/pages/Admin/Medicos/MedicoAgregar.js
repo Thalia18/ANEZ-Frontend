@@ -1,5 +1,5 @@
 import axios from 'axios';
-import fetch from 'cross-fetch';
+import 'babel-polyfill';
 import generator from 'generate-password';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -71,26 +71,30 @@ class MedicoAgregar extends Component {
       error: null,
     });
     try {
-      const resespecialidades = await fetch(`${api_url}/api/especialidades`, {
-        method: 'GET',
-        headers: {
-          Authorization: this.props.jwt.refreshToken,
-          auth: this.props.user.rol,
-        },
-      });
-      const resconsultorios = await fetch(`${api_url}/api/consultorios`, {
-        method: 'GET',
-        headers: {
-          Authorization: this.props.jwt.refreshToken,
-          auth: this.props.user.rol,
-        },
-      });
-      let especialidades = await resespecialidades.json();
-      let consultorios = await resconsultorios.json();
+      const { data: especialidades } = await axios.get(
+        `${api_url}/api/especialidades`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.refreshToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
+      const { data: consultorios } = await axios.get(
+        `${api_url}/api/consultorios`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.refreshToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
 
       if (especialidades.error) {
         this.setState({
-          // sesion: true,
+          sesion: true,
           loading: false,
         });
       } else {
@@ -101,7 +105,6 @@ class MedicoAgregar extends Component {
         });
       }
     } catch (error) {
-      console.log(error);
       this.setState({
         loading: false,
         error: error,

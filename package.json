@@ -9,7 +9,6 @@
     "@testing-library/react": "11.1.0",
     "@testing-library/user-event": "12.1.10",
     "axios": "0.21.1",
-    "cross-fetch": "3.1.4",
     "generate-password": "1.6.0",
     "moment": "2.29.1",
     "react": "17.0.1",
@@ -49,7 +48,8 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ios_saf"
     ],
     "development": [
       "last 1 chrome version",
