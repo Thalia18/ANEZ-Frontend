@@ -102,6 +102,12 @@ class UsuarioDetalle extends Component {
         this.setState({
           loading: false,
         });
+        openNotification(
+          'success',
+          'Usuarios',
+          `Usuario eliminado exitosamente`,
+          ''
+        );
         this.props.history.push('/admin/usuarios');
       }
     } catch (error) {

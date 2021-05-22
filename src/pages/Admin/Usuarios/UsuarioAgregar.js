@@ -258,6 +258,19 @@ class UsuarioAgregar extends Component {
         loading: false,
       });
       openNotification('error', 'Usuarios', 'Correo electrónico no válido', '');
+    } else if (
+      this.state.usuario.rol_id === 2 &&
+      this.state.medicoUpdate.especialidad === undefined
+    ) {
+      this.setState({
+        loading: false,
+      });
+      openNotification(
+        'error',
+        'Usuarios',
+        'Seleccione una o varias especialidades',
+        ''
+      );
     } else {
       this.setState({
         loading: false,

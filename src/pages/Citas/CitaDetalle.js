@@ -8,7 +8,11 @@ import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Sesion from '../../components/Modales/ModalSesionExpirada';
-import { api_url, mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  mapStateToProps,
+  openNotification,
+} from '../../components/utils';
 
 class CitaDetalle extends Component {
   constructor(props) {
@@ -96,6 +100,7 @@ class CitaDetalle extends Component {
         this.setState({
           loading: false,
         });
+        openNotification('success', 'Citas', `Cita eliminada exitosamente`, '');
         this.props.history.push(`/citas/${new Date()}/month`);
       }
     } catch (error) {

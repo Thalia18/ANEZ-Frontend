@@ -8,7 +8,11 @@ import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Sesion from '../../components/Modales/ModalSesionExpirada';
 import Detalle from '../../components/Paciente/Detalle/Detalle';
 import Navbar from '../../components/Paciente/Detalle/NavbarDetalle';
-import { api_url, mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  mapStateToProps,
+  openNotification,
+} from '../../components/utils';
 
 class PacienteDetalle extends Component {
   constructor(props) {
@@ -84,6 +88,12 @@ class PacienteDetalle extends Component {
         this.setState({
           loading: false,
         });
+        openNotification(
+          'success',
+          'Pacientes',
+          `Paciente eliminado exitosamente`,
+          ''
+        );
         this.props.history.push('/pacientes');
       }
     } catch (error) {

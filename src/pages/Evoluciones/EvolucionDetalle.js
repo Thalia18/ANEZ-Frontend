@@ -8,7 +8,11 @@ import Layout from '../../components/Layout/Layout';
 import Loader from '../../components/Loader/Loader';
 import ModalEliminar from '../../components/Modales/ModalEliminar';
 import Sesion from '../../components/Modales/ModalSesionExpirada';
-import { api_url, mapStateToProps } from '../../components/utils';
+import {
+  api_url,
+  mapStateToProps,
+  openNotification,
+} from '../../components/utils';
 
 class PacienteDetalle extends Component {
   constructor(props) {
@@ -102,6 +106,12 @@ class PacienteDetalle extends Component {
         this.setState({
           loading: false,
         });
+        openNotification(
+          'success',
+          'Evoluciones',
+          `Evolución eliminada exitosamente`,
+          ''
+        );
         this.props.history.push(
           `/evoluciones/${this.props.match.params.historiaId}`
         );

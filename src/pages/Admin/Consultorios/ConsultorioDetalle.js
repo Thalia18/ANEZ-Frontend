@@ -8,7 +8,11 @@ import Layout from '../../../components/Layout/Layout';
 import Loader from '../../../components/Loader/Loader';
 import ModalEliminar from '../../../components/Modales/ModalEliminar';
 import Sesion from '../../../components/Modales/ModalSesionExpirada';
-import { api_url, mapStateToProps } from '../../../components/utils';
+import {
+  api_url,
+  mapStateToProps,
+  openNotification,
+} from '../../../components/utils';
 
 class ConsultorioDetalle extends Component {
   constructor(props) {
@@ -88,6 +92,12 @@ class ConsultorioDetalle extends Component {
         this.setState({
           loading: false,
         });
+        openNotification(
+          'success',
+          'Consultorios',
+          `Consultorio eliminado exitosamente`,
+          ''
+        );
         this.props.history.push('/admin/consultorios');
       }
     } catch (error) {

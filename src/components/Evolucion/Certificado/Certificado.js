@@ -10,6 +10,9 @@ import Doc from './DocService';
 import PdfContainer from './PdfContainer';
 var writtenNumber = require('written-number');
 
+var fecha = new Date();
+var ffecha =
+  fecha.getUTCFullYear() + '/' + fecha.getUTCMonth() + '/' + fecha.getDate();
 class App extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +56,7 @@ class App extends Component {
                   fontSize: '0.7em',
                 }}
               >
-                Quito, DM, {fechaFormato(new Date().toString()).toLowerCase()}
+                Quito, DM, {fechaFormato(ffecha).toLowerCase()}
               </p>
               <br />
             </Container>
