@@ -228,27 +228,40 @@ class UsuarioEditar extends Component {
       loading: true,
       error: null,
     });
-
+    console.log(this.state.medicoUpdate.especialidad);
+    console.log(this.state.medico.especialidad);
     if (!this.state.usuario.email.match(regexEmail)) {
       this.setState({
         loading: false,
       });
       openNotification('error', 'Usuarios', 'Correo electrónico no válido', '');
-    } else if (
-      this.state.usuario.rol_id === 2 &&
-      this.state.medicoUpdate.especialidad === undefined &&
-      this.state.medico.especialidad === undefined
-    ) {
-      this.setState({
-        loading: false,
-      });
-      openNotification(
-        'error',
-        'Usuarios',
-        'Seleccione una o varias especialidades',
-        ''
-      );
-    } else {
+    } else if (this.state.usuario.rol_id === 2)
+      if (
+        (this.state.medicoUpdate.especialidad === undefined &&
+          this.state.medico.especialidad.length > 0) ||
+        (this.state.medicoUpdate.especialidad !== undefined &&
+          this.state.medico.especialidad.length === 0 &&
+          this.state.medicoUpdate.especialidad.length > 0) ||
+        (this.state.medicoUpdate.especialidad !== undefined &&
+          this.state.medico.especialidad.length > 0 &&
+          this.state.medicoUpdate.especialidad.length > 0)
+      ) {
+        this.setState({
+          loading: false,
+        });
+        this.saveData();
+      } else {
+        this.setState({
+          loading: false,
+        });
+        openNotification(
+          'error',
+          'Usuarios',
+          'Seleccione una o varias especialidades',
+          ''
+        );
+      }
+    else {
       this.setState({
         loading: false,
       });
