@@ -252,7 +252,8 @@ class UsuarioAgregar extends Component {
       loading: true,
       error: null,
     });
-
+    console.log(this.state.medico);
+    console.log(this.state.medico.especialidad);
     if (!this.state.usuario.email.match(regexEmail)) {
       this.setState({
         loading: false,
@@ -260,7 +261,7 @@ class UsuarioAgregar extends Component {
       openNotification('error', 'Usuarios', 'Correo electrónico no válido', '');
     } else if (
       this.state.usuario.rol_id === 2 &&
-      this.state.medicoUpdate.especialidad === undefined
+      this.state.medico.especialidad === ''
     ) {
       this.setState({
         loading: false,
