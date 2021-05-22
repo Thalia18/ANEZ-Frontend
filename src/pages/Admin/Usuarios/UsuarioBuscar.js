@@ -75,7 +75,7 @@ class UsuarioBuscar extends Component {
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
-          {this.state.sesion && (
+          {!this.state.sesion && (
             <Listado
               header="Resultados de la búsqueda"
               icon="search"

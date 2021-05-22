@@ -32,6 +32,7 @@ class UsuarioDetalle extends Component {
           })
           .toUpperCase(),
       },
+      medico: {},
       sesion: false,
     };
   }
@@ -68,6 +69,21 @@ class UsuarioDetalle extends Component {
           loading: false,
         });
       } else {
+        if (data.data.rol_id === 2) {
+          const { data: medico } = await axios.get(
+            `${api_url}/api/medicos_usuario_id/${data.data.usuario_id}`,
+            {
+              method: 'GET',
+              headers: {
+                Authorization: this.props.jwt.refreshToken,
+                auth: this.props.user.rol,
+              },
+            }
+          );
+          this.setState({
+            medico: medico.data,
+          });
+        }
         this.setState({
           usuario: data.data,
           loading: false,
@@ -171,7 +187,7 @@ class UsuarioDetalle extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
+    console.log(this.state.medico);
     return (
       <React.Fragment>
         <Layout activeKeyP="4">
@@ -182,7 +198,12 @@ class UsuarioDetalle extends Component {
             tipo="usuario"
             regresar="/admin/usuarios"
           />
-          {!this.state.sesion && <Detalle usuario={this.state.usuario} />}
+          {!this.state.sesion && (
+            <Detalle
+              usuario={this.state.usuario}
+              medico={Object.values(this.state.medico)}
+            />
+          )}
           <ModalEliminar
             deleteM={this.deleteData}
             open={this.state.open}

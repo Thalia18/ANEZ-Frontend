@@ -17,10 +17,11 @@ import {
   mediumScrollExtra,
 } from '../../utils/index';
 
-const Detalle = ({ usuario }) => {
+const Detalle = ({ usuario, medico }) => {
   const edad = calculaEdad(usuario.fecha_nacimiento);
 
   const styled = { fontWeight: 'bold' };
+  console.log(medico);
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -90,6 +91,20 @@ const Detalle = ({ usuario }) => {
                     Rol
                   </Table.Cell>
                   <Table.Cell colSpan="2">{usuario.rol.rol}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  {medico.length > 0 && (
+                    <>
+                      <Table.Cell collapsing style={styled}>
+                        Especialidades
+                      </Table.Cell>
+                      <Table.Cell colSpan="8">
+                        {medico.especialidad.map((item) => {
+                          return <p key={item.id}>{item.value}</p>;
+                        })}
+                      </Table.Cell>
+                    </>
+                  )}
                 </Table.Row>
               </Table.Body>
             </Table>
