@@ -71,7 +71,7 @@ class MedicoAgregar extends Component {
     });
     try {
       const { data: especialidades } = await axios.get(
-        `${api_url}/api/especialidades`,
+        `${api_url}/api/especialidades/`,
         {
           method: 'GET',
           headers: {
@@ -81,7 +81,7 @@ class MedicoAgregar extends Component {
         }
       );
       const { data: consultorios } = await axios.get(
-        `${api_url}/api/consultorios`,
+        `${api_url}/api/consultorios/`,
         {
           method: 'GET',
           headers: {
