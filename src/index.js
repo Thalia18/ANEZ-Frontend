@@ -1,5 +1,4 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime.js';
+import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
