@@ -276,13 +276,12 @@ class MedicoAgregar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-    console.log(this.state.consultorios);
     return (
       <React.Fragment>
         <Layout activeKeyP="5">
           <Navbar />
 
-          {/* {!this.state.sesion && (
+          {!this.state.sesion && (
             <Agregar
               headerC="Nuevo Médico"
               icon="add circle"
@@ -296,13 +295,8 @@ class MedicoAgregar extends Component {
               handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}
               emailCorrect={this.state.emailCorrect}
             />
-          )} */}
-          <div>
-            funciona
-            {this.state.consultorios.map((item) => {
-              return <p key={item.key}>{item.text}</p>;
-            })}
-          </div>
+          )}
+
           <Sesion open={this.state.sesion} />
         </Layout>
       </React.Fragment>

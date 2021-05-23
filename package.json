@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/polyfill": "7.12.1",
     "@progress/kendo-drawing": "1.9.4",
     "@progress/kendo-react-pdf": "2.0.0",
     "@testing-library/jest-dom": "5.11.4",
@@ -49,7 +48,9 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%"
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
     "development": [
       "last 1 chrome version",
