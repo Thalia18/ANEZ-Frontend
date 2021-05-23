@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/polyfill": "7.12.1",
     "@progress/kendo-drawing": "1.9.4",
     "@progress/kendo-react-pdf": "2.0.0",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "11.1.0",
     "@testing-library/user-event": "12.1.10",
     "axios": "0.21.1",
+    "core-js": "3.12.1",
     "generate-password": "1.6.0",
     "moment": "2.29.1",
     "react": "17.0.1",
     "react-big-calendar": "0.33.2",
-    "react-app-polyfill": "2.0.0",
     "react-dom": "17.0.1",
     "react-input-mask": "2.0.4",
     "react-media": "1.10.0",
@@ -24,6 +25,7 @@
     "redux-logger": "3.0.6",
     "redux-persist": "6.0.0",
     "redux-thunk": "2.3.0",
+    "regenerator-runtime": "0.13.7",
     "rsuite": "4.8.9",
     "rxjs": "6.6.6",
     "semantic-ui-css": "2.4.1",
@@ -47,9 +49,7 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not op_mini all",
-      "ios_saf 9"
+      ">0.2%"
     ],
     "development": [
       "last 1 chrome version",
