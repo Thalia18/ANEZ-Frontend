@@ -9,11 +9,18 @@ const Layout = ({ activeKeyP, ...props }) => {
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES} key={Math.floor(Math.random)}>
       {(matches) => (
-        <Global style={colorBackground}>
-          <Sidenav children={props.children} activeKeyP={activeKeyP} />
-          <br />
-          <br />
-        </Global>
+        <React.Fragment>
+          <div
+            style={
+              colorBackground
+              // height: matches.medium ? '48em' : '66em',
+            }
+          >
+            <Sidenav children={props.children} activeKeyP={activeKeyP} />
+            <br />
+            <br />
+          </div>
+        </React.Fragment>
       )}
     </Media>
   );

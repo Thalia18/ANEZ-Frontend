@@ -15,10 +15,8 @@ import {
 
 const Agregar = ({
   handleChange,
-  id,
   formConsultorio,
   onClickButtonSaveConsultorio,
-  foto,
   headerC,
   icon,
 }) => {
