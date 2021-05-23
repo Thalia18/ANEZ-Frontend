@@ -49,7 +49,7 @@
       ">0.2%",
       "not dead",
       "not op_mini all",
-      "ios_saf"
+      "last 4 safari version"
     ],
     "development": [
       "last 1 chrome version",
