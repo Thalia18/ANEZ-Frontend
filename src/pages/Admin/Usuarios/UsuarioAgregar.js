@@ -234,9 +234,7 @@ class UsuarioAgregar extends Component {
             'Usuario creado exitosamente',
             ''
           );
-          this.props.history.push(
-            `/admin/usuario/${this.state.usuario.usuario_id}`
-          );
+          this.props.history.push(`/admin/usuarios`);
         }
       }
     } catch (error) {

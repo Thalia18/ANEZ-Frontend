@@ -227,9 +227,7 @@ class MedicoAgregar extends Component {
             'Médico creado exitosamente',
             ''
           );
-          this.props.history.push(
-            `/admin/medico/${medico.data.data.medico_id}`
-          );
+          this.props.history.push(`/admin/medicos`);
         }
       }
     } catch (error) {
