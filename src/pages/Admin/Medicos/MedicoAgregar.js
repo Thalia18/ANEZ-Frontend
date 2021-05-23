@@ -1,5 +1,4 @@
 import axios from 'axios';
-import 'babel-polyfill';
 import generator from 'generate-password';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
