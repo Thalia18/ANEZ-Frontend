@@ -75,7 +75,6 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                       >
                         <Icon icon="calendar" /> Citas
                       </Nav.Item>
-
                       {user.rol.trim().toUpperCase() !== 'RECEPCIONISTA' && (
                         <Nav.Item
                           eventKey="2"
@@ -92,14 +91,24 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                       >
                         <Icon icon="people-group" /> Pacientes
                       </Nav.Item>
+
                       {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
-                        <Nav.Item
-                          eventKey="4"
-                          componentClass={Link}
-                          to="/admin/usuarios"
-                        >
-                          <Icon icon="user-circle" /> Usuarios
-                        </Nav.Item>
+                        <>
+                          <Nav.Item
+                            style={{
+                              border: 'solid thin #E0E0E0',
+                              height: '0.01em',
+                              margin: '0',
+                            }}
+                          />
+                          <Nav.Item
+                            eventKey="6"
+                            componentClass={Link}
+                            to="/admin/consultorios"
+                          >
+                            <Icon icon="hospital-o" /> Consultorios
+                          </Nav.Item>
+                        </>
                       )}
                       {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                         <Nav.Item
@@ -112,11 +121,11 @@ const SidenavC = ({ user, consultorio, activeKeyP, ...props }) => {
                       )}
                       {user.rol.trim().toUpperCase() === 'ADMINISTRADOR' && (
                         <Nav.Item
-                          eventKey="6"
+                          eventKey="4"
                           componentClass={Link}
-                          to="/admin/consultorios"
+                          to="/admin/usuarios"
                         >
-                          <Icon icon="hospital-o" /> Consultorios
+                          <Icon icon="user-circle" /> Usuarios
                         </Nav.Item>
                       )}
                     </Nav>
