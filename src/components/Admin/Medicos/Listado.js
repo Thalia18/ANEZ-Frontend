@@ -66,7 +66,7 @@ const Listado = ({
                   <Table.Body>
                     {medicos.map((medico) => {
                       return (
-                        <Table.Row key={medico.medico_id}>
+                        <Table.Row key={medico.usuario_id}>
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle

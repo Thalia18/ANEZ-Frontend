@@ -151,6 +151,31 @@ const Agregar = ({
                   readOnly
                 />
               )}
+
+              {usuariopass && (
+                <Form.Group>
+                  <Form.Input
+                    label="Usuario"
+                    placeholder="Usuario"
+                    width={8}
+                    type="usuario"
+                    onChange={handleChange}
+                    name="usuario"
+                    value={formUsuario.usuario}
+                    readOnly
+                  />
+                  <Form.Input
+                    label="Contraseña"
+                    placeholder="Contraseña"
+                    width={8}
+                    type="password"
+                    onChange={handleChange}
+                    name="contrasena"
+                    value={formUsuario.contrasena}
+                    readOnly
+                  />
+                </Form.Group>
+              )}
               <Form.Group>
                 <Form.Select
                   label="Consultorio"
@@ -195,31 +220,6 @@ const Agregar = ({
                     onChange={handleOnChangeEspecialidad}
                     defaultValue={especialidadesSelect}
                     required
-                  />
-                </Form.Group>
-              )}
-
-              {usuariopass && (
-                <Form.Group>
-                  <Form.Input
-                    label="Usuario"
-                    placeholder="Usuario"
-                    width={8}
-                    type="usuario"
-                    onChange={handleChange}
-                    name="usuario"
-                    value={formUsuario.usuario}
-                    readOnly
-                  />
-                  <Form.Input
-                    label="Contraseña"
-                    placeholder="Contraseña"
-                    width={8}
-                    type="password"
-                    onChange={handleChange}
-                    name="contrasena"
-                    value={formUsuario.contrasena}
-                    readOnly
                   />
                 </Form.Group>
               )}

@@ -8,6 +8,8 @@ import {
   HeaderSubCell,
 } from '../../Paciente/Detalle/DetalleStyles';
 import {
+  calculaEdad,
+  fechaFormato,
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
   maxMediumScrollRecord,
@@ -16,6 +18,8 @@ import {
 } from '../../utils/index';
 
 const Detalle = ({ medico }) => {
+  const edad = calculaEdad(medico.usuario.fecha_nacimiento);
+
   const styled = { fontWeight: 'bold' };
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
@@ -52,18 +56,44 @@ const Detalle = ({ medico }) => {
               </Table.Header>
 
               <Table.Body>
-                {medico.especialidad && (
-                  <Table.Row>
-                    <Table.Cell collapsing style={styled}>
-                      Especialidades
-                    </Table.Cell>
-                    <Table.Cell colSpan="8">
-                      {medico.especialidad.map((item) => {
-                        return <p key={item.id}>{item.value}</p>;
-                      })}
-                    </Table.Cell>
-                  </Table.Row>
-                )}
+                <Table.Row>
+                  <Table.Cell collapsing style={styled}>
+                    Fecha de nacimiento
+                  </Table.Cell>
+                  <Table.Cell colSpan="4">
+                    {fechaFormato(medico.usuario.fecha_nacimiento)}
+                  </Table.Cell>
+                  <Table.Cell collapsing style={styled}>
+                    Edad
+                  </Table.Cell>
+                  <Table.Cell colSpan="2">{edad}</Table.Cell>
+                </Table.Row>
+
+                <Table.Row>
+                  <Table.Cell collapsing style={styled}>
+                    Correo electrónico
+                  </Table.Cell>
+                  <Table.Cell colSpan="4">{medico.usuario.email}</Table.Cell>
+                  <Table.Cell collapsing style={styled}>
+                    Teléfono
+                  </Table.Cell>
+                  <Table.Cell colSpan="2">{medico.usuario.telefono}</Table.Cell>
+                </Table.Row>
+
+                <Table.Row>
+                  {medico.especialidad && (
+                    <>
+                      <Table.Cell collapsing style={styled}>
+                        Especialidades
+                      </Table.Cell>
+                      <Table.Cell colSpan="8">
+                        {medico.especialidad.map((item) => {
+                          return <p key={item.id}>{item.value}</p>;
+                        })}
+                      </Table.Cell>
+                    </>
+                  )}
+                </Table.Row>
               </Table.Body>
             </Table>
           </DivScroll>

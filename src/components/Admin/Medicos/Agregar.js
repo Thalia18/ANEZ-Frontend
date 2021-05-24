@@ -24,6 +24,7 @@ const Agregar = ({
   especialidadesSelect,
   headerC,
   icon,
+  tipo,
 }) => {
   // var a = formCita.hora.split(':');
 
@@ -139,18 +140,31 @@ const Agregar = ({
                 <Form.Input
                   label="Usuario"
                   placeholder="Usuario"
-                  width={8}
-                  type="usuario"
+                  width={!tipo ? 8 : 16}
                   onChange={handleChange}
                   name="usuario"
                   value={formUsuario.usuario}
                   readOnly
                 />
+                {!tipo && (
+                  <Form.Input
+                    label="Contraseña"
+                    placeholder="Contraseña"
+                    width={8}
+                    type="password"
+                    onChange={handleChange}
+                    name="usuario"
+                    value={formUsuario.contrasena}
+                    readOnly
+                  />
+                )}
+              </Form.Group>
+              <Form.Group>
                 <Form.Select
                   label="Consultorio"
                   placeholder="Consultorio"
                   options={consultorios}
-                  width={8}
+                  width={16}
                   name="consultorio_id"
                   onChange={(e, data) => {
                     formUsuario.consultorio_id = data.value;

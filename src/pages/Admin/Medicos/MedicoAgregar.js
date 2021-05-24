@@ -287,7 +287,6 @@ class MedicoAgregar extends Component {
               formUsuario={this.state.usuario}
               handleChange={this.handleChange}
               especialidades={this.state.especialidades}
-              roles={this.state.roles}
               consultorios={this.state.consultorios}
               handleOnChangeConsultorio={this.handleOnChangeConsultorio}
               handleOnChangeEspecialidad={this.handleOnChangeEspecialidad}

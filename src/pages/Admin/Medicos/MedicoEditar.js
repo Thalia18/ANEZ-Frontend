@@ -296,6 +296,7 @@ class MedicoEditar extends Component {
               especialidadesSelect={this.especialidadesSelect(
                 this.state.medico.especialidad
               )}
+              tipo={true}
             />
           )}
           <Sesion open={this.state.sesion} />
