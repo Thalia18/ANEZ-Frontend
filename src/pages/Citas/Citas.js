@@ -80,12 +80,14 @@ class Citas extends Component {
   };
 
   changeMonth = (e, view, action) => {
+    console.log(e);
     this.state.fechaUltima = e;
     if (action === 'DATE') {
+      this.props.history.push(`/citas/${fechaCitas(e, view)}/day`);
       this.state.view = view;
 
       setTimeout(() => {
-        window.location.href = `/citas/${fechaCitas(e, 'day')}/day`;
+        window.location.href = `/citas/${e}/${this.props.match.params.view}`;
       }, 10);
     } else {
       if (view === 'day') {
