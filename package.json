@@ -47,10 +47,8 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all",
-      "ios_saf 8"
+      ">0.25%",
+      "not dead"
     ],
     "development": [
       "last 1 chrome version",

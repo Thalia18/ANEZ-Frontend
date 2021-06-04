@@ -77,7 +77,7 @@ class App extends Component {
                 >
                   El / la paciente: {this.props.paciente}
                   con Cedula / Pasaporte: {this.props.cedula.trim()} <br /> e
-                  Historia Clínica No.:{' '}
+                  Historia Clinica No.:{' '}
                   {this.props.evolucion.historia_clinica_id} fue atendido /a en
                   este centro medico.
                   <br />
