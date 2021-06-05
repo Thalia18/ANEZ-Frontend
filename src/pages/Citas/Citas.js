@@ -80,7 +80,6 @@ class Citas extends Component {
   };
 
   changeMonth = (e, view, action) => {
-    console.log(e);
     this.state.fechaUltima = e;
     if (action === 'DATE') {
       this.props.history.push(`/citas/${fechaCitas(e, view)}/day`);

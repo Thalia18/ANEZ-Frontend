@@ -35,11 +35,7 @@ class Citas extends Component {
     };
   }
   componentDidMount() {
-    if (
-      this.props.user != null &&
-      this.props.user.isLoggedIn &&
-      this.props.user.rol.trim().toUpperCase() !== 'MÉDICO'
-    ) {
+    if (this.props.user != null && this.props.user.isLoggedIn) {
       this.fetchData();
     } else {
       this.props.history.push('/error_auth');

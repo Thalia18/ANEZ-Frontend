@@ -49,18 +49,16 @@ const NavbarCitas = ({ verNav, citaId, user, ...props }) => {
               >
                 Agendar cita
               </Nav.Item>
-              {user.rol.trim() !== 'MÉDICO' && (
-                <Nav.Item
-                  icon={<Icon icon="bell" />}
-                  onClick={() =>
-                    history.push(
-                      `/citas_notificacion/${fechaCitas(new Date())}`
-                    )
-                  }
-                >
-                  Recordatorios de citas
-                </Nav.Item>
-              )}
+
+              <Nav.Item
+                icon={<Icon icon="bell" />}
+                onClick={() =>
+                  history.push(`/citas_notificacion/${fechaCitas(new Date())}`)
+                }
+              >
+                Recordatorios de citas
+              </Nav.Item>
+
               {verNav && (
                 <Nav.Item
                   icon={<Icon icon="eye" />}
