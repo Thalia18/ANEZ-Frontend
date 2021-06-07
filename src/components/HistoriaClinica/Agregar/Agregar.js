@@ -5,6 +5,8 @@ import { Checkbox, Form, Header, Icon, Segment } from 'semantic-ui-react';
 import { DivScroll } from '../../../global';
 import HCHeader from '../../HistoriasClinicas/HCHeader';
 import Modal from '../../Modales/ModalExists';
+import ModalPaciente from '../../Modales/ModalPaciente';
+
 import {
   GLOBAL_MEDIA_QUERIES,
   masMediumHeight,
@@ -152,6 +154,14 @@ const Agregar = ({
               )}
             </Form>
           </DivScroll>
+          {paciente.cedula === null && (
+            <ModalPaciente
+              complete={true}
+              close={false}
+              id={paciente.paciente_id}
+            />
+          )}
+
           <Modal
             existsHC={existsHC}
             header={header}

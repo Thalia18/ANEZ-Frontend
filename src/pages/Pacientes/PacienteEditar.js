@@ -217,7 +217,10 @@ class PacienteEditar extends Component {
       loading: true,
       error: null,
     });
-    if (!this.state.paciente.email.match(regexEmail)) {
+    if (
+      this.state.paciente.email !== null &&
+      !this.state.paciente.email.match(regexEmail)
+    ) {
       this.setState({
         loading: false,
       });
@@ -225,6 +228,22 @@ class PacienteEditar extends Component {
         'error',
         'Pacientes',
         'Correo electrónico no válido',
+        ''
+      );
+    } else if (
+      this.state.paciente.etnia_id === 0 ||
+      this.state.paciente.nivel_de_instruccion_id === 0 ||
+      this.state.paciente.estado_civil_id === 0 ||
+      this.state.paciente.tipo_de_sangre_id === 0 ||
+      this.state.paciente.genero_id === 0
+    ) {
+      this.setState({
+        loading: false,
+      });
+      openNotification(
+        'error',
+        'Pacientes',
+        'Seleccione género, estado civil, etnia, nivel de instrucción y tipo de sangre',
         ''
       );
     } else {
@@ -256,7 +275,6 @@ class PacienteEditar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
         <Layout activeKeyP="3">

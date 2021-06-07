@@ -70,11 +70,13 @@ const Detalle = ({ paciente }) => {
                   <Table.Cell collapsing style={styled}>
                     Edad
                   </Table.Cell>
-                  <Table.Cell colSpan="3">{edad}</Table.Cell>
+                  <Table.Cell colSpan="3">
+                    {paciente.fecha_nacimiento !== null ? edad : ''}
+                  </Table.Cell>
                   <Table.Cell collapsing style={styled}>
                     Género
                   </Table.Cell>
-                  <Table.Cell colSpan="3">{paciente.generos.genero}</Table.Cell>
+                  <Table.Cell colSpan="2">{paciente.generos.genero}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell collapsing style={styled} colSpan="2">

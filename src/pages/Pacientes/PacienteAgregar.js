@@ -40,7 +40,7 @@ class PacienteAgregar extends Component {
         lugar_nacimiento: '',
         direccion: '',
         telefono: '',
-        email: '',
+        email: null,
         genero_id: null,
         contacto_emergencia_nombre: '',
         contacto_emergencia_telefono: '',
@@ -223,7 +223,10 @@ class PacienteAgregar extends Component {
       loading: true,
       error: null,
     });
-    if (!this.state.paciente.email.match(regexEmail)) {
+    if (
+      this.state.paciente.email !== null &&
+      !this.state.paciente.email.match(regexEmail)
+    ) {
       this.setState({
         loading: false,
       });

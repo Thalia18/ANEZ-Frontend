@@ -96,8 +96,8 @@ const Agregar = ({
               </Form.Group>
               <Form.Group>
                 <Form.Input
-                  label="Teléfono "
-                  placeholder="Teléfono  "
+                  label="Teléfono adicional"
+                  placeholder="Teléfono adicional "
                   width={12}
                 >
                   <InputMask

@@ -17,6 +17,7 @@ import UsuarioDetallePage from './pages/Admin/Usuarios/UsuarioDetalle';
 import UsuarioEditarPage from './pages/Admin/Usuarios/UsuarioEditar';
 import UsuariosPage from './pages/Admin/Usuarios/Usuarios';
 import CitasAgregarPage from './pages/Citas/CitaAgregar';
+import CitasAgregarPacientePage from './pages/Citas/CitaAgregar+Paciente';
 import CitaBuscarPage from './pages/Citas/CitaBuscar';
 import CitaPage from './pages/Citas/CitaDetalle';
 import CitasPage from './pages/Citas/Citas';
@@ -173,6 +174,12 @@ function App() {
             path="/cita_agregar/:pacienteId"
             component={CitasAgregarPage}
           />
+          <Route
+            exact
+            path="/cita_agregar_paciente"
+            component={CitasAgregarPacientePage}
+          />
+
           <Route
             exact
             path="/cita_editar/:pacienteId/:citaId"

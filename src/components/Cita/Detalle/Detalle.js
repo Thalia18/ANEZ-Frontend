@@ -58,6 +58,12 @@ const Detalle = ({ cita, medico }) => {
                   <Table.Cell collapsing>
                     <b>Teléfono</b>
                   </Table.Cell>
+                  <Table.Cell>{cita.pacientes.telefono}</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell collapsing>
+                    <b>Teléfono adicional</b>
+                  </Table.Cell>
                   <Table.Cell>{cita.telefono_paciente}</Table.Cell>
                 </Table.Row>
                 <Table.Row>

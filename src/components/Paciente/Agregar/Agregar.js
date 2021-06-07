@@ -269,7 +269,6 @@ const Agregar = ({
                   onChange={handleChange}
                   name="email"
                   value={formPaciente.email}
-                  required
                 />
                 <Form.Input
                   label="Teléfono"

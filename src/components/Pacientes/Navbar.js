@@ -6,6 +6,7 @@ import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Button, Form, Popup } from 'semantic-ui-react';
 import Modal from '../Modales/ModalHC';
+
 import { GLOBAL_MEDIA_QUERIES, stylePop } from '../utils/';
 
 const NavbarPacientes = ({
@@ -30,11 +31,13 @@ const NavbarPacientes = ({
 
   let history = useHistory();
   let [value, setValue] = React.useState('');
+
   const [modal, setModal] = React.useState(false);
 
   const closeModal = () => {
     setModal(false);
   };
+
   return (
     <Media queries={GLOBAL_MEDIA_QUERIES}>
       {(matches) => (
@@ -153,6 +156,7 @@ const NavbarPacientes = ({
               </Container>
             </Nav>
           </Navbar.Body>
+
           <Modal existsHC={modal} close={closeModal} />
         </Navbar>
       )}

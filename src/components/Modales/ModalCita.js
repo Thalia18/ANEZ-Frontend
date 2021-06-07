@@ -14,10 +14,10 @@ const ModalCita = ({ existsHC, close }) => {
         <Button
           color="blue"
           onClick={() => {
-            history.push(`/paciente_agregar`);
+            history.push(`/cita_agregar_paciente`);
           }}
         >
-          <Icon name="plus" /> Crear paciente
+          <Icon name="plus" /> Nuevo paciente
         </Button>
         <Button color="green" onClick={() => history.push(`/pacientes`)}>
           <Icon name="search" /> Buscar paciente
