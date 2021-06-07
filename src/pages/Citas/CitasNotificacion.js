@@ -147,12 +147,19 @@ class Citas extends Component {
             success: true,
             error: null,
           });
-          if (cita.data) {
+          if (cita.data === 'success') {
             openNotification(
               'success',
               'Citas',
               `Recordatorios enviados satisfactoriamente`,
               ''
+            );
+          } else {
+            openNotification(
+              'error',
+              'Citas',
+              `No se pudo enviar el recordatorio al paciente ${cita.data.apellido} ${cita.data.nombre}. `,
+              `Revise si se ha registrado un correo electrónico. `
             );
           }
         }
@@ -167,7 +174,6 @@ class Citas extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
-
     return (
       <React.Fragment>
         <Layout activeKeyP="1">
@@ -181,6 +187,7 @@ class Citas extends Component {
               onClickSend={this.onClickSend}
               header="Recordatorio citas"
               icon="bell"
+              citaN={false}
             />
           )}
           <Sesion open={this.state.sesion} />

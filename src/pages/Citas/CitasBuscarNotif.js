@@ -177,6 +177,7 @@ class Citas extends Component {
               icon="search"
               fecha1={this.props.match.params.fecha1}
               fecha2={this.props.match.params.fecha2}
+              citaN={true}
             />
           )}
           <Sesion open={this.state.sesion} />

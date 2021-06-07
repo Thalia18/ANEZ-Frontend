@@ -219,6 +219,7 @@ class PacienteEditar extends Component {
     });
     if (
       this.state.paciente.email !== null &&
+      this.state.paciente.email !== '' &&
       !this.state.paciente.email.match(regexEmail)
     ) {
       this.setState({
@@ -275,6 +276,7 @@ class PacienteEditar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
+
     return (
       <React.Fragment>
         <Layout activeKeyP="3">

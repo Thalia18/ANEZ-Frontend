@@ -225,6 +225,7 @@ class PacienteAgregar extends Component {
     });
     if (
       this.state.paciente.email !== null &&
+      this.state.paciente.email !== '' &&
       !this.state.paciente.email.match(regexEmail)
     ) {
       this.setState({

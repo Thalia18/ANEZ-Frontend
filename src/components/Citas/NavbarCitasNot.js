@@ -1,6 +1,6 @@
 import React from 'react';
 import Media from 'react-media';
-import { useHistory, withRouter } from 'react-router-dom';
+import { useHistory, withRouter, Link } from 'react-router-dom';
 import { Container, DateRangePicker, Icon, Nav, Navbar } from 'rsuite';
 import 'rsuite/dist/styles/rsuite-default.css';
 import 'semantic-ui-css/semantic.min.css';

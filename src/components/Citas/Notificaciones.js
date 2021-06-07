@@ -1,6 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
 import 'semantic-ui-css/semantic.min.css';
+import { useHistory } from 'react-router-dom';
 import {
   Checkbox,
   Header,
@@ -9,6 +10,7 @@ import {
   Pagination,
   Segment,
   Table,
+  Button,
 } from 'semantic-ui-react';
 import { DivScroll } from '../../global';
 import {
@@ -18,6 +20,7 @@ import {
   mediumScrollExtra,
 } from '../utils';
 import Navbar from './NavbarCitasNot';
+import Modal from '../Modales/ModalCita';
 
 const Notificaciones = ({
   citas,
@@ -29,23 +32,32 @@ const Notificaciones = ({
   onClickSend,
   header,
   icon,
+  citaN,
 }) => {
   const [value, setValue] = React.useState('true');
   let opcion = [];
-
+  let history = useHistory();
   const handleChangeAll = () => {
     opcion = [];
 
     if (value === 'true' && citas) {
       setValue('false');
       citas.map((item) => {
-        opcion.push(item.cita_id);
+        console.log(item);
+        if (item.pacientes.email !== null) {
+          console.log(item.pacientes.email);
+          opcion.push(item.cita_id);
+        }
       });
 
       onChangeSeleccionadas('all', opcion);
     } else {
       setValue('true');
     }
+  };
+  const [modal, setModal] = React.useState(false);
+  const closeModal = () => {
+    setModal(false);
   };
 
   return (
@@ -88,7 +100,9 @@ const Notificaciones = ({
                                   toggle
                                   name="checkboxRadioGroup"
                                   value={cita.cita_id}
-                                  checked={true}
+                                  checked={
+                                    cita.pacientes.email !== null ? true : false
+                                  }
                                 />
                               )}
 
@@ -99,13 +113,27 @@ const Notificaciones = ({
                                   value={cita.cita_id}
                                   onChange={(e, data) => {
                                     onChangeSeleccionadas('opcion', data);
-
-                                    //-1 no existe 2 existe
                                   }}
+                                  readOnly={
+                                    cita.pacientes.email === null ? true : false
+                                  }
                                 />
                               )}
                             </Table.Cell>
                             <Table.Cell>
+                              {cita.pacientes.email === null && (
+                                <Button
+                                  content="Agregar correo electrónico"
+                                  icon="right arrow"
+                                  labelPosition="right"
+                                  style={{ float: 'right' }}
+                                  onClick={() => {
+                                    history.push(
+                                      `/paciente_editar/${cita.paciente_id}`
+                                    );
+                                  }}
+                                />
+                              )}
                               <Icon name="calendar alternate" />
                               {fechaFormato(cita.fecha)} &nbsp; &nbsp; &nbsp;
                               <Icon name="time" /> {cita.hora}
@@ -128,7 +156,7 @@ const Notificaciones = ({
                   </Table>
                 </>
               )}
-              {citas.length === 0 && (
+              {citas.length === 0 && citaN && (
                 <Message warning>
                   <Message.Header>
                     <Icon name="info circle" />
@@ -140,6 +168,27 @@ const Notificaciones = ({
                     <b>{fechaFormato(fecha2)}</b>
                   </p>
                 </Message>
+              )}
+              {citas.length === 0 && !citaN && (
+                <>
+                  <Message info>
+                    <Message.Header>
+                      <Icon name="info circle" />
+                      Aún no se han agendado citas
+                    </Message.Header>
+                    <br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button
+                      color="blue"
+                      onClick={() => {
+                        setModal(true);
+                      }}
+                    >
+                      <Icon name="plus" /> Agendar cita
+                    </Button>
+                  </Message>
+                  <Modal existsHC={modal} close={closeModal} />
+                </>
               )}
             </DivScroll>
 
