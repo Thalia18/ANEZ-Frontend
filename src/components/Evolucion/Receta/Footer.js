@@ -7,7 +7,7 @@ import { eliminarTildes, mapStateToProps } from '../../utils';
 const Footer = ({ user, telefono, direccion }) => {
   return (
     <React.Fragment>
-      {user.rol === 'MÉDICO' && (
+      {user.rol.trim() === 'MÉDICO' && (
         <Container
           style={{
             fontSize: '0.9em',

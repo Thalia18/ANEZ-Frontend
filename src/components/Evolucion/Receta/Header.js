@@ -5,6 +5,7 @@ import { Container, Grid, Image } from 'semantic-ui-react';
 import { eliminarTildes, mapStateToProps } from '../../utils';
 
 const Header = ({ user, consultorio }) => {
+  console.log(user.nombre);
   return (
     <Grid>
       <Grid.Column width={5}>
@@ -14,7 +15,7 @@ const Header = ({ user, consultorio }) => {
         <Container style={{ marginTop: '1em' }}>
           <Container>{eliminarTildes(consultorio.nombre)}</Container>
 
-          {user.rol === 'MÉDICO' && (
+          {user.rol.trim() === 'MÉDICO' && (
             <Container
               style={{
                 fontStyle: 'italic',
