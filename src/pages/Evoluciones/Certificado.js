@@ -128,11 +128,11 @@ class Receta extends Component {
                 this.state.paciente.pacientes.apellido
               }
               paciente={
-                this.state.paciente.pacientes.nombre +
+                this.state.paciente.pacientes.nombre.trim() +
                 ' ' +
-                this.state.paciente.pacientes.apellido
+                this.state.paciente.pacientes.apellido.trim()
               }
-              cedula={this.state.paciente.pacientes.cedula}
+              cedula={this.state.paciente.pacientes.cedula.trim()}
             />
           )}
           <Sesion open={this.state.sesion} />

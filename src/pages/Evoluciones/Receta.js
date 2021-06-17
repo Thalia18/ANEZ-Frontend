@@ -94,9 +94,9 @@ class Receta extends Component {
               apellidoMedico={this.props.user.apellido.trim()}
               paciente={
                 `Receta ANEZ ${this.state.evolucion.fecha} ` +
-                this.state.paciente.pacientes.nombre +
+                this.state.paciente.pacientes.nombre.trim() +
                 ' ' +
-                this.state.paciente.pacientes.apellido
+                this.state.paciente.pacientes.apellido.trim()
               }
             />
           )}
