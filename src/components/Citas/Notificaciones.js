@@ -44,7 +44,10 @@ const Notificaciones = ({
       setValue('false');
       citas.map((item) => {
         console.log(item);
-        if (item.pacientes.email !== null) {
+        if (
+          item.pacientes.email.trim() !== '' &&
+          item.pacientes.email !== null
+        ) {
           console.log(item.pacientes.email);
           opcion.push(item.cita_id);
         }
@@ -101,7 +104,10 @@ const Notificaciones = ({
                                   name="checkboxRadioGroup"
                                   value={cita.cita_id}
                                   checked={
-                                    cita.pacientes.email !== null ? true : false
+                                    cita.pacientes.email !== null &&
+                                    cita.pacientes.email.trim() !== ''
+                                      ? true
+                                      : false
                                   }
                                 />
                               )}
@@ -115,13 +121,17 @@ const Notificaciones = ({
                                     onChangeSeleccionadas('opcion', data);
                                   }}
                                   readOnly={
-                                    cita.pacientes.email === null ? true : false
+                                    cita.pacientes.email.trim() !== '' &&
+                                    cita.pacientes.email !== null
+                                      ? false
+                                      : true
                                   }
                                 />
                               )}
                             </Table.Cell>
                             <Table.Cell>
-                              {cita.pacientes.email === null && (
+                              {(cita.pacientes.email === null ||
+                                cita.pacientes.email.trim() === '') && (
                                 <Button
                                   content="Agregar correo electrónico"
                                   icon="right arrow"
