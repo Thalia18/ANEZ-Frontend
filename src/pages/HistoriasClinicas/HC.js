@@ -39,13 +39,16 @@ class Pacientes extends Component {
       error: null,
     });
     try {
-      const { data } = await axios.get(`${api_url}/api/historias`, {
-        method: 'GET',
-        headers: {
-          Authorization: this.props.jwt.refreshToken,
-          auth: this.props.user.rol,
-        },
-      });
+      const { data } = await axios.get(
+        `${api_url}/api/historias?page=${this.state.page}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: this.props.jwt.refreshToken,
+            auth: this.props.user.rol,
+          },
+        }
+      );
       if (data.error) {
         this.setState({
           sesion: true,
@@ -75,17 +78,17 @@ class Pacientes extends Component {
     if (this.state.error) return <Error />;
     return (
       <React.Fragment>
-        <Layout activeKeyP="2">
+        <Layout activeKeyP='2'>
           {!this.state.sesion && (
             <Listado
-              header="Historias clínicas"
-              icon="heartbeat"
+              header='Historias clínicas'
+              icon='heartbeat'
               HC={Object.values(this.state.HC)}
               autoComplete={this.state.autocomplete}
-              pageInitial="/historia_clinica"
-              pageSecond="/historias_clinicas"
-              reload="/historia_clinica_buscar"
-              optionNav="HC"
+              pageInitial='/historia_clinica'
+              pageSecond='/historias_clinicas'
+              reload='/historia_clinica_buscar'
+              optionNav='HC'
               paginas={this.state.paginas}
               handleChangePage={this.handleChangePage}
             />
