@@ -183,11 +183,12 @@ class MedicoAgregar extends Component {
           },
         }
       );
-
+      console.log(usuario.info);
+      this.state.medico.usuario_id = usuario.info.usuario_id;
       this.setState({
         medico: {
           ...this.state.medico,
-          usuario_id: usuario.info.usuario_id,
+          // usuario_id: usuario.info.usuario_id,
           especialidad: this.state.medico.especialidad,
         },
       });
@@ -202,6 +203,7 @@ class MedicoAgregar extends Component {
           },
         }
       );
+      console.log(this.state.medico);
 
       if (usuario.error) {
         this.setState({
@@ -276,13 +278,13 @@ class MedicoAgregar extends Component {
     if (this.state.error) return <Error />;
     return (
       <React.Fragment>
-        <Layout activeKeyP="5">
+        <Layout activeKeyP='5'>
           <Navbar />
 
           {!this.state.sesion && (
             <Agregar
-              headerC="Nuevo Médico"
-              icon="add circle"
+              headerC='Nuevo Médico'
+              icon='add circle'
               onClickButtonSaveMedico={this.onClickButtonSaveMedico}
               formUsuario={this.state.usuario}
               handleChange={this.handleChange}

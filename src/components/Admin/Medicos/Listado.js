@@ -42,7 +42,7 @@ const Listado = ({
             popHeader={'Ingrese Nombre, Apellido o Cédula del médico'}
           />
           <Segment style={matches.medium ? mediumHeight : masMediumHeight}>
-            <Header as="h1" textAlign="center">
+            <Header as='h1' textAlign='center'>
               <Header.Content>
                 <Icon name={icon} />
                 {header}
@@ -70,7 +70,7 @@ const Listado = ({
                           <Table.Cell collapsing>
                             <Checkbox
                               toggle
-                              name="checkboxRadioGroup"
+                              name='checkboxRadioGroup'
                               value={medico.medico_id}
                               checked={value === medico.medico_id}
                               onChange={handleChange}
@@ -93,7 +93,7 @@ const Listado = ({
               {buscar && (
                 <Message warning>
                   <Message.Header>
-                    <Icon name="info circle" />
+                    <Icon name='info circle' />
                     No se encontraron resultados
                   </Message.Header>
                   <p>
@@ -104,7 +104,7 @@ const Listado = ({
                 </Message>
               )}
             </DivScroll>
-            <Segment basic align="center">
+            <Segment basic align='center'>
               <Pagination
                 onPageChange={handleChangePage}
                 pointing

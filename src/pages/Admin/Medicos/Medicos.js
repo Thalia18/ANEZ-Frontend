@@ -75,13 +75,16 @@ class Usuarios extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
+    console.log(this.state.error);
+    console.log(this.state.medicos);
+
     return (
       <React.Fragment>
-        <Layout activeKeyP="5">
+        <Layout activeKeyP='5'>
           {!this.state.sesion && (
             <Listado
-              header="Médicos"
-              icon="doctor"
+              header='Médicos'
+              icon='doctor'
               medicos={Object.values(this.state.medicos)}
               paginas={this.state.paginas}
               handleChangePage={this.handleChangePage}

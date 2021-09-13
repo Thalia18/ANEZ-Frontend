@@ -281,15 +281,16 @@ class PacienteAgregar extends Component {
   render() {
     if (this.state.loading) return <Loader />;
     if (this.state.error) return <Error />;
+    console.log(this.state.error);
 
     return (
       <React.Fragment>
-        <Layout activeKeyP="3">
+        <Layout activeKeyP='3'>
           <Navbar />
           {!this.state.sesion && (
             <Agregar
-              header="Nuevo Paciente"
-              icon="add circle"
+              header='Nuevo Paciente'
+              icon='add circle'
               etnias={this.state.etnias}
               generos={this.state.genero}
               nivelDeInstruccion={this.state.nivelDeInstruccion}
